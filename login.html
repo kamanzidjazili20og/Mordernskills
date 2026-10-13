@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Injira — Modern Skills</title>
+<meta name="description" content="Sign in to your Modern Skills account to continue your Quran lessons.">
+<meta name="robots" content="noindex, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Modern Skills">
+<meta property="og:title" content="Sign in — Modern Skills">
+<meta property="og:description" content="Sign in to continue your Quran lessons.">
+<meta property="og:image" content="Images/mordern-skills-logo.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sign in — Modern Skills">
+<meta name="twitter:description" content="Sign in to continue your Quran lessons.">
+<meta name="twitter:image" content="Images/mordern-skills-logo.png">
+<link rel="icon" type="image/png" href="Images/mordern-skills-logo.png">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" media="print" onload="this.media='all';this.onload=null">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap"></noscript>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(ellipse 40% 34% at 50% -12%, rgba(212,168,83,0.16) 0%, transparent 60%),
+        radial-gradient(ellipse at 88% 6%, rgba(52,211,153,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 118%, rgba(6,95,70,0.42) 0%, transparent 58%),
+        linear-gradient(165deg, #04120d 0%, #071b13 46%, #030b08 100%);
+    padding: 24px 16px;
+    position: relative;
+    overflow-x: hidden;
+}
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cg fill='none' stroke='%23d4a853' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M45 0 L90 45 L45 90 L0 45 Z'/%3E%3Ccircle cx='45' cy='45' r='15'/%3E%3Ccircle cx='45' cy='45' r='24'/%3E%3Cpath d='M45 19 L71 45 L45 71 L19 45 Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 90px 90px;
+    pointer-events: none;
+}
+body::after {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -20%;
+    z-index: 0;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(212,168,83,0.14) 0%, transparent 55%);
+    filter: blur(60px);
+    pointer-events: none;
+    animation: auroraFloat 14s ease-in-out infinite;
+}
+@keyframes auroraFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: .7; }
+    50% { transform: translate(14vw, 8vh) scale(1.15); opacity: 1; }
+}
+
+.back-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-sec);
+    text-decoration: none;
+    margin-bottom: 22px;
+    transition: all 0.2s;
+    font-weight: 500;
+    padding: 9px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: rgba(10,28,21,0.5);
+    backdrop-filter: blur(8px);
+    position: fixed;
+    top: 22px;
+    left: 24px;
+    z-index: 20;
+}
+.auth-lang-toggle {
+    position: fixed;
+    top: 22px;
+    right: 24px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: rgba(10,28,21,0.5);
+    backdrop-filter: blur(8px);
+}
+.auth-lang-toggle .lang-option {
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 100px;
+    transition: all 0.2s;
+}
+.auth-lang-toggle .lang-option.active {
+    background: rgba(212,168,83,0.18);
+    color: var(--gold-light);
+}
+.auth-lang-toggle .lang-option:hover {
+    background: rgba(212,168,83,0.12);
+    color: var(--gold-light);
+}
+@media (max-width: 560px) {
+    .auth-lang-toggle { top: auto; bottom: 16px; right: 16px; }
+}
+.back-home:hover {
+    color: var(--gold-light);
+    border-color: var(--border-strong);
+    box-shadow: var(--glow-gold);
+    transform: translateX(-3px);
+}
+
+.auth-shell {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 940px;
+    display: grid;
+    grid-template-columns: 42% 58%;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 34px 100px -24px rgba(0,0,0,0.75), 0 0 0 1px rgba(212,168,83,0.07), 0 0 80px -40px rgba(212,168,83,0.5);
+    animation: cardIn .8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(30px) scale(.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.auth-shell::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    z-index: 5;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+    box-shadow: var(--glow-gold);
+}
+
+/* ===== HERO PANEL ===== */
+.auth-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 46px 38px 36px;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse 90% 60% at 20% -10%, rgba(212,168,83,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 80% 55% at 110% 115%, rgba(52,211,153,0.28) 0%, transparent 55%),
+        linear-gradient(165deg, #0a2b1d 0%, #051710 55%, #03100b 100%);
+}
+.auth-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23d4a853' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M60 6 L114 60 L60 114 L6 60 Z'/%3E%3Ccircle cx='60' cy='60' r='13'/%3E%3Ccircle cx='60' cy='60' r='26'/%3E%3Cpath d='M60 28 L92 60 L60 92 L28 60 Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+    pointer-events: none;
+}
+.hero-orn {
+    position: absolute;
+    top: -90px;
+    right: -90px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,168,83,0.22);
+    box-shadow: inset 0 0 60px rgba(212,168,83,0.1);
+    animation: spinSlow 40s linear infinite;
+    pointer-events: none;
+}
+.hero-orn::before, .hero-orn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px dashed rgba(212,168,83,0.16);
+}
+.hero-orn::after { inset: 34px; border: 1px solid rgba(212,168,83,0.18); }
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+
+.hero-top {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+.auth-logo {
+    width: 66px;
+    height: 66px;
+    margin: 0 auto 18px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(212,168,83,0.3), rgba(212,168,83,0.08));
+    border: 1.5px solid rgba(212,168,83,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: var(--gold-light);
+    box-shadow: 0 12px 38px rgba(212,168,83,0.28), var(--glow-gold);
+    animation: logoGlow 4s ease-in-out infinite;
+}
+@keyframes logoGlow {
+    0%, 100% { box-shadow: 0 12px 38px rgba(212,168,83,0.28), 0 0 30px rgba(212,168,83,0.35); }
+    50% { box-shadow: 0 12px 38px rgba(212,168,83,0.4), 0 0 50px rgba(212,168,83,0.55); }
+}
+.hero-brand {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-tagline {
+    margin-top: 6px;
+    font-size: 12.5px;
+    color: var(--text-sec);
+    letter-spacing: 0.3px;
+}
+.hero-verse {
+    font-family: 'Amiri', serif;
+    font-size: 30px;
+    line-height: 1.9;
+    color: var(--gold-light);
+    margin: 30px 0 24px;
+    text-align: center;
+    text-shadow: 0 0 34px rgba(212,168,83,0.45);
+    position: relative;
+    z-index: 2;
+}
+.hero-verse small {
+    display: block;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    margin-top: 8px;
+    letter-spacing: 0.4px;
+    text-shadow: none;
+}
+.hero-feats {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 14px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(212,168,83,0.16);
+}
+.hero-feat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text-sec);
+    padding: 4px 2px;
+}
+.hero-feat i {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--gold);
+    background: rgba(212,168,83,0.12);
+    border: 1px solid rgba(212,168,83,0.22);
+    flex-shrink: 0;
+}
+
+/* ===== FORM PANEL ===== */
+.auth-main {
+    position: relative;
+    background:
+        radial-gradient(ellipse 70% 40% at 100% 0%, rgba(212,168,83,0.07) 0%, transparent 60%),
+        rgba(8,22,16,0.96);
+    padding: 44px 46px 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.auth-main::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 70 70'%3E%3Cpath fill='none' stroke='%23d4a853' stroke-opacity='0.04' stroke-width='1' d='M35 3 L67 35 L35 67 L3 35 Z'/%3E%3Ccircle cx='35' cy='35' r='9'/%3E%3C/svg%3E");
+    background-size: 70px 70px;
+    pointer-events: none;
+}
+.auth-main > * { position: relative; z-index: 1; }
+
+.auth-top { margin-bottom: 26px; }
+.auth-top h1 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    margin-bottom: 7px;
+}
+.auth-top h1 em {
+    font-style: normal;
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.auth-top p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 20px 0 22px;
+}
+.auth-divider::before, .auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,83,0.2), transparent);
+}
+.auth-divider span {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.form-group { margin-bottom: 18px; }
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-sec);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+.input-icon-wrap { position: relative; }
+.input-icon-wrap > i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 15px;
+    transition: color 0.3s;
+    pointer-events: none;
+}
+.input-icon-wrap:focus-within > i { color: var(--gold); }
+.form-input-full {
+    width: 100%;
+    padding: 14px 46px 14px 42px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(6,19,14,0.7);
+    color: var(--text);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    position: relative;
+}
+.form-input-full:focus {
+    border-color: var(--gold);
+    background: rgba(6,19,14,0.95);
+    box-shadow: 0 0 0 3px rgba(212,168,83,0.08), var(--glow-gold);
+}
+.form-input-full.has-error {
+    border-color: var(--error);
+}
+.form-input-full.has-error~.form-error { display: flex; }
+.form-input-full::placeholder { color: var(--text-muted); }
+
+.password-wrap { position: relative; }
+.password-wrap .form-input-full { padding-right: 44px; }
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    transition: color 0.2s;
+}
+.password-toggle:hover { color: var(--gold); }
+
+.form-error {
+    display: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(248,113,113,0.08);
+    border: 1px solid rgba(248,113,113,0.2);
+    color: var(--error);
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    align-items: center;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.form-error.show { display: flex; }
+
+.btn-login {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    background: var(--grad-gold);
+    background-size: 200% auto;
+    color: #0a1d15;
+    font-size: 15px;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+    box-shadow: 0 8px 30px rgba(212,168,83,0.28), inset 0 1px 0 rgba(255,255,255,0.4);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    margin-bottom: 16px;
+}
+.btn-login::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -80%;
+    width: 50%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.5), transparent);
+    transform: skewX(-20deg);
+    animation: shineSweep 3.2s ease-in-out infinite;
+}
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(212,168,83,0.4), inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.btn-login:hover::after { left: 140%; animation: none; }
+.btn-login:active { transform: translateY(0); }
+.btn-login:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+.btn-login .spinner {
+    display: none;
+    width: 18px; height: 18px;
+    border: 2.5px solid rgba(10,29,21,0.3);
+    border-top-color: #0a1d15;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+.btn-login.loading .spinner { display: block; }
+.btn-login.loading .btn-text { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.auth-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+.auth-footer a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
+}
+.auth-footer a:hover { color: var(--gold-light); text-shadow: 0 0 16px rgba(212,168,83,0.4); }
+
+.toast-msg {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 10000;
+    padding: 14px 20px;
+    border-radius: 14px;
+    background: rgba(10,28,21,0.97);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 14px 40px -8px rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.toast-msg.show { transform: translateX(0); }
+
+@media (max-width: 780px) {
+    .auth-shell { grid-template-columns: 1fr; max-width: 460px; }
+    .auth-hero { display: none; }
+    .auth-main { padding: 40px 28px 30px; }
+    .auth-top h1 { font-size: 23px; }
+}
+@media (max-width: 540px) {
+    body { padding: 18px 12px; }
+    .back-home { top: 16px; left: 16px; }
+}
+</style>
+<script src="config.js"></script>
+<script src="assets/js/translations.js"></script>
+<script src="assets/js/i18n.js"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#loginForm">Skip to content</a>
+
+<div class="auth-lang-toggle" id="langToggle" title="Switch language">
+<span class="lang-option active" data-lang-code="en">EN</span>
+    <span class="lang-option" data-lang-code="rw">RW</span>
+    <span class="lang-option" data-lang-code="fr">FR</span>
+    <span class="lang-option" data-lang-code="sw">SW</span>
+    <span class="lang-option" data-lang-code="ar">AR</span>
+</div>
+
+<a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> <span data-lang="en">Back Home</span><span data-lang="rw">Subira mu Rugo</span><span data-lang="fr">Retour à l'accueil</span><span data-lang="sw">Rudi Nyumbani</span><span data-lang="ar">العودة للرئيسية</span></a>
+
+<div class="auth-shell">
+    <aside class="auth-hero">
+        <span class="hero-orn"></span>
+        <div class="hero-top">
+            <div class="auth-logo"><i class="fas fa-book-quran"></i></div>
+            <div class="hero-brand">Modern Skills</div>
+            <div class="hero-tagline"><span data-lang="en">Learn the Qur'an the Right Way</span><span data-lang="rw">Kwiga Qur’an mu buryo bunoze</span><span data-lang="fr">Apprenez le Coran de la bonne manière</span><span data-lang="sw">Jifunze Qur'an kwa Njia Sahihi</span><span data-lang="ar">تعلّم القرآن بالطريقة الصحيحة</span></div>
+        </div>
+        <div class="hero-verse">
+            وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا
+            <small><span data-lang="en">"Recite the Qur'an in slow, measured tones." — Al-Muzzammil 73:4</span><span data-lang="rw">“Soma Qur’an ukoreye amategeko yayo.” — Al-Muzzammil 73:4</span><span data-lang="fr">« Récite le Coran avec soin et lenteur. » — Al-Muzzammil 73:4</span><span data-lang="sw">"Soma Qur'an kwa utaratibu na kwa makini." — Al-Muzzammil 73:4</span><span data-lang="ar">«وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا» — المزمل 73:4</span></small>
+        </div>
+        <div class="hero-feats">
+            <div class="hero-feat"><i class="fas fa-voice"></i> <span data-lang="en">Tajweed pronunciation lessons</span><span data-lang="rw">Amasomo y’inyuguti ya Tajweed</span><span data-lang="fr">Leçons de prononciation Tajwid</span><span data-lang="sw">Masomo ya matamshi ya Tajweed</span><span data-lang="ar">دروس أحكام التجويد</span></div>
+            <div class="hero-feat"><i class="fas fa-chalkboard-user"></i> <span data-lang="en">Certified expert teachers</span><span data-lang="rw">Abigisha babahanga bemewe</span><span data-lang="fr">Professeurs experts certifiés</span><span data-lang="sw">Walimu wataalamu waliothibitishwa</span><span data-lang="ar">معلمون خبراء معتمدون</span></div>
+            <div class="hero-feat"><i class="fas fa-video"></i> <span data-lang="en">Watch lessons anywhere</span><span data-lang="rw">Amafirime bishobora kurebwa ahantu hose</span><span data-lang="fr">Regardez les leçons partout</span><span data-lang="sw">Tazama masomo popote</span><span data-lang="ar">شاهد الدروس في أي مكان</span></div>
+        </div>
+    </aside>
+
+    <main class="auth-main">
+        <div class="auth-top">
+            <h1><span data-lang="en">Welcome</span><span data-lang="rw">Murakaza</span><span data-lang="fr">Bon</span><span data-lang="sw">Karibu</span><span data-lang="ar">مرحبًا</span> <em><span data-lang="en">Back!</span><span data-lang="rw">Neza!</span><span data-lang="fr">retour !</span><span data-lang="sw">Tena!</span><span data-lang="ar">بعودتك!</span></em></h1>
+            <p><span data-lang="en">Sign in to continue your Qur'an learning journey.</span><span data-lang="rw">Injira ngo ukomeze urugendo rwawe rwo kwiga Qur’an.</span><span data-lang="fr">Connectez-vous pour poursuivre votre apprentissage du Coran.</span><span data-lang="sw">Ingia ili kuendelea na safari yako ya kujifunza Qur'an.</span><span data-lang="ar">سجّل الدخول لمتابعة رحلتك في تعلّم القرآن.</span></p>
+        </div>
+
+        <div class="auth-divider"><span><span data-lang="en">Sign in with your account</span><span data-lang="rw">Injira ukoresheje konti yawe</span><span data-lang="fr">Connectez-vous avec votre compte</span><span data-lang="sw">Ingia kwa akaunti yako</span><span data-lang="ar">سجّل الدخول بحسابك</span></span></div>
+
+        <div class="form-error" id="formError">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="formErrorText"></span>
+        </div>
+
+        <form id="loginForm" autocomplete="off" novalidate>
+            <div class="form-group">
+                <label class="form-label"><span data-lang="en">Email</span><span data-lang="rw">Imeri</span><span data-lang="fr">E-mail</span><span data-lang="sw">Barua pepe</span><span data-lang="ar">البريد الإلكتروني</span></label>
+                <div class="input-icon-wrap">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-input-full" id="email" placeholder="you@example.com" required autofocus autocomplete="email">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"><span data-lang="en">Password</span><span data-lang="rw">Ijambo Wibanga</span><span data-lang="fr">Mot de passe</span><span data-lang="sw">Nenosiri</span><span data-lang="ar">كلمة المرور</span></label>
+                <div class="password-wrap input-icon-wrap">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-input-full" id="password" placeholder="Shyiramo ijambo wibanga" required>
+                    <button type="button" class="password-toggle" id="togglePassword"><i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login" id="submitBtn">
+                <span class="btn-text"><i class="fas fa-arrow-right-to-bracket"></i> <span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Se Connecter</span><span data-lang="sw">Ingia</span><span data-lang="ar">تسجيل الدخول</span></span>
+                <span class="spinner"></span>
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <span data-lang="en">Don't have an account?</span><span data-lang="rw">Nta konti ufite?</span><span data-lang="fr">Vous n'avez pas de compte ?</span><span data-lang="sw">Huna akaunti?</span><span data-lang="ar">ليس لديك حساب؟</span> <a href="register.html"><span data-lang="en">Create Account</span><span data-lang="rw">Kora konti</span><span data-lang="fr">Créer un compte</span><span data-lang="sw">Fungua Akaunti</span><span data-lang="ar">إنشاء حساب</span></a>
+        </div>
+    </main>
+</div>
+
+<div class="toast-msg" id="toastMsg">
+    <i class="fas fa-circle-check" style="color:var(--success);"></i>
+    <span id="toastText"></span>
+</div>
+
+<script>
+// ===== LANGUAGE =====
+// Follows the site-wide language (same key as index/video/register) so the
+// sign-in page always opens in "the language that is on".
+var LOGIN_L10N = {
+    emailRequired: { en: 'Enter your email.', rw: 'Andika imeri yawe.', fr: 'Entrez votre e-mail.', sw: 'Weka barua pepe yako.', ar: 'أدخل بريدك الإلكتروني.' },
+    emailInvalid: { en: 'Enter a valid email.', rw: 'Andika imeri nyayo.', fr: 'Entrez un e-mail valide.', sw: 'Weka barua pepe sahihi.', ar: 'أدخل بريدًا إلكترونيًا صحيحًا.' },
+    passwordRequired: { en: 'Enter your password.', rw: 'Andika ijambo wibanga ryawe.', fr: 'Entrez votre mot de passe.', sw: 'Weka nenosiri lako.', ar: 'أدخل كلمة المرور.' },
+    loginFailed: { en: 'Sign in failed. Check what you typed.', rw: 'Kwinjira byanze. Reba neza ibyo wanditse.', fr: 'Connexion échouée. Vérifiez vos informations.', sw: 'Ingia imeshindwa. Angalia ulichoandika.', ar: 'فشل تسجيل الدخول. تحقق مما كتبته.' },
+    networkError: { en: 'Network problem. Check your internet and try again.', rw: 'Hari ikibazo cy’umurongo. Reba neza umurongo wa interineti, wongere ugerageze.', fr: 'Problème de réseau. Vérifiez votre connexion et réessayez.', sw: 'Tatizo la mtandao. Angalia intaneti yako ujaribu tena.', ar: 'مشكلة في الشبكة. تحقق من اتصالك وحاول مجددًا.' },
+    welcome: { en: 'Welcome, ', rw: 'Murakaza neza, ', fr: 'Bienvenue, ', sw: 'Karibu, ', ar: 'مرحبًا، ' },
+    passwordPh: { en: 'Enter your password', rw: 'Shyiramo ijambo wibanga', fr: 'Entrez votre mot de passe', sw: 'Weka nenosiri lako', ar: 'أدخل كلمة المرور' }
+};
+var currentLang = 'en';
+function lt(key) {
+    var entry = LOGIN_L10N[key];
+    if (!entry) return key;
+    if (window.MS_I18N && typeof MS_I18N.t === 'function') return MS_I18N.t(entry, currentLang);
+    return entry[currentLang] || entry.en;
+}
+(function() {
+    var langToggle = document.getElementById('langToggle');
+    if (!langToggle) return;
+    var langOptions = langToggle.querySelectorAll('.lang-option');
+    currentLang = MS_I18N.readStored();
+    currentLang = MS_I18N.normalise(currentLang);
+    window.setAuthLang = function(lang) {
+        currentLang = MS_I18N.normalise(lang);
+        document.body.className = document.body.className.replace(/lang-\w+/g, '').trim();
+document.body.classList.add('lang-' + currentLang);
+        // Arabic reads right-to-left; keep the document direction in step with
+        // the chosen language instead of pinning it to ltr.
+        document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = currentLang;
+        langOptions.forEach(function(opt) { opt.classList.toggle('active', opt.dataset.langCode === currentLang); });
+        // Shared public-site key so every public page stays in sync (the admin
+        // panel uses its own separate key and is never affected by this).
+        localStorage.setItem(MS_I18N.STORAGE_KEY, currentLang);
+        localStorage.removeItem('noorAdminLang');
+        localStorage.removeItem('noorLang');
+        MS_I18N.applyTranslations(document);
+        document.querySelectorAll('[data-lang]').forEach(function(el) {
+            el.style.display = el.dataset.lang === currentLang ? '' : 'none';
+        });
+        var pw = document.getElementById('password');
+        if (pw) pw.placeholder = lt('passwordPh');
+    };
+    langOptions.forEach(function(opt) { opt.addEventListener('click', function() { window.setAuthLang(opt.dataset.langCode); }); });
+    // Follow the language chosen on any other page or tab (assets/js/i18n.js owns the
+    // `storage` listener and re-broadcasts it as ms:langchange).
+    document.addEventListener('ms:langchange', function (e) {
+        var lang = e.detail && e.detail.lang;
+        if (lang && lang !== currentLang) window.setAuthLang(lang);
+    });
+    window.setAuthLang(currentLang);
+})();
+
+const API_ORIGIN = (window.MODERN_SKILLS_CONFIG && window.MODERN_SKILLS_CONFIG.API_URL) || (location.protocol === 'file:' ? 'http://localhost:3001' : location.origin);
+const API = API_ORIGIN + '/api';
+
+// Where to land after signing in. The video page sends `?next=video.html?id=…`
+// after the free preview so the student returns to the lesson they were
+// watching instead of the homepage. Only same-site relative paths are honoured
+// — a crafted `?next=https://evil.example/…` must not turn this page into an
+// open redirect — so anything with a scheme or a protocol-relative `//` falls
+// back to the homepage.
+function nextUrl() {
+    var raw = new URLSearchParams(location.search).get('next');
+    if (!raw) return 'index.html';
+    var scheme = /^[a-z][a-z0-9+.-]*:/i.test(raw);
+    var protocolRelative = raw.slice(0, 2) === '//' || raw.slice(0, 2) === '/\\' || raw.charAt(0) === '\\';
+    if (scheme || protocolRelative) return 'index.html';
+    return raw;
+}
+
+// Carry the intended destination over to the register page, so choosing
+// "Create Account" from a login prompt still returns the user to the lesson.
+(function () {
+    var raw = new URLSearchParams(location.search).get('next');
+    if (!raw) return;
+    var link = document.querySelector('a[href="register.html"]');
+    if (link) link.href = 'register.html?next=' + encodeURIComponent(raw);
+})();
+
+const form = document.getElementById('loginForm');
+const errorEl = document.getElementById('formError');
+const errorText = document.getElementById('formErrorText');
+const submitBtn = document.getElementById('submitBtn');
+const toastEl = document.getElementById('toastMsg');
+const toastText = document.getElementById('toastText');
+
+function showError(msg) {
+    errorText.textContent = msg;
+    errorEl.classList.add('show');
+    // Add error class to input fields
+    const inputs = form.querySelectorAll('.form-input-full');
+    inputs.forEach(input => input.classList.add('has-error'));
+}
+function hideError() { 
+    errorEl.classList.remove('show'); 
+    // Remove error class from input fields
+    const inputs = form.querySelectorAll('.form-input-full');
+    inputs.forEach(input => input.classList.remove('has-error'));
+}
+
+function showToast(msg) {
+    toastText.textContent = msg;
+    toastEl.classList.add('show');
+    setTimeout(() => toastEl.classList.remove('show'), 4000);
+}
+
+// Password toggle
+document.getElementById('togglePassword').addEventListener('click', () => {
+    const pw = document.getElementById('password');
+    const icon = document.querySelector('#togglePassword i');
+    if (pw.type === 'password') {
+        pw.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+    } else {
+        pw.type = 'password';
+        icon.className = 'fas fa-eye';
+    }
+});
+
+// If a valid session already exists, skip the form and go home.
+(async function redirectIfLoggedIn() {
+    const token = localStorage.getItem('ms_token');
+    if (!token) return;
+    try {
+        const res = await fetch(API + '/auth/me', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (res.ok) window.location.href = nextUrl();
+        else { localStorage.removeItem('ms_token'); localStorage.removeItem('ms_user'); }
+    } catch (e) { /* offline — let the user try the form */ }
+})();
+
+// Submit — real database login via POST /api/auth/login { email, password }
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError();
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!email) return showError(lt('emailRequired'));
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError(lt('emailInvalid'));
+    if (!password) return showError(lt('passwordRequired'));
+
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+
+    try {
+        const res = await fetch(API + '/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        let data = {};
+        try { data = await res.json(); } catch (parseErr) { data = {}; }
+
+        if (!res.ok) {
+            const msg = data.errors
+                ? data.errors.map(e => e.msg).join('. ')
+                : (data.error || lt('loginFailed'));
+            return showError(msg);
+        }
+
+        if (data.token) {
+            localStorage.setItem('ms_token', data.token);
+            localStorage.setItem('ms_user', JSON.stringify(data.user));
+        }
+
+        showToast(lt('welcome') + ((data.user && data.user.username) || 'User') + '!');
+        setTimeout(() => { window.location.href = nextUrl(); }, 1200);
+    } catch (err) {
+        showError(lt('networkError'));
+    } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+    }
+});
+</script>
+</body>
+</html>

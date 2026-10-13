@@ -1,0 +1,8 @@
+.git
+node_modules
+backend/node_modules
+backend/uploads/videos
+backend/.env
+.env
+*.log
+logs

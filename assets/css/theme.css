@@ -1,0 +1,397 @@
+/* ==========================================================================
+   Modern Skills — shared theme
+   --------------------------------------------------------------------------
+   One source of truth for the design system across all six pages. Loaded
+   before each page's own <style>, so page rules still win on ties; this file
+   only supplies tokens, base styles, accessibility and RTL behaviour.
+
+   Contents
+     1. Design tokens
+     2. Reset & base
+     3. Typography
+     4. Accessibility (focus, skip link, reduced motion)
+     5. RTL (Arabic) support
+     6. Shared components (buttons, fields, cards, badges, language switcher)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   Previously every page carried its own :root with slightly different names
+   and values for the same colours (--card vs --bg-card, #5f7a6d vs #6d8a7b).
+   Both spellings are kept so nothing that referenced the old names breaks,
+   but they now resolve to one palette.
+   -------------------------------------------------------------------------- */
+:root {
+    /* Brand palette */
+    --gold: #d4a853;
+    --gold-light: #f0d9a0;
+    --gold-pale: #f8e9c4;
+    --green: #34d399;
+    --emerald: #0e7a5a;
+    --deep: #031812;
+
+    /* Surfaces */
+    --bg: #04120d;
+    --bg2: #072218;
+    --bg-card: rgba(13, 32, 24, 0.85);
+    --bg-hover: rgba(20, 45, 34, 0.9);
+    --card: rgba(10, 34, 25, 0.72);
+    --card-solid: #0a241b;
+
+    /* Text */
+    --text: #f4f8f5;
+    --text-sec: #b0c9bd;
+    --text-muted: #6d8a7b;
+
+    /* Lines & states */
+    --border: rgba(212, 168, 83, 0.14);
+    --border-strong: rgba(212, 168, 83, 0.4);
+    --error: #f87171;
+    --success: #34d399;
+    --warning: #fbbf24;
+
+    /* Effects */
+    --grad-gold: linear-gradient(120deg, #f9e9bd 0%, #e8c877 40%, #c79a45 70%, #f0d9a0 100%);
+    --glow-gold: 0 0 30px rgba(212, 168, 83, 0.35);
+    --shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.75);
+    --shadow-sm: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+
+    /* Geometry */
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 20px;
+    --radius-pill: 999px;
+    --sidebar-width: 240px;
+
+    /* Type */
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-serif: 'Amiri', 'Times New Roman', serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+
+    /* Motion — every transition below is disabled under reduced-motion. */
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --dur-fast: 0.15s;
+    --dur: 0.2s;
+    --dur-slow: 0.3s;
+
+    /* Layout */
+    --content-max: 1320px;
+    --gutter: 36px;
+    --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--gold);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    min-height: 100vh;
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+::selection { background: rgba(212, 168, 83, 0.35); color: #fff; }
+
+/* Firefox / WebKit scrollbars, tinted to match the palette. */
+* { scrollbar-width: thin; scrollbar-color: rgba(212, 168, 83, 0.35) transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: rgba(212, 168, 83, 0.28);
+    border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(212, 168, 83, 0.45); }
+
+/* --------------------------------------------------------------------------
+   3. Typography
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 0.5em;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+p { margin: 0 0 1em; }
+
+/* Arabic needs a touch more line height: glyphs have taller ascenders and
+   descenders, and Amiri sits on a large body. */
+body[dir='rtl'] { line-height: 1.8; }
+
+/* --------------------------------------------------------------------------
+   4. Accessibility
+   -------------------------------------------------------------------------- */
+
+/* A single, consistent focus ring. `:focus-visible` keeps it off mouse clicks,
+   and the fallback keeps older browsers from removing the ring entirely. */
+:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
+:focus:not(:focus-visible) { outline: none; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+/* Keyboard users get a way past the header on every page. */
+.skip-link {
+    position: absolute;
+    inset-inline-start: 50%;
+    top: -100px;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 12px 22px;
+    background: var(--gold);
+    color: #14100a;
+    font-weight: 700;
+    border-radius: 0 0 var(--radius) var(--radius);
+    text-decoration: none;
+    transition: top var(--dur) var(--ease);
+}
+.skip-link:focus { top: 0; color: #14100a; }
+
+/* Respect the OS setting: kill transitions, animations and smooth scrolling. */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   5. RTL support (Arabic)
+   The layout uses logical properties throughout, so most of the page mirrors
+   for free. These rules fix the places that genuinely need direction help.
+   -------------------------------------------------------------------------- */
+
+/* The default text alignment is inherited from the document; make sure it
+   follows the direction instead of staying left-aligned. */
+[dir='rtl'] body { text-align: right; }
+
+/* Directional icons (arrows, chevrons) must point the other way. */
+[dir='rtl'] .fa-arrow-left,
+[dir='rtl'] .fa-arrow-right,
+[dir='rtl'] .fa-chevron-left,
+[dir='rtl'] .fa-chevron-right,
+[dir='rtl'] .fa-angle-left,
+[dir='rtl'] .fa-angle-right,
+[dir='rtl'] .fa-long-arrow-alt-left,
+[dir='rtl'] .fa-long-arrow-alt-right { transform: scaleX(-1); }
+
+/* Mirror the decorative patterns so they don't read as a printing error. */
+[dir='rtl'] .pattern-bg { transform: scaleX(-1); }
+
+/* Latin words inside Arabic text (file names, emails) must stay LTR, otherwise
+   a trailing period or slash jumps to the wrong end of the line. */
+[dir='rtl'] .ltr,
+[dir='rtl'] code,
+[dir='rtl'] kbd,
+[dir='rtl'] samp {
+    direction: ltr;
+    unicode-bidi: isolate;
+    text-align: left;
+}
+
+/* Numbers stay left-to-right in every language. */
+[dir='rtl'] .num,
+[dir='rtl'] [data-numeric] {
+    direction: ltr;
+    unicode-bidi: embed;
+}
+
+/* --------------------------------------------------------------------------
+   6. Shared components
+   Component classes below are only applied where a page opts in; page-specific
+   styling still wins on equal specificity.
+   -------------------------------------------------------------------------- */
+
+/* --- Language switcher ------------------------------------------------- */
+.lang-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    line-height: 1;
+    border-radius: var(--radius-pill);
+    transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.lang-option.active { background: rgba(212, 168, 83, 0.18); color: var(--gold-light); }
+
+/* --- Buttons ----------------------------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 700;
+    line-height: 1;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    transition: transform var(--dur-fast) var(--ease),
+                box-shadow var(--dur) var(--ease),
+                background var(--dur) var(--ease),
+                border-color var(--dur) var(--ease);
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+.btn-primary {
+    background: var(--grad-gold);
+    color: #14100a;
+    box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover:not(:disabled) { box-shadow: var(--glow-gold); }
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--border);
+    color: var(--text-sec);
+}
+.btn-secondary:hover:not(:disabled) {
+    background: var(--bg-hover);
+    border-color: var(--border-strong);
+    color: var(--text);
+}
+
+/* --- Form fields ------------------------------------------------------- */
+.form-control {
+    width: 100%;
+    background: rgba(6, 19, 14, 0.6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    color: var(--text);
+    transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.form-control::placeholder { color: var(--text-muted); }
+.form-control:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.12);
+}
+
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 7px;
+    color: var(--text-sec);
+}
+
+.form-hint { font-size: 11px; color: var(--text-muted); }
+
+/* Number inputs: hide the spinners, which look broken in a dark UI and are
+   pointless when a number keyboard already provides the stepper. */
+input[type='number'] { -moz-appearance: textfield; appearance: textfield; }
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* --- Cards ------------------------------------------------------------- */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur) var(--ease),
+                border-color var(--dur) var(--ease),
+                box-shadow var(--dur) var(--ease);
+}
+.card:hover { border-color: var(--border-strong); }
+
+/* --- Layout helpers ---------------------------------------------------- */
+.container {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+}
+.visually-hidden {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* --- Toast ------------------------------------------------------------- */
+.toast-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    box-shadow: var(--shadow);
+    padding: 13px 16px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.toast-item.success { border-inline-start: 3px solid var(--success); }
+.toast-item.error   { border-inline-start: 3px solid var(--error); }
+.toast-item.warning { border-inline-start: 3px solid var(--warning); }
+.toast-item.info    { border-inline-start: 3px solid var(--gold); }
+
+/* --------------------------------------------------------------------------
+   Page-specific RTL corrections
+   Pages that predate RTL support position a few elements with physical
+   properties. These rules mirror just those, so Arabic renders correctly
+   without rewriting each page's layout.
+   -------------------------------------------------------------------------- */
+
+/* --- login.html & register.html (shared shell) --- */
+/* Both pages pin the language switcher and the back link to opposite physical
+   corners; in RTL those swap. */
+[dir='rtl'] .auth-lang-toggle { right: auto; left: 24px; }
+[dir='rtl'] .lang-mini { right: auto; left: 22px; }
+[dir='rtl'] .back-home { left: auto; right: 24px; }
+
+/* Toasts slide in from the edge; that edge must be the trailing one. */
+[dir='rtl'] .toast-msg { right: auto; left: 24px; transform: translateX(-120%); }
+
+/* Field icons sit at the text-start edge. */
+[dir='rtl'] .input-icon-wrap > i { left: auto; right: 15px; }
+[dir='rtl'] .password-wrap .form-input-full { padding-right: 14px; padding-left: 44px; }
+[dir='rtl'] .password-toggle { right: auto; left: 12px; }
+
+/* --- register.html extras --- */
+[dir='rtl'] .form-label .required { margin-left: 0; margin-right: 2px; }
+/* The country select draws a divider and chevron on the physical right. */
+[dir='rtl'] .country-select {
+    border-right: none;
+    border-left: 1px solid var(--border);
+    padding: 13px 14px 13px 10px;
+    padding-right: 26px;
+    background-position: left 8px center;
+}
+
+/* --- courses.html --- */
+[dir='rtl'] .logout-link { margin-left: 0; margin-right: auto; }
+[dir='rtl'] .chip { margin-right: 0; margin-left: 8px; }
+
+/* --------------------------------------------------------------------------
+   Responsive gutters
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    :root { --gutter: 20px; }
+    body { font-size: 15px; }
+}

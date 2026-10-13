@@ -1,0 +1,2853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isomo — Modern Skills</title>
+<meta name="description" content="Watch your Quran lesson and manage your access. Tajweed, Tafsir, Hifz and Arabic courses on Modern Skills.">
+<meta property="og:type" content="video.other">
+<meta property="og:site_name" content="Modern Skills">
+<meta property="og:title" content="Watch your lesson — Modern Skills">
+<meta property="og:description" content="Watch your Quran lesson and manage your access.">
+<meta property="og:image" content="Images/mordern-skills-logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Watch your lesson — Modern Skills">
+<meta name="twitter:description" content="Watch your Quran lesson and manage your access.">
+<meta name="twitter:image" content="Images/mordern-skills-logo.png">
+<link rel="icon" type="image/png" href="Images/mordern-skills-logo.png">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" media="print" onload="this.media='all';this.onload=null">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap"></noscript>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    position: relative;
+    background:
+        radial-gradient(ellipse 45% 30% at 50% -8%, rgba(212,168,83,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 85% 85%, rgba(52,211,153,0.06) 0%, transparent 50%),
+        linear-gradient(165deg, #04120d 0%, #071b13 46%, #030b08 100%);
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(ellipse at 25% 20%, rgba(212,168,83,0.1) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 80%, rgba(212,168,83,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 30%, rgba(52,211,153,0.05) 0%, transparent 45%),
+        radial-gradient(ellipse at 10% 70%, rgba(45,138,94,0.05) 0%, transparent 40%),
+        linear-gradient(180deg, #06130e 0%, #0a1d15 40%, #050f0b 100%);
+    pointer-events: none;
+}
+
+.page-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    filter: blur(52px) saturate(1.35);
+    transform: scale(1.15);
+    opacity: 0.38;
+}
+
+.page-backdrop::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(5,15,10,0.85) 0%, rgba(5,15,10,0.5) 45%, rgba(4,11,8,0.94) 100%);
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #06130e; }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 12px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(5,16,11,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+}
+.header::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,83,0.5), transparent);
+    opacity: .55;
+}
+
+.header-left { display: flex; align-items: center; gap: 24px; }
+
+.back-link {
+    text-decoration: none;
+    color: var(--text-sec);
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.back-link:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text);
+    gap: 10px;
+}
+
+.logo i { font-size: 20px; color: var(--gold); }
+.logo span { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
+
+.nav-links { display: flex; gap: 4px; }
+.lang-toggle { display: flex; align-items: center; gap: 2px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 999px; padding: 3px; margin-left: 8px; }
+.lang-option { padding: 5px 9px; font-size: 10px; font-weight: 700; color: var(--text-muted); cursor: pointer; border-radius: 999px; transition: all .2s; }
+.lang-option.active { background: rgba(212,168,83,0.18); color: var(--gold-light); }
+/* Keep the language switcher reachable on phones instead of hiding it —
+   shrink it and let the nav links give it room. */
+@media (max-width: 720px) {
+    .nav-links { display: none; }
+    .lang-toggle { margin-left: 4px; }
+    .lang-option { padding: 5px 7px; font-size: 9px; }
+}
+@media (max-width: 480px) {
+    .lang-toggle { padding: 2px; gap: 1px; }
+    .lang-option { padding: 4px 6px; font-size: 8.5px; }
+}
+.nav-links a {
+    color: var(--text-sec);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: all .2s;
+    text-decoration: none;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--text); background: rgba(255,255,255,0.06); }
+
+.header-right { display: flex; align-items: center; gap: 10px; }
+
+.btn-admin {
+    text-decoration: none;
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(212,168,83,0.2);
+    transition: all 0.2s;
+}
+
+.btn-admin:hover { background: rgba(212,168,83,0.08); }
+
+.player-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 28px 40px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 28px;
+    position: relative;
+    z-index: 1;
+}
+
+.player-main { min-width: 0; }
+
+.player-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 20px 60px -15px rgba(0,0,0,0.6);
+    border: 1px solid rgba(212,168,83,0.14);
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.player-container:hover {
+    border-color: rgba(212,168,83,0.4);
+    box-shadow: 0 26px 80px -16px rgba(0,0,0,0.8), 0 0 40px -18px rgba(212,168,83,0.5);
+}
+
+.player-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#youtubeFrame { position: absolute; inset: 0; display: none; z-index: 2; }
+#youtubeFrame iframe { width: 100%; height: 100%; border: none; }
+/* z-index keeps the real player above the poster/thumbnail and the gradient
+   (so the picture is never hidden behind the cover art), while the custom
+   controls sit on top of it for the poster state. */
+#realVideo { position: absolute; inset: 0; z-index: 2; background: #000; }
+
+.player-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.1) 70%, transparent 100%);
+    pointer-events: none;
+}
+
+.player-controls {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.player-top { display: flex; align-items: center; justify-content: space-between; }
+
+.player-top-badge {
+    padding: 4px 14px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.player-top-right { display: flex; gap: 8px; }
+
+.player-top-btn {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(0,0,0,0.5);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.player-top-btn:hover { background: rgba(0,0,0,0.7); color: white; }
+
+.player-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.play-big-btn {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.3);
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    backdrop-filter: blur(8px);
+    margin: 0 auto 12px;
+}
+
+.play-big-btn:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: scale(1.05);
+}
+
+.player-center span { display: block; font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 500; }
+
+.player-bottom { display: flex; align-items: center; justify-content: space-between; }
+
+.player-timeline { flex: 1; margin-right: 16px; }
+
+.player-timeline .bar {
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+}
+
+.player-timeline .bar .fill {
+    height: 100%;
+    width: 0%;
+    background: var(--gold);
+    border-radius: 2px;
+    position: relative;
+}
+
+.player-timeline .bar .fill::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.player-timeline:hover .bar .fill::after { opacity: 1; }
+
+.player-time { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 500; margin-top: 4px; }
+
+.player-bottom-right { display: flex; align-items: center; gap: 12px; }
+
+.player-bottom-btn {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(0,0,0,0.4);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.player-bottom-btn:hover { background: rgba(0,0,0,0.6); color: white; }
+
+.video-info-section {
+    margin-top: 24px;
+    background: rgba(10,28,21,0.72);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border);
+}
+
+.video-info-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.video-info-header .left { flex: 1; min-width: 0; }
+
+.video-info-header .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.video-info-header h1 {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    margin-bottom: 10px;
+}
+
+.video-stats-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.video-stats-row .stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--text-sec);
+}
+
+.video-stats-row .stat i { font-size: 13px; }
+.video-stats-row .stat .stars { color: var(--gold); }
+.video-stats-row .price-badge-stat {
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: rgba(212,168,83,0.1);
+    border: 1px solid rgba(212,168,83,0.2);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--gold);
+}
+
+.video-actions { display: flex; gap: 10px; flex-shrink: 0; }
+
+.btn-action {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-action.primary {
+    background: var(--grad-gold);
+    background-size: 200% auto;
+    color: #14100a;
+    box-shadow: 0 6px 18px rgba(212,168,83,0.3), inset 0 1px 0 rgba(255,255,255,0.4);
+    position: relative;
+    overflow: hidden;
+}
+.btn-action.primary::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -80%;
+    width: 50%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.5), transparent);
+    transform: skewX(-20deg);
+    animation: btnShine 3.2s ease-in-out infinite;
+}
+@keyframes btnShine { 0%, 60% { left: -80%; } 100% { left: 140%; } }
+.btn-action.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(212,168,83,0.42), inset 0 1px 0 rgba(255,255,255,0.4); }
+
+.btn-action.secondary {
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.btn-action.secondary:hover { background: var(--bg-hover); }
+.btn-action.secondary.saved { background: rgba(212,168,83,0.16); color: var(--gold-light); border-color: rgba(212,168,83,0.35); }
+
+.instructor-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 0;
+    margin: 16px 0;
+    position: relative;
+}
+
+.instructor-bar::before,
+.instructor-bar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(212,168,83,0.3), rgba(212,168,83,0.05), transparent);
+}
+
+.instructor-bar::before { top: 0; }
+.instructor-bar::after { bottom: 0; }
+
+.instructor-avatar {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.instructor-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.instructor-info h4 { font-size: 15px; font-weight: 700; }
+.instructor-info p { font-size: 13px; color: var(--text-muted); }
+.instructor-info a { color: var(--gold); text-decoration: none; font-size: 13px; font-weight: 600; }
+
+.instructor-price {
+    margin-left: auto;
+    text-align: right;
+    padding: 10px 18px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(212,168,83,0.1), rgba(212,168,83,0.03));
+    border: 1px solid rgba(212,168,83,0.2);
+    flex-shrink: 0;
+}
+.instructor-price-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+.instructor-price-value {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(120deg, #eccf8b, #d4a853);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+.instructor-price-value.free-label {
+    background: linear-gradient(120deg, #34d399, #3da76e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.video-description { padding: 16px 0; }
+
+.video-description h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.video-description p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-sec);
+}
+
+.video-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 16px 0;
+}
+
+.video-tags span {
+    padding: 6px 14px;
+    border-radius: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-sec);
+    transition: all 0.2s;
+}
+
+.video-tags span:hover { border-color: rgba(212,168,83,0.2); color: var(--gold); }
+
+.access-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    margin: 4px 0 16px;
+    border-radius: 20px;
+    background: rgba(45,138,94,0.12);
+    border: 1px solid rgba(45,138,94,0.3);
+    color: #3da76e;
+    font-size: 12px;
+    font-weight: 600;
+}
+.access-status.expiring {
+    background: rgba(212,168,83,0.12);
+    border-color: rgba(212,168,83,0.3);
+    color: var(--gold);
+}
+
+/* Live "time left" clock inside the access badge. Tabular figures stop the
+   number from jittering as it ticks down once per second. */
+.access-countdown {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.14);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.access-status.expiring .access-countdown { color: var(--gold-light); }
+.access-countdown.urgent { color: #f87171; }
+[dir="rtl"] .access-countdown {
+    padding-left: 0;
+    padding-right: 8px;
+    border-left: none;
+    border-right: 1px solid rgba(255,255,255,0.14);
+}
+
+.player-sidebar {
+    background: rgba(10,28,21,0.72);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border);
+}
+
+.player-sidebar h3 {
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    position: relative;
+}
+
+.player-sidebar h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(212,168,83,0.3), rgba(212,168,83,0.05), transparent);
+}
+
+.player-sidebar h3 span { font-weight: 400; color: var(--text-muted); font-size: 13px; }
+
+.related-card {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+.related-card:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    right: 12px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), rgba(212,168,83,0.1), rgba(255,255,255,0.03), transparent);
+}
+
+.related-card:hover {
+    background: rgba(212,168,83,0.03);
+    box-shadow: 0 0 0 1px rgba(212,168,83,0.06);
+}
+
+.related-thumb {
+    width: 168px;
+    min-width: 168px;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg-hover);
+}
+
+.related-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.related-thumb .dur {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: rgba(0,0,0,0.75);
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+}
+
+.related-info h4 { font-size: 13px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.related-info .rel-instructor { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.related-info .rel-meta { font-size: 11px; color: var(--text-muted); }
+.related-info .rel-meta i { color: var(--gold); font-size: 10px; }
+
+.footer {
+    padding: 24px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-muted);
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.footer a { color: var(--text-sec); text-decoration: none; transition: color 0.2s; }
+.footer a:hover { color: var(--gold); }
+.footer-links { display: flex; gap: 24px; }
+
+@media (max-width: 1024px) {
+    .player-wrapper { grid-template-columns: 1fr; padding: 20px; }
+    .related-thumb { width: 140px; min-width: 140px; }
+    .header { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .footer { padding: 20px; }
+}
+
+@media (max-width: 640px) {
+    .player-wrapper { padding: 14px; }
+    .player-controls { padding: 14px; }
+    .video-info-section { padding: 18px; }
+    .video-info-header h1 { font-size: 20px; }
+    .video-actions { width: 100%; }
+    .btn-action { flex: 1; justify-content: center; }
+    .play-big-btn { width: 60px; height: 60px; font-size: 24px; }
+    .related-thumb { width: 120px; min-width: 120px; }
+    .footer { flex-direction: column; gap: 12px; text-align: center; }
+    .header { padding: 10px 14px; }
+    .header-left { gap: 12px; }
+    .btn-label { display: none; }
+    .back-link { width: 32px; height: 32px; font-size: 15px; }
+    .logo span { font-size: 14px; }
+    .instructor-bar { gap: 10px; }
+}
+
+@media (max-width: 480px) {
+    .player-wrapper { padding: 10px; }
+    .video-info-header { flex-direction: column; }
+    .video-stats-row { gap: 12px; }
+    .player-timeline { margin-right: 8px; }
+    .player-time { font-size: 10px; }
+    .player-bottom-right { gap: 6px; }
+    .player-bottom-btn { width: 30px; height: 30px; font-size: 14px; }
+    .play-big-btn { width: 54px; height: 54px; font-size: 22px; }
+    .related-thumb { width: 108px; min-width: 108px; }
+    .footer-links { gap: 14px; flex-wrap: wrap; justify-content: center; }
+}
+
+/* ===== AUTH BUTTONS ===== */
+.btn-auth {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 8px;
+    font-size: 12px; font-weight: 700; text-decoration: none;
+    transition: all .2s;
+}
+.btn-auth.login-btn {
+    color: var(--gold); border: 1px solid rgba(212,168,83,0.24);
+}
+.btn-auth.login-btn:hover { background: rgba(212,168,83,0.1); border-color: rgba(212,168,83,0.45); }
+.btn-auth.register-btn {
+    background: var(--grad-gold); background-size: 200% auto;
+    color: #14100a;
+    box-shadow: 0 4px 16px rgba(212,168,83,0.28), inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.btn-auth.register-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212,168,83,0.4); }
+.user-pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 12px 6px 10px; border-radius: 100px;
+    font-size: 12px; font-weight: 700; color: #34d399;
+    background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25);
+}
+.user-pill i { font-size: 11px; }
+.logout-link {
+    font-size: 11px; color: var(--text-muted); cursor: pointer;
+    background: none; border: none; font-family: inherit;
+    padding: 4px 8px; border-radius: 6px; transition: all .2s;
+}
+.logout-link:hover { color: #f87171; background: rgba(248,113,113,0.08); }
+
+/* ===== PAYMENT OVERLAY ===== */
+.payment-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(4,11,8,0.94);
+    backdrop-filter: blur(40px) saturate(150%);
+    padding: 20px;
+}
+.payment-overlay.show { display: flex; }
+
+.payment-bg-img {
+    position: absolute; inset: 0; z-index: 0;
+    background-size: cover; background-position: center;
+    filter: blur(60px) brightness(0.25) saturate(1.5);
+    transform: scale(1.2); opacity: 0.5;
+}
+
+.payment-card {
+    width: 100%; max-width: 440px;
+    background: linear-gradient(170deg, rgba(14,34,26,0.98) 0%, rgba(8,22,16,0.99) 100%);
+    border: 1px solid rgba(212,168,83,0.15);
+    border-radius: 28px;
+    padding: 0 0 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 50px 140px -20px rgba(0,0,0,0.85), 0 0 80px -10px rgba(212,168,83,0.06);
+    animation: paySlideUp .5s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1;
+}
+@keyframes paySlideUp { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: none; } }
+
+.payment-card::after {
+    content: '';
+    position: absolute; top: -80px; right: -60px; width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(212,168,83,0.05) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+}
+
+.pay-top-decor {
+    height: 4px;
+    background: linear-gradient(90deg, #d4a853, #eccf8b, #d4a853, #eccf8b, #d4a853);
+    background-size: 200% 100%;
+    animation: payTopShimmer 4s linear infinite;
+}
+@keyframes payTopShimmer { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
+
+.pay-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(6,19,14,0.5);
+    color: var(--text-sec); font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; z-index: 5;
+    backdrop-filter: blur(8px);
+}
+.pay-close:hover { background: rgba(248,113,113,0.12); color: #f87171; border-color: rgba(248,113,113,0.2); }
+
+.pay-logo-wrap { padding-top: 28px; margin-bottom: 10px; }
+
+.pay-logo-ring {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, rgba(212,168,83,0.3), rgba(212,168,83,0.05), rgba(52,211,153,0.15), rgba(212,168,83,0.3));
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto;
+    animation: payRingSpin 8s linear infinite;
+}
+@keyframes payRingSpin { to { transform: rotate(360deg); } }
+
+.pay-logo {
+    width: 58px; height: 58px; border-radius: 50%;
+    background: linear-gradient(145deg, rgba(212,168,83,0.2), rgba(212,168,83,0.06));
+    border: 1.5px solid rgba(212,168,83,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: #d4a853;
+    box-shadow: 0 8px 28px rgba(212,168,83,0.12);
+    animation: payRingSpin 8s linear infinite reverse;
+}
+
+.pay-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: #34d399;
+    padding: 5px 14px; border-radius: 100px;
+    background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2);
+    margin-bottom: 10px;
+}
+.pay-badge i { font-size: 10px; }
+
+.payment-card h2 {
+    font-size: 22px; font-weight: 800; letter-spacing: -0.3px;
+    margin-bottom: 4px; color: #f2f7f4;
+}
+.payment-card .pay-sub {
+    font-size: 13px; color: #5f7a6d; margin-bottom: 20px; line-height: 1.5;
+    padding: 0 24px;
+}
+
+.pay-amount-box {
+    padding: 18px 24px; border-radius: 18px;
+    background: linear-gradient(145deg, rgba(212,168,83,0.1), rgba(212,168,83,0.03));
+    border: 1.5px solid rgba(212,168,83,0.2);
+    margin: 0 20px 20px;
+    text-align: center;
+}
+.pay-amount-label {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.2px; color: #5f7a6d; margin-bottom: 4px;
+}
+.pay-amount-value {
+    font-size: 36px; font-weight: 800; letter-spacing: 1px;
+    background: linear-gradient(120deg, #eccf8b, #d4a853, #eccf8b);
+    background-size: 200% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: payAmtShimmer 3s ease-in-out infinite;
+    line-height: 1.1;
+}
+@keyframes payAmtShimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.pay-amount-lesson {
+    font-size: 11px; color: #a3bbb0; font-weight: 500;
+    max-width: 260px; margin: 4px auto 0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Payment details card */
+.pay-details-card {
+    margin: 0 20px 18px;
+    border-radius: 16px;
+    background: rgba(6,19,14,0.5);
+    border: 1px solid rgba(255,255,255,0.04);
+    overflow: hidden;
+}
+
+.pay-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    transition: background 0.2s;
+}
+.pay-detail-row:hover {
+    background: rgba(212,168,83,0.03);
+}
+
+.pay-detail-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(212,168,83,0.12), rgba(212,168,83,0.04));
+    border: 1px solid rgba(212,168,83,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: #d4a853;
+    flex-shrink: 0;
+}
+
+.pay-detail-content {
+    flex: 1; text-align: left; min-width: 0;
+}
+.pay-detail-label {
+    display: block;
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: #5f7a6d;
+    margin-bottom: 1px;
+}
+.pay-detail-value {
+    display: block;
+    font-size: 15px; font-weight: 700; color: #f2f7f4;
+}
+.pay-phone-val {
+    letter-spacing: 0.5px;
+    color: #34d399;
+}
+
+.pay-detail-divider {
+    height: 1px;
+    margin: 0 16px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+}
+
+.pay-copy-btn {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    border: 1px solid rgba(212,168,83,0.12);
+    background: rgba(212,168,83,0.06);
+    color: #d4a853;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+.pay-copy-btn:hover {
+    background: rgba(212,168,83,0.15);
+    border-color: rgba(212,168,83,0.3);
+    transform: scale(1.05);
+}
+.pay-copy-btn.copied {
+    background: rgba(52,211,153,0.12);
+    border-color: rgba(52,211,153,0.3);
+    color: #34d399;
+}
+
+.pay-footer {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-size: 11px; color: #5f7a6d;
+    padding: 0 20px;
+    line-height: 1.4;
+}
+.pay-footer i { font-size: 13px; flex-shrink: 0; }
+
+/* ===== Payment submission form ===== */
+.pay-form { margin: 0 20px 16px; text-align: left; }
+.pay-form-row { margin-bottom: 12px; }
+.pay-form-row label {
+    display: block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.6px; color: #5f7a6d; margin-bottom: 6px;
+}
+.pay-form-row input {
+    width: 100%; padding: 12px 14px; border-radius: 12px;
+    background: rgba(6,19,14,0.6); border: 1.5px solid rgba(255,255,255,0.06);
+    color: #f2f7f4; font-size: 14px; font-weight: 600; letter-spacing: 0.3px;
+    transition: all 0.2s; font-family: inherit;
+}
+.pay-form-row input::placeholder { color: #3d5347; font-weight: 500; }
+.pay-form-row input:focus { outline: none; border-color: rgba(212,168,83,0.4); background: rgba(6,19,14,0.85); }
+.pay-form-error {
+    font-size: 12px; color: #f87171; margin-bottom: 10px; display: none;
+    padding: 8px 12px; border-radius: 10px; background: rgba(248,113,113,0.08);
+    border: 1px solid rgba(248,113,113,0.2);
+}
+.pay-form-error.show { display: block; }
+.pay-tier-options { display:flex; flex-direction:column; gap:10px; margin:0 20px 16px; }
+.pay-tier-card {
+    display:flex; align-items:center; gap:12px;
+    padding:14px 16px; border-radius:14px;
+    background: rgba(10,28,20,0.7); border:1.5px solid rgba(212,168,83,0.1);
+    cursor:pointer; transition: all 0.2s;
+}
+.pay-tier-card:hover { border-color: rgba(212,168,83,0.3); background: rgba(16,38,28,0.8); }
+.pay-tier-card.selected { border-color: var(--gold); background: rgba(212,168,83,0.08); }
+.pay-tier-icon { font-size:22px; color:var(--gold); width:36px; text-align:center; flex-shrink:0; }
+.pay-tier-info { flex:1; }
+.pay-tier-info h4 { font-size:14px; font-weight:700; color:var(--text); margin-bottom:2px; }
+.pay-tier-price { font-size:18px; font-weight:800; color:var(--gold); display:block; margin-bottom:2px; }
+.pay-tier-desc { font-size:11px; color:var(--text-muted); }
+.pay-tier-check { color:var(--text-muted); font-size:12px; flex-shrink:0; }
+.pay-tier-card.selected .pay-tier-check { color:var(--gold); }
+.pay-tier-card.selected .pay-tier-check i { content:"\f058"; }
+.pay-tier-card.selected .pay-tier-check i::before { content:"\f058"; font-family:"Font Awesome 6 Free"; font-weight:900; }
+.pay-amount-val { font-size:16px !important; font-weight:800 !important; color:var(--gold) !important; }
+.pay-submit-btn {
+    width: 100%; padding: 14px; border-radius: 14px; border: none; cursor: pointer;
+    background: var(--grad-gold); background-size: 200% auto;
+    color: #14100a; font-size: 14px; font-weight: 800; letter-spacing: 0.2px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.2s; box-shadow: 0 12px 30px -10px rgba(212,168,83,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
+    font-family: inherit;
+}
+.pay-submit-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 16px 36px -10px rgba(212,168,83,0.65); }
+.pay-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ===== Pending / rejected review state ===== */
+.pay-pending { padding: 8px 24px 4px; }
+.pay-pending-icon {
+    width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px;
+    background: linear-gradient(145deg, rgba(212,168,83,0.16), rgba(212,168,83,0.04));
+    border: 1.5px solid rgba(212,168,83,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; color: #d4a853;
+    animation: payPulse 2s ease-in-out infinite;
+}
+@keyframes payPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+.pay-pending h3 { font-size: 18px; font-weight: 800; color: #f2f7f4; margin-bottom: 6px; }
+.pay-pending > p { font-size: 13px; color: #a3bbb0; line-height: 1.5; margin-bottom: 16px; }
+.pay-pending-details {
+    text-align: left; background: rgba(6,19,14,0.5); border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 14px; padding: 12px 16px; margin-bottom: 16px; font-size: 12px;
+}
+.pay-pending-details div { display: flex; justify-content: space-between; padding: 5px 0; color: #a3bbb0; }
+.pay-pending-details strong { color: #f2f7f4; font-weight: 700; }
+.pay-refresh-btn {
+    width: 100%; padding: 12px; border-radius: 14px; cursor: pointer;
+    background: rgba(52,211,153,0.1); border: 1.5px solid rgba(52,211,153,0.25);
+    color: #34d399; font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.2s; font-family: inherit; margin-bottom: 8px;
+}
+.pay-refresh-btn:hover { background: rgba(52,211,153,0.18); }
+.pay-refresh-btn.spinning i { animation: paySpin 0.8s linear infinite; }
+@keyframes paySpin { to { transform: rotate(360deg); } }
+.pay-rejected-note {
+    text-align: left; font-size: 12px; color: #f87171; line-height: 1.5;
+    background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.15);
+    border-radius: 12px; padding: 10px 14px; margin-bottom: 14px;
+}
+
+@media (max-width: 540px) {
+    .payment-card { padding: 0 0 22px; border-radius: 22px; }
+    .payment-card h2 { font-size: 18px; }
+    .pay-amount-value { font-size: 28px; }
+    .pay-amount-box { padding: 14px 16px; margin: 0 14px 16px; }
+    .pay-details-card { margin: 0 14px 14px; }
+    .pay-phone-val { font-size: 14px; }
+    .pay-logo { width: 50px; height: 50px; font-size: 20px; }
+    .pay-logo-ring { width: 62px; height: 62px; }
+    .pay-footer { flex-direction: column; text-align: center; }
+    .btn-auth { padding: 6px 10px; font-size: 11px; }
+}
+
+/* ===== RIGHT-TO-LEFT (Arabic) MIRRORING ===== */
+[dir="rtl"] .lang-toggle { margin-left: 0; margin-right: 8px; }
+[dir="rtl"] .player-timeline { margin-right: 0; margin-left: 16px; }
+[dir="rtl"] .instructor-price { margin-left: 0; margin-right: auto; text-align: left; }
+[dir="rtl"] .player-top-badge,
+[dir="rtl"] .pay-footer,
+[dir="rtl"] .modal-close { text-align: right; }
+[dir="rtl"] .player-time { direction: ltr; text-align: right; }
+[dir="rtl"] .lang-toggle .lnative { margin-left: 0; margin-right: auto; }
+/* Directional glyphs must be mirrored, and numbers stay left-to-right. */
+[dir="rtl"] .fa-arrow-left, [dir="rtl"] .fa-arrow-right,
+[dir="rtl"] .fa-chevron-left, [dir="rtl"] .fa-chevron-right,
+[dir="rtl"] .fa-angle-left, [dir="rtl"] .fa-angle-right,
+[dir="rtl"] .fa-caret-left, [dir="rtl"] .fa-caret-right,
+[dir="rtl"] .fa-circle-right, [dir="rtl"] .fa-circle-left { transform: scaleX(-1); }
+[dir="rtl"] .stars, [dir="rtl"] .num, [dir="rtl"] .d-inline-block { unicode-bidi: isolate; }
+</style>
+<script src="config.js"></script>
+<script src="assets/js/media.js"></script>
+<script src="assets/js/translations.js"></script>
+<script src="assets/js/i18n.js"></script>
+</head>
+<body>
+
+<div class="page-backdrop" id="pageBackdrop"></div>
+
+<!-- ===== PAYMENT OVERLAY ===== -->
+<div class="payment-overlay" id="paymentOverlay">
+    <div class="payment-bg-img" id="payBgImg"></div>
+    <div class="payment-card">
+        <button class="pay-close" id="payClose"><i class="fas fa-xmark"></i></button>
+
+        <div class="pay-top-decor"></div>
+
+        <div class="pay-logo-wrap">
+            <div class="pay-logo-ring">
+                <div class="pay-logo"><i class="fas fa-lock"></i></div>
+            </div>
+        </div>
+
+        <div class="pay-badge"><i class="fas fa-shield-halved"></i> <span data-lang="en">Secure Payment</span><span data-lang="rw">Kwishura Ku Bwizinga</span><span data-lang="fr">Paiement Sécurisé</span><span data-lang="sw">Malipo Salama</span><span data-lang="ar">دفع آمن</span></div>
+        <h2><span data-lang="en">Choose Your Plan</span><span data-lang="rw">Hitamo Igicaro</span><span data-lang="fr">Choisissez votre plan</span><span data-lang="sw">Chagua Mpango Wako</span><span data-lang="ar">اختر خطتك</span></h2>
+        <p class="pay-sub"><span data-lang="en">Select an access plan and pay via MoMo to get started.</span><span data-lang="rw">Hitamo igicaro ube twishyure na MoMo.</span><span data-lang="fr">Sélectionnez un plan d'accès et payez via MoMo pour commencer.</span><span data-lang="sw">Chagua mpango wa ufikiaji na ulipe kupitia MoMo kuanza.</span><span data-lang="ar">اختر خطة الوصول وادفع عبر MoMo للبدء.</span></p>
+
+        <div class="pay-tier-options" id="payTierOptions">
+            <div class="pay-tier-card" data-tier="video">
+                <div class="pay-tier-icon"><i class="fas fa-play-circle"></i></div>
+                <div class="pay-tier-info">
+                    <h4><span data-lang="en">Single Video</span><span data-lang="rw">Video Imwe</span><span data-lang="fr">Vidéo unique</span><span data-lang="sw">Video Moja</span><span data-lang="ar">فيديو واحد</span></h4>
+                    <span class="pay-tier-price">500 RWF</span>
+                    <span class="pay-tier-desc"><span data-lang="en">Access one lesson</span><span data-lang="rw">Kubona isomo rimwe</span><span data-lang="fr">Accès à une leçon</span><span data-lang="sw">Fikia somo moja</span><span data-lang="ar">الوصول إلى درس واحد</span></span>
+                </div>
+                <div class="pay-tier-check"><i class="fas fa-circle"></i></div>
+            </div>
+            <div class="pay-tier-card" data-tier="weekly">
+                <div class="pay-tier-icon"><i class="fas fa-calendar-week"></i></div>
+                <div class="pay-tier-info">
+                    <h4><span data-lang="en">Weekly Access</span><span data-lang="rw">Ubwifashisho bwa Cyumweru</span><span data-lang="fr">Accès Hebdomadaire</span><span data-lang="sw">Ufikiaji wa Wiki</span><span data-lang="ar">وصول أسبوعي</span></h4>
+                    <span class="pay-tier-price">2,000 RWF</span>
+                    <span class="pay-tier-desc"><span data-lang="en">All videos for 7 days</span><span data-lang="rw">Amavideo yose iminsi 7</span><span data-lang="fr">Toutes les vidéos pendant 7 jours</span><span data-lang="sw">Video zote kwa siku 7</span><span data-lang="ar">جميع الفيديوهات لمدة 7 أيام</span></span>
+                </div>
+                <div class="pay-tier-check"><i class="fas fa-circle"></i></div>
+            </div>
+            <div class="pay-tier-card" data-tier="monthly">
+                <div class="pay-tier-icon"><i class="fas fa-calendar-days"></i></div>
+                <div class="pay-tier-info">
+                    <h4><span data-lang="en">Monthly Access</span><span data-lang="rw">Ubwifashisho bwa Kwezi</span><span data-lang="fr">Accès Mensuel</span><span data-lang="sw">Ufikiaji wa Mwezi</span><span data-lang="ar">وصول شهري</span></h4>
+                    <span class="pay-tier-price">7,000 RWF</span>
+                    <span class="pay-tier-desc"><span data-lang="en">All videos for 30 days</span><span data-lang="rw">Amavideo yose iminsi 30</span><span data-lang="fr">Toutes les vidéos pendant 30 jours</span><span data-lang="sw">Video zote kwa siku 30</span><span data-lang="ar">جميع الفيديوهات لمدة 30 يومًا</span></span>
+                </div>
+                <div class="pay-tier-check"><i class="fas fa-circle"></i></div>
+            </div>
+        </div>
+
+        <div class="pay-details-card" id="payDetailsCard">
+            <div class="pay-detail-row">
+                <div class="pay-detail-icon"><i class="fas fa-user"></i></div>
+                <div class="pay-detail-content">
+                    <span class="pay-detail-label"><span data-lang="en">Account Name</span><span data-lang="rw">Izina ry'Akounti</span><span data-lang="fr">Nom du Compte</span><span data-lang="sw">Jina la Akaunti</span><span data-lang="ar">اسم الحساب</span></span>
+                    <span class="pay-detail-value">Misigaro Issa</span>
+                </div>
+            </div>
+            <div class="pay-detail-divider"></div>
+            <div class="pay-detail-row">
+                <div class="pay-detail-icon"><i class="fas fa-phone"></i></div>
+                <div class="pay-detail-content">
+                    <span class="pay-detail-label"><span data-lang="en">Send To</span><span data-lang="rw">Ohereza Kuri</span><span data-lang="fr">Envoyer à</span><span data-lang="sw">Tuma Kwa</span><span data-lang="ar">إرسال إلى</span></span>
+                    <span class="pay-detail-value pay-phone-val">+250 783 198 148</span>
+                </div>
+                <button class="pay-copy-btn" id="payCopyPhone" title="Copy number"><i class="fas fa-copy"></i></button>
+            </div>
+            <div class="pay-detail-divider"></div>
+            <div class="pay-detail-row">
+                <div class="pay-detail-icon"><i class="fas fa-sack-dollar"></i></div>
+                <div class="pay-detail-content">
+                    <span class="pay-detail-label"><span data-lang="en">Amount</span><span data-lang="rw">Igiteranyo</span><span data-lang="fr">Montant</span><span data-lang="sw">Kiasi</span><span data-lang="ar">المبلغ</span></span>
+                    <span class="pay-detail-value pay-amount-val" id="paySelectedAmount">— RWF</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="pay-footer" id="payFooterNote">
+            <i class="fas fa-circle-check" style="color:#34d399;"></i>
+            <span data-lang="en">After paying, admin will approve your access shortly.</span>
+            <span data-lang="rw">Nyuma yo kwishura, umuyobozi azemeza uburenganzira bwawe vuba.</span><span data-lang="fr">Après le paiement, l'administrateur approuvera votre accès sous peu.</span><span data-lang="sw">Baada ya kulipa, msimamizi ataidhinisha ufikiaji wako hivi karibuni.</span><span data-lang="ar">بعد الدفع، سيوافق المسؤول على وصولك قريبًا.</span>
+        </div>
+
+        <!-- Step 2: confirm payment -->
+        <form class="pay-form" id="paymentForm">
+            <div class="pay-form-row">
+                <label><span data-lang="en">Phone Number You Paid From</span><span data-lang="rw">Numero Wishuriyeho</span><span data-lang="fr">Numéro de téléphone utilisé pour payer</span><span data-lang="sw">Nambari ya Simu Uliyolipia</span><span data-lang="ar">رقم الهاتف الذي دفعت منه</span></label>
+                <input type="tel" id="payPhoneInput" placeholder="07XX XXX XXX" required>
+            </div>
+            <input type="hidden" id="paySelectedTier" value="">
+            <div class="pay-form-error" id="payFormError"></div>
+            <button type="submit" class="pay-submit-btn" id="paySubmitBtn">
+                <i class="fas fa-paper-plane"></i>
+                <span data-lang="en">I've Paid — Submit for Verification</span>
+                <span data-lang="rw">Narishyuye — Ohereza Kugenzurwa</span><span data-lang="fr">J'ai Payé — Soumettre pour Vérification</span><span data-lang="sw">Nimelipa — Wasilisha Kuthibitishwa</span><span data-lang="ar">لقد دفعت — إرسال للتحقق</span>
+            </button>
+        </form>
+
+        <!-- Pending review state (shown after submission, or on return visit) -->
+        <div class="pay-pending" id="payPendingState" style="display:none;">
+            <div class="pay-pending-icon"><i class="fas fa-hourglass-half"></i></div>
+            <h3><span data-lang="en">Payment Submitted!</span><span data-lang="rw">Kwishyura Kwoherejwe!</span><span data-lang="fr">Paiement Soumis !</span><span data-lang="sw">Malipo Yamewasilishwa!</span><span data-lang="ar">تم إرسال الدفع!</span></h3>
+            <p>
+                <span data-lang="en">An admin is reviewing your payment. This usually takes just a few minutes — this page will unlock automatically once approved.</span>
+                <span data-lang="rw">Umuyobozi arimo asuzuma kwishyura kwawe. Bisanzwe bifata iminota mike — iyi paji izifungura ubwo yemejwe.</span><span data-lang="fr">Un administrateur examine votre paiement. Cela prend généralement quelques minutes — cette page se déverrouillera automatiquement une fois approuvée.</span><span data-lang="sw">Msimamizi anakagua malipo yako. Kawaida huchukua dakika chache tu — ukurasa huu utafunguka kiotomatiki mara ukiidhinishwa.</span><span data-lang="ar">يقوم المسؤول بمراجعة دفعتك. يستغرق هذا عادة بضع دقائق فقط — ستُفتح هذه الصفحة تلقائيًا بمجرد الموافقة.</span>
+            </p>
+            <div class="pay-pending-details" id="payPendingDetails"></div>
+            <button class="pay-refresh-btn" id="payRefreshBtn"><i class="fas fa-rotate"></i> <span data-lang="en">Check Status</span><span data-lang="rw">Reba Imiterere</span><span data-lang="fr">Vérifier le Statut</span><span data-lang="sw">Angalia Hali</span><span data-lang="ar">التحقق من الحالة</span></button>
+        </div>
+    </div>
+</div>
+
+<header class="header">
+    <div class="header-left">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i></a>
+        <a href="index.html" class="logo">
+            <i class="fas fa-book-quran"></i>
+            <span>Modern Skills</span>
+        </a>
+<nav class="nav-links">
+            <a href="index.html"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">الرئيسية</span></a>
+            <a href="index.html#categoryRows"><span data-lang="en">Lessons</span><span data-lang="rw">Amasomo</span><span data-lang="fr">Leçons</span><span data-lang="sw">Masomo</span><span data-lang="ar">الدروس</span></a>
+            <a href="books.html"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">الكتب</span></a>
+</nav>
+        <a class="skip-link" href="#playerContainer">Skip to content</a>
+        <div class="lang-toggle" id="langToggle" title="Switch language">
+<span class="lang-option active" data-lang-code="en">EN</span>
+            <span class="lang-option" data-lang-code="rw">RW</span>
+            <span class="lang-option" data-lang-code="fr">FR</span>
+            <span class="lang-option" data-lang-code="sw">SW</span>
+            <span class="lang-option" data-lang-code="ar">AR</span>
+        </div>
+    </div>
+    <div class="header-right">
+        <div id="authButtons">
+            <a href="login.html" class="btn-auth login-btn"><i class="fas fa-arrow-right-to-bracket"></i> <span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Connexion</span><span data-lang="sw">Ingia</span><span data-lang="ar">تسجيل الدخول</span></a>
+            <a href="register.html" class="btn-auth register-btn"><i class="fas fa-user-plus"></i> <span data-lang="en">Register</span><span data-lang="rw">Iyandikishe</span><span data-lang="fr">S'inscrire</span><span data-lang="sw">Jisajili</span><span data-lang="ar">التسجيل</span></a>
+        </div>
+        <a href="https://wa.me/250781853141" target="_blank" rel="noopener" class="btn-admin"><i class="fab fa-whatsapp"></i> <span class="btn-label">WhatsApp</span></a>
+    </div>
+</header>
+
+<div class="player-wrapper">
+
+    <div class="player-main">
+        <div class="player-container" id="playerContainer">
+            <img id="videoThumbnail" src="Images/thumbnails/thumb_seed_1.jpg" alt="Video thumbnail">
+            <div class="player-gradient" id="playerGradient"></div>
+            <div class="player-controls" id="playerControls">
+                <div class="player-top">
+                    <span class="player-top-badge" id="playerTopBadge"><i class="fas fa-play" style="font-size:10px;margin-right:4px;"></i> Biri ku Rastingi</span>
+                    <div class="player-top-right">
+                        <button class="player-top-btn" id="btnSubtitles" title="Subtitles" style="display:none;"><i class="fas fa-closed-captioning"></i></button>
+                    </div>
+                </div>
+                <div class="player-center" id="playerCenter">
+                    <button class="play-big-btn" id="playBigBtn"><i class="fas fa-play" style="margin-left:3px;"></i></button>
+                    <span id="playerHint">Kanda kugira ngo uzirebe</span>
+                </div>
+                <div class="player-bottom">
+                    <div class="player-timeline">
+                        <div class="bar" id="timelineBar"><div class="fill" id="timelineFill" style="width: 0%;"></div></div>
+                        <div class="player-time" id="playerTime">0:00 / 0:00</div>
+                    </div>
+                    <div class="player-bottom-right">
+                        <button class="player-bottom-btn" id="btnVolume"><i class="fas fa-volume-up"></i></button>
+                        <button class="player-bottom-btn" id="btnExpand"><i class="fas fa-expand"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div id="youtubeFrame"></div>
+            <video id="realVideo" controls playsinline preload="metadata" style="display:none;width:100%;height:100%;object-fit:contain;background:#000;"></video>
+            <div id="previewBanner" style="display:none;position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:40;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:rgba(8,25,18,0.88);border:1px solid var(--gold);color:var(--gold);font-size:13px;font-weight:700;white-space:nowrap;box-shadow:0 8px 24px -8px rgba(0,0,0,0.6);">
+                <i class="fas fa-hourglass-half"></i>
+                <span data-lang="en">Free preview — <span class="pv-secs">15</span> seconds</span><span data-lang="rw">Igerageza ry'ubuntu — amasegonda <span class="pv-secs">15</span></span><span data-lang="fr">Aperçu gratuit — <span class="pv-secs">15</span> secondes</span><span data-lang="sw">Onyesho la bure — sekunde <span class="pv-secs">15</span></span><span data-lang="ar">معاينة مجانية — <span class="pv-secs">15</span> ثانية</span>
+            </div>
+        </div>
+
+        <div class="video-info-section">
+            <div class="video-info-header">
+                <div class="left">
+                    <div class="tag" id="videoTag">Tajweed</div>
+                    <h1 id="videoTitle">Intangiriro ya Makhaarij &amp; Sifaat</h1>
+                    <div class="video-stats-row">
+                        <span class="stat price-badge-stat" id="priceDisplay" style="display:none;">
+                            <i class="fas fa-tag" style="color:var(--gold);"></i>
+                            <span id="priceTag">—</span>
+                        </span>
+                        <span class="stat" id="difficultyDisplay"><i class="fas fa-signal"></i> <span id="difficultyLevel">—</span></span>
+                        <span class="stat" id="ratingDisplay"><span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> 5.0</span>
+                        <span class="stat" id="viewsDisplay"><i class="fas fa-eye"></i> <span id="viewCount">0</span> <span data-lang="en">views</span><span data-lang="rw">ibisanzwe</span><span data-lang="fr">vues</span><span data-lang="sw">mionekano</span><span data-lang="ar">مشاهدة</span></span>
+                        <span class="stat" id="studentsDisplay"><i class="fas fa-user-graduate"></i> <span id="studentCount">0</span> <span data-lang="en">students</span><span data-lang="rw">abanyeshuri</span><span data-lang="fr">étudiants</span><span data-lang="sw">wanafunzi</span><span data-lang="ar">طلاب</span></span>
+                        <span class="stat" id="dateDisplay"><i class="fas fa-calendar"></i> —</span>
+                        <span class="stat" id="languageDisplay" style="display:none;"><i class="fas fa-globe"></i> <span data-lang="en">Language</span><span data-lang="rw">Ururimi</span><span data-lang="fr">Langue</span><span data-lang="sw">Lugha</span><span data-lang="ar">اللغة</span>: <strong id="languageValue">—</strong></span>
+                    </div>
+                </div>
+                <div class="video-actions">
+                    <button class="btn-action primary" id="watchNowBtn"><i class="fas fa-play"></i> <span data-lang="en">Watch Now</span><span data-lang="rw">Reba Ubu</span><span data-lang="fr">Regarder</span><span data-lang="sw">Tazama Sasa</span><span data-lang="ar">شاهد الآن</span></button>
+                    <button class="btn-action secondary" id="saveLessonBtn"><i class="fas fa-bookmark"></i> <span data-lang="en">Save</span><span data-lang="rw">Bika</span><span data-lang="fr">Enregistrer</span><span data-lang="sw">Hifadhi</span><span data-lang="ar">حفظ</span></button>
+                    <button class="btn-action secondary" id="shareLessonBtn"><i class="fas fa-share"></i></button>
+                </div>
+            </div>
+
+            <div class="instructor-bar">
+                <div class="instructor-avatar" id="instructorAvatar">
+                    <img src="Images/avatars/avatar_1.jpg" alt="Instructor">
+                </div>
+                <div class="instructor-info">
+                    <h4 id="instructorName">—</h4>
+                    <p id="instructorBio">Umwarimu &middot; <a href="#">Reba Profayili</a></p>
+                </div>
+                <div class="instructor-price" id="instructorPrice" style="display:none;">
+                    <div class="instructor-price-label"><span data-lang="en">Price</span><span data-lang="rw">Igiciro</span><span data-lang="fr">Prix</span><span data-lang="sw">Bei</span><span data-lang="ar">السعر</span></div>
+                    <div class="instructor-price-value" id="instructorPriceValue">—</div>
+                </div>
+            </div>
+
+            <div class="video-description" id="lessonDescription">
+                <h3><i class="fas fa-align-left" style="color:var(--gold);font-size:14px;margin-right:8px;"></i> <span data-lang="en">Description</span><span data-lang="rw">Ibisobanuro</span><span data-lang="fr">Description</span><span data-lang="sw">Maelezo</span><span data-lang="ar">الوصف</span></h3>
+                <div id="descriptionContent">
+                    <p id="descriptionText"><em>Kurura amakuru y'isomo...</em></p>
+                </div>
+            </div>
+
+            <div class="video-tags" id="videoTags"></div>
+
+            <div id="accessStatus" class="access-status" style="display:none;"></div>
+
+        <div style="margin-top:20px;padding:20px;border-radius:12px;background:linear-gradient(145deg,rgba(212,168,83,0.06),rgba(212,168,83,0.02));border:1px solid rgba(212,168,83,0.1);">
+                <p style="font-size:13px;color:var(--text-muted);text-align:center;">
+                    <i class="fas fa-info-circle" style="color:var(--gold);margin-right:6px;"></i>
+                    <span data-lang="en">Lesson chapters and resources are managed by the admin through the dashboard.</span><span data-lang="rw">Ibice by'isomo n'ibikoresho byabyo biyoborwa n'umuyobozi binyuze mu ruhare rwa dashboard.</span><span data-lang="fr">Les chapitres et ressources de la leçon sont gérés par l'administrateur via le tableau de bord.</span><span data-lang="sw">Sura na nyenzo za somo husimamiwa na msimamizi kupitia dashibodi.</span><span data-lang="ar">يدير المسؤول فصول الدرس وموارده من خلال لوحة التحكم.</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="player-sidebar">
+        <h3><span data-lang="en">Related Lessons</span><span data-lang="rw">Amasomo Afitanye</span><span data-lang="fr">Leçons similaires</span><span data-lang="sw">Masomo Yanayohusiana</span><span data-lang="ar">دروس ذات صلة</span> <span id="relatedCount">0</span></h3>
+        <div id="relatedList"></div>
+
+        <div style="margin-top:20px;padding:16px;border-radius:12px;background:linear-gradient(145deg,rgba(212,168,83,0.08),rgba(212,168,83,0.02));border:1px solid rgba(212,168,83,0.1);">
+            <h4 style="font-size:14px;font-weight:700;margin-bottom:6px;"><i class="fas fa-mosque" style="color:var(--gold);margin-right:8px;"></i> <span id="courseTitle">Amahunda Yose ya Tajweed</span></h4>
+            <p style="font-size:13px;color:var(--text-muted);"><span data-lang="en">Master all Tajweed rules with our structured course program.</span><span data-lang="rw">Menya amategeko ya Tajweed yose ukoresheje amahunda yacu atunganyijwe.</span><span data-lang="fr">Maîtrisez toutes les règles du Tajwid avec notre programme structuré.</span><span data-lang="sw">Jifunze sheria zote za Tajweed kupitia programu yetu iliyopangwa.</span><span data-lang="ar">أتقن جميع أحكام التجويد من خلال برنامجنا المنظم.</span></p>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <span>&copy; 2026 Modern Skills. <span data-lang="en">All rights reserved.</span><span data-lang="rw">Uburenganzira bwose buranazwe.</span><span data-lang="fr">Tous droits réservés.</span><span data-lang="sw">Haki zote zimehifadhiwa.</span><span data-lang="ar">جميع الحقوق محفوظة.</span></span>
+    <div class="footer-links">
+        <a href="index.html"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">الرئيسية</span></a>
+        <a href="#"><span data-lang="en">Privacy Policy</span><span data-lang="rw">Politike y'Ibanga</span><span data-lang="fr">Politique de confidentialité</span><span data-lang="sw">Sera ya Faragha</span><span data-lang="ar">سياسة الخصوصية</span></a>
+        <a href="#"><span data-lang="en">Terms of Service</span><span data-lang="rw">Amategeko</span><span data-lang="fr">Conditions d'utilisation</span><span data-lang="sw">Masharti ya Huduma</span><span data-lang="ar">شروط الخدمة</span></a>
+        <a href="https://wa.me/250781853141" target="_blank" rel="noopener"><span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
+    </div>
+</footer>
+
+
+<script>
+// ===== AUTH STATE =====
+// Logged-out visitors see Sign In / Register (the static header markup).
+// A stored session is rendered instantly, then re-checked against the
+// database — expired or deleted accounts fall back to logged-out UI.
+let currentUser = null;
+let authDefaultHTMLVideo = '';
+function renderVideoAuthState(user) {
+    const authEl = document.getElementById('authButtons');
+    if (!authEl) return;
+    if (!authDefaultHTMLVideo) authDefaultHTMLVideo = authEl.innerHTML;
+    currentUser = user || null;
+    if (!user) {
+        authEl.innerHTML = authDefaultHTMLVideo;
+        // Re-apply the active language to the restored buttons. The page's
+        // `currentLang` is declared later in this script (TDZ), so read the
+        // preference from the shared runtime, which is already loaded and
+        // rejects any code the site no longer offers.
+        var lang = MS_I18N.readStored();
+        authEl.querySelectorAll('[data-lang]').forEach(function (el) {
+            el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+        });
+        return;
+    }
+    authEl.innerHTML = '';
+    const pill = document.createElement('span');
+    pill.className = 'user-pill';
+    const ico = document.createElement('i');
+    ico.className = 'fas fa-user-check';
+    pill.appendChild(ico);
+    // textContent, not innerHTML: the value comes from localStorage.
+    pill.appendChild(document.createTextNode(' ' + (user.username || 'User')));
+    const out = document.createElement('button');
+    out.className = 'logout-link';
+    out.id = 'logoutBtn';
+    out.type = 'button';
+    // `currentLang` AND `VIDEO_L10N` are both declared later in this script.
+    // `VIDEO_L10N` in particular is a hoisted `var` whose assignment hasn't run
+    // yet the first time a signed-in visitor loads this page (this function is
+    // called at the top of the script, VIDEO_L10N further down) — reading
+    // `VIDEO_L10N.logout` here used to throw "Cannot read properties of
+    // undefined", which aborted the rest of this script and broke everything
+    // after it (language switching, payment overlay, the player itself).
+    // `localizeLogoutBtn()` already re-labels this button once VIDEO_L10N
+    // exists, so it's safe to fall back to a plain default here.
+    var btnLang = MS_I18N.readStored();
+    var logoutDict = (typeof VIDEO_L10N !== 'undefined') ? VIDEO_L10N.logout : null;
+    out.textContent = (logoutDict && (logoutDict[btnLang] || logoutDict.en)) || 'Log out';
+    out.addEventListener('click', function() {
+        localStorage.removeItem('ms_token');
+        localStorage.removeItem('ms_user');
+        location.reload();
+    });
+    authEl.appendChild(pill);
+    authEl.appendChild(out);
+}
+function getVideoStoredUser() {
+    try { return JSON.parse(localStorage.getItem('ms_user')); }
+    catch (e) { return null; }
+}
+renderVideoAuthState(getVideoStoredUser());
+async function verifyVideoAuthSession() {
+    const token = localStorage.getItem('ms_token');
+    if (!token) { renderVideoAuthState(null); return; }
+    try {
+        const res = await fetch(API_BASE + '/auth/me', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) throw new Error('invalid session');
+        const data = await res.json();
+        const fresh = (data && data.user) || null;
+        if (fresh && fresh.id) {
+            try { localStorage.setItem('ms_user', JSON.stringify(fresh)); } catch (e) {}
+            renderVideoAuthState(fresh);
+        } else {
+            throw new Error('no user');
+        }
+    } catch (e) {
+        if (e && e.message === 'invalid session') {
+            localStorage.removeItem('ms_token');
+            localStorage.removeItem('ms_user');
+            renderVideoAuthState(null);
+        }
+    }
+}
+
+const params = new URLSearchParams(window.location.search);
+const lessonId = parseInt(params.get('id')) || 1;
+const API_ORIGIN = (window.MODERN_SKILLS_CONFIG && window.MODERN_SKILLS_CONFIG.API_URL) || (location.protocol === 'file:' ? 'http://localhost:3001' : location.origin);
+const API_BASE = API_ORIGIN + '/api';
+const authToken = localStorage.getItem('ms_token');
+
+const viewKey = 'lesson_view_' + lessonId;
+let views = parseInt(localStorage.getItem(viewKey)) || 0;
+views++;
+localStorage.setItem(viewKey, views);
+
+// ===== LANGUAGE =====
+// Read the saved preference through the shared runtime, which rejects any code the
+// site no longer offers. Falls back to English, matching every other page.
+let currentLang = MS_I18N.readStored();
+function setLang(lang) {
+    currentLang = MS_I18N.normalise(lang);
+    document.body.className = document.body.className.replace(/\blang-\w+/g, '').trim();
+document.body.classList.add('lang-' + currentLang);
+    // Arabic reads right-to-left; the [dir="rtl"] rules earlier in this file
+    // mirror the layout, so the direction has to follow the language.
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = currentLang;
+    document.querySelectorAll('.lang-option').forEach(function(opt) {
+        opt.classList.toggle('active', opt.dataset.langCode === currentLang);
+    });
+    // Shared public-site key so every public page stays in sync (the admin
+    // panel uses its own separate key and is never affected by this).
+    localStorage.setItem(MS_I18N.STORAGE_KEY, currentLang);
+    localStorage.removeItem('noorAdminLang');
+    localStorage.removeItem('noorLang');
+    MS_I18N.applyTranslations(document);
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+        el.style.display = el.dataset.lang === currentLang ? '' : 'none';
+    });
+    // Lesson fields are injected from JS, so re-render them in the new language.
+    if (typeof lessonData !== 'undefined' && lessonData) {
+        localizeLesson(lessonData);
+        if (typeof renderPaymentOverlayState === 'function') renderPaymentOverlayState();
+        if (typeof renderAccessStatus === 'function') renderAccessStatus();
+    }
+    if (typeof localizeRelatedCount === 'function') localizeRelatedCount();
+    if (typeof renderTierCards === 'function') renderTierCards();
+    // The logout button is built in JS and carries no [data-lang] child, so its
+    // label is driven from the dictionary. That dictionary is a hoisted `var`
+    // assigned further down this script, so this call is a no-op on the first
+    // pass; localizeLogoutBtn() runs again once the dictionary exists.
+    if (typeof localizeLogoutBtn === 'function') localizeLogoutBtn();
+}
+function applyLang() { setLang(currentLang); }
+var langToggleEl = document.getElementById('langToggle');
+if (langToggleEl) {
+    langToggleEl.querySelectorAll('.lang-option').forEach(function(opt) {
+        opt.addEventListener('click', function() { setLang(opt.dataset.langCode); });
+    });
+}
+applyLang();
+
+// Follow the language chosen on any other page or tab (assets/js/i18n.js owns the
+// `storage` listener and re-broadcasts it as ms:langchange).
+document.addEventListener('ms:langchange', function (e) {
+    var lang = e.detail && e.detail.lang;
+    if (lang && lang !== currentLang) setLang(lang);
+});
+
+// ===== HELPERS =====
+/* Set the logout button label for the active language. Guarded because
+   setLang() may reach this before the dictionary below is assigned. */
+function localizeLogoutBtn() {
+    var dict = typeof VIDEO_L10N !== 'undefined' ? VIDEO_L10N.logout : null;
+    if (!dict) return;
+    var btn = document.getElementById('logoutBtn');
+    if (btn) btn.textContent = vT(dict);
+}
+var VIDEO_L10N = {
+    difficulty: {
+        en: { 'Beginner': 'Beginner', 'Intermediate': 'Intermediate', 'Advanced': 'Advanced', 'All Levels': 'All Levels' },
+        rw: { 'Beginner': 'Umutangira', 'Intermediate': 'Urwego rwo Hagati', 'Advanced': 'Abahinze', 'All Levels': 'Ibice Byose' },
+        fr: { 'Beginner': 'Débutant', 'Intermediate': 'Intermédiaire', 'Advanced': 'Avancé', 'All Levels': 'Tous niveaux' },
+        sw: { 'Beginner': 'Mwanzo', 'Intermediate': 'Wastani', 'Advanced': 'Juu', 'All Levels': 'Viwote' },
+        ar: { 'Beginner': 'مبتدئ', 'Intermediate': 'متوسط', 'Advanced': 'متقدم', 'All Levels': 'جميع المستويات' }
+    },
+    lesson: { en: 'Lesson', rw: 'Isomo', fr: 'Leçon', sw: 'Somo', ar: 'درس' },
+    free: { en: 'Free', rw: 'Bira', fr: 'Gratuit', sw: 'Bure', ar: 'مجاني' },
+    paid: { en: 'Paid', rw: 'Iishyurwa', fr: 'Payant', sw: 'Inalipwa', ar: 'مدفوع' },
+    comingSoon: { en: 'Video coming soon', rw: 'Video igiye kuza', fr: 'Vidéo bientôt disponible', sw: 'Video itakuja karibuni', ar: 'الفيديو قريبًا' },
+    clickPlay: { en: 'Click to play', rw: 'Kanda kugira ngo uzirebe', fr: 'Cliquez pour lire', sw: 'Bofya kucheza', ar: 'اضغط للتشغيل' },
+    clickPlayYt: { en: 'Click to play (YouTube)', rw: 'Kanda kugira ngo uzirebe (YouTube)', fr: 'Cliquez pour lire (YouTube)', sw: 'Bofya kucheza (YouTube)', ar: 'اضغط للتشغيل (YouTube)' },
+    allLevels: { en: 'All Levels', rw: 'Ibice Byose', fr: 'Tous niveaux', sw: 'Viwote', ar: 'جميع المستويات' },
+    noDescription: {
+        en: 'No description available for this lesson.',
+        rw: 'Nta bisobanuro biriho kuri iyi isomo noneho.',
+        fr: 'Aucune description disponible pour cette leçon.',
+        sw: 'Hakuna maelezo ya somo hili.',
+        ar: 'لا يوجد وصف لهذا الدرس.'
+    },
+    unknownInstructor: { en: 'Instructor not set', rw: 'Umwarimu atazwi', fr: 'Instructeur non défini', sw: 'Mwalimu haijawekwa', ar: 'لم يتم تحديد المدرّس' },
+    views: { en: 'views', rw: 'ibisanzwe', fr: 'vues', sw: 'mionekano', ar: 'مشاهدة' },
+    students: { en: 'students', rw: 'abanyeshuri', fr: 'étudiants', sw: 'wanafunzi', ar: 'طلاب' },
+    addedSaved: { en: 'Saved for later.', rw: 'Byabitswe kugira ngo ubirebe nyuma.', fr: 'Enregistré pour plus tard.', sw: 'Imehifadhiwa kwa baadaye.', ar: 'تم الحفظ لوقت لاحق.' },
+    removedSaved: { en: 'Removed from saved.', rw: 'Byakuwe mu byabitswe.', fr: 'Retiré des éléments enregistrés.', sw: 'Imeondolewa kwenye ilivyohifadhiwa.', ar: 'تمت الإزالة من المحفوظات.' },
+    linkCopied: { en: 'Link copied to clipboard.', rw: 'Link yakopowe.', fr: 'Lien copié dans le presse-papiers.', sw: 'Kiungo kimenakiliwa.', ar: 'تم نسخ الرابط.' },
+    videos: { en: 'videos', rw: 'videos', fr: 'vidéos', sw: 'videos', ar: 'مقاطع' },
+    completeCourse: { en: 'Complete', rw: 'Ikiganza', fr: 'Cours complet', sw: 'Kozi kamili', ar: 'الدورة الكاملة' },
+    courseWord: { en: 'Course', rw: 'Kiganza', fr: 'Cours', sw: 'Kozi', ar: 'دورة' },
+    plan: { en: 'Plan', rw: 'Igicaro', fr: 'Forfait', sw: 'Mpango', ar: 'الخطة' },
+    phone: { en: 'Phone', rw: 'Telefone', fr: 'Téléphone', sw: 'Simu', ar: 'الهاتف' },
+    amount: { en: 'Amount', rw: 'Igiteranyo', fr: 'Montant', sw: 'Kiasi', ar: 'المبلغ' },
+    submitted: { en: 'Submitted', rw: 'Byoherejwe', fr: 'Soumis', sw: 'Imewasilishwa', ar: 'تم الإرسال' },
+    payApproved: {
+        en: 'Payment approved! You can now watch the video.',
+        rw: 'Kwishyura kwemejwe! Ushobora kureba video.',
+        fr: 'Paiement approuvé ! Vous pouvez maintenant regarder la vidéo.',
+        sw: 'Malipo yameidhinishwa! Sasa unaweza kutazama video.',
+        ar: 'تمت الموافقة على الدفع! يمكنك الآن مشاهدة الفيديو.'
+    },
+    stillPending: {
+        en: 'Still pending. Check back again shortly.',
+        rw: 'Ntikiremejwe. Ongera ugerageze vuba.',
+        fr: 'Toujours en attente. Revenez dans un instant.',
+        sw: 'Bado inasubiri. Angalia tena baadaye.',
+        ar: 'لا يزال قيد الانتظار. عد بعد قليل.'
+    },
+    selectPlan: { en: 'Please select a plan first.', rw: 'Hitamo igicaro mbere.', fr: "Veuillez d'abord choisir un forfait.", sw: 'Tafadhali chagua mpango kwanza.', ar: 'الرجاء اختيار خطة أولاً.' },
+    invalidPhone: { en: 'Enter a valid phone number.', rw: 'Andika numero ya telefone yemewe.', fr: 'Saisissez un numéro de téléphone valide.', sw: 'Weka namba ya simu inayofaa.', ar: 'أدخل رقم هاتف صالح.' },
+    submitting: { en: 'Submitting...', rw: 'Kohereza...', fr: 'Envoi...', sw: 'Inatuma...', ar: 'جارٍ الإرسال...' },
+    submitFailed: { en: 'Submission failed. Please try again.', rw: 'Byanze kohereza. Ongera ugerageze.', fr: "Échec de l'envoi. Veuillez réessayer.", sw: 'Kutuma kumeshindwa. Jaribu tena.', ar: 'فشل الإرسال. يرجى المحاولة مرة أخرى.' },
+    submittedWaiting: { en: 'Payment submitted! Waiting for approval.', rw: 'Kwishyura kwoherejwe! Tegereza kwemezwa.', fr: 'Paiement envoyé ! En attente de validation.', sw: 'Malipo yametumwa! Inasubiri kuthibitishwa.', ar: 'تم إرسال الدفع! في انتظار الموافقة.' },
+    networkError: { en: 'Network error. Check your connection and try again.', rw: 'Ikosa ryo guhuza. Reba interineti yawe.', fr: 'Erreur réseau. Vérifiez votre connexion et réessayez.', sw: 'Hitilafu ya mtandao. Angalia muunganisho wako na jaribu tena.', ar: 'خطأ في الشبكة. تحقق من اتصالك وحاول مرة أخرى.' },
+    logout: { en: 'Log out', rw: 'Sohoka', fr: 'Déconnexion', sw: 'Toka', ar: 'تسجيل الخروج' },
+    language: { en: 'Language', rw: 'Ururimi', fr: 'Langue', sw: 'Lugha', ar: 'اللغة' },
+    previewEnded: { en: 'Your free preview has ended. Unlock the full lesson to continue.', rw: 'Igerageza ry\'ubuntu ryarangiye. Fungura isomo ryose kugira ngo ukomeze.', fr: "Votre aperçu gratuit est terminé. Débloquez la leçon complète pour continuer.", sw: 'Onyesho lako la bure limekwisha. Fungua somo kamili ili kuendelea.', ar: 'انتهت معاينتك المجانية. افتح الدرس الكامل للمتابعة.' },
+    accessUntil: { en: 'Access until ', rw: 'Ufite uburenganzira kugeza: ', fr: 'Accès jusqu’au ', sw: 'Ufikiaji hadi ', ar: 'الوصول حتى ' },
+    daysLeft: { en: ' days left', rw: ' iminsi hasigaye', fr: ' jours restants', sw: ' siku zilizobaki', ar: ' يوماً متبقياً' },
+    ownAccess: { en: 'You own access to this video.', rw: 'Ufite uburenganzira bwa iyi video.', fr: 'Vous avez accès à cette vidéo.', sw: 'Una ufikiaji wa video hii.', ar: 'لديك وصول إلى هذا الفيديو.' },
+    accessEnded: {
+        en: 'Your access period has ended. Renew your plan to keep watching.',
+        rw: 'Igihe cyawe cyarangiye. Vugurura igicaro cyawe kugira ngo ukomeze.',
+        fr: "Votre période d'accès est terminée. Renouvelez votre forfait pour continuer.",
+        sw: 'Kipindi chako cha ufikiaji kimekwisha. Onyesha mpango wako ili kuendelea.',
+        ar: 'انتهت فترة الوصول. جدد خطتك للمتابعة.'
+    },
+    accessEndingSoon: {
+        en: 'Your access ends in 2 minutes. Finish up or renew to keep watching.',
+        rw: 'Uburenganzira bwawe burangira mu minota 2. Rangiza cyangwa uvugurure kugira ngo ukomeze.',
+        fr: "Votre accès se termine dans 2 minutes. Terminez ou renouvelez pour continuer.",
+        sw: 'Ufikiaji wako unaisha baada ya dakika 2. Maliza au uongeze ili kuendelea.',
+        ar: 'سينتهي وصولك خلال دقيقتين. أنهِ أو جدد للمتابعة.'
+    },
+    timeLeft: { en: 'Time left', rw: 'Igihe gisigaye', fr: 'Temps restant', sw: 'Muda uliobaki', ar: 'الوقت المتبقي' },
+    unitDay: { en: 'd', rw: 'd', fr: 'j', sw: 'd', ar: 'ي' },
+    unitHour: { en: 'h', rw: 'h', fr: 'h', sw: 'h', ar: 'س' },
+    unitMin: { en: 'm', rw: 'm', fr: 'min', sw: 'm', ar: 'د' },
+    tierVideoDesc: { en: 'Unlock this lesson', rw: 'Fungura iri somo', fr: 'Débloquer cette leçon', sw: 'Fungua somo hili', ar: 'افتح هذا الدرس' },
+    allVideosFor: { en: 'All videos for {n} days', rw: 'Videwo zose iminsi {n}', fr: 'Toutes les vidéos pendant {n} jours', sw: 'Video zote kwa siku {n}', ar: 'كل المقاطع لمدة {n} يوم' },
+    allVideosEver: { en: 'All videos, lifetime access', rw: 'Videwo zose, ubuzima bwose', fr: 'Toutes les vidéos, à vie', sw: 'Video zote, maisha yote', ar: 'كل المقاطع، مدى الحياة' },
+    signInFirst: { en: 'Please sign in to watch this video.', rw: 'Injira mbere yo kureba video.', fr: 'Veuillez vous connecter pour regarder cette vidéo.', sw: 'Tafadhali ingia ili kutazama video hii.', ar: 'الرجاء تسجيل الدخول لمشاهدة هذا الفيديو.' },
+    registerOrLogin: { en: 'Free preview ended — register or sign in to continue watching.', rw: 'Igerageza ry\'ubuntu ryarangiye — iyandikishe cyangwa winjire kugira ngo ukomeze kureba.', fr: "L'aperçu gratuit est terminé — inscrivez-vous ou connectez-vous pour continuer.", sw: 'Onyesho la bure limekwisha — jisajili au ingia ili kuendelea kutazama.', ar: 'انتهت المعاينة المجانية — سجّل أو ادخل لمتابعة المشاهدة.' },
+    notUploaded: { en: 'This video is not uploaded yet. Please check back soon.', rw: 'Iyi video iracyategurwa. Uzayibone vubi.', fr: "Cette vidéo n'est pas encore en ligne. Revenez bientôt.", sw: 'Video hii bado haijawekwa. Rudi karibuni.', ar: 'لم يتم رفع هذا الفيديو بعد. عد قريبًا.' },
+    noLessonYet: { en: 'No lesson available yet.', rw: 'Nta somo riboneka kiracyo.', fr: "Aucune leçon disponible pour l'instant.", sw: 'Hakuna somo bado.', ar: 'لا يوجد درس متاح بعد.' },
+    offlineHint: { en: 'Offline - check connection', rw: 'Nta interineti - reba umurongo', fr: 'Hors ligne - verifiez la connexion', sw: 'Nimeja nje - angalia muunganisho', ar: 'غير متصل - تحقق من الاتصال' },
+    rejectedHead: {
+        en: 'Your previous submission was not approved.',
+        rw: 'Kwishyura kwabanjirije ntikwemejwe.',
+        fr: "Votre envoi précédent n'a pas été approuvé.",
+        sw: 'Uwasilishaji wako wa awali haukukubaliwa.',
+        ar: 'لم تتم الموافقة على طلبك السابق.'
+    },
+    rejectedTail: {
+        en: 'Please double-check your details and try again.',
+        rw: 'Nyamuneka ongera ugerageze.',
+        fr: 'Veuillez vérifier vos informations et réessayer.',
+        sw: 'Angalia taarifa zako na jaribu tena.',
+        ar: 'يرجى التحقق من بياناتك والمحاولة مرة أخرى.'
+    },
+    expiredGlobal: {
+        en: 'Your previous access period has ended. Pick a plan below to continue watching.',
+        rw: 'Igihe cyawe cyo kureba cyarangiye. Hitamo igicaro gishya kugira ngo ukomeze.',
+        fr: "Votre période d'accès précédente est terminée. Choisissez un forfait ci-dessous pour continuer.",
+        sw: 'Kipindi chako cha ufikiaji kimekwisha. Chagua mpango hapa chini ili kuendelea.',
+        ar: 'انتهت فترة الوصول السابقة. اختر خطة أدناه للمتابعة.'
+    }
+};
+
+/* First paint: the dictionary only exists from here, so label the button now. */
+localizeLogoutBtn();
+
+function vT(strings) {
+    if (!strings) return '';
+    if (window.MS_I18N && typeof MS_I18N.t === 'function') return MS_I18N.t(strings, currentLang);
+    return strings[currentLang] || strings.en || '';
+}
+
+// Escapes text destined for innerHTML, including quotes used inside attributes.
+function esc(str) {
+    if (window.MS_MEDIA && typeof MS_MEDIA.escapeHtml === 'function') return MS_MEDIA.escapeHtml(str);
+    return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+var MS_PLACEHOLDER = (window.MS_MEDIA && MS_MEDIA.PLACEHOLDER) || 'Images/placeholder.svg';
+
+// Maps the app's language codes onto BCP-47 tags for Intl.
+var LOCALE_TAGS = { en: 'en-GB', rw: 'rw-RW', fr: 'fr-FR', sw: 'sw-TZ', ar: 'ar' };
+function dateLocale(lang) {
+    return LOCALE_TAGS[lang || currentLang] || 'en-GB';
+}
+
+function difficultyRw(d) {
+    var table = VIDEO_L10N.difficulty[currentLang] || VIDEO_L10N.difficulty.en;
+    var translated = table[d];
+    if (window.MS_I18N && typeof MS_I18N.t === 'function' && VIDEO_L10N.difficulty.en[d]) {
+        translated = MS_I18N.t({ en: VIDEO_L10N.difficulty.en[d] }, currentLang);
+    }
+    return translated || d || vT(VIDEO_L10N.allLevels);
+}
+
+// Human-readable name for a lesson's language code, shown on the video page
+// and repainted whenever the interface language changes.
+var LESSON_LANG_NAMES = {
+    en: { en: 'English', rw: 'Icyongereza', fr: 'Anglais', sw: 'Kiingereza', ar: 'الإنجليزية' },
+    rw: { en: 'Kinyarwanda', rw: 'Ikinyarwanda', fr: 'Kinyarwanda', sw: 'Kinyarwanda', ar: 'الكينيارواندية' },
+    fr: { en: 'French', rw: 'Igifaransa', fr: 'Français', sw: 'Kifaransa', ar: 'الفرنسية' },
+    sw: { en: 'Swahili', rw: 'Igiswahili', fr: 'Swahili', sw: 'Kiswahili', ar: 'السواحيلية' },
+    ar: { en: 'Arabic', rw: 'Icyarabu', fr: 'Arabe', sw: 'Kiarabu', ar: 'العربية' }
+};
+function lessonLanguageLabel(lang) {
+    if (!lang) return null;
+    var code = String(lang).toLowerCase().slice(0, 2);
+    var names = LESSON_LANG_NAMES[code];
+    if (names) return vT(names);
+    return String(lang);
+}
+
+// How much a lesson costs to a visitor. Only lessons explicitly marked free
+// show the Free label; everything else shows the lesson price, or the
+// single-video tier price when the lesson has no price of its own.
+var DEFAULT_VIDEO_PRICE = 500; // mirrored in backend/services/plans.js
+function lessonDisplayPrice(lesson) {
+    if (!lesson || lesson.is_free) return null;
+    var p = lesson.price != null && Number(lesson.price) > 0 ? Number(lesson.price) : 0;
+    if (p) return p;
+    var vp = PLANS_BY_TIER && PLANS_BY_TIER.video ? Number(PLANS_BY_TIER.video.price) || 0 : 0;
+    return vp || DEFAULT_VIDEO_PRICE;
+}
+
+// Re-apply the language-dependent fields for an already-loaded lesson.
+function localizeLesson(lesson) {
+    if (!lesson) return;
+    var tagEl = document.getElementById('videoTag');
+    if (tagEl) tagEl.textContent = lesson.category_name || vT(VIDEO_L10N.lesson);
+    var diffEl = document.getElementById('difficultyLevel');
+    if (diffEl) diffEl.textContent = difficultyRw(lesson.difficulty);
+    var dateEl = document.getElementById('dateDisplay');
+    if (dateEl) dateEl.innerHTML = '<i class="fas fa-calendar"></i> ' + formatDate(lesson.created_at);
+    var priceTag = document.getElementById('priceTag');
+    if (priceTag) {
+        var dp = lessonDisplayPrice(lesson);
+        priceTag.textContent = dp ? vT(VIDEO_L10N.paid) : vT(VIDEO_L10N.free);
+    }
+    var instrPriceVal = document.getElementById('instructorPriceValue');
+    if (instrPriceVal) {
+        var idp = lessonDisplayPrice(lesson);
+        if (idp) {
+            instrPriceVal.textContent = vT(VIDEO_L10N.paid);
+            instrPriceVal.className = 'instructor-price-value';
+        } else {
+            instrPriceVal.textContent = vT(VIDEO_L10N.free);
+            instrPriceVal.className = 'instructor-price-value free-label';
+        }
+    }
+    var langValueEl = document.getElementById('languageValue');
+    var langBoxEl = document.getElementById('languageDisplay');
+    if (langBoxEl && langValueEl) {
+        var langLabel = lessonLanguageLabel(lesson.language);
+        if (langLabel) { langValueEl.textContent = langLabel; langBoxEl.style.display = ''; }
+        else { langBoxEl.style.display = 'none'; }
+    }
+    var badge = document.getElementById('playerTopBadge');
+    if (badge) {
+        badge.innerHTML = '<i class="fas fa-play" style="font-size:10px;margin-right:4px;"></i> '
+            + (lesson.difficulty || vT(VIDEO_L10N.allLevels));
+    }
+    var hint = document.getElementById('playerHint');
+    if (hint) {
+        var vurl = lesson.video_file_path || lesson.video_url;
+        if (!vurl) {
+            hint.textContent = vT(VIDEO_L10N.comingSoon);
+        } else if (/youtu\.?be/i.test(vurl)) {
+            hint.textContent = vT(VIDEO_L10N.clickPlayYt);
+        } else {
+            hint.textContent = vT(VIDEO_L10N.clickPlay);
+        }
+    }
+}
+
+function formatNumber(num) {
+    if (num == null) return '0';
+    if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+    return num.toLocaleString();
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return 'N/A';
+    var d = new Date(dateStr);
+    if (isNaN(d)) return 'N/A';
+    try {
+        return d.toLocaleDateString(dateLocale(), { year: 'numeric', month: 'long', day: 'numeric' });
+    } catch (e) {
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    }
+}
+
+function getCategoryFallback(category) {
+    var map = {
+        'Tajweed': 'Images/thumbnails/thumb_seed_11.jpg',
+        'Tafsir': 'Images/thumbnails/thumb_seed_5.jpg',
+        'Hifz': 'Images/thumbnails/thumb_seed_9.jpg',
+        'Arabic': 'Images/thumbnails/thumb_seed_3.jpg',
+        'English Course': 'Images/thumbnails/thumb_seed_1.jpg'
+    };
+    return map[category] || 'Images/thumbnails/thumb_seed_1.jpg';
+}
+
+// Absolute Supabase public URLs pass through; relative /uploads/... paths are
+// served by the API, while local assets (Images/...) must stay site-relative.
+function resolveMediaUrl(u) {
+    if (window.MS_MEDIA && typeof MS_MEDIA.resolve === 'function') return MS_MEDIA.resolve(u);
+    if (!u) return u;
+    if (/^https?:\/\//i.test(u)) return u;
+    if (/^\/?uploads\//i.test(u)) return API_ORIGIN + '/' + String(u).replace(/^\/+/, '');
+    return u;
+}
+
+// Best available artwork: real thumbnail, then category art, then branded placeholder.
+function lessonArt(lesson) {
+    if (window.MS_MEDIA && typeof MS_MEDIA.thumb === 'function') return MS_MEDIA.thumb(lesson);
+    return resolveMediaUrl(lesson && lesson.thumbnail_url) || getCategoryFallback(lesson && lesson.category_name);
+}
+
+function generateStars(rating) {
+    var full = Math.floor(rating);
+    var half = rating % 1 >= 0.5 ? 1 : 0;
+    var empty = 5 - full - half;
+    var html = '';
+    for (var i = 0; i < full; i++) html += '<i class="fas fa-star"></i>';
+    if (half) html += '<i class="fas fa-star-half-alt"></i>';
+    for (var i = 0; i < empty; i++) html += '<i class="far fa-star"></i>';
+    return html;
+}
+
+function formatDuration(minutes) {
+    var mins = Math.floor(minutes);
+    var secs = Math.round((minutes - mins) * 60);
+    return mins + ':' + String(secs).padStart(2, '0');
+}
+
+function formatClock(secs) {
+    if (!isFinite(secs)) return '0:00';
+    var m = Math.floor(secs / 60);
+    var s = Math.floor(secs % 60);
+    return m + ':' + String(s).padStart(2, '0');
+}
+
+function toast(message, type) {
+    var el = document.createElement('div');
+    el.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:20000;padding:13px 18px;border-radius:12px;background:rgba(8,25,18,0.97);border:1px solid var(--border);color:var(--text);font-size:13px;font-weight:600;box-shadow:0 12px 40px -8px rgba(0,0,0,0.6);display:flex;align-items:center;gap:10px;';
+    el.innerHTML = '<i class="fas ' + (type === 'error' ? 'fa-circle-exclamation" style="color:#f87171;' : 'fa-circle-info" style="color:var(--gold);') + '"></i><span></span>';
+    el.querySelector('span').textContent = message;
+    document.body.appendChild(el);
+    setTimeout(function() { el.style.transition = 'opacity 0.3s'; el.style.opacity = '0'; setTimeout(function() { el.remove(); }, 320); }, 3200);
+}
+
+function getYouTubeEmbed(url, startAt) {
+    var m = url.match(/(?:youtube\.com\/watch\?v=)([\w-]+)/) || url.match(/(?:youtu\.be\/)([\w-]+)/);
+    if (!m) return null;
+    var embed = 'https://www.youtube.com/embed/' + m[1] + '?rel=0&autoplay=1&playsinline=1&modestbranding=1';
+    if (startAt && startAt > 0) embed += '&start=' + Math.floor(startAt);
+    return embed;
+}
+
+// ===== PLAYER STATE =====
+var videoSource = null;
+// A seek requested before the native video has metadata (you cannot set
+// currentTime while readyState < HAVE_METADATA); applied by the player's
+// loadedmetadata handler.
+var pendingSeek = null;
+var lessonData = null;
+var userHasAccess = false;
+var accessExpiresAt = null;
+var accessWatchdog = null;
+var relatedCount = 0;
+/* The "N videos" count next to "Related Lessons" is plain text built from a
+   number + a translated word, so (unlike [data-lang] spans) it needs to be
+   explicitly repainted on every language switch — setLang() calls this. */
+function localizeRelatedCount() {
+    var el = document.getElementById('relatedCount');
+    // `function` declarations are fully hoisted (this function is callable
+    // from the very top of the script), but `var VIDEO_L10N = {...}` is only
+    // hoisted as a binding — its assignment doesn't run until line ~1490. The
+    // very first call to this function happens via applyLang() before that
+    // line runs, so VIDEO_L10N is still undefined at that point.
+    if (typeof VIDEO_L10N === 'undefined') return;
+    if (el) el.textContent = relatedCount + ' ' + vT(VIDEO_L10N.videos);
+}
+
+// ===== PAYMENT OVERLAY =====
+var overlayEl = document.getElementById('paymentOverlay');
+var pollTimer = null;
+
+/* Plans (price + access length) are admin-editable and fetched from
+   /api/plans. These defaults mirror backend/services/plans.js and are used
+   until the request answers (or if it fails), so the overlay is never blank. */
+var PLANS_BY_TIER = {
+    video:   { accessType: 'video',   price: 500,  durationDays: null },
+    weekly:  { accessType: 'weekly',  price: 2000, durationDays: 7 },
+    monthly: { accessType: 'monthly', price: 7000, durationDays: 30 }
+};
+function planPriceText(tier) {
+    var p = PLANS_BY_TIER ? PLANS_BY_TIER[tier] : null;
+    return p ? (Number(p.price).toLocaleString() + ' RWF') : '— RWF';
+}
+// Repaints the tier cards' price + description and the current selection total
+// from PLANS_BY_TIER. Called after loadPlans() and on every language switch.
+function renderTierCards() {
+    // setLang() runs once near the top of this script, before the hoisted
+    // `PLANS_BY_TIER` var has been assigned. Bail out then so the undefined
+    // lookup can't throw and abort the whole script (which left the player
+    // and lesson data uninitialised). loadPlans() repaints once it has data.
+    if (!PLANS_BY_TIER) return;
+    var hasL10n = (typeof VIDEO_L10N !== 'undefined');
+    document.querySelectorAll('.pay-tier-card').forEach(function(card) {
+        var tier = card.getAttribute('data-tier');
+        var plan = PLANS_BY_TIER[tier];
+        if (!plan) return;
+        var priceEl = card.querySelector('.pay-tier-price');
+        if (priceEl) priceEl.textContent = Number(plan.price).toLocaleString() + ' RWF';
+        var descEl = card.querySelector('.pay-tier-desc');
+        if (descEl && hasL10n) {
+            if (tier === 'video') descEl.textContent = vT(VIDEO_L10N.tierVideoDesc);
+            else if (plan.durationDays) descEl.textContent = vT(VIDEO_L10N.allVideosFor).replace('{n}', String(plan.durationDays));
+            else descEl.textContent = vT(VIDEO_L10N.allVideosEver);
+        }
+    });
+    var tierInput = document.getElementById('paySelectedTier');
+    var amountEl = document.getElementById('paySelectedAmount');
+    if (amountEl && tierInput && tierInput.value) amountEl.textContent = planPriceText(tierInput.value);
+}
+async function loadPlans() {
+    try {
+        var res = await fetch(API_BASE + '/plans');
+        if (!res.ok) return;
+        var data = await res.json();
+        (data.plans || []).forEach(function(p) {
+            if (p && p.accessType) {
+                PLANS_BY_TIER[p.accessType] = {
+                    accessType: p.accessType,
+                    price: Number(p.price) || 0,
+                    durationDays: (p.durationDays == null ? null : Number(p.durationDays))
+                };
+            }
+        });
+        renderTierCards();
+    } catch (e) { /* keep the defaults above */ }
+}
+
+(function() {
+    var closeBtn = document.getElementById('payClose');
+
+    closeBtn.addEventListener('click', function() { closePaymentOverlay(); });
+    overlayEl.addEventListener('click', function(e) { if (e.target === overlayEl) closePaymentOverlay(); });
+
+    // Tier card selection
+    var tierCards = document.querySelectorAll('.pay-tier-card');
+    tierCards.forEach(function(card) {
+        card.addEventListener('click', function() {
+            tierCards.forEach(function(c) { c.classList.remove('selected'); });
+            card.classList.add('selected');
+            var selectedTier = card.getAttribute('data-tier');
+            document.getElementById('paySelectedTier').value = selectedTier;
+            var amountEl = document.getElementById('paySelectedAmount');
+            if (amountEl) amountEl.textContent = planPriceText(selectedTier);
+        });
+    });
+
+    var backdrop = document.getElementById('pageBackdrop');
+    var payBg = document.getElementById('payBgImg');
+    if (backdrop && payBg) {
+        var bgStyle = backdrop.style.backgroundImage;
+        if (bgStyle) payBg.style.backgroundImage = bgStyle;
+    }
+
+    // Copy buttons
+    var copyPhone = document.getElementById('payCopyPhone');
+    function copyToClipboard(text, btn) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(function() {
+                btn.classList.add('copied');
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(function() {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = '<i class="fas fa-copy"></i>';
+                }, 1500);
+            });
+        } else {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+            btn.classList.add('copied');
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            setTimeout(function() {
+                btn.classList.remove('copied');
+                btn.innerHTML = '<i class="fas fa-copy"></i>';
+            }, 1500);
+        }
+    }
+    if (copyPhone) copyPhone.addEventListener('click', function() { copyToClipboard('+250783198148', this); });
+})();
+
+function closePaymentOverlay() {
+    overlayEl.classList.remove('show');
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+}
+
+// Switches the overlay between: payment form / pending review / rejected note.
+function renderPaymentOverlayState() {
+    var form = document.getElementById('paymentForm');
+    var pending = document.getElementById('payPendingState');
+    var footer = document.getElementById('payFooterNote');
+    var detailsCard = document.getElementById('payDetailsCard');
+    var tierOptions = document.getElementById('payTierOptions');
+    var pendingDetailsEl = document.getElementById('payPendingDetails');
+
+    var data = userAccessCache;
+    var hasPending = data && data.pending && data.pendingPayments && data.pendingPayments.length > 0;
+
+    if (hasPending) {
+        form.style.display = 'none';
+        footer.style.display = 'none';
+        detailsCard.style.display = 'none';
+        tierOptions.style.display = 'none';
+        pending.style.display = 'block';
+
+        var p = data.pendingPayments[0];
+        var TIER_L10N = {
+            video: { en: 'Single Video', rw: 'Video Imwe', fr: 'Vidéo unique', sw: 'Video moja', ar: 'مقطع واحد' },
+            weekly: { en: 'Weekly', rw: 'Icyumweru', fr: 'Hebdomadaire', sw: 'Wiki', ar: 'أسبوعي' },
+            monthly: { en: 'Monthly', rw: 'Kwezi', fr: 'Mensuel', sw: 'Mwezi', ar: 'شهري' }
+        };
+        var tierKey = TIER_L10N[p.accessType] ? p.accessType : null;
+        var tierLabel = tierKey ? vT(TIER_L10N[tierKey]) : (p.accessType || '—');
+        var rows = [
+            [vT(VIDEO_L10N.plan), tierLabel],
+            [vT(VIDEO_L10N.phone), p.phoneNumber],
+            [vT(VIDEO_L10N.amount), (p.amount ? Number(p.amount).toLocaleString() + ' RWF' : '—')],
+            [vT(VIDEO_L10N.submitted), formatDate(p.createdAt)]
+        ];
+        pendingDetailsEl.innerHTML = rows.map(function(r) {
+            return '<div><span>' + esc(r[0]) + '</span><strong>' + esc(r[1] || '—') + '</strong></div>';
+        }).join('');
+
+        if (!pollTimer) {
+            pollTimer = setInterval(async function() {
+                var access = await checkUserAccess();
+                if (access) {
+                    clearInterval(pollTimer);
+                    pollTimer = null;
+                    closePaymentOverlay();
+                    userHasAccess = true;
+                    toast(vT(VIDEO_L10N.payApproved));
+                    startActualPlayback();
+                } else {
+                    renderPaymentOverlayState();
+                }
+            }, 15000);
+        }
+    } else {
+        pending.style.display = 'none';
+        form.style.display = 'block';
+        footer.style.display = 'flex';
+        detailsCard.style.display = 'block';
+        tierOptions.style.display = 'flex';
+        if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+
+        // Pre-fill the phone field from the user's profile / last submission, if known.
+        var phoneInput = document.getElementById('payPhoneInput');
+        if (phoneInput && !phoneInput.value && currentUser && currentUser.phoneNumber) {
+            phoneInput.value = currentUser.phoneNumber;
+        }
+
+        // Show a note about the most recent rejection, if any, above the form.
+        var existingNote = document.getElementById('payRejectedNote');
+        if (existingNote) existingNote.remove();
+        if (data && data.lastRejected) {
+            var note = document.createElement('div');
+            note.className = 'pay-rejected-note';
+            note.id = 'payRejectedNote';
+            note.innerHTML = '<i class="fas fa-triangle-exclamation"></i> ' + esc(vT(VIDEO_L10N.rejectedHead)) +
+                (data.lastRejected.adminNote ? ' &ldquo;' + esc(data.lastRejected.adminNote) + '&rdquo;' : '') +
+                ' ' + esc(vT(VIDEO_L10N.rejectedTail));
+            form.parentNode.insertBefore(note, form);
+        }
+        if (data && data.expiredGlobal) {
+            var expiredNote = document.createElement('div');
+            expiredNote.className = 'pay-rejected-note';
+            expiredNote.id = 'payExpiredNote';
+            expiredNote.innerHTML = '<i class="fas fa-clock"></i> ' + esc(vT(VIDEO_L10N.expiredGlobal));
+            form.parentNode.insertBefore(expiredNote, form);
+        }
+    }
+}
+
+async function openPaymentOverlay() {
+    overlayEl.classList.add('show');
+    var errorEl = document.getElementById('payFormError');
+    errorEl.classList.remove('show');
+    document.getElementById('paySelectedTier').value = '';
+    document.querySelectorAll('.pay-tier-card').forEach(function(c) { c.classList.remove('selected'); });
+    var amountEl = document.getElementById('paySelectedAmount');
+    if (amountEl) amountEl.textContent = '— RWF';
+    await checkUserAccess();
+    if (userHasAccess) {
+        closePaymentOverlay();
+        startActualPlayback();
+        return;
+    }
+    renderPaymentOverlayState();
+}
+
+document.getElementById('payRefreshBtn').addEventListener('click', async function() {
+    var btn = this;
+    btn.classList.add('spinning');
+    var access = await checkUserAccess();
+    btn.classList.remove('spinning');
+    if (access) {
+        closePaymentOverlay();
+        userHasAccess = true;
+        toast(vT(VIDEO_L10N.payApproved));
+        startActualPlayback();
+    } else {
+        renderPaymentOverlayState();
+        toast(vT(VIDEO_L10N.stillPending), 'info');
+    }
+});
+
+document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var errorEl = document.getElementById('payFormError');
+    errorEl.classList.remove('show');
+
+    var phone = document.getElementById('payPhoneInput').value.trim();
+    var accessType = document.getElementById('paySelectedTier').value;
+
+    if (!accessType) {
+        errorEl.textContent = vT(VIDEO_L10N.selectPlan);
+        errorEl.classList.add('show');
+        return;
+    }
+    if (!phone || phone.length < 7) {
+        errorEl.textContent = vT(VIDEO_L10N.invalidPhone);
+        errorEl.classList.add('show');
+        return;
+    }
+
+    var btn = document.getElementById('paySubmitBtn');
+    btn.disabled = true;
+    var originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + esc(vT(VIDEO_L10N.submitting));
+
+    try {
+        var payload = {
+            phoneNumber: phone,
+            accessType: accessType
+        };
+        if (accessType === 'video' && lessonId) {
+            payload.lessonId = lessonId;
+        }
+
+        var res = await fetch(API_BASE + '/payments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + authToken
+            },
+            body: JSON.stringify(payload)
+        });
+        var data = await res.json();
+
+        if (!res.ok) {
+            errorEl.textContent = data.error || vT(VIDEO_L10N.submitFailed);
+            errorEl.classList.add('show');
+            return;
+        }
+
+        toast(vT(VIDEO_L10N.submittedWaiting));
+        await checkUserAccess();
+        renderPaymentOverlayState();
+    } catch (err) {
+        errorEl.textContent = vT(VIDEO_L10N.networkError);
+        errorEl.classList.add('show');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+    }
+});
+
+// ===== ACCESS CHECK =====
+var userAccessCache = null;
+// Single place that records the server's verdict. Every path that learns the
+// user's access state funnels through here so `accessExpiresAt` and the expiry
+// watchdog can never drift apart: a user approved *while this page is open*
+// (via the pending poll or the "Check Status" button) used to be granted
+// `userHasAccess` but never got an expiry, so their period could lapse and the
+// video kept playing. This keeps that in sync.
+function applyAccessCache(data) {
+    userAccessCache = data || null;
+    userHasAccess = !!(data && data.hasAccess);
+    accessExpiresAt = (data && data.accessExpiresAt) || null;
+    if (accessWatchdog) { clearInterval(accessWatchdog); accessWatchdog = null; }
+    if (userHasAccess) startAccessWatchdog();
+}
+async function checkUserAccess() {
+    if (!currentUser || !authToken) return false;
+    try {
+        var res = await fetch(API_BASE + '/payments/check-all?lessonId=' + lessonId, {
+            headers: { 'Authorization': 'Bearer ' + authToken }
+        });
+        if (!res.ok) return false;
+        var data = await res.json();
+        applyAccessCache(data);
+        return data.hasAccess;
+    } catch (e) {
+        return false;
+    }
+}
+
+// ===== PLAYBACK =====
+function renderAccessStatus() {
+    var el = document.getElementById('accessStatus');
+    if (!el) return;
+    var cache = userAccessCache || {};
+    if (lessonData && (lessonData.is_free || !userHasAccess)) {
+        el.style.display = 'none';
+        return;
+    }
+    var html = '';
+    var expiring = false;
+    if (cache.hasGlobalAccess && cache.accessExpiresAt) {
+        var d = new Date(cache.accessExpiresAt);
+        expiring = (cache.daysLeft != null && cache.daysLeft <= 2);
+        html = '<i class="fas fa-lock-open"></i> ' + esc(vT(VIDEO_L10N.accessUntil)) + d.toLocaleDateString(dateLocale(currentLang)) +
+            '<span class="access-countdown" id="accessCountdown"></span>';
+    } else if (cache.accessType === 'video' || cache.lessonApproved) {
+        html = '<i class="fas fa-lock-open"></i> ' + esc(vT(VIDEO_L10N.ownAccess));
+    } else {
+        el.style.display = 'none';
+        return;
+    }
+    el.innerHTML = html;
+    el.className = 'access-status' + (expiring ? ' expiring' : '');
+    el.style.display = 'inline-flex';
+    updateAccessCountdown();
+}
+
+// Repaints the ticking "time left" clock inside the access badge. Called once
+// per second by the expiry watchdog; the element only exists for plans that
+// actually expire (weekly/monthly), so single-video and free lessons no-op.
+function pad2(n) { return String(n).padStart(2, '0'); }
+function updateAccessCountdown() {
+    var el = document.getElementById('accessCountdown');
+    if (!el) return;
+    if (!accessExpiresAt) { el.textContent = ''; el.classList.remove('urgent'); return; }
+    var ms = new Date(accessExpiresAt) - Date.now();
+    if (ms <= 0) { el.textContent = ''; el.classList.remove('urgent'); return; }
+    var totalSec = Math.floor(ms / 1000);
+    var days = Math.floor(totalSec / 86400);
+    var hours = Math.floor((totalSec % 86400) / 3600);
+    var mins = Math.floor((totalSec % 3600) / 60);
+    var secs = totalSec % 60;
+    var txt = days > 0
+        ? days + vT(VIDEO_L10N.unitDay) + ' ' + pad2(hours) + vT(VIDEO_L10N.unitHour) + ' ' + pad2(mins) + vT(VIDEO_L10N.unitMin)
+        : pad2(hours) + ':' + pad2(mins) + ':' + pad2(secs);
+    el.innerHTML = '<i class="fas fa-hourglass-half"></i> ' + esc(vT(VIDEO_L10N.timeLeft)) + ': ' + esc(txt);
+    el.classList.toggle('urgent', ms <= 3600000);
+}
+
+// Stops whatever is playing without throwing — covers both the native <video>
+// and the YouTube iframe, which has no .pause() we can reach cross-origin.
+function stopPlaybackNow() {
+    previewPlaying = false;
+    clearTimeout(previewTimer);
+    previewTimer = null;
+    var v = document.getElementById('realVideo');
+    if (v) { try { v.pause(); } catch (e) {} }
+    var wrap = document.getElementById('youtubeFrame');
+    if (wrap) { wrap.style.display = 'none'; wrap.innerHTML = ''; }
+    hidePreviewBanner();
+    resetPlayerVisual();
+}
+
+function startAccessWatchdog() {
+    if (!userHasAccess || !accessExpiresAt || accessWatchdog) return;
+    var warned = false;
+    // Tick every second so playback stops at the moment the paid period
+    // elapses, not up to a minute later. Each tick is a cheap date compare.
+    accessWatchdog = setInterval(function () {
+        if (!userHasAccess || !accessExpiresAt) {
+            clearInterval(accessWatchdog);
+            accessWatchdog = null;
+            return;
+        }
+        var msLeft = new Date(accessExpiresAt) - Date.now();
+        updateAccessCountdown();
+        if (!warned && msLeft > 0 && msLeft <= 120000) {
+            warned = true;
+            toast(vT(VIDEO_L10N.accessEndingSoon));
+        }
+        if (msLeft <= 0) {
+            clearInterval(accessWatchdog);
+            accessWatchdog = null;
+            stopPlaybackNow();
+            userHasAccess = false;
+            userAccessCache = null;
+            accessExpiresAt = null;
+            var statusEl = document.getElementById('accessStatus');
+            if (statusEl) statusEl.style.display = 'none';
+            toast(vT(VIDEO_L10N.accessEnded));
+            openPaymentOverlay();
+        }
+    }, 1000);
+}
+
+// ===== FREE PREVIEW (guest 10s / signed-in 15s) =====
+// Visitors without access see the real video for a short preview, then the
+// player stops and the payment overlay (or a sign-in prompt) appears.
+function previewSeconds() {
+    return (currentUser && authToken) ? 15 : 10;
+}
+var previewTimer = null;
+var previewPlaying = false;
+
+function showPreviewBanner() {
+    var b = document.getElementById('previewBanner');
+    if (b) {
+        var secs = previewSeconds();
+        b.querySelectorAll('.pv-secs').forEach(function (s) { s.textContent = secs; });
+        b.style.display = 'inline-flex';
+    }
+}
+function hidePreviewBanner() {
+    var b = document.getElementById('previewBanner');
+    if (b) b.style.display = 'none';
+}
+function resetPlayerVisual() {
+    // Hide the real player first — otherwise a paused native <video> or the
+    // YouTube iframe keeps painting above the poster and the controls, leaving
+    // a frozen frame with a play button that can't be reached.
+    var v = document.getElementById('realVideo');
+    if (v) { try { v.pause(); } catch (e) {} v.style.display = 'none'; }
+    var wrap = document.getElementById('youtubeFrame');
+    if (wrap) { wrap.style.display = 'none'; wrap.innerHTML = ''; }
+    var th = document.getElementById('videoThumbnail');
+    if (th) th.style.display = '';
+    var pg = document.getElementById('playerGradient');
+    if (pg) pg.style.display = '';
+    var pc = document.getElementById('playerControls');
+    if (pc) pc.style.display = '';
+}
+
+// ===== WATCH PROGRESS (resume where the visitor stopped) =====
+// Persisted per lesson so a guest who signs in and pays continues exactly where
+// their preview ended instead of starting over from the beginning.
+var progressKey = 'ms_progress_' + lessonId;
+var resumeSeconds = 0;
+var previewStartPos = 0;
+var previewStartStamp = 0;
+(function loadProgress() {
+    try {
+        var v = parseFloat(localStorage.getItem(progressKey));
+        resumeSeconds = (isFinite(v) && v > 0) ? v : 0;
+    } catch (e) { resumeSeconds = 0; }
+})();
+function setProgress(sec) {
+    resumeSeconds = (isFinite(sec) && sec > 0) ? sec : 0;
+    try {
+        if (resumeSeconds > 0) localStorage.setItem(progressKey, String(Math.floor(resumeSeconds)));
+        else localStorage.removeItem(progressKey);
+    } catch (e) {}
+}
+function saveProgress(sec) {
+    if (isFinite(sec) && sec > resumeSeconds) setProgress(sec);
+}
+// Where the video currently is, for both the native player (exact) and the
+// YouTube embed (start offset + elapsed time since the preview began).
+function currentPosition() {
+    var v = document.getElementById('realVideo');
+    if (videoSource && videoSource.type === 'html5' && v && isFinite(v.currentTime)) return v.currentTime;
+    if (videoSource && videoSource.type === 'youtube') {
+        var elapsed = previewPlaying ? (Date.now() - previewStartStamp) / 1000 : 0;
+        return previewStartPos + elapsed;
+    }
+    return resumeSeconds;
+}
+function hideThumbnailLayer() {
+    var th = document.getElementById('videoThumbnail');
+    if (th) th.style.display = 'none';
+    var pg = document.getElementById('playerGradient');
+    if (pg) pg.style.display = 'none';
+    var pc = document.getElementById('playerControls');
+    if (pc) pc.style.display = 'none';
+}
+// Starts (or resumes) the real video at `pos` seconds. Shared by the preview
+// and the full playback so the two can never drift apart.
+function playAt(pos) {
+    pos = Math.max(0, Math.floor(pos || 0));
+    if (videoSource.type === 'youtube') {
+        var wrap = document.getElementById('youtubeFrame');
+        wrap.style.display = 'block';
+        wrap.innerHTML = '<iframe src="' + getYouTubeEmbed(videoSource.src, pos) + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    } else {
+        var v = document.getElementById('realVideo');
+        v.style.display = 'block';
+        v.controls = true;
+        if (v.getAttribute('src') !== videoSource.src) {
+            v.setAttribute('src', videoSource.src);
+            try { v.load(); } catch (e) {}
+        }
+        // You can only seek once metadata has loaded; otherwise remember the
+        // target and let the persistent loadedmetadata handler apply it.
+        if (v.readyState >= 1) { try { v.currentTime = pos; } catch (e) {} }
+        else { pendingSeek = pos; }
+        playVideo(v);
+    }
+}
+
+// Keeps the custom volume button in step with the video element, whichever
+// path set `muted` (button, or the autoplay fallback below).
+function syncVolumeButton() {
+    var v = document.getElementById('realVideo');
+    var b = document.getElementById('btnVolume');
+    if (!v || !b) return;
+    b.innerHTML = v.muted ? '<i class="fas fa-volume-xmark"></i>' : '<i class="fas fa-volume-up"></i>';
+}
+
+// When even a muted play is refused, fall back to the poster + play button so
+// the visitor can start it themselves with a real click.
+function showControlsForRetry() {
+    resetPlayerVisual();
+    var hint = document.getElementById('playerHint');
+    if (hint) hint.textContent = vT(VIDEO_L10N.clickPlay);
+}
+
+// Play, with a muted retry. Browsers block `play()` (audio and all) when it is
+// not the direct result of a user gesture — which is exactly our case: the
+// preview auto-starts from a timer. Retrying muted is always allowed, so the
+// picture still plays (the same way social/streaming previews do). A click
+// that *is* a gesture plays with sound on the first try.
+function playVideo(v) {
+    var p;
+    try { p = v.play(); } catch (e) { p = null; }
+    if (!p || typeof p.catch !== 'function') return;
+    p.catch(function () {
+        try {
+            v.muted = true;
+            syncVolumeButton();
+            var retry = v.play();
+            if (retry && typeof retry.catch === 'function') retry.catch(function () { showControlsForRetry(); });
+        } catch (e) {
+            showControlsForRetry();
+        }
+    });
+}
+
+function startPreview() {
+    if (!videoSource) { toast(vT(VIDEO_L10N.notUploaded)); return; }
+    if (previewPlaying) return;
+    previewPlaying = true;
+    previewStartPos = resumeSeconds;
+    previewStartStamp = Date.now();
+
+    hideThumbnailLayer();
+    playAt(resumeSeconds);
+    showPreviewBanner();
+    clearTimeout(previewTimer);
+    previewTimer = setTimeout(endPreview, previewSeconds() * 1000);
+}
+
+function endPreview() {
+    if (!previewPlaying) return;
+    // Capture the stop position before flipping the flag: the YouTube branch
+    // reads `previewPlaying` to work out how far the preview got.
+    var stoppedAt = currentPosition();
+    saveProgress(stoppedAt);
+    previewPlaying = false;
+    clearTimeout(previewTimer);
+    previewTimer = null;
+
+    var v = document.getElementById('realVideo');
+    if (v) { try { v.pause(); } catch (e) {} }
+    var wrap = document.getElementById('youtubeFrame');
+    if (wrap) { wrap.style.display = 'none'; wrap.innerHTML = ''; }
+    hidePreviewBanner();
+    resetPlayerVisual();
+
+    toast(vT(VIDEO_L10N.previewEnded));
+    if (!currentUser || !authToken) {
+        setTimeout(function () {
+            toast(vT(VIDEO_L10N.registerOrLogin));
+            window.location.href = 'login.html?next=' + encodeURIComponent('video.html?id=' + lessonId);
+        }, 1400);
+        return;
+    }
+    openPaymentOverlay();
+}
+
+function startPlayback() {
+    if (userHasAccess) {
+        startActualPlayback();
+    } else if (previewPlaying) {
+        // The preview is already running (it auto-started muted because the
+        // browser blocks unmuted autoplay). A click *is* a user gesture, so
+        // give the visitor sound on the preview instead of doing nothing.
+        var v = document.getElementById('realVideo');
+        if (videoSource && videoSource.type === 'html5' && v) {
+            v.muted = false;
+            syncVolumeButton();
+            playVideo(v);
+        }
+    } else {
+        startPreview();
+    }
+}
+
+function startActualPlayback() {
+    if (!videoSource) {
+        toast(vT(VIDEO_L10N.notUploaded));
+        return;
+    }
+    previewPlaying = false;
+    clearTimeout(previewTimer);
+    previewTimer = null;
+    hidePreviewBanner();
+    hideThumbnailLayer();
+    // A paid start should have sound. Clear any mute left behind by the muted
+    // autoplay preview; if this runs without a gesture the retry re-mutes.
+    var rv = document.getElementById('realVideo');
+    if (rv) { rv.muted = false; syncVolumeButton(); }
+    // Resume exactly where the preview stopped (0 for a fresh, never-watched
+    // lesson) — this is what makes pay-then-continue feel seamless.
+    playAt(resumeSeconds);
+}
+
+// ===== PLAYER CONTROLS =====
+function wirePlayerControls() {
+    var v = document.getElementById('realVideo');
+    var big = document.getElementById('playBigBtn');
+    var center = document.getElementById('playerCenter');
+    var timeEl = document.getElementById('playerTime');
+    var fill = document.getElementById('timelineFill');
+    var bar = document.getElementById('timelineBar');
+    var volBtn = document.getElementById('btnVolume');
+    var expBtn = document.getElementById('btnExpand');
+
+    big.addEventListener('click', startPlayback);
+    center.addEventListener('click', startPlayback);
+    // Clicking anywhere on the poster/video surface also starts playback — users
+    // expect tapping the video to play it, not only the round button. Ignore
+    // clicks that land on the controls or while something is already playing.
+    var surface = document.getElementById('playerContainer');
+    if (surface) {
+        surface.addEventListener('click', function(e) {
+            if (e.target.closest('button, .player-timeline, #playerCenter')) return;
+            var pc = document.getElementById('playerControls');
+            if (pc && pc.style.display === 'none') return;
+            startPlayback();
+        });
+    }
+
+    var lastProgressSave = 0;
+    v.addEventListener('timeupdate', function() {
+        if (!v.duration) return;
+        fill.style.width = (v.currentTime / v.duration * 100) + '%';
+        timeEl.textContent = formatClock(v.currentTime) + ' / ' + formatClock(v.duration);
+        // Remember how far a paying viewer got (throttled to ~every 5s so we
+        // don't hammer localStorage on every frame) so a later visit resumes.
+        if (userHasAccess && v.currentTime - lastProgressSave > 5) {
+            lastProgressSave = v.currentTime;
+            saveProgress(v.currentTime);
+        }
+    });
+    v.addEventListener('ended', function() { setProgress(0); });
+    v.addEventListener('loadedmetadata', function() {
+        if (pendingSeek != null) { try { v.currentTime = pendingSeek; } catch (e) {} pendingSeek = null; }
+        // Show the *real* media length — uploaded lessons often have no
+        // `duration_minutes`, which used to leave the poster stuck on
+        // "0:00 / 0:00" until playback began.
+        if (isFinite(v.duration) && v.duration > 0) {
+            timeEl.textContent = formatClock(v.currentTime || 0) + ' / ' + formatClock(v.duration);
+        }
+    });
+    v.addEventListener('durationchange', function() {
+        if (isFinite(v.duration) && v.duration > 0 && !(v.currentTime > 0)) {
+            timeEl.textContent = '0:00 / ' + formatClock(v.duration);
+        }
+    });
+    v.addEventListener('error', function() {
+        var hint = document.getElementById('playerHint');
+        if (hint) hint.textContent = vT(VIDEO_L10N.notUploaded);
+        toast(vT(VIDEO_L10N.notUploaded), 'error');
+    });
+    bar.addEventListener('click', function(e) {
+        if (!v.duration) return;
+        var rect = bar.getBoundingClientRect();
+        var pct = (e.clientX - rect.left) / rect.width;
+        v.currentTime = pct * v.duration;
+    });
+    volBtn.addEventListener('click', function() {
+        v.muted = !v.muted;
+        syncVolumeButton();
+    });
+    expBtn.addEventListener('click', function() {
+        var pc = document.getElementById('playerContainer');
+        if (document.fullscreenElement) document.exitFullscreen();
+        else pc.requestFullscreen().catch(function() { toast('Ibyerekanwe ntabwo bishobora kubaho'); });
+    });
+}
+
+
+wirePlayerControls();
+
+// ===== ACTION BUTTONS (Watch Now / Save / Share) =====
+// These three buttons used to be plain markup with no click handlers at
+// all — clicking "Watch Now", "Save" or the share icon did nothing.
+var SAVED_LESSONS_KEY = 'ms_saved_lessons';
+function getSavedLessonIds() {
+    try { return JSON.parse(localStorage.getItem(SAVED_LESSONS_KEY)) || []; }
+    catch (e) { return []; }
+}
+function isLessonSaved(id) { return getSavedLessonIds().indexOf(id) > -1; }
+function paintSaveBtn() {
+    var btn = document.getElementById('saveLessonBtn');
+    if (!btn) return;
+    // Keep the icon on the solid style (the only style the free Font Awesome
+    // build guarantees for every icon) and show "saved" with the button's own
+    // color/background instead, via the .saved class below.
+    btn.classList.toggle('saved', isLessonSaved(lessonId));
+}
+function wireActionButtons() {
+    var watchBtn = document.getElementById('watchNowBtn');
+    if (watchBtn) watchBtn.addEventListener('click', startPlayback);
+
+    var saveBtn = document.getElementById('saveLessonBtn');
+    if (saveBtn) {
+        paintSaveBtn();
+        saveBtn.addEventListener('click', function () {
+            var ids = getSavedLessonIds();
+            var idx = ids.indexOf(lessonId);
+            if (idx > -1) {
+                ids.splice(idx, 1);
+                toast(vT(VIDEO_L10N.removedSaved));
+            } else {
+                ids.push(lessonId);
+                toast(vT(VIDEO_L10N.addedSaved));
+            }
+            try { localStorage.setItem(SAVED_LESSONS_KEY, JSON.stringify(ids)); } catch (e) {}
+            paintSaveBtn();
+        });
+    }
+
+    var shareBtn = document.getElementById('shareLessonBtn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', function () {
+            var url = window.location.href;
+            var title = (lessonData && lessonData.title) || document.title;
+            if (navigator.share) {
+                navigator.share({ title: title, url: url }).catch(function () {});
+                return;
+            }
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(function () {
+                    toast(vT(VIDEO_L10N.linkCopied));
+                }).catch(function () {
+                    toast(vT(VIDEO_L10N.linkCopied));
+                });
+            }
+        });
+    }
+}
+wireActionButtons();
+loadPlans();
+
+// ===== LOAD LESSON DATA =====
+verifyVideoAuthSession();
+(async function () {
+    try {
+        var lessonId_raw = parseInt(params.get('id')) || 1;
+        var res = await fetch(API_BASE + '/lessons/' + lessonId_raw);
+        if (!res.ok) throw new Error('API ' + res.status);
+        var dJson = await res.json();
+        var lesson = dJson.lesson || {};
+        if (!lesson || !lesson.id) {
+            document.getElementById('descriptionText').textContent = vT(VIDEO_L10N.noLessonYet);
+            return;
+        }
+        lessonData = lesson;
+
+        document.title = lesson.title + ' — Modern Skills';
+        document.getElementById('videoTag').textContent = lesson.category_name || vT(VIDEO_L10N.lesson);
+        document.getElementById('videoTitle').textContent = lesson.title || '';
+
+        var art = lessonArt(lesson);
+        var thumbEl = document.getElementById('videoThumbnail');
+        thumbEl.src = art;
+
+        var backdrop = document.getElementById('pageBackdrop');
+        if (backdrop) {
+            backdrop.style.backgroundImage = "url('" + art + "')";
+        }
+
+        // Set payment overlay background
+        var payBg = document.getElementById('payBgImg');
+        if (payBg) {
+            payBg.style.backgroundImage = "url('" + art + "')";
+        }
+
+        var rating = lesson.rating || 0;
+        document.getElementById('ratingDisplay').innerHTML = '<span class="stars">' + generateStars(rating) + '</span> ' + Number(rating).toFixed(1);
+
+        document.getElementById('viewCount').textContent = formatNumber(views);
+        document.getElementById('studentCount').textContent = formatNumber(lesson.student_count || 0);
+        document.getElementById('dateDisplay').innerHTML = '<i class="fas fa-calendar"></i> ' + formatDate(lesson.created_at);
+        document.getElementById('difficultyLevel').textContent = difficultyRw(lesson.difficulty);
+
+        var langBoxInit = document.getElementById('languageDisplay');
+        var langValInit = document.getElementById('languageValue');
+        if (langBoxInit && langValInit) {
+            var llInit = lessonLanguageLabel(lesson.language);
+            if (llInit) { langValInit.textContent = llInit; langBoxInit.style.display = ''; }
+        }
+
+        // Show price badge
+        var priceDisplay = document.getElementById('priceDisplay');
+        var priceTag = document.getElementById('priceTag');
+        if (priceDisplay && priceTag) {
+            var dp = lessonDisplayPrice(lesson);
+            // Every lesson is paid, so show a plain "Paid" label instead of a
+            // per-lesson amount (the amount comes from the plan at checkout).
+            priceTag.textContent = dp ? vT(VIDEO_L10N.paid) : vT(VIDEO_L10N.free);
+            priceDisplay.style.display = '';
+        }
+
+        var instrName = lesson.instructor_name || vT(VIDEO_L10N.unknownInstructor);
+        document.getElementById('instructorName').textContent = instrName;
+        var bioTxt = lesson.instructor_bio ? lesson.instructor_bio : vT(VIDEO_L10N.unknownInstructor);
+        document.getElementById('instructorBio').innerHTML = bioTxt;
+        var avatarImg = document.querySelector('#instructorAvatar img');
+        if (avatarImg) {
+            if (window.MS_MEDIA && typeof MS_MEDIA.avatar === 'function') {
+                avatarImg.src = MS_MEDIA.avatar(lesson.instructor_avatar);
+            } else {
+                avatarImg.src = lesson.instructor_avatar || 'Images/avatars/avatar_1.jpg';
+            }
+            if (window.MS_MEDIA && typeof MS_MEDIA.harden === 'function') MS_MEDIA.harden(avatarImg);
+        }
+
+        // Show price next to instructor
+        var instrPriceBox = document.getElementById('instructorPrice');
+        var instrPriceVal = document.getElementById('instructorPriceValue');
+        if (instrPriceBox && instrPriceVal) {
+            var idp = lessonDisplayPrice(lesson);
+            instrPriceBox.style.display = '';
+            if (idp) {
+                instrPriceVal.textContent = vT(VIDEO_L10N.paid);
+                instrPriceVal.className = 'instructor-price-value';
+            } else {
+                instrPriceVal.textContent = vT(VIDEO_L10N.free);
+                instrPriceVal.className = 'instructor-price-value free-label';
+            }
+        }
+
+        var timeEl = document.getElementById('playerTime');
+        if (lesson.duration_minutes != null) {
+            timeEl.textContent = '0:00 / ' + formatDuration(lesson.duration_minutes);
+        }
+
+        var badge = document.getElementById('playerTopBadge');
+        if (badge) badge.innerHTML = '<i class="fas fa-play" style="font-size:10px;margin-right:4px;"></i> ' + (lesson.difficulty || vT(VIDEO_L10N.allLevels));
+
+        document.getElementById('descriptionText').textContent = lesson.description || vT(VIDEO_L10N.noDescription);
+
+        var tagsContainer = document.getElementById('videoTags');
+        var tags = [lesson.category_name, difficultyRw(lesson.difficulty), lessonDisplayPrice(lesson) ? null : vT(VIDEO_L10N.free), lesson.language ? String(lesson.language).toUpperCase() : null].filter(Boolean);
+        tagsContainer.innerHTML = tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
+
+        // Determine video source
+        var vurl = lesson.video_file_path || lesson.video_url;
+        if (vurl) {
+            var isYT = getYouTubeEmbed(vurl);
+            if (isYT) {
+                videoSource = { type: 'youtube', src: vurl };
+            } else {
+                var full = resolveMediaUrl(vurl);
+                videoSource = { type: 'html5', src: full };
+                // Preload just the metadata so the poster can show the real
+                // duration (uploaded lessons often have none) and the timeline
+                // knows its length before the first play.
+                var rv = document.getElementById('realVideo');
+                if (rv && rv.getAttribute('src') !== full) rv.setAttribute('src', full);
+            }
+            document.getElementById('playerHint').textContent = videoSource.type === 'youtube' ? vT(VIDEO_L10N.clickPlayYt) : vT(VIDEO_L10N.clickPlay);
+        } else {
+            document.getElementById('playerHint').textContent = vT(VIDEO_L10N.comingSoon);
+        }
+
+        // CHECK PAYMENT ACCESS
+        if (lesson.is_free) {
+            userHasAccess = true;
+        } else {
+            userHasAccess = await checkUserAccess();
+        }
+        if (userAccessCache && userAccessCache.accessExpiresAt) {
+            accessExpiresAt = userAccessCache.accessExpiresAt;
+        }
+        renderAccessStatus();
+        startAccessWatchdog();
+
+        // Show the real video straight away on every flow:
+        //   • guest / signed-in without access → the timed preview
+        //   • paid subscriber → the full lesson
+        // (both are muted-autoplay safe; a click restores sound). Previously a
+        // subscriber had to click, so the player looked "empty" on arrival.
+        if (videoSource && !previewPlaying) {
+            setTimeout(function () {
+                if (userHasAccess) startActualPlayback();
+                else startPreview();
+            }, 400);
+        }
+
+// Related lessons — fetched from the API; the sidebar used to be permanently
+// empty because `lessons` was a hardcoded `[]` that was never populated.
+        var lessons = [];
+        try {
+            var relQs = lesson.category_name ? ('?category=' + encodeURIComponent(lesson.category_slug || lesson.category_name) + '&limit=8') : '?limit=8';
+            var relRes = await fetch(API_BASE + '/lessons' + relQs);
+            if (relRes.ok) {
+                var relJson = await relRes.json();
+                lessons = relJson.lessons || [];
+            }
+        } catch (e) { /* sidebar degrades to empty, the rest of the page still works */ }
+        var related = lessons.filter(function (l) {
+            return l.id !== lesson.id && l.category_name === lesson.category_name;
+        });
+        if (related.length === 0) {
+            // The category-filtered fetch came back empty (or the filter excluded
+            // everything) — fall back to a second, unfiltered fetch so the
+            // sidebar still shows something instead of staying blank.
+            try {
+                var fallbackRes = await fetch(API_BASE + '/lessons?limit=8');
+                if (fallbackRes.ok) {
+                    var fallbackJson = await fallbackRes.json();
+                    lessons = fallbackJson.lessons || [];
+                }
+            } catch (e) { /* ignore — sidebar simply stays empty */ }
+            related = lessons.filter(function (l) { return l.id !== lesson.id; });
+        }
+        related = related.slice(0, 4);
+        relatedCount = related.length;
+        localizeRelatedCount();
+
+        document.getElementById('relatedList').innerHTML = related.map(function (r) {
+            var mins = r.duration_minutes || 0;
+            var d = Math.floor(mins);
+            var relViews = parseInt(localStorage.getItem('lesson_view_' + r.id)) || r.student_count || 0;
+            return '<a href="video.html?id=' + r.id + '" class="related-card">' +
+                '<div class="related-thumb">' +
+                    '<img src="' + esc(lessonArt(r)) + '" alt="" onerror="this.onerror=null;this.src=\'' + esc(MS_PLACEHOLDER) + '\'">' +
+                    '<span class="dur">' + d + '</span>' +
+                '</div>' +
+                '<div class="related-info">' +
+                    '<h4>' + esc(r.title) + '</h4>' +
+                    '<div class="rel-instructor">' + esc(r.instructor_name) + '</div>' +
+                    '<div class="rel-meta"><i class="fas fa-star"></i> ' + (r.rating || 0) + ' &middot; ' + formatNumber(relViews) + ' ' + esc(vT(VIDEO_L10N.views)) + '</div>' +
+                '</div>' +
+            '</a>';
+        }).join('');
+
+        var courseTitle = document.getElementById('courseTitle');
+        if (lesson.category_name) courseTitle.textContent = vT(VIDEO_L10N.completeCourse) + ' ' + lesson.category_name + ' ' + vT(VIDEO_L10N.courseWord);
+    } catch (err) {
+        console.error('Failed to load lesson data:', err);
+        document.getElementById('descriptionText').textContent = vT(VIDEO_L10N.networkError);
+        document.getElementById('playerHint').textContent = vT(VIDEO_L10N.offlineHint);
+    }
+})();
+</script>
+</body>
+</html>

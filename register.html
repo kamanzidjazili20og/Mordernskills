@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iyandikishe — Modern Skills</title>
+<meta name="description" content="Create your free Modern Skills account and start learning the Quran online today.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Modern Skills">
+<meta property="og:title" content="Create your account — Modern Skills">
+<meta property="og:description" content="Create your free account and start learning the Quran online today.">
+<meta property="og:image" content="Images/mordern-skills-logo.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Create your account — Modern Skills">
+<meta name="twitter:description" content="Create your free account and start learning the Quran online today.">
+<meta name="twitter:image" content="Images/mordern-skills-logo.png">
+<link rel="icon" type="image/png" href="Images/mordern-skills-logo.png">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" media="print" onload="this.media='all';this.onload=null">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap"></noscript>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(ellipse 40% 34% at 50% -12%, rgba(212,168,83,0.16) 0%, transparent 60%),
+        radial-gradient(ellipse at 88% 6%, rgba(52,211,153,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 118%, rgba(6,95,70,0.42) 0%, transparent 58%),
+        linear-gradient(165deg, #04120d 0%, #071b13 46%, #030b08 100%);
+    padding: 24px 16px;
+    position: relative;
+    overflow-x: hidden;
+}
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cg fill='none' stroke='%23d4a853' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M45 0 L90 45 L45 90 L0 45 Z'/%3E%3Ccircle cx='45' cy='45' r='15'/%3E%3Ccircle cx='45' cy='45' r='24'/%3E%3Cpath d='M45 19 L71 45 L45 71 L19 45 Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 90px 90px;
+    pointer-events: none;
+}
+body::after {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -20%;
+    z-index: 0;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(212,168,83,0.14) 0%, transparent 55%);
+    filter: blur(60px);
+    pointer-events: none;
+    animation: auroraFloat 14s ease-in-out infinite;
+}
+@keyframes auroraFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: .7; }
+    50% { transform: translate(14vw, 8vh) scale(1.15); opacity: 1; }
+}
+
+.back-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-sec);
+    text-decoration: none;
+    margin-bottom: 22px;
+    transition: all 0.2s;
+    font-weight: 500;
+    padding: 9px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: rgba(10,28,21,0.5);
+    backdrop-filter: blur(8px);
+    position: fixed;
+    top: 22px;
+    left: 24px;
+    z-index: 20;
+}
+.back-home:hover {
+    color: var(--gold-light);
+    border-color: var(--border-strong);
+    box-shadow: var(--glow-gold);
+    transform: translateX(-3px);
+}
+
+.auth-shell {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 960px;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 34px 100px -24px rgba(0,0,0,0.75), 0 0 0 1px rgba(212,168,83,0.07), 0 0 80px -40px rgba(212,168,83,0.5);
+    animation: cardIn .8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(30px) scale(.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.auth-shell::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    z-index: 5;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+    box-shadow: var(--glow-gold);
+}
+
+/* ===== HERO PANEL ===== */
+.auth-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 46px 38px 36px;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse 90% 60% at 20% -10%, rgba(212,168,83,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 80% 55% at 110% 115%, rgba(52,211,153,0.28) 0%, transparent 55%),
+        linear-gradient(165deg, #0a2b1d 0%, #051710 55%, #03100b 100%);
+}
+.auth-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23d4a853' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M60 6 L114 60 L60 114 L6 60 Z'/%3E%3Ccircle cx='60' cy='60' r='13'/%3E%3Ccircle cx='60' cy='60' r='26'/%3E%3Cpath d='M60 28 L92 60 L60 92 L28 60 Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+    pointer-events: none;
+}
+.hero-orn {
+    position: absolute;
+    bottom: -100px;
+    left: -80px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,168,83,0.22);
+    box-shadow: inset 0 0 60px rgba(212,168,83,0.1);
+    animation: spinSlow 44s linear infinite;
+    pointer-events: none;
+}
+.hero-orn::before, .hero-orn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px dashed rgba(212,168,83,0.16);
+}
+.hero-orn::after { inset: 40px; border: 1px solid rgba(212,168,83,0.18); }
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+
+.hero-top {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+.auth-logo {
+    width: 66px;
+    height: 66px;
+    margin: 0 auto 18px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(212,168,83,0.3), rgba(212,168,83,0.08));
+    border: 1.5px solid rgba(212,168,83,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: var(--gold-light);
+    box-shadow: 0 12px 38px rgba(212,168,83,0.28), var(--glow-gold);
+    animation: logoGlow 4s ease-in-out infinite;
+}
+@keyframes logoGlow {
+    0%, 100% { box-shadow: 0 12px 38px rgba(212,168,83,0.28), 0 0 30px rgba(212,168,83,0.35); }
+    50% { box-shadow: 0 12px 38px rgba(212,168,83,0.4), 0 0 50px rgba(212,168,83,0.55); }
+}
+.hero-brand {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-tagline {
+    margin-top: 6px;
+    font-size: 12.5px;
+    color: var(--text-sec);
+    letter-spacing: 0.3px;
+}
+.hero-verse {
+    font-family: 'Amiri', serif;
+    font-size: 30px;
+    line-height: 1.9;
+    color: var(--gold-light);
+    margin: 30px 0 24px;
+    text-align: center;
+    text-shadow: 0 0 34px rgba(212,168,83,0.45);
+    position: relative;
+    z-index: 2;
+}
+.hero-verse small {
+    display: block;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    margin-top: 8px;
+    letter-spacing: 0.4px;
+    text-shadow: none;
+}
+.hero-feats {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 14px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(212,168,83,0.16);
+}
+.hero-feat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text-sec);
+    padding: 4px 2px;
+}
+.hero-feat i {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--gold);
+    background: rgba(212,168,83,0.12);
+    border: 1px solid rgba(212,168,83,0.22);
+    flex-shrink: 0;
+}
+
+/* ===== FORM PANEL ===== */
+.auth-main {
+    position: relative;
+    background:
+        radial-gradient(ellipse 70% 40% at 100% 0%, rgba(212,168,83,0.07) 0%, transparent 60%),
+        rgba(8,22,16,0.96);
+    padding: 40px 46px 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.auth-main::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 70 70'%3E%3Cpath fill='none' stroke='%23d4a853' stroke-opacity='0.04' stroke-width='1' d='M35 3 L67 35 L35 67 L3 35 Z'/%3E%3Ccircle cx='35' cy='35' r='9'/%3E%3C/svg%3E");
+    background-size: 70px 70px;
+    pointer-events: none;
+}
+.auth-main > * { position: relative; z-index: 1; }
+
+.auth-top { margin-bottom: 22px; }
+.auth-top h1 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    margin-bottom: 7px;
+}
+.auth-top h1 em {
+    font-style: normal;
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.auth-top p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 18px 0 20px;
+}
+.auth-divider::before, .auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,83,0.2), transparent);
+}
+.auth-divider span {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.form-group { margin-bottom: 14px; }
+.form-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-sec);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 7px;
+}
+.form-label .required { color: var(--error); margin-left: 2px; }
+
+.input-row {
+    display: flex;
+    gap: 0;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(6,19,14,0.7);
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+.input-row::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    background: transparent;
+    pointer-events: none;
+}
+.input-row:focus-within {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212,168,83,0.08), var(--glow-gold);
+}
+.input-row.has-error {
+    border-color: var(--error);
+}
+.input-row.has-error .form-input { border-color: var(--error); }
+.country-select {
+    padding: 13px 10px 13px 14px;
+    background: rgba(6,19,14,0.85);
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+    min-width: 108px;
+    -webkit-appearance: none;
+    appearance: none;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23d4a853' d='M5 7L1 2h8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 26px;
+    /* LTR chevron points down; mirror it so it still reads "open" in RTL. */
+    transform: scaleX(1);
+}
+.country-select option { background: #0a1d15; color: var(--text); }
+.form-input {
+    flex: 1;
+    padding: 13px 14px;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    min-width: 0;
+}
+.form-input::placeholder { color: var(--text-muted); }
+
+.input-icon-wrap { position: relative; }
+.input-icon-wrap > i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 15px;
+    transition: color 0.3s;
+    pointer-events: none;
+}
+.input-icon-wrap:focus-within > i { color: var(--gold); }
+.form-input-full {
+    width: 100%;
+    padding: 13px 44px 13px 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(6,19,14,0.7);
+    color: var(--text);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.form-input-full:focus {
+    border-color: var(--gold);
+    background: rgba(6,19,14,0.95);
+    box-shadow: 0 0 0 3px rgba(212,168,83,0.08), var(--glow-gold);
+}
+.form-input-full::placeholder { color: var(--text-muted); }
+
+.password-wrap { position: relative; }
+.password-wrap .form-input-full { padding-right: 44px; }
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    transition: color 0.2s;
+}
+.password-toggle:hover { color: var(--gold); }
+
+.password-strength { display: flex; gap: 4px; margin-top: 7px; }
+.strength-bar {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.08);
+    transition: background 0.3s, box-shadow 0.3s;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.strength-bar.active.weak { background: #f87171; box-shadow: inset 0 1px 0 rgba(248,113,113,0.3); }
+.strength-bar.active.medium { background: var(--gold); box-shadow: inset 0 1px 0 rgba(212,168,83,0.4); }
+.strength-bar.active.strong { background: var(--success); box-shadow: inset 0 1px 0 rgba(52,211,153,0.4); }
+.strength-text {
+    font-size: 11px;
+    margin-top: 4px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.form-error {
+    display: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(248,113,113,0.08);
+    border: 1px solid rgba(248,113,113,0.2);
+    color: var(--error);
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    align-items: center;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.country-select:focus-wrapper { position: relative; }
+.form-error.show { display: flex; }
+
+.btn-register {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: var(--grad-gold);
+    background-size: 200% auto;
+    color: #0a1d15;
+    font-size: 15px;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
+    box-shadow: 0 8px 30px rgba(212,168,83,0.28), inset 0 1px 0 rgba(255,255,255,0.4);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    margin-bottom: 14px;
+}
+.btn-register::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -80%;
+    width: 50%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.5), transparent);
+    transform: skewX(-20deg);
+    animation: shineSweep 3.2s ease-in-out infinite;
+}
+.btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(212,168,83,0.4), inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.btn-register:hover::after { left: 140%; animation: none; }
+.btn-register:active { transform: translateY(0); }
+.btn-register:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-register .spinner {
+    display: none;
+    width: 18px; height: 18px;
+    border: 2.5px solid rgba(10,29,21,0.3);
+    border-top-color: #0a1d15;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+.btn-register.loading .spinner { display: block; }
+.btn-register.loading .btn-text { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+.auth-footer a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
+}
+.auth-footer a:hover { color: var(--gold-light); text-shadow: 0 0 16px rgba(212,168,83,0.4); }
+
+.toast-msg {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 10000;
+    padding: 14px 20px;
+    border-radius: 14px;
+    background: rgba(10,28,21,0.97);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 14px 40px -8px rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.toast-msg.show { transform: translateX(0); }
+
+@media (max-width: 780px) {
+    .auth-shell { grid-template-columns: 1fr; max-width: 480px; }
+    .auth-hero { display: none; }
+    .auth-main { padding: 40px 28px 30px; }
+    .auth-top h1 { font-size: 23px; }
+}
+@media (max-width: 540px) {
+    body { padding: 18px 12px; }
+    .back-home { top: 16px; left: 16px; }
+    .country-select { min-width: 92px; padding: 13px 6px 13px 10px; font-size: 12px; }
+}
+
+.avatar-upload { display:flex; align-items:center; gap:14px; margin-bottom:18px; padding:12px; border:1px dashed var(--border-strong); border-radius:16px; background:rgba(255,255,255,.025); }
+.avatar-preview { width:64px; height:64px; border-radius:18px; object-fit:cover; border:1px solid var(--border-strong); background:rgba(212,168,83,.08); display:flex; align-items:center; justify-content:center; color:var(--gold-light); overflow:hidden; flex:none; }
+.avatar-preview img { width:100%; height:100%; object-fit:cover; }
+.avatar-upload input[type=file] { width:100%; color:var(--text-sec); font-size:12px; }
+.lang-mini { position:fixed; top:20px; right:22px; z-index:20; display:flex; gap:2px; padding:3px; border:1px solid var(--border); border-radius:12px; background:rgba(10,28,21,.72); backdrop-filter:blur(10px); }
+.lang-mini button { border:0; background:transparent; color:var(--text-muted); padding:6px 7px; border-radius:8px; cursor:pointer; font:700 10px inherit; }
+.lang-mini button.active { background:rgba(212,168,83,.18); color:var(--gold-light); }
+.lang-mini button:hover { color:var(--gold); }
+</style>
+<script src="config.js"></script>
+<script src="assets/js/translations.js"></script>
+<script src="assets/js/i18n.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#registerForm">Skip to content</a>
+<div class="lang-mini" id="globalLang" aria-label="Language"><button data-code="en" class="active">EN</button><button data-code="rw">RW</button><button data-code="fr">FR</button><button data-code="sw">SW</button><button data-code="ar">AR</button></div>
+
+<a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> <span data-lang="en">Back Home</span><span data-lang="rw">Subira mu Rugo</span><span data-lang="fr">Retour à l'accueil</span><span data-lang="sw">Rudi Nyumbani</span><span data-lang="ar">العودة للرئيسية</span></a>
+
+<div class="auth-shell">
+    <aside class="auth-hero">
+        <span class="hero-orn"></span>
+        <div class="hero-top">
+            <div class="auth-logo"><i class="fas fa-book-quran"></i></div>
+            <div class="hero-brand">Modern Skills</div>
+            <div class="hero-tagline"><span data-lang="en">Learn the Qur'an the Right Way</span><span data-lang="rw">Kwiga Qur'an mu buryo bunoze</span><span data-lang="fr">Apprenez le Coran de la bonne manière</span><span data-lang="sw">Jifunze Qur'an kwa Njia Sahihi</span><span data-lang="ar">تعلّم القرآن بالطريقة الصحيحة</span></div>
+        </div>
+        <div class="hero-verse">
+            وَقُل رَّبِّ زِدْنِي عِلْمًا
+            <small><span data-lang="en">"My Lord, increase me in knowledge." — Taha 20:114</span><span data-lang="rw">"Vuga uti: Nyagasani wanjye, nyongera ubumenyi." — Taha 20:114</span><span data-lang="fr">« Seigneur, accroît mon savoir. » — Taha 20:114</span><span data-lang="sw">"Mola wangu, niongezee elimu." — Taha 20:114</span><span data-lang="ar">«وَقُل رَّبِّ زِدْنِي عِلْمًا» — طه 20:114</span></small>
+        </div>
+        <div class="hero-feats">
+            <div class="hero-feat"><i class="fas fa-shield-halved"></i> <span data-lang="en">Your safety comes first</span><span data-lang="rw">Umutekano wawe niwo mbere</span><span data-lang="fr">Votre sécurité avant tout</span><span data-lang="sw">Usalama wako kwanza</span><span data-lang="ar">سلامتك أولاً</span></div>
+            <div class="hero-feat"><i class="fas fa-user-plus"></i> <span data-lang="en">Quick and easy sign-up</span><span data-lang="rw">Konti yawe yoroshye gukora</span><span data-lang="fr">Inscription rapide et facile</span><span data-lang="sw">Usajili wa haraka na rahisi</span><span data-lang="ar">تسجيل سريع وسهل</span></div>
+            <div class="hero-feat"><i class="fas fa-globe"></i> <span data-lang="en">Everyone can learn</span><span data-lang="rw">Buri wese ashobora kwiga</span><span data-lang="fr">Tout le monde peut apprendre</span><span data-lang="sw">Kila mtu anaweza kujifunza</span><span data-lang="ar">يمكن للجميع التعلم</span></div>
+        </div>
+    </aside>
+
+    <main class="auth-main">
+        <div class="auth-top">
+            <h1><span data-lang="en">Create</span><span data-lang="rw">Fungura</span><span data-lang="fr">Créer un</span><span data-lang="sw">Fungua</span><span data-lang="ar">إنشاء</span> <em><span data-lang="en">Account</span><span data-lang="rw">Konti</span><span data-lang="fr">Compte</span><span data-lang="sw">Akaunti</span><span data-lang="ar">حساب</span></em></h1>
+            <p><span data-lang="en">Register on Modern Skills and start learning the Qur'an today.</span><span data-lang="rw">Iyandikishe mu Modern Skills utangire kwiga Qur'an uhereye ubu.</span><span data-lang="fr">Inscrivez-vous à Modern Skills et commencez à apprendre le Coran aujourd'hui.</span><span data-lang="sw">Jisajili Modern Skills na uanze kujifunza Qur'an leo.</span><span data-lang="ar">سجّل في Modern Skills وابدأ تعلّم القرآن اليوم.</span></p>
+        </div>
+
+        <div class="auth-divider"><span><span data-lang="en">Register with your details</span><span data-lang="rw">Iyandikishe hamwe n'amakuru yawe</span><span data-lang="fr">Inscrivez-vous avec vos informations</span><span data-lang="sw">Jisajili kwa taarifa zako</span><span data-lang="ar">سجّل ببياناتك</span></span></div>
+
+        <div class="form-error" id="formError">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="formErrorText"></span>
+        </div>
+
+        <form id="registerForm" autocomplete="off" novalidate>
+            <div class="form-group">
+                <label class="form-label"><span data-lang="en">Full Name</span><span data-lang="rw">Amazina Yose</span><span data-lang="fr">Nom complet</span><span data-lang="sw">Jina Kamili</span><span data-lang="ar">الاسم الكامل</span> <span class="required">*</span></label>
+                <div class="input-icon-wrap">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" class="form-input-full" id="fullName" placeholder="Amazina yawe yose" minlength="3" maxlength="100" required autocomplete="name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"><span data-lang="en">Email</span><span data-lang="rw">Imeri</span><span data-lang="fr">E-mail</span><span data-lang="sw">Barua pepe</span><span data-lang="ar">البريد الإلكتروني</span> <span class="required">*</span></label>
+                <div class="input-icon-wrap">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-input-full" id="email" placeholder="you@example.com" required autocomplete="email">
+                </div>
+            </div>
+
+            <div class="avatar-upload">
+                <div class="avatar-preview" id="avatarPreview"><i class="fas fa-user"></i></div>
+                <div style="flex:1">
+                    <label class="form-label" for="avatar"><span data-lang="en">Profile photo</span><span data-lang="rw">Ifoto y'umwirondoro</span><span data-lang="fr">Photo de profil</span><span data-lang="sw">Picha ya wasifu</span><span data-lang="ar">صورة الملف الشخصي</span></label>
+                    <input type="file" id="avatar" name="avatar" accept="image/jpeg,image/png,image/webp">
+                    <div style="font-size:10px;color:var(--text-muted);margin-top:5px"><span data-lang="en">JPG, PNG or WEBP · max 5MB</span><span data-lang="rw">JPG, PNG cyangwa WEBP · ntirenze 5MB</span><span data-lang="fr">JPG, PNG ou WEBP · max 5 Mo</span><span data-lang="sw">JPG, PNG au WEBP · upeo 5MB</span><span data-lang="ar">JPG أو PNG أو WEBP · بحد أقصى 5 ميغابايت</span></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label"><span data-lang="en">Phone Number</span><span data-lang="rw">Numero ya telefone</span><span data-lang="fr">Numéro de téléphone</span><span data-lang="sw">Nambari ya Simu</span><span data-lang="ar">رقم الهاتف</span> <span class="required">*</span></label>
+                <div class="input-row">
+                    <select class="country-select" id="countryCode" required>
+                        <option value="+250" data-flag="🇷🇼">🇷🇼 +250</option>
+                        <option value="+234" data-flag="🇳🇬">🇳🇬 +234</option>
+                        <option value="+254" data-flag="🇰🇪">🇰🇪 +254</option>
+                        <option value="+256" data-flag="🇺🇬">🇺🇬 +256</option>
+                        <option value="+255" data-flag="🇹🇿">🇹🇿 +255</option>
+                        <option value="+243" data-flag="🇨🇩">🇨🇩 +243</option>
+                        <option value="+20" data-flag="🇪🇬">🇪🇬 +20</option>
+                        <option value="+212" data-flag="🇲🇦">🇲🇦 +212</option>
+                        <option value="+27" data-flag="🇿🇦">🇿🇦 +27</option>
+                        <option value="+233" data-flag="🇬🇭">🇬🇭 +233</option>
+                        <option value="+225" data-flag="🇨🇮">🇨🇮 +225</option>
+                        <option value="+221" data-flag="🇸🇳">🇸🇳 +221</option>
+                        <option value="+216" data-flag="🇹🇳">🇹🇳 +216</option>
+                        <option value="+213" data-flag="🇩🇿">🇩🇿 +213</option>
+                        <option value="+218" data-flag="🇱🇾">🇱🇾 +218</option>
+                        <option value="+966" data-flag="🇸🇦">🇸🇦 +966</option>
+                        <option value="+971" data-flag="🇦🇪">🇦🇪 +971</option>
+                        <option value="+964" data-flag="🇮🇶">🇮🇶 +964</option>
+                        <option value="+92" data-flag="🇵🇰">🇵🇰 +92</option>
+                        <option value="+91" data-flag="🇮🇳">🇮🇳 +91</option>
+                        <option value="+880" data-flag="🇧🇩">🇧🇩 +880</option>
+                        <option value="+60" data-flag="🇲🇾">🇲🇾 +60</option>
+                        <option value="+62" data-flag="🇮🇩">🇮🇩 +62</option>
+                        <option value="+63" data-flag="🇵🇭">🇵🇭 +63</option>
+                        <option value="+90" data-flag="🇹🇷">🇹🇷 +90</option>
+                        <option value="+44" data-flag="🇬🇧">🇬🇧 +44</option>
+                        <option value="+1" data-flag="🇺🇸">🇺🇸 +1</option>
+                        <option value="+33" data-flag="🇫🇷">🇫🇷 +33</option>
+                        <option value="+49" data-flag="🇩🇪">🇩🇪 +49</option>
+                        <option value="+39" data-flag="🇮🇹">🇮🇹 +39</option>
+                        <option value="+34" data-flag="🇪🇸">🇪🇸 +34</option>
+                        <option value="+55" data-flag="🇧🇷">🇧🇷 +55</option>
+                        <option value="+52" data-flag="🇲🇽">🇲🇽 +52</option>
+                        <option value="+86" data-flag="🇨🇳">🇨🇳 +86</option>
+                        <option value="+81" data-flag="🇯🇵">🇯🇵 +81</option>
+                        <option value="+82" data-flag="🇰🇷">🇰🇷 +82</option>
+                    </select>
+                    <input type="tel" class="form-input" id="phone" placeholder="781 234 567" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"><span data-lang="en">Username</span><span data-lang="rw">Username</span><span data-lang="fr">Nom d’utilisateur</span><span data-lang="sw">Jina la mtumiaji</span><span data-lang="ar">اسم المستخدم</span> <span class="required">*</span></label>
+                <div class="input-icon-wrap">
+                    <i class="fas fa-at"></i>
+                    <input type="text" class="form-input-full" id="username" placeholder="Hitamo username" minlength="3" maxlength="30" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"><span data-lang="en">Password</span><span data-lang="rw">Ijambo Wibanga</span><span data-lang="fr">Mot de passe</span><span data-lang="sw">Nenosiri</span><span data-lang="ar">كلمة المرور</span> <span class="required">*</span></label>
+                <div class="password-wrap input-icon-wrap">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-input-full" id="password" placeholder="Tangira uzi ijambo wibanga" minlength="6" required>
+                    <button type="button" class="password-toggle" data-target="password"><i class="fas fa-eye"></i></button>
+                </div>
+                <div class="password-strength" id="strengthBars">
+                    <div class="strength-bar" id="bar1"></div>
+                    <div class="strength-bar" id="bar2"></div>
+                    <div class="strength-bar" id="bar3"></div>
+                    <div class="strength-bar" id="bar4"></div>
+                </div>
+                <div class="strength-text" id="strengthText"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"><span data-lang="en">Confirm Password</span><span data-lang="rw">Subiramo Ijambo Wibanga</span><span data-lang="fr">Confirmer le mot de passe</span><span data-lang="sw">Thibitisha Nenosiri</span><span data-lang="ar">تأكيد كلمة المرور</span> <span class="required">*</span></label>
+                <div class="password-wrap input-icon-wrap">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-input-full" id="confirmPassword" placeholder="Subiramo ijambo wibanga" required>
+                    <button type="button" class="password-toggle" data-target="confirmPassword"><i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-register" id="submitBtn">
+                <span class="btn-text"><i class="fas fa-user-plus"></i> <span data-lang="en">Create Account</span><span data-lang="rw">Fungura Konti</span><span data-lang="fr">Créer un compte</span><span data-lang="sw">Fungua Akaunti</span><span data-lang="ar">إنشاء حساب</span></span>
+                <span class="spinner"></span>
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <span data-lang="en">Already have an account?</span><span data-lang="rw">Usanzwe ufite konti?</span><span data-lang="fr">Vous avez déjà un compte ?</span><span data-lang="sw">Tayari una akaunti?</span><span data-lang="ar">لديك حساب بالفعل؟</span> <a href="login.html"><span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Se Connecter</span><span data-lang="sw">Ingia</span><span data-lang="ar">تسجيل الدخول</span></a>
+        </div>
+    </main>
+</div>
+
+<div class="toast-msg" id="toastMsg">
+    <i class="fas fa-circle-check" style="color:var(--success);"></i>
+    <span id="toastText"></span>
+</div>
+
+<script>
+const API_ORIGIN = (window.MODERN_SKILLS_CONFIG && window.MODERN_SKILLS_CONFIG.API_URL) || (location.protocol === 'file:' ? 'http://localhost:3001' : location.origin);
+const API = API_ORIGIN + '/api';
+
+// Where to land after creating an account. Only same-site relative paths are
+// honoured, so `?next=https://evil.example` cannot turn this page into an open
+// redirect; anything with a scheme or a protocol-relative prefix is ignored.
+function nextUrl() {
+    const raw = new URLSearchParams(location.search).get('next');
+    if (!raw) return 'index.html';
+    const scheme = /^[a-z][a-z0-9+.-]*:/i.test(raw);
+    const protocolRelative = raw.slice(0, 2) === '//' || raw.slice(0, 2) === '/\\' || raw.charAt(0) === '\\';
+    if (scheme || protocolRelative) return 'index.html';
+    return raw;
+}
+
+// Carry the intended destination over to the login page too.
+(function () {
+    const raw = new URLSearchParams(location.search).get('next');
+    if (!raw) return;
+    const link = document.querySelector('a[href="login.html"]');
+    if (link) link.href = 'login.html?next=' + encodeURIComponent(raw);
+})();
+
+const form = document.getElementById('registerForm');
+const errorEl = document.getElementById('formError');
+const errorText = document.getElementById('formErrorText');
+const submitBtn = document.getElementById('submitBtn');
+const toastEl = document.getElementById('toastMsg');
+const toastText = document.getElementById('toastText');
+
+function showError(msg) {
+    errorText.textContent = msg;
+    errorEl.classList.add('show');
+    // Add error class to relevant input group
+    const inputs = form.querySelectorAll('.form-input-full, .country-select');
+    inputs.forEach(input => input.classList.add('has-error'));
+}
+function hideError() { 
+    errorEl.classList.remove('show'); 
+    // Remove error class from input groups
+    const inputs = form.querySelectorAll('.form-input-full, .country-select');
+    inputs.forEach(input => input.classList.remove('has-error'));
+}
+
+function showToast(msg) {
+    toastText.textContent = msg;
+    toastEl.classList.add('show');
+    setTimeout(() => toastEl.classList.remove('show'), 4000);
+}
+
+// Password visibility toggle
+document.querySelectorAll('.password-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const target = document.getElementById(btn.dataset.target);
+        const icon = btn.querySelector('i');
+        if (target.type === 'password') {
+            target.type = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            target.type = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    });
+});
+
+// Password strength
+const passwordInput = document.getElementById('password');
+const strengthText = document.getElementById('strengthText');
+const bars = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3'), document.getElementById('bar4')];
+
+passwordInput.addEventListener('input', () => {
+    const val = passwordInput.value;
+    let score = 0;
+    if (val.length >= 6) score++;
+    if (val.length >= 10) score++;
+    if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+    if (/[0-9]/.test(val) || /[^A-Za-z0-9]/.test(val)) score++;
+
+    const levels = (window.REG_L10N && window.REG_L10N.strength && (window.REG_L10N.strength[window.regLang] || window.REG_L10N.strength.en)) || ['', 'Weak', 'Fair', 'Good', 'Strong'];
+    const classes = ['', 'weak', 'medium', 'medium', 'strong'];
+
+    bars.forEach((bar, i) => {
+        bar.classList.remove('active', 'weak', 'medium', 'strong');
+        if (i < score) {
+            bar.classList.add('active', classes[score]);
+        }
+    });
+
+    strengthText.textContent = val.length > 0 ? levels[score] : '';
+    strengthText.style.color = score <= 1 ? 'var(--error)' : score === 2 ? 'var(--gold)' : 'var(--success)';
+});
+
+// Form submit
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError();
+
+    const countryCode = document.getElementById('countryCode').value;
+    const phone = document.getElementById('phone').value.replace(/\s/g, '');
+    const username = document.getElementById('username').value.trim();
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (!fullName || fullName.length < 3) return showError(window.rt('fullName'));
+    if (!email) return showError(window.rt('emailRequired'));
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError(window.rt('emailInvalid'));
+    if (!phone) return showError(window.rt('phoneRequired'));
+    if (phone.length < 5) return showError(window.rt('phoneInvalid'));
+    if (!username || username.length < 3) return showError(window.rt('usernameLength'));
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) return showError(window.rt('usernameChars'));
+    if (password.length < 6) return showError(window.rt('passwordLength'));
+    if (password !== confirmPassword) return showError(window.rt('passwordMismatch'));
+
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+
+    try {
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('fullName', fullName);
+        formData.append('phone', countryCode + phone);
+        const avatarFile = document.getElementById('avatar').files[0];
+        if (avatarFile) formData.append('avatar', avatarFile);
+
+        const res = await fetch(API + '/auth/register', {
+            method: 'POST',
+            body: formData
+        });
+
+        let data = {};
+        try { data = await res.json(); } catch (parseErr) { data = {}; }
+
+        if (!res.ok) {
+            const msg = data.errors ? data.errors.map(e => e.msg).join('. ') : (data.error || window.rt('registerFailed'));
+            return showError(msg);
+        }
+
+        if (data.token) {
+            localStorage.setItem('ms_token', data.token);
+            localStorage.setItem('ms_user', JSON.stringify(data.user));
+        }
+
+        showToast(window.rt('success'));
+        setTimeout(() => { window.location.href = nextUrl(); }, 1500);
+    } catch (err) {
+        showError(window.rt('networkError'));
+    } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+    }
+});
+</script>
+<script>
+// Profile photo preview
+const avatarInput = document.getElementById('avatar');
+const avatarPreview = document.getElementById('avatarPreview');
+if (avatarInput) avatarInput.addEventListener('change', () => {
+    const file = avatarInput.files[0];
+    if (!file) { avatarPreview.innerHTML = '<i class="fas fa-user"></i>'; return; }
+    if (file.size > 5 * 1024 * 1024) { showError(window.rt('avatarSize')); avatarInput.value=''; return; }
+    const reader = new FileReader();
+    reader.onload = e => avatarPreview.innerHTML = '<img src="' + e.target.result + '" alt="Profile preview">';
+    reader.readAsDataURL(file);
+});
+
+(function(){
+    const box=document.getElementById('globalLang'); if(!box) return;
+    const buttons = box.querySelectorAll('button');
+    // Every message, placeholder and strength label below follows the
+    // site-wide language (same key as index/login/video).
+    window.REG_L10N = {
+        fullName: { en: 'Enter your full name.', rw: 'Andika amazina yawe yose.', fr: 'Entrez votre nom complet.', sw: 'Weka jina lako kamili.', ar: 'أدخل اسمك الكامل.' },
+        emailRequired: { en: 'Enter your email.', rw: 'Andika imeri yawe.', fr: 'Entrez votre e-mail.', sw: 'Weka barua pepe yako.', ar: 'أدخل بريدك الإلكتروني.' },
+        emailInvalid: { en: 'Enter a valid email.', rw: 'Andika imeri nyayo.', fr: 'Entrez un e-mail valide.', sw: 'Weka barua pepe sahihi.', ar: 'أدخل بريدًا إلكترونيًا صحيحًا.' },
+        phoneRequired: { en: 'Enter your phone number.', rw: 'Andika numero ya telefone yawe.', fr: 'Entrez votre numéro de téléphone.', sw: 'Weka nambari yako ya simu.', ar: 'أدخل رقم هاتفك.' },
+        phoneInvalid: { en: 'That number looks wrong. Try again.', rw: 'Numero yawe ntayo ari yo. Ongera ugerageze.', fr: 'Ce numéro semble incorrect. Réessayez.', sw: 'Nambari hiyo haionekani sahihi. Jaribu tena.', ar: 'يبدو هذا الرقم غير صحيح. حاول مجددًا.' },
+        usernameLength: { en: 'Username must be 3 or more characters.', rw: 'Username igomba kuba imyaka 3 cyangwa zirenze.', fr: 'Le nom d’utilisateur doit avoir 3 caractères ou plus.', sw: 'Jina la mtumiaji lazima liwe na herufi 3 au zaidi.', ar: 'يجب أن يتكون اسم المستخدم من 3 أحرف أو أكثر.' },
+        usernameChars: { en: 'Username allows letters, numbers and underscore only.', rw: 'Username irongera inyuguti, ibiharimbuko, cyangwa underscore gusa.', fr: 'Le nom d’utilisateur n’accepte que lettres, chiffres et tiret bas.', sw: 'Jina la mtumiaji linaruhusu herufi, nambari na underscore pekee.', ar: 'يسمح اسم المستخدم بالأحرف والأرقام والشرطة السفلية فقط.' },
+        passwordLength: { en: 'Password must be 6 or more characters.', rw: 'Ijambo wibanga rigomba kuba imyaka 6 cyangwa zirenze.', fr: 'Le mot de passe doit avoir 6 caractères ou plus.', sw: 'Nenosiri lazima liwe na herufi 6 au zaidi.', ar: 'يجب أن تتكون كلمة المرور من 6 أحرف أو أكثر.' },
+        passwordMismatch: { en: 'Passwords do not match. Repeat it well.', rw: 'Ijambo wibanga ntabwo rihebye. Subiramo neza.', fr: 'Les mots de passe ne correspondent pas.', sw: 'Nenosiri hazifanani. Rudia vizuri.', ar: 'كلمتا المرور غير متطابقتين.' },
+        registerFailed: { en: 'Registration failed.', rw: 'Kwiyandikisha byanze.', fr: 'L’inscription a échoué.', sw: 'Usajili umeshindwa.', ar: 'فشل التسجيل.' },
+        avatarSize: { en: 'Profile photo must be under 5MB.', rw: 'Profile photo igomba kuba munsi ya 5MB.', fr: 'La photo doit faire moins de 5 Mo.', sw: 'Picha ya wasifu lazima iwe chini ya 5MB.', ar: 'يجب أن تكون صورة الملف الشخصي أقل من 5 ميغابايت.' },
+        success: { en: 'Your account was created!', rw: 'Konti yawe yakoze neza!', fr: 'Votre compte a été créé !', sw: 'Akaunti yako imeundwa!', ar: 'تم إنشاء حسابك!' },
+        networkError: { en: 'Network problem. Check your internet and try again.', rw: 'Hari ikibazo cy’umurongo. Reba neza umurongo wa interineti, wongere ugerageze.', fr: 'Problème de réseau. Vérifiez votre connexion et réessayez.', sw: 'Tatizo la mtandao. Angalia intaneti yako ujaribu tena.', ar: 'مشكلة في الشبكة. تحقق من اتصالك وحاول مجددًا.' },
+        fullNamePh: { en: 'Your full name', rw: 'Amazina yawe yose', fr: 'Votre nom complet', sw: 'Jina lako kamili', ar: 'اسمك الكامل' },
+        usernamePh: { en: 'Choose a username', rw: 'Hitamo username', fr: 'Choisissez un nom d’utilisateur', sw: 'Chagua jina la mtumiaji', ar: 'اختر اسم مستخدم' },
+        passwordPh: { en: 'Create a password (6+ characters)', rw: 'Shyiramo ijambo wibanga (inyuguti 6+)', fr: 'Créez un mot de passe (6+ caractères)', sw: 'Weka nenosiri (herufi 6+)', ar: 'أنشئ كلمة مرور (6+ أحرف)' },
+        confirmPh: { en: 'Repeat the password', rw: 'Subiramo ijambo wibanga', fr: 'Répétez le mot de passe', sw: 'Rudia nenosiri', ar: 'كرر كلمة المرور' },
+        strength: {
+            en: ['', 'Weak', 'Fair', 'Good', 'Strong'],
+            rw: ['', 'Birababara', 'Biranoze', 'Nziza', 'Kwitanga'],
+            fr: ['', 'Faible', 'Moyen', 'Bon', 'Fort'],
+            sw: ['', 'Dhaifu', 'Wastani', 'Nzuri', 'Imara'],
+            ar: ['', 'ضعيفة', 'متوسطة', 'جيدة', 'قوية']
+        }
+    };
+    window.regLang = MS_I18N.readStored();
+    window.regLang = MS_I18N.normalise(window.regLang);
+    window.rt = function(key) {
+        var entry = window.REG_L10N[key];
+        if (!entry) return key;
+        if (window.MS_I18N && typeof MS_I18N.t === 'function') return MS_I18N.t(entry, window.regLang);
+        return entry[window.regLang] || entry.en;
+    };
+    function applyPlaceholders() {
+        var map = { fullName: 'fullNamePh', username: 'usernamePh', password: 'passwordPh', confirmPassword: 'confirmPh' };
+        Object.keys(map).forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.placeholder = window.rt(map[id]);
+        });
+    }
+    function setLang(code) {
+        code = MS_I18N.normalise(code);
+        window.regLang = code;
+        // Shared public-site key so every public page stays in sync (the admin
+        // panel uses its own separate key and is never affected by this).
+        localStorage.setItem(MS_I18N.STORAGE_KEY, code);
+        localStorage.removeItem('noorAdminLang');
+        localStorage.removeItem('noorLang');
+buttons.forEach(b => b.classList.toggle('active', b.dataset.code === code));
+        // Arabic reads right-to-left; keep the document direction in step with
+        // the chosen language instead of pinning it to ltr.
+        document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = code;
+        document.body.className = document.body.className.replace(/\blang-\w+/g, '').trim();
+        document.body.classList.add('lang-' + code);
+        MS_I18N.applyTranslations(document);
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            el.style.display = el.dataset.lang === code ? '' : 'none';
+        });
+        applyPlaceholders();
+    }
+    buttons.forEach(b => b.addEventListener('click', () => setLang(b.dataset.code)));
+    // Follow the language chosen on any other page or tab (assets/js/i18n.js owns the
+    // `storage` listener and re-broadcasts it as ms:langchange).
+    document.addEventListener('ms:langchange', function (e) {
+        var lang = e.detail && e.detail.lang;
+        if (lang && lang !== window.regLang) setLang(lang);
+    });
+    setLang(window.regLang);
+})();
+</script>
+</body>
+</html>

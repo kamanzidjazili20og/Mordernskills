@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#06130e">
+<meta name="description" content="Modern Skills — Learn the Quran online with expert instructors. Tajweed, Tafsir, Hifz and Arabic courses.">
+<title>Modern Skills — Wige Qur'an kuri Interineti</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Modern Skills">
+<meta property="og:title" content="Modern Skills — Learn the Quran Online">
+<meta property="og:description" content="Learn the Quran online with expert instructors. Tajweed, Tafsir, Hifz and Arabic courses for Rwanda and East Africa.">
+<meta property="og:image" content="Images/mordern-skills-logo.png">
+<meta property="og:url" content="/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Modern Skills — Learn the Quran Online">
+<meta name="twitter:description" content="Tajweed, Tafsir, Hifz and Arabic courses with expert instructors.">
+<meta name="twitter:image" content="Images/mordern-skills-logo.png">
+<link rel="icon" type="image/png" href="Images/mordern-skills-logo.png">
+<link rel="apple-touch-icon" href="Images/mordern-skills-logo.png">
+<link rel="preload" as="image" href="Images/mordern-skills-logo.png" fetchpriority="high">
+<link rel="preload" as="image" href="Images/thumbnails/thumb_seed_11.jpg" fetchpriority="high">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&family=Playfair+Display:wght@600;700&display=swap" media="print" onload="this.media='all';this.onload=null">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&family=Playfair+Display:wght@600;700&display=swap"></noscript>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(ellipse 60% 40% at 18% -5%, rgba(212,168,83,0.16) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 35% at 88% 4%, rgba(52,211,153,0.1) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 50% at 50% 115%, rgba(10,94,69,0.5) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 96% 60%, rgba(212,168,83,0.07) 0%, transparent 45%),
+        linear-gradient(165deg, #03130e 0%, #05251a 46%, #03100b 100%);
+    background-attachment: fixed;
+}
+
+body::selection { background: rgba(212,168,83,0.35); color: #fff; }
+
+/* ===== DECORATIVE BACKGROUND LAYERS ===== */
+.pattern-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92' viewBox='0 0 92 92'%3E%3Cg fill='none' stroke='%23d4a853' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M46 8 L84 46 L46 84 L8 46 Z'/%3E%3Ccircle cx='46' cy='46' r='16'/%3E%3Ccircle cx='46' cy='46' r='24'/%3E%3Cpath d='M46 22 L70 46 L46 70 L22 46 Z'/%3E%3Cpath d='M46 30 L62 46 L46 62 L30 46 Z'/%3E%3Ccircle cx='46' cy='46' r='3'/%3E%3Cpath d='M46 0 L92 46 L46 92 L0 46 Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 92px 92px;
+}
+.aurora {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.aurora::before,
+.aurora::after {
+    content: '';
+    position: absolute;
+    width: 55vw;
+    height: 55vw;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+}
+.aurora::before {
+    top: -18vw; left: -10vw;
+    background: radial-gradient(circle, rgba(212,168,83,0.22), transparent 65%);
+    animation: auroraFloat 18s ease-in-out infinite alternate;
+}
+.aurora::after {
+    bottom: -22vw; right: -12vw;
+    background: radial-gradient(circle, rgba(14,122,90,0.4), transparent 62%);
+    animation: auroraFloat 22s ease-in-out 4s infinite alternate-reverse;
+}
+@keyframes auroraFloat {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(6vw, -4vw) scale(1.15); }
+}
+.skyline {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: 240px;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='260' viewBox='0 0 1600 260'%3E%3Cg fill='%23e8c87a' fill-opacity='0.05'%3E%3Crect x='0' y='214' width='1600' height='46'/%3E%3Crect x='90' y='118' width='16' height='96'/%3E%3Ccircle cx='98' cy='110' r='12'/%3E%3Cpath d='M98 90l5 15h-10z'/%3E%3Crect x='1494' y='118' width='16' height='96'/%3E%3Ccircle cx='1502' cy='110' r='12'/%3E%3Cpath d='M1502 90l5 15h-10z'/%3E%3Cpath d='M700 214c0-92 58-150 100-176 42 26 100 84 100 176z'/%3E%3Ccircle cx='800' cy='30' r='16'/%3E%3Cpath d='M800 6l6 18h-12z'/%3E%3Cpath d='M390 214c0-56 32-96 60-118 28 22 60 62 60 118z'/%3E%3Cpath d='M1150 214c0-56 32-96 60-118 28 22 60 62 60 118z'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: center bottom;
+}
+
+/* Floating glow spots on cards' top corners */
+.gold-hairline {
+    position: relative;
+}
+.gold-hairline::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,83,0.55), transparent);
+}
+
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #17382a; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+a { text-decoration: none; color: inherit; }
+img { display: block; }
+
+body.lang-en [data-lang="rw"] { display: none !important; }
+body.lang-rw [data-lang="en"] { display: none !important; }
+
+.wrap, .featured-inner { position: relative; z-index: 1; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 36px; }
+
+/* ===== HEADER ===== */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 36px;
+    background: rgba(4,17,12,0.78);
+    backdrop-filter: blur(20px) saturate(150%);
+    border-bottom: 1px solid rgba(212,168,83,0.14);
+    box-shadow: 0 12px 44px -20px rgba(0,0,0,0.7);
+}
+.header::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    width: 220px;
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.7;
+}
+.header-left { display: flex; align-items: center; gap: 36px; }
+.logo { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.4px; }
+.logo .logo-img {
+    width: 36px; height: 36px; border-radius: 12px; object-fit: cover;
+    border: 1px solid rgba(212,168,83,0.5);
+    box-shadow: 0 0 16px rgba(212,168,83,0.35);
+}
+.logo i { color: var(--gold); font-size: 22px; filter: drop-shadow(0 0 8px rgba(212,168,83,0.5)); }
+.nav-links { display: flex; gap: 4px; }
+.nav-links a {
+    color: var(--text-sec); font-size: 14px; font-weight: 500;
+    padding: 8px 14px; border-radius: 10px; transition: all .2s;
+    position: relative;
+}
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 50%; bottom: 3px;
+    width: 0; height: 2px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    background: var(--grad-gold);
+    transition: width .25s ease;
+}
+.nav-links a:hover::after, .nav-links a.active::after { width: 50%; }
+.nav-links a:hover, .nav-links a.active { color: var(--text); background: rgba(212,168,83,0.1); }
+.header-right { display: flex; align-items: center; gap: 10px; }
+
+/* ===== LANGUAGE SELECTOR (globe dropdown) ===== */
+.lang-select { position: relative; }
+.lang-trigger {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 13px; border-radius: 11px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    color: var(--text-sec); font-size: 12px; font-weight: 700; letter-spacing: 0.4px;
+    font-family: inherit; cursor: pointer; transition: all .2s;
+    user-select: none;
+}
+.lang-trigger:hover { border-color: rgba(212,168,83,0.45); color: var(--text); background: rgba(212,168,83,0.09); box-shadow: 0 0 18px rgba(212,168,83,0.16); }
+.lang-trigger .globe-icon {
+    color: var(--gold); font-size: 14px;
+    filter: drop-shadow(0 0 7px rgba(212,168,83,0.55));
+    animation: globeSpin 14s linear infinite;
+}
+.lang-select:hover .globe-icon { animation-play-state: running; }
+@keyframes globeSpin { to { transform: rotate(360deg); } }
+.lang-caret { font-size: 9px; opacity: 0.75; transition: transform .2s ease; }
+.lang-select.open .lang-caret { transform: rotate(180deg); }
+
+.lang-menu {
+    position: absolute; top: calc(100% + 10px); right: 0; z-index: 300;
+    min-width: 224px; padding: 7px;
+    background: rgba(7,25,18,0.98);
+    backdrop-filter: blur(22px) saturate(150%);
+    border: 1px solid rgba(212,168,83,0.26);
+    border-radius: 14px;
+    box-shadow: 0 26px 66px -20px rgba(0,0,0,0.8), 0 0 36px -14px rgba(212,168,83,0.35);
+    opacity: 0; visibility: hidden; transform: translateY(8px);
+    transition: opacity .18s ease, transform .18s ease, visibility .18s;
+}
+.lang-menu::before { /* little arrow pointing to the globe */
+    content: '';
+    position: absolute; top: -5px; right: 22px;
+    width: 10px; height: 10px;
+    background: rgba(7,25,18,0.98);
+    border-left: 1px solid rgba(212,168,83,0.26); border-top: 1px solid rgba(212,168,83,0.26);
+    transform: rotate(45deg);
+}
+.lang-select.open .lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.lang-option {
+    display: flex; align-items: center; gap: 11px;
+    padding: 10px 12px; border-radius: 9px;
+    font-size: 13px; font-weight: 600; color: var(--text-sec);
+    cursor: pointer; transition: all .15s;
+    border: none; background: none; width: 100%; text-align: left; font-family: inherit;
+}
+.lang-option:hover { background: rgba(212,168,83,0.09); color: var(--text); }
+.lang-option.active { background: rgba(212,168,83,0.18); color: var(--gold-light); }
+.lang-option.active::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 10px; margin-left: auto; color: var(--gold); }
+.lang-option .flag { font-size: 18px; line-height: 1; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5)); }
+.lang-option .lname { font-weight: 700; }
+.lang-option .lnative { margin-left: auto; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+
+.btn-admin {
+    color: var(--gold); font-size: 13px; font-weight: 600;
+    padding: 8px 16px; border-radius: 10px;
+    border: 1px solid rgba(212,168,83,0.24); transition: all .2s;
+}
+.btn-admin:hover { background: rgba(212,168,83,0.12); border-color: rgba(212,168,83,0.5); box-shadow: 0 0 18px rgba(212,168,83,0.2); }
+
+.menu-toggle {
+    display: none;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    color: var(--text-sec);
+    font-size: 15px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+}
+.menu-toggle:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+
+/* ===== FEATURED ===== */
+.featured { position: relative; min-height: 78vh; display: flex; align-items: flex-end; overflow: hidden; }
+.featured::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 50% 30% at 50% 0%, rgba(212,168,83,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 85% 40%, rgba(14,122,90,0.22) 0%, transparent 60%);
+}
+.featured-bg { position: absolute; inset: 0; }
+.featured-bg img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
+    animation: slowZoom 26s ease-in-out infinite alternate;
+}
+@keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+.featured-shade {
+    position: absolute; inset: 0;
+    background:
+        linear-gradient(90deg, rgba(3,16,12,0.97) 0%, rgba(3,16,12,0.82) 46%, rgba(3,16,12,0.35) 100%),
+        linear-gradient(0deg, var(--bg) 2%, transparent 46%);
+}
+.featured-inner {
+    max-width: 1320px; margin: 0 auto; padding: 0 36px 66px;
+    width: 100%;
+    display: flex; align-items: flex-end; gap: 48px; justify-content: space-between;
+    position: relative; z-index: 3;
+}
+.featured-info { max-width: 660px; padding-bottom: 8px; }
+.f-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 27px; color: var(--gold-light);
+    letter-spacing: 0.5px; margin-bottom: 12px;
+    opacity: 0.95; text-shadow: 0 0 34px rgba(212,168,83,0.45);
+}
+.f-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+    color: var(--gold-light);
+    padding: 7px 15px; border-radius: 100px;
+    background: rgba(212,168,83,0.12); border: 1px solid rgba(212,168,83,0.35);
+    margin-bottom: 18px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 6px 22px -8px rgba(212,168,83,0.3);
+}
+.f-badge .sep { opacity: 0.6; }
+.featured-info h1 {
+    font-size: 50px; line-height: 1.08; font-weight: 800; letter-spacing: -1px; margin-bottom: 14px;
+    text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+}
+.featured-info p { font-size: 15.5px; line-height: 1.65; color: var(--text-sec); margin-bottom: 20px; max-width: 560px; }
+.f-meta { display: flex; flex-wrap: wrap; gap: 18px; font-size: 13px; color: var(--text-sec); margin-bottom: 28px; }
+.f-meta span {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 5px 11px;
+    border-radius: 100px;
+    background: rgba(4,18,13,0.55);
+    border: 1px solid rgba(212,168,83,0.14);
+    backdrop-filter: blur(4px);
+}
+.f-meta i { color: var(--gold); font-size: 12px; }
+.f-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-gold, .btn-ghost {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 26px; border-radius: 12px;
+    font-size: 14px; font-weight: 700; transition: all .2s;
+    position: relative; overflow: hidden;
+}
+.btn-gold {
+    background: var(--grad-gold); color: #14100a;
+    box-shadow: 0 8px 28px rgba(212,168,83,0.38), inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.btn-gold::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -80%;
+    width: 50%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent);
+    transform: skewX(-20deg);
+    animation: shineSweep 3.2s ease-in-out infinite;
+}
+@keyframes shineSweep { 0%, 60% { left: -80%; } 100% { left: 130%; } }
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(212,168,83,0.5); }
+.btn-ghost { border: 1px solid var(--border-strong); color: var(--text); background: rgba(255,255,255,0.05); backdrop-filter: blur(6px); }
+.btn-ghost:hover { background: rgba(212,168,83,0.14); border-color: rgba(212,168,83,0.6); transform: translateY(-2px); }
+
+.featured-poster {
+    flex-shrink: 0; width: 240px;
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 34px 90px rgba(0,0,0,0.75), 0 0 0 1px rgba(212,168,83,0.35), 0 12px 40px -10px rgba(212,168,83,0.3);
+    border: 1px solid rgba(212,168,83,0.35);
+    transform: rotate(2deg);
+    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.featured-poster:hover { transform: rotate(0deg) translateY(-8px) scale(1.02); border-color: rgba(212,168,83,0.7); box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(212,168,83,0.5), 0 0 50px rgba(212,168,83,0.25); }
+.featured-poster img { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
+
+/* "Taught by" credit under the featured lesson copy */
+.f-instructor {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 18px;
+    font-size: 13.5px;
+    color: var(--text-sec);
+}
+.f-instructor-avatar {
+    width: 34px; height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
+    color: #14100a;
+    background: var(--grad-gold);
+    border: 1.5px solid rgba(212,168,83,0.5);
+    box-shadow: 0 6px 18px -6px rgba(212,168,83,0.5);
+}
+.f-instructor em { font-style: normal; }
+.f-instructor strong { color: var(--text); font-weight: 700; }
+@media (max-width: 480px) { .f-instructor { font-size: 12.5px; } }
+
+/* ===== STATS BAND ===== */
+.stats-band {
+    margin-top: -34px;
+    position: relative; z-index: 4;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    background: linear-gradient(160deg, rgba(13,42,31,0.92), rgba(8,30,22,0.94));
+    border: 1px solid rgba(212,168,83,0.22);
+    border-radius: 20px;
+    padding: 28px 34px;
+    box-shadow: var(--shadow), 0 0 40px -18px rgba(212,168,83,0.4);
+    backdrop-filter: blur(14px);
+}
+.stats-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background:
+        radial-gradient(ellipse 40% 60% at 12% 50%, rgba(212,168,83,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 88% 50%, rgba(52,211,153,0.06) 0%, transparent 60%);
+    pointer-events: none;
+}
+.empty-stats {
+    grid-column: 1 / -1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    text-align: center;
+    color: var(--text-sec);
+    font-size: 14.5px;
+    font-weight: 500;
+    line-height: 1.6;
+    padding: 10px 0;
+}
+.empty-stats i { font-size: 26px; color: var(--gold); opacity: 0.6; }
+.stat { display: flex; align-items: center; gap: 16px; position: relative; }
+.stat-icon {
+    width: 54px; height: 54px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 16px; font-size: 20px; color: var(--gold-light);
+    background: linear-gradient(160deg, rgba(212,168,83,0.2), rgba(212,168,83,0.05));
+    border: 1px solid rgba(212,168,83,0.3);
+    box-shadow: 0 10px 26px -8px rgba(212,168,83,0.3);
+}
+.stat-num {
+    display: block; font-size: 28px; font-weight: 800; letter-spacing: -0.5px;
+    background: var(--grad-gold);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-lbl { display: block; font-size: 12.5px; color: var(--text-sec); margin-top: 2px; }
+.stat + .stat { border-left: 1px solid rgba(255,255,255,0.07); padding-left: 22px; }
+
+/* ===== ABOUT BAND ===== */
+.about-band {
+    margin-top: 40px; position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: center;
+    background: linear-gradient(160deg, rgba(13,42,31,0.92), rgba(8,30,22,0.94));
+    border: 1px solid rgba(212,168,83,0.22); border-radius: 20px;
+    padding: 34px 36px; box-shadow: var(--shadow), 0 0 40px -18px rgba(212,168,83,0.4);
+    scroll-margin-top: 90px; overflow: hidden;
+}
+.about-band::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 45% 70% at 10% 50%, rgba(212,168,83,0.09) 0%, transparent 60%);
+}
+.about-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.about-band h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 10px; }
+.about-band h2 em { font-style: normal; color: var(--gold-light); }
+.about-band > div:first-child > p { font-size: 14px; line-height: 1.7; color: var(--text-sec); max-width: 560px; }
+.about-feats { display: flex; flex-direction: column; gap: 12px; position: relative; }
+.about-feat { display: flex; align-items: center; gap: 12px; font-size: 13.5px; font-weight: 600; color: var(--text); background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+.about-feat i { color: var(--gold); font-size: 15px; width: 20px; text-align: center; flex-shrink: 0; }
+.about-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; position: relative; }
+@media (max-width: 900px) { .about-band { grid-template-columns: 1fr; padding: 26px 22px; } }
+
+/* ===== ROW SECTIONS ===== */
+.row-section { margin-top: 54px; }
+.row-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
+.row-head h2 { font-size: 21px; font-weight: 700; letter-spacing: -0.3px; position: relative; padding-bottom: 10px; }
+.row-head h2::after {
+    content: ''; position: absolute; left: 0; bottom: 0;
+    width: 40px; height: 3px; border-radius: 3px;
+    background: var(--grad-gold);
+    box-shadow: 0 0 12px rgba(212,168,83,0.5);
+}
+.row-head h2 em { font-style: normal; color: var(--gold-light); text-shadow: 0 0 18px rgba(212,168,83,0.4); }
+.row-head.center { justify-content: center; }
+.row-head.center h2::after { left: 50%; transform: translateX(-50%); }
+.row-head.center h2 { text-align: center; }
+.view-more {
+    font-size: 13px; font-weight: 600; color: var(--text-sec);
+    display: inline-flex; align-items: center; gap: 7px; transition: all .2s;
+}
+.view-more:hover { color: var(--gold-light); }
+
+/* ===== EMPTY STATE (no lessons) ===== */
+.empty-lessons, .empty-instructors {
+    position: relative;
+    text-align: center;
+    padding: 64px 28px;
+    border-radius: 24px;
+    background: var(--card);
+    border: 1px dashed rgba(212,168,83,0.32);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    grid-column: 1 / -1;
+}
+.empty-lessons::before, .empty-instructors::before {
+    content: '';
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 55% 75% at 50% 0%, rgba(212,168,83,0.09) 0%, transparent 62%);
+}
+.empty-lessons .empty-icon, .empty-instructors .empty-icon {
+    position: relative;
+    width: 84px; height: 84px;
+    margin: 0 auto 20px;
+    border-radius: 26px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px; color: var(--gold-light);
+    background: linear-gradient(160deg, rgba(212,168,83,0.22), rgba(212,168,83,0.05));
+    border: 1px solid rgba(212,168,83,0.32);
+    box-shadow: 0 18px 44px -16px rgba(212,168,83,0.45);
+    animation: floatY 4.5s ease-in-out infinite;
+}
+.empty-lessons h3, .empty-instructors h3 {
+    position: relative;
+    font-size: 21px; font-weight: 800; letter-spacing: -0.3px;
+    margin-bottom: 10px;
+}
+.empty-lessons p, .empty-instructors p {
+    position: relative;
+    font-size: 14.5px; line-height: 1.7; color: var(--text-sec);
+    max-width: 540px; margin: 0 auto 26px;
+}
+.empty-lessons .empty-actions, .empty-instructors .empty-actions { position: relative; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.h-row {
+    display: flex; gap: 16px; overflow-x: auto;
+    padding: 6px 2px 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+.h-row::-webkit-scrollbar { display: none; }
+.h-row.expanded { flex-wrap: wrap; overflow-x: visible; }
+
+/* poster card */
+.pcard { flex: 0 0 auto; width: 196px; scroll-snap-align: start; }
+.pcard .poster {
+    position: relative; aspect-ratio: 2/3; border-radius: 16px; overflow: hidden;
+    background: linear-gradient(180deg, #123528, #0a1f16);
+    border: 1px solid rgba(212,168,83,0.16);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.pcard:hover .poster {
+    transform: translateY(-8px);
+    border-color: rgba(212,168,83,0.55);
+    box-shadow: 0 26px 50px rgba(0,0,0,0.65), 0 0 0 1px rgba(212,168,83,0.2), 0 14px 46px -12px rgba(212,168,83,0.35);
+}
+.pcard .poster img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.pcard:hover .poster img { transform: scale(1.07); }
+.pcard .poster::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(5,16,11,0.62) 100%);
+    pointer-events: none;
+}
+.cat-badge {
+    position: absolute; top: 10px; left: 10px; z-index: 2;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+    padding: 4px 9px; border-radius: 8px;
+    background: rgba(4,16,11,0.85); color: var(--gold-light); backdrop-filter: blur(4px);
+    border: 1px solid rgba(212,168,83,0.25);
+}
+.dur-badge {
+    position: absolute; bottom: 10px; right: 10px; z-index: 2;
+    font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: 8px;
+    background: rgba(4,16,11,0.85); color: var(--gold-light);
+}
+.free-badge {
+    position: absolute; bottom: 10px; left: 10px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 9.5px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 8px;
+    background: linear-gradient(135deg, #2ee07a, #1fb85f);
+    color: #06281a;
+    box-shadow: 0 4px 14px -4px rgba(37,211,102,0.6);
+}
+.free-badge i { font-size: 8px; }
+.paid-badge {
+    position: absolute; bottom: 10px; left: 10px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 9.5px; font-weight: 800; letter-spacing: 0.3px;
+    padding: 3px 8px; border-radius: 8px;
+    background: linear-gradient(135deg, #f5c26b, #c9942f);
+    color: #241703;
+    box-shadow: 0 4px 14px -4px rgba(212,168,83,0.6);
+}
+.paid-badge i { font-size: 8px; }
+.pcard .pmeta { font-size: 12px; color: var(--text-muted); margin-top: 4px; display: flex; align-items: center; gap: 6px; }
+.pcard .pmeta i { color: var(--gold); font-size: 10px; flex-shrink: 0; }
+.poster-hover {
+    position: absolute; inset: 0; z-index: 3;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(4,16,11,0.42);
+    opacity: 0; transition: opacity .25s;
+}
+.pcard:hover .poster-hover { opacity: 1; }
+.poster-hover i {
+    width: 54px; height: 54px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #14100a;
+    background: var(--grad-gold);
+    box-shadow: 0 8px 26px rgba(212,168,83,0.5);
+    padding-left: 4px;
+}
+.pcard h3 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-top: 12px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+}
+
+.pcard .pcredits {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 11px; color: var(--text-muted); margin-top: 7px;
+}
+.pcard .pcredits .rate { color: var(--gold-light); }
+.pcard .pcredits i { font-size: 9px; margin-right: 3px; color: var(--gold); }
+.pcard .pcredits .rate i { color: var(--gold); }
+.pcard .pcredits .lng { color: var(--gold-light); font-weight: 800; letter-spacing: 0.4px; }
+.pcard .pcredits .lng i { color: var(--gold); }
+.pcard .pdesc {
+    font-size: 11.5px; color: var(--text-sec); line-height: 1.5;
+    margin-top: 6px;
+    overflow: hidden; display: -webkit-box;
+    -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2;
+}
+.vid-badge {
+    position: absolute; top: 10px; right: 10px; z-index: 2;
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: #06281a;
+    background: linear-gradient(135deg, #2ee07a, #1fb85f);
+    box-shadow: 0 4px 14px -4px rgba(37,211,102,0.7);
+    padding-left: 2px;
+}
+/* oshakurfilms-style category blocks on the homepage */
+.cat-block { scroll-margin-top: 90px; }
+.row-total {
+    font-size: 12px; font-weight: 700; color: var(--text-muted);
+    padding: 5px 12px; border-radius: 100px;
+    background: rgba(212,168,83,0.08); border: 1px solid rgba(212,168,83,0.2);
+    white-space: nowrap;
+}
+.cat-block-head { align-items: center; }
+.cat-block-head .cat-count {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 800; color: var(--gold-light);
+    padding: 5px 12px; border-radius: 100px;
+    background: rgba(212,168,83,0.1); border: 1px solid rgba(212,168,83,0.25);
+}
+.cat-block-head .cat-count i { font-size: 10px; }
+.cat-block-desc { font-size: 13px; color: var(--text-sec); margin: -6px 0 4px; max-width: 720px; line-height: 1.6; }
+.cat-block-teachers { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+.cat-block-teachers i { color: var(--gold); margin-right: 6px; font-size: 11px; }
+.cat-grid {
+    display: grid; gap: 22px 18px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    padding: 6px 2px 8px;
+}
+.cat-grid .pcard { width: auto; flex: none; }
+@media (max-width: 640px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 14px 10px; }
+}
+
+/* ===== INSTRUCTORS (personas) ===== */
+.inst-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+.inst-card {
+    position: relative;
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 18px;
+    border-radius: 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    overflow: hidden;
+}
+.inst-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 2px;
+    border-radius: 2px;
+    background: var(--grad-gold);
+    opacity: 0;
+    transition: opacity .3s;
+}
+.inst-card:hover::before { opacity: 1; }
+.inst-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212,168,83,0.45);
+    box-shadow: 0 24px 50px -18px rgba(0,0,0,0.75), 0 0 30px -12px rgba(212,168,83,0.35);
+}
+.inst-avatar {
+    flex-shrink: 0;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; color: #14100a;
+    background: var(--grad-gold);
+    overflow: hidden;
+    border: 2px solid rgba(212,168,83,0.55);
+    box-shadow: 0 8px 22px -6px rgba(212,168,83,0.45);
+}
+.inst-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.inst-info { min-width: 0; }
+.inst-info h4 { font-size: 14px; font-weight: 700; line-height: 1.3; margin-bottom: 3px; }
+.inst-exp { font-size: 11.5px; color: var(--gold-light); font-weight: 600; margin-bottom: 6px; }
+.inst-bio {
+    font-size: 11.5px; color: var(--text-sec); line-height: 1.6;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+.inst-count {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10.5px; font-weight: 700; color: var(--text-muted);
+    padding: 3px 10px; border-radius: 100px;
+    background: rgba(212,168,83,0.08);
+    border: 1px solid rgba(212,168,83,0.18);
+}
+.inst-count i { color: var(--gold); font-size: 9px; }
+
+/* ===== WHATSAPP CTA ===== */
+.wa-bar {
+    margin: 72px 0 0; border-radius: 20px; overflow: hidden;
+    display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+    padding: 22px 24px;
+    background:
+        radial-gradient(ellipse 40% 100% at 10% 50%, rgba(37,211,102,0.2) 0%, transparent 55%),
+        radial-gradient(ellipse 30% 100% at 90% 50%, rgba(212,168,83,0.1) 0%, transparent 50%),
+        linear-gradient(135deg, #0d2c1f 0%, #0a2117 60%, #0d2418 100%);
+    border: 1px solid rgba(37,211,102,0.28);
+    box-shadow: var(--shadow);
+}
+.wa-left { display: flex; align-items: center; gap: 14px; }
+.wa-icon {
+    width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #2ee07a, #1fb85f); color: #06281a; font-size: 22px;
+    box-shadow: 0 10px 28px rgba(37,211,102,0.45);
+}
+.wa-left h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.wa-left p { font-size: 12.5px; color: var(--text-sec); }
+.btn-wa {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: linear-gradient(135deg, #2ee07a, #1fb85f); color: #06281a; font-weight: 700; font-size: 13px;
+    padding: 11px 22px; border-radius: 12px; transition: all .2s;
+    box-shadow: 0 8px 26px rgba(37,211,102,0.35);
+}
+.btn-wa:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(37,211,102,0.5); }
+
+/* ===== FOOTER ===== */
+.footer { margin-top: 64px; border-top: 1px solid rgba(212,168,83,0.14); background: #030e0a; position: relative; z-index: 1; }
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,83,0.5), transparent);
+}
+.footer-inner { max-width: 1320px; margin: 0 auto; padding: 52px 36px 0; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr; gap: 40px; }
+.footer-brand h3 { font-size: 18px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.footer-brand h3 i { color: var(--gold); filter: drop-shadow(0 0 10px rgba(212,168,83,0.4)); }
+.footer-brand p { font-size: 13px; line-height: 1.7; color: var(--text-muted); max-width: 340px; margin-bottom: 18px; }
+.footer-social { display: flex; gap: 10px; }
+.footer-social a {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border); color: var(--text-sec); font-size: 14px; transition: all .2s;
+}
+.footer-social a:hover { background: rgba(212,168,83,0.16); color: var(--gold-light); border-color: rgba(212,168,83,0.4); transform: translateY(-3px); box-shadow: 0 8px 20px -6px rgba(212,168,83,0.4); }
+.footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-sec); margin-bottom: 16px; position: relative; padding-bottom: 8px; }
+.footer-col h4::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 24px; height: 2px;
+    border-radius: 2px;
+    background: var(--grad-gold);
+    opacity: 0.7;
+}
+.footer-col a, .footer-col span { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 11px; transition: color .2s; }
+.footer-col a:hover { color: var(--gold-light); }
+.footer-col .contact-row { display: flex; align-items: center; gap: 10px; }
+.footer-col .contact-row i { color: var(--gold); font-size: 12px; width: 16px; }
+.footer-bottom {
+    margin-top: 40px; padding: 20px 0;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    font-size: 12px; color: var(--text-muted);
+}
+.footer-bottom i { color: #ef4444; }
+
+/* ===== REVEAL ON SCROLL ===== */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.revealed { opacity: 1; transform: none; }
+
+@media (max-width: 1024px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .featured-inner { flex-direction: column-reverse; align-items: flex-start; }
+    .featured-poster { display: none; }
+    .featured-info { max-width: 100%; }
+    .stats-band { grid-template-columns: 1fr 1fr; gap: 18px; }
+    .stat + .stat { border-left: none; padding-left: 0; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .inst-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+    .header { padding: 12px 16px; }
+    .wrap { padding: 0 16px; }
+    .header-left { gap: 14px; }
+    .header-right { gap: 8px; }
+    .btn-admin { padding: 8px 12px; }
+    .btn-label { display: none; }
+    .menu-toggle { display: flex; }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        gap: 2px;
+        padding: 10px 16px 16px;
+        background: rgba(5,16,11,0.97);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 20px 40px -18px rgba(0,0,0,0.7);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; font-size: 15px; }
+    .featured { min-height: 60vh; }
+    .featured-inner { padding: 0 16px 36px; }
+    .featured-info h1 { font-size: 32px; }
+    .featured-info p { font-size: 14.5px; }
+    .f-arabic { font-size: 22px; }
+    .f-meta { gap: 12px; }
+    .stats-band { margin-top: -26px; padding: 20px 18px; }
+    .stat-icon { width: 44px; height: 44px; font-size: 16px; }
+    .stat-num { font-size: 21px; }
+    .step { padding: 28px 20px; }
+    .wa-bar { padding: 18px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .footer-inner { padding: 32px 16px 0; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .pcard { width: 160px; }
+    .btn-gold, .btn-ghost { padding: 12px 20px; font-size: 13px; }
+}
+@media (max-width: 480px) {
+    .header { padding: 10px 12px; }
+    .wrap { padding: 0 12px; }
+    .header-left .logo { font-size: 16px; }
+    .btn-admin { padding: 8px 10px; }
+    .lang-trigger { padding: 7px 10px; gap: 6px; }
+    .lang-trigger .lang-current { display: none; }
+    .lang-menu .lang-option { padding: 10px 12px; font-size: 13px; }
+    .btn-wa-link { display: none; }
+    .featured { min-height: 54vh; }
+    .featured-info h1 { font-size: 26px; }
+    .f-badge { font-size: 11px; padding: 6px 12px; }
+    .f-meta { gap: 10px; font-size: 12px; }
+    .f-btns { flex-direction: column; align-items: stretch; }
+    .f-btns .btn-gold, .f-btns .btn-ghost { justify-content: center; }
+    .stats-band { gap: 14px; padding: 18px 14px; }
+    .stat { gap: 10px; }
+    .stat-icon { width: 38px; height: 38px; font-size: 14px; }
+    .stat-num { font-size: 18px; }
+    .stat-lbl { font-size: 11px; }
+    .row-head h2 { font-size: 18px; }
+    .row-section { margin-top: 40px; }
+    .pcard { width: 150px; }
+    .inst-grid { grid-template-columns: 1fr; }
+    .step-icon { width: 56px; height: 56px; font-size: 22px; }
+    .step h4 { font-size: 16px; }
+    .wa-bar { flex-direction: column; align-items: flex-start; }
+    .btn-wa { width: 100%; justify-content: center; }
+    .footer-inner { padding: 28px 12px 0; }
+    .footer-grid { gap: 24px; }
+}
+
+/* ===== LESSONS LOADING SECTION ===== */
+.lessons-loading-section {
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
+    grid-column: 1 / -1;
+}
+.lessons-loading-card {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    padding: 48px 32px;
+    border-radius: 24px;
+    background: rgba(13,32,24,0.72);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(212,168,83,0.15);
+    box-shadow: 0 8px 32px -12px rgba(0,0,0,0.5);
+    transition: all 0.3s;
+}
+.lessons-loading-card:hover {
+    border-color: rgba(212,168,83,0.3);
+    box-shadow: 0 12px 40px -8px rgba(212,168,83,0.2);
+}
+.lessons-loading-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--gold);
+    background: linear-gradient(160deg, rgba(212,168,83,0.2), rgba(212,168,83,0.05));
+    border: 2px solid rgba(212,168,83,0.3);
+    margin: 0 auto 24px;
+    box-shadow: 0 10px 30px -8px rgba(212,168,83,0.4);
+    animation: floatY 3s ease-in-out infinite;
+}
+@keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+.lessons-loading-bar-wrap {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+.lessons-loading-bar {
+    height: 100%;
+    width: 40%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    background-size: 200% 100%;
+    border-radius: 3px;
+    animation: shimmer 1.5s ease-in-out infinite;
+    box-shadow: 0 0 12px rgba(212,168,83,0.5);
+}
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+.lessons-loading-card h3 {
+    font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text);
+    background: var(--grad-gold);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.lessons-loading-card p {
+    font-size: 14px; color: var(--text-muted); line-height: 1.6;
+}
+
+/* ===== CATEGORY GRID SECTION (oshakurfilms style) ===== */
+.category-grid-section {
+    margin-top: 56px;
+}
+.category-section {
+    margin-bottom: 48px;
+}
+.category-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(212,168,83,0.15);
+}
+.category-section-head h2 {
+    font-size: 22px;
+    font-weight: 800;
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+.category-section-head .view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+    transition: all 0.2s;
+    padding: 8px 16px;
+    border: 1px solid rgba(212,168,83,0.3);
+    border-radius: 100px;
+    background: rgba(212,168,83,0.08);
+}
+.category-section-head .view-all:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+    transform: translateX(4px);
+}
+.category-lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+@media (max-width: 1024px) {
+    .category-lessons-grid {
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 16px;
+    }
+}
+@media (max-width: 640px) {
+    .category-lessons-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .category-section-head h2 { font-size: 18px; }
+}
+.lesson-grid-card {
+    background: rgba(13,32,24,0.72);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+}
+.lesson-grid-card:hover {
+    border-color: rgba(212,168,83,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px -12px rgba(0,0,0,0.4);
+}
+.lesson-grid-poster {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+.lesson-grid-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.lesson-grid-card:hover .lesson-grid-poster img {
+    transform: scale(1.05);
+}
+.lesson-grid-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: var(--gold);
+    color: var(--bg);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.lesson-grid-duration {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    backdrop-filter: blur(4px);
+}
+.lesson-grid-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.lesson-grid-card:hover .lesson-grid-play {
+    opacity: 1;
+}
+.lesson-grid-play i {
+    font-size: 40px;
+    color: var(--gold);
+    text-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s;
+}
+.lesson-grid-card:hover .lesson-grid-play i {
+    transform: scale(1);
+}
+.lesson-grid-info {
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.lesson-grid-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--text);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.lesson-grid-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+.lesson-grid-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.lesson-grid-meta i {
+    font-size: 10px;
+    color: var(--gold);
+}
+.lesson-grid-instructor {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ===== CATEGORY GRID SECTION (oshakurfilms style) =====
+   Each category gets a unique color design based on its assigned color.
+*/
+.category-grid-hero {
+    text-align: center;
+    padding: 40px 0 10px;
+}
+.category-grid-hero h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+}
+.category-grid-hero p {
+    font-size: 14px;
+    color: var(--text-sec);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.category-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+}
+
+/* Individual category card — each has its own color theme */
+.cat-grid-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+}
+.cat-grid-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 56px -16px rgba(0,0,0,0.6), 0 0 40px -12px rgba(212,168,83,0.3);
+}
+
+/* Category color top accent bar */
+.cat-grid-card .cat-accent-bar {
+    height: 4px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.cat-grid-card .cat-accent-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmerBar 3s ease-in-out infinite;
+}
+@keyframes shimmerBar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.cat-grid-card .cat-card-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+}
+
+/* Category icon circle */
+.cat-grid-card .cat-icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+    border: 1px solid rgba(212,168,83,0.3);
+    box-shadow: 0 8px 24px -6px rgba(212,168,83,0.4);
+}
+
+.cat-grid-card .cat-card-title {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+}
+
+.cat-grid-card .cat-card-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-sec);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Lead instructor credit on a category card */
+.cat-grid-card .cat-card-teacher {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-sec);
+    min-width: 0;
+}
+.cat-grid-card .cat-card-teacher > span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cat-grid-card .cat-teacher-avatar {
+    width: 24px; height: 24px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9.5px; font-weight: 800; letter-spacing: 0.2px;
+    color: #14100a;
+    background: var(--grad-gold);
+    border: 1px solid rgba(212,168,83,0.4);
+}
+
+/* Lesson count badge */
+.cat-grid-card .cat-lesson-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 100px;
+    width: fit-content;
+    margin-top: 4px;
+}
+
+/* Quick lesson thumbnails strip */
+.cat-grid-card .cat-lesson-strip {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 0;
+    scrollbar-width: none;
+    margin-top: auto;
+}
+.cat-grid-card .cat-lesson-strip::-webkit-scrollbar { display: none; }
+
+.cat-grid-card .strip-thumb {
+    flex: 0 0 auto;
+    width: 72px;
+    height: 42px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color .2s;
+}
+.cat-grid-card .strip-thumb:hover { border-color: rgba(212,168,83,0.4); }
+.cat-grid-card .strip-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+.cat-grid-card .strip-thumb .strip-dur {
+    position: absolute;
+    bottom: 2px;
+    right: 3px;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    backdrop-filter: blur(2px);
+}
+.cat-grid-card .strip-thumb .strip-video-badge {
+    position: absolute;
+    bottom: 2px;
+    left: 3px;
+    font-size: 9px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: rgba(37,211,102,0.95);
+    color: #06281a;
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cat-grid-card .cat-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: auto;
+    padding: 6px 0;
+    transition: gap .2s;
+}
+.cat-grid-card .cat-view-all:hover { gap: 10px; }
+.cat-grid-card .cat-view-all i { font-size: 10px; }
+
+/* Category-specific color variations */
+.cat-grid-card[data-color="gold"] .cat-accent-bar { background: linear-gradient(90deg, #d4a853, #f0d9a0, #d4a853); }
+.cat-grid-card[data-color="gold"] .cat-icon-circle { background: linear-gradient(160deg, rgba(212,168,83,0.3), rgba(212,168,83,0.05)); color: #d4a853; }
+.cat-grid-card[data-color="gold"] .cat-lesson-count { background: rgba(212,168,83,0.1); color: #d4a853; border: 1px solid rgba(212,168,83,0.2); }
+.cat-grid-card[data-color="gold"] .cat-view-all { color: #d4a853; }
+
+.cat-grid-card[data-color="green"] .cat-accent-bar { background: linear-gradient(90deg, #34d399, #6ee7b7, #34d399); }
+.cat-grid-card[data-color="green"] .cat-icon-circle { background: linear-gradient(160deg, rgba(52,211,153,0.3), rgba(52,211,153,0.05)); color: #34d399; }
+.cat-grid-card[data-color="green"] .cat-lesson-count { background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); }
+.cat-grid-card[data-color="green"] .cat-view-all { color: #34d399; }
+
+.cat-grid-card[data-color="blue"] .cat-accent-bar { background: linear-gradient(90deg, #60a5fa, #93c5fd, #60a5fa); }
+.cat-grid-card[data-color="blue"] .cat-icon-circle { background: linear-gradient(160deg, rgba(96,165,250,0.3), rgba(96,165,250,0.05)); color: #60a5fa; }
+.cat-grid-card[data-color="blue"] .cat-lesson-count { background: rgba(96,165,250,0.1); color: #60a5fa; border: 1px solid rgba(96,165,250,0.2); }
+.cat-grid-card[data-color="blue"] .cat-view-all { color: #60a5fa; }
+
+.cat-grid-card[data-color="purple"] .cat-accent-bar { background: linear-gradient(90deg, #a78bfa, #c4b5fd, #a78bfa); }
+.cat-grid-card[data-color="purple"] .cat-icon-circle { background: linear-gradient(160deg, rgba(167,139,250,0.3), rgba(167,139,250,0.05)); color: #a78bfa; }
+.cat-grid-card[data-color="purple"] .cat-lesson-count { background: rgba(167,139,250,0.1); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); }
+.cat-grid-card[data-color="purple"] .cat-view-all { color: #a78bfa; }
+
+.cat-grid-card[data-color="rose"] .cat-accent-bar { background: linear-gradient(90deg, #fb7185, #fda4af, #fb7185); }
+.cat-grid-card[data-color="rose"] .cat-icon-circle { background: linear-gradient(160deg, rgba(251,113,133,0.3), rgba(251,113,133,0.05)); color: #fb7185; }
+.cat-grid-card[data-color="rose"] .cat-lesson-count { background: rgba(251,113,133,0.1); color: #fb7185; border: 1px solid rgba(251,113,133,0.2); }
+.cat-grid-card[data-color="rose"] .cat-view-all { color: #fb7185; }
+
+/* Default fallback */
+.cat-grid-card[data-color=""] .cat-accent-bar,
+.cat-grid-card:not([data-color]) .cat-accent-bar { background: linear-gradient(90deg, #d4a853, #f0d9a0, #d4a853); }
+.cat-grid-card[data-color=""] .cat-icon-circle,
+.cat-grid-card:not([data-color]) .cat-icon-circle { background: linear-gradient(160deg, rgba(212,168,83,0.3), rgba(212,168,83,0.05)); color: #d4a853; }
+.cat-grid-card[data-color=""] .cat-lesson-count,
+.cat-grid-card:not([data-color]) .cat-lesson-count { background: rgba(212,168,83,0.1); color: #d4a853; border: 1px solid rgba(212,168,83,0.2); }
+.cat-grid-card[data-color=""] .cat-view-all,
+.cat-grid-card:not([data-color]) .cat-view-all { color: #d4a853; }
+
+/* Empty state for category grid */
+.cat-grid-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 28px;
+    border-radius: 24px;
+    background: var(--card);
+    border: 1px dashed rgba(212,168,83,0.32);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+}
+.cat-grid-empty .empty-icon {
+    width: 84px; height: 84px;
+    margin: 0 auto 20px;
+    border-radius: 26px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px; color: var(--gold-light);
+    background: linear-gradient(160deg, rgba(212,168,83,0.22), rgba(212,168,83,0.05));
+    border: 1px solid rgba(212,168,83,0.32);
+    box-shadow: 0 18px 44px -16px rgba(212,168,83,0.45);
+    animation: floatY 4.5s ease-in-out infinite;
+}
+.cat-grid-empty h3 {
+    font-size: 21px; font-weight: 800; margin-bottom: 10px;
+}
+.cat-grid-empty p {
+    font-size: 14.5px; line-height: 1.7; color: var(--text-sec);
+    max-width: 540px; margin: 0 auto 26px;
+}
+
+@media (max-width: 768px) {
+    .category-grid-wrapper {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .category-grid-hero h2 { font-size: 22px; }
+}
+@media (max-width: 480px) {
+    .category-grid-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .cat-grid-card .cat-card-body { padding: 18px; }
+    .cat-grid-card .cat-card-title { font-size: 17px; }
+}
+
+/* ===== SPLASH / LOADING SCREEN ===== */
+body.loading { overflow: hidden; }
+
+#splash {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(ellipse 60% 45% at 50% 38%, rgba(14,122,90,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 30% at 50% 8%, rgba(212,168,83,0.18) 0%, transparent 55%),
+        linear-gradient(180deg, #031b13 0%, #04120d 55%, #03100b 100%);
+    transition: opacity .8s ease, visibility .8s ease;
+    overflow: hidden;
+}
+#splash.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+#splash.hide .splash-inner { opacity: 0; transform: translateY(18px) scale(.97); }
+#splash.hide .splash-footer { opacity: 0; }
+
+.splash-bg {
+    position: absolute;
+    inset: 0;
+    background: url('Images/thumbnails/thumb_seed_11.jpg') center 22% / cover no-repeat;
+    animation: splashZoom 16s ease-in-out infinite alternate;
+    filter: saturate(1.15);
+}
+@keyframes splashZoom { from { transform: scale(1.02); } to { transform: scale(1.16); } }
+
+.splash-shade {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 50% 42%, rgba(5,17,12,0.42) 0%, rgba(4,11,8,0.76) 55%, rgba(3,8,6,0.96) 100%),
+        linear-gradient(180deg, rgba(3,13,9,0.62) 0%, rgba(5,15,11,0.72) 100%);
+}
+
+.splash-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 50% 42%, rgba(212,168,83,0.16) 0%, transparent 46%),
+        radial-gradient(circle at 50% 112%, rgba(10,103,75,0.4) 0%, transparent 52%);
+    animation: glowBreath 5s ease-in-out infinite;
+}
+@keyframes glowBreath {
+    0%, 100% { opacity: .75; }
+    50% { opacity: 1.15; }
+}
+
+.splash-pattern {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.6;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23d4a853' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M48 4 L92 48 L48 92 L4 48 Z'/%3E%3Ccircle cx='48' cy='48' r='14'/%3E%3Ccircle cx='48' cy='48' r='22'/%3E%3Cpath d='M48 24 L72 48 L48 72 L24 48 Z'/%3E%3Ccircle cx='48' cy='48' r='3'/%3E%3Cpath d='M48 4 L48 92 M4 48 L92 48'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 96px 96px;
+}
+
+/* Star field / constellation sparks */
+.splash-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+.splash-stars span {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    box-shadow: 0 0 8px rgba(212,168,83,0.9), 0 0 18px rgba(212,168,83,0.5);
+    animation: twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle {
+    0%, 100% { opacity: .15; transform: scale(.6); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+.splash-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 34px 40px 42px;
+    max-width: 92vw;
+    animation: splashIn 1s cubic-bezier(0.22, 1, 0.36, 1) both, floatY 5s ease-in-out 1.2s infinite;
+    transition: opacity .8s ease, transform .8s ease;
+}
+@keyframes splashIn {
+    from { opacity: 0; transform: translateY(28px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* floatY is already defined above (shared by .lessons-loading-icon and .splash-inner) */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+.splash-emblem {
+    position: relative;
+    width: 156px;
+    height: 156px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeUp .8s ease .1s both;
+}
+.splash-halo {
+    position: absolute;
+    inset: -40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,83,0.38) 0%, rgba(212,168,83,0.1) 45%, transparent 72%);
+    filter: blur(12px);
+    animation: haloPulse 3.2s ease-in-out infinite;
+}
+@keyframes haloPulse {
+    0%, 100% { opacity: .5; transform: scale(.92); }
+    50% { opacity: 1; transform: scale(1.08); }
+}
+.progress-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+.progress-ring .ring-track {
+    fill: none;
+    stroke: rgba(212,168,83,0.2);
+    stroke-width: 3;
+}
+.progress-ring .ring-progress {
+    fill: none;
+    stroke: url(#splashRingGrad);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 464.96;
+    stroke-dashoffset: 464.96;
+    filter: drop-shadow(0 0 12px rgba(212,168,83,0.8));
+    transition: stroke-dashoffset .12s linear;
+}
+.splash-orbit {
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(212,168,83,0.45);
+    animation: spinRev 20s linear infinite;
+}
+.splash-orbit::after {
+    content: '';
+    position: absolute;
+    top: -4px; left: 50%;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    box-shadow: 0 0 18px rgba(212,168,83,1);
+}
+.splash-orbit2 {
+    position: absolute;
+    inset: -30px;
+    border-radius: 50%;
+    border: 1px dotted rgba(52,211,153,0.35);
+    animation: spinRev 34s linear infinite reverse;
+}
+.splash-orbit2::after {
+    content: '';
+    position: absolute;
+    bottom: 6px; left: 50%;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 14px rgba(52,211,153,1);
+}
+.splash-logo {
+    position: relative;
+    z-index: 2;
+    width: 116px; height: 116px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(212,168,83,0.25), rgba(212,168,83,0.05));
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 46px rgba(212,168,83,0.4), 0 0 90px rgba(212,168,83,0.14);
+}
+.splash-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+@keyframes spinRev { to { transform: rotate(-360deg); } }
+
+.splash-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(212,168,83,0.95);
+    margin-bottom: 12px;
+    animation: fadeUp .8s ease .2s both;
+}
+.splash-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1.15;
+    margin-bottom: 4px;
+    animation: fadeUp .8s ease .28s both;
+    background: var(--grad-gold);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 24px rgba(212,168,83,0.25));
+    background-size: 200% auto;
+    animation: fadeUp .8s ease .28s both, goldSheen 4s linear infinite;
+}
+@keyframes goldSheen {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+.splash-title span { -webkit-text-fill-color: transparent; }
+.splash-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 22px;
+    color: var(--gold-light);
+    margin: 8px 0 26px;
+    opacity: 0.96;
+    text-shadow: 0 0 40px rgba(212,168,83,0.5);
+    animation: fadeUp .8s ease .36s both;
+}
+
+.splash-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    animation: fadeUp .8s ease .46s both;
+}
+.splash-status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 12px rgba(52,211,153,0.9);
+    animation: dotPulse 1.6s ease-in-out infinite;
+    flex-shrink: 0;
+}
+@keyframes dotPulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.splash-msg {
+    font-size: 13px;
+    color: var(--text-sec);
+    letter-spacing: 0.2px;
+    min-width: 195px;
+    transition: opacity .3s ease;
+}
+
+.splash-bar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: min(300px, 74vw);
+    animation: fadeUp .8s ease .56s both;
+}
+.splash-pct {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+}
+.splash-bar {
+    width: 100%;
+    height: 5px;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.1);
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 0 1px rgba(212,168,83,0.15);
+}
+.splash-bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 5px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+    box-shadow: 0 0 24px rgba(212,168,83,0.9);
+}
+/* @keyframes shimmer is already defined above and shared with .lessons-loading-bar */
+
+.splash-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 26px;
+    animation: fadeUp .8s ease .64s both;
+}
+.splash-dots span {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 14px rgba(212,168,83,0.9);
+    animation: dotBounce 1.4s infinite ease-in-out;
+}
+.splash-dots span:nth-child(2) { animation-delay: 0.2s; }
+.splash-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.3; }
+    50% { transform: translateY(-8px); opacity: 1; }
+}
+
+.splash-footer {
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10.5px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(242,247,244,0.55);
+    text-shadow: 0 1px 14px rgba(0,0,0,0.85);
+    transition: opacity .8s ease;
+}
+.splash-footer::before,
+.splash-footer::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,83,0.6));
+}
+.splash-footer::after { transform: rotate(180deg); }
+
+@media (max-width: 640px) {
+    .splash-inner { padding: 24px 22px 30px; }
+    .splash-emblem { width: 126px; height: 126px; margin-bottom: 24px; }
+    .splash-halo { inset: -30px; }
+    .splash-orbit { inset: -13px; }
+    .splash-orbit2 { inset: -26px; }
+    .splash-logo { width: 92px; height: 92px; border-width: 2.5px; }
+    .splash-title { font-size: 33px; }
+    .splash-arabic { font-size: 19px; }
+    .splash-msg { font-size: 12px; min-width: 0; }
+    .splash-footer { bottom: 20px; letter-spacing: 2px; }
+}
+
+/* ===== RIGHT-TO-LEFT (Arabic) MIRRORING ===== */
+[dir="rtl"] .lang-option.active::after,
+[dir="rtl"] .lang-option .lnative { margin-left: 0; margin-right: auto; }
+[dir="rtl"] .stat + .stat { border-left: 1px solid var(--border); padding-left: 18px; border-right: none; padding-right: 0; }
+[dir="rtl"] .pcard .pcredits i { margin-right: 0; margin-left: 3px; }
+/* Directional glyphs must be mirrored, and numbers stay left-to-right. */
+[dir="rtl"] .fa-arrow-left, [dir="rtl"] .fa-arrow-right,
+[dir="rtl"] .fa-chevron-left, [dir="rtl"] .fa-chevron-right,
+[dir="rtl"] .fa-angle-left, [dir="rtl"] .fa-angle-right,
+[dir="rtl"] .fa-caret-left, [dir="rtl"] .fa-caret-right,
+[dir="rtl"] .fa-circle-right, [dir="rtl"] .fa-circle-left { transform: scaleX(-1); }
+[dir="rtl"] .lang-menu { right: auto; left: 0; }
+[dir="rtl"] .stat-num, [dir="rtl"] .d-inline-block { unicode-bidi: isolate; }
+</style>
+<script src="config.js"></script>
+<script src="assets/js/media.js"></script>
+<script src="assets/js/translations.js"></script>
+<script src="assets/js/i18n.js"></script>
+</head>
+<body class="loading">
+<a class="skip-link" href="#featured">Skip to content</a>
+
+<!-- ===== SPLASH / LOADING SCREEN ===== -->
+<div id="splash">
+    <div class="splash-bg"></div>
+    <div class="splash-shade"></div>
+    <div class="splash-glow"></div>
+    <div class="splash-pattern"></div>
+    <div class="splash-stars">
+        <span style="top:18%; left:14%; animation-delay:.2s"></span>
+        <span style="top:26%; left:82%; animation-delay:.8s"></span>
+        <span style="top:12%; left:60%; animation-delay:1.4s"></span>
+        <span style="top:34%; left:8%; animation-delay:.5s"></span>
+        <span style="top:22%; left:42%; animation-delay:2s"></span>
+        <span style="top:16%; left:94%; animation-delay:1s"></span>
+        <span style="top:40%; left:72%; animation-delay:.1s"></span>
+        <span style="top:8%; left:32%; animation-delay:1.8s"></span>
+        <span style="top:30%; left:28%; animation-delay:2.4s"></span>
+        <span style="top:10%; left:72%; animation-delay:.6s"></span>
+    </div>
+    <div class="splash-inner">
+        <div class="splash-emblem">
+            <div class="splash-halo"></div>
+            <svg class="progress-ring" width="160" height="160" viewBox="0 0 160 160">
+                <defs>
+                    <linearGradient id="splashRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#eccf8b"></stop>
+                        <stop offset="100%" stop-color="#d4a853"></stop>
+                    </linearGradient>
+                </defs>
+                <circle class="ring-track" cx="80" cy="80" r="74"></circle>
+                <circle class="ring-progress" id="splashRing" cx="80" cy="80" r="74"></circle>
+            </svg>
+            <div class="splash-orbit"></div>
+            <div class="splash-orbit2"></div>
+            <div class="splash-logo"><img src="Images/mordern-skills-logo.png" alt="Modern Skills logo"></div>
+        </div>
+        <div class="splash-eyebrow">Modern Skills Academy</div>
+        <div class="splash-title">Modern <span>Skills</span></div>
+        <div class="splash-arabic">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+        <div class="splash-status">
+            <span class="splash-status-dot"></span>
+            <span class="splash-msg" id="splashMsg">Preparing your lessons...</span>
+        </div>
+        <div class="splash-bar-wrap">
+            <div class="splash-pct" id="splashPct">0%</div>
+            <div class="splash-bar"><div class="splash-bar-fill" id="splashBarFill"></div></div>
+        </div>
+        <div class="splash-dots"><span></span><span></span><span></span></div>
+    </div>
+    <div class="splash-footer">Modern Skills Academy &middot; Wige Qur'an kuri Interineti</div>
+</div>
+
+<div class="pattern-bg"></div>
+<div class="skyline"></div>
+
+<header class="header">
+    <div class="header-left">
+        <a href="index.html" class="logo"><img src="Images/mordern-skills-logo.png" alt="Modern Skills logo" class="logo-img"> Modern Skills</a>
+        <nav class="nav-links">
+            <a href="#featured" class="active"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">الرئيسية</span></a>
+            <a href="#categoryRows"><span data-lang="en">Lessons</span><span data-lang="rw">Amasomo</span><span data-lang="fr">Leçons</span><span data-lang="sw">Masomo</span><span data-lang="ar">الدروس</span></a>
+            <a href="#about"><span data-lang="en">About us</span><span data-lang="rw">Turi Bande</span><span data-lang="fr">À propos</span><span data-lang="sw">Kuhusu Sisi</span><span data-lang="ar">من نحن</span></a>
+            <a href="books.html"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">الكتب</span></a>
+        </nav>
+    </div>
+    <div class="header-right">
+        <div class="lang-select" id="langToggle" title="Switch language">
+            <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-label="Choose language">
+                <i class="fas fa-globe-africa globe-icon"></i>
+                <span class="lang-current" id="langCurrent">EN</span>
+                <i class="fas fa-chevron-down lang-caret"></i>
+            </button>
+            <div class="lang-menu" id="langMenu" role="listbox">
+<span class="lang-option active" data-lang-code="en" role="option" tabindex="0"><span class="flag">🇬🇧</span><span class="lname">English</span><span class="lnative">English</span></span>
+                <span class="lang-option" data-lang-code="rw" role="option" tabindex="0"><span class="flag">🇷🇼</span><span class="lname">Kinyarwanda</span><span class="lnative">Ikinyarwanda</span></span>
+                <span class="lang-option" data-lang-code="fr" role="option" tabindex="0"><span class="flag">🇫🇷</span><span class="lname">French</span><span class="lnative">Français</span></span>
+                <span class="lang-option" data-lang-code="sw" role="option" tabindex="0"><span class="flag">🇰🇪</span><span class="lname">Swahili</span><span class="lnative">Kiswahili</span></span>
+                <span class="lang-option" data-lang-code="ar" role="option" tabindex="0"><span class="flag">🇸🇦</span><span class="lname">Arabic</span><span class="lnative">العربية</span></span>
+            </div>
+        </div>
+        <div id="authButtons">
+            <a href="login.html" class="btn-admin" style="font-size:12px;"><i class="fas fa-arrow-right-to-bracket"></i> <span class="btn-label"><span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Connexion</span><span data-lang="sw">Ingia</span><span data-lang="ar">تسجيل الدخول</span></span></a>
+            <a href="register.html" class="btn-admin" style="background:rgba(212,168,83,0.1);"><i class="fas fa-user-plus"></i> <span class="btn-label"><span data-lang="en">Register</span><span data-lang="rw">Iyandikishe</span><span data-lang="fr">S'inscrire</span><span data-lang="sw">Jisajili</span><span data-lang="ar">التسجيل</span></span></a>
+        </div>
+        <a href="https://wa.me/250781853141" target="_blank" class="btn-admin btn-wa-link"><i class="fab fa-whatsapp"></i> <span class="btn-label">WhatsApp</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+    </div>
+</header>
+
+<!-- ===== FEATURED ===== -->
+<section class="featured" id="featured"></section>
+
+<div class="wrap">
+
+    <!-- ===== STATS ===== -->
+    <div class="stats-band reveal" id="statsBand"></div>
+
+    <!-- ===== ABOUT US ===== -->
+    <section class="about-band reveal" id="about">
+        <div>
+            <div class="about-eyebrow"><span data-lang="en">About Us</span><span data-lang="rw">Turi Bande</span><span data-lang="fr">À propos de nous</span><span data-lang="sw">Kuhusu Sisi</span><span data-lang="ar">من نحن</span></div>
+            <h2><span data-lang="en">Learn the <em>Qur'an</em> the Right Way</span><span data-lang="rw">Wige <em>Qur'an</em> mu Buryo Bunoze</span><span data-lang="fr">Apprenez le <em>Coran</em> de la bonne manière</span><span data-lang="sw">Jifunze <em>Qur'an</em> kwa Njia Sahihi</span><span data-lang="ar">تعلّم <em>القرآن</em> بالطريقة الصحيحة</span></h2>
+            <p><span data-lang="en">Modern Skills is an online academy for Qur'an learning — Tajweed, Tafsir, Hifz and Arabic, taught step by step by certified instructors, in your language.</span><span data-lang="rw">Modern Skills ni ishuri ryo kuri interineti ryo kwiga Qur'an — Tajweed, Tafsir, Hifz n'Icyarabu, byigishwa buhoro buhoro n'abigisha bemewe, mu rurimi rwawe.</span><span data-lang="fr">Modern Skills est une académie en ligne pour apprendre le Coran — Tajwid, Tafsir, Hifz et arabe, enseignés pas à pas par des instructeurs certifiés, dans votre langue.</span><span data-lang="sw">Modern Skills ni chuo cha mtandaoni cha kujifunza Qur'an — Tajweed, Tafsir, Hifz na Kiarabu, kikifundishwa hatua kwa hatua na walimu waliothibitishwa, kwa lugha yako.</span><span data-lang="ar">Modern Skills أكاديمية عبر الإنترنت لتعلّم القرآن — التجويد والتفسير والحفظ والعربية، تُدرَّس خطوة بخطوة على يد معلمين معتمدين، بلغتك.</span></p>
+            <div class="about-cta">
+                <a href="books.html" class="btn-gold"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Books</span><span data-lang="rw">Soma Ibitabo</span><span data-lang="fr">Voir les livres</span><span data-lang="sw">Vinjari Vitabu</span><span data-lang="ar">تصفح الكتب</span></a>
+                <a href="https://wa.me/250781853141" target="_blank" class="btn-ghost"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
+            </div>
+        </div>
+        <div class="about-feats">
+            <div class="about-feat"><i class="fas fa-chalkboard-user"></i> <span data-lang="en">Certified expert teachers</span><span data-lang="rw">Abigisha babahanga bemewe</span><span data-lang="fr">Professeurs experts certifiés</span><span data-lang="sw">Walimu wataalamu waliothibitishwa</span><span data-lang="ar">معلمون خبراء معتمدون</span></div>
+            <div class="about-feat"><i class="fas fa-layer-group"></i> <span data-lang="en">Step-by-step structured lessons</span><span data-lang="rw">Amasomo yigishwa buhoro buhoro</span><span data-lang="fr">Leçons structurées pas à pas</span><span data-lang="sw">Masomo yaliyopangwa hatua kwa hatua</span><span data-lang="ar">دروس منظمة خطوة بخطوة</span></div>
+            <div class="about-feat"><i class="fas fa-video"></i> <span data-lang="en">Watch lessons anywhere</span><span data-lang="rw">Reba amasomo ahantu hose</span><span data-lang="fr">Regardez les leçons partout</span><span data-lang="sw">Tazama masomo popote</span><span data-lang="ar">شاهد الدروس في أي مكان</span></div>
+        </div>
+    </section>
+
+    <!-- ===== CATEGORY ROWS ===== -->
+    <div id="categoryRows"></div>
+
+    <!-- ===== INSTRUCTORS / PERSONAS ===== -->
+    <section class="row-section" id="instructorsSection" style="display:none;">
+        <div class="row-head reveal">
+            <h2><em><span data-lang="en">Our Instructors</span><span data-lang="rw">Abigisha Bacu</span><span data-lang="fr">Nos Instructeurs</span><span data-lang="sw">Walimu Wetu</span><span data-lang="ar">معلمونا</span></em></h2>
+        </div>
+        <div class="inst-grid" id="instructorsList"></div>
+    </section>
+
+<!-- ===== CATEGORY GRID SECTION (fallback only — hidden whenever lessons exist;
+          the #categoryRows movie-style rows above are the main listing) ===== -->
+     <section class="row-section category-grid-section" id="categoryGridSection" style="display:none;">
+         <div id="categoryGridContainer">
+             <!-- Categories with lessons will be rendered here dynamically -->
+         </div>
+     </section>
+
+    <!-- ===== WHATSAPP CTA ===== -->
+    <div class="wa-bar">
+        <div class="wa-left">
+            <div class="wa-icon"><i class="fab fa-whatsapp"></i></div>
+            <div>
+                <h3><span data-lang="en">Join our WhatsApp community</span><span data-lang="rw">Injira mu muryango wacu wa WhatsApp</span><span data-lang="fr">Rejoignez notre communauté WhatsApp</span><span data-lang="sw">Jiunge na jumuiya yetu ya WhatsApp</span><span data-lang="ar">انضم إلى مجتمعنا على واتساب</span></h3>
+                <p><span data-lang="en">Get lesson updates, reminders and support directly from our teachers.</span><span data-lang="rw">Bona amakuru y'amasomo, urwibutso n'inkunga ivuye ku bigisha bacu.</span><span data-lang="fr">Recevez les mises à jour des leçons, rappels et soutien directement de nos professeurs.</span><span data-lang="sw">Pata masasisho ya masomo, vikumbusho na msaada moja kwa moja kutoka kwa walimu wetu.</span><span data-lang="ar">احصل على تحديثات الدروس والتذكيرات والدعم مباشرة من معلمينا.</span></p>
+            </div>
+        </div>
+        <a href="https://wa.me/250781853141" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i> <span data-lang="en">Join Now</span><span data-lang="rw">Injira</span><span data-lang="fr">Rejoindre maintenant</span><span data-lang="sw">Jiunge Sasa</span><span data-lang="ar">انضم الآن</span></a>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3><i class="fas fa-book-quran"></i> Modern Skills</h3>
+                <p><span data-lang="en">Your trusted platform for learning the Quran online. Expert instructors, structured lessons, and a supportive community to guide you every step of the way.</span><span data-lang="rw">Uruhando rwawe rwizerwa rwo kwiga Qur'an kuri interineti. Abigisha babahanga, amasomo atunganyijwe, n'umuryango utera inkunga kugira ngo uyoborwe buri cyiciro.</span><span data-lang="fr">Votre plateforme de confiance pour apprendre le Coran en ligne. Instructeurs experts, leçons structurées, et une communauté bienveillante pour vous guider à chaque étape.</span><span data-lang="sw">Jukwaa lako la kuaminika la kujifunza Qur'an mtandaoni. Walimu wataalamu, masomo yaliyopangwa, na jumuiya inayokusaidia kila hatua.</span><span data-lang="ar">منصتك الموثوقة لتعلم القرآن عبر الإنترنت. معلمون خبراء، دروس منظمة، ومجتمع داعم يرشدك في كل خطوة.</span></p>
+                <div class="footer-social">
+                    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4><span data-lang="en">Quick Links</span><span data-lang="rw">Ihuza Ryihuta</span><span data-lang="fr">Liens rapides</span><span data-lang="sw">Viungo vya Haraka</span><span data-lang="ar">روابط سريعة</span></h4>
+                <a href="#featured"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">الرئيسية</span></a>
+                <a href="#about"><span data-lang="en">About us</span><span data-lang="rw">Turi Bande</span><span data-lang="fr">À propos</span><span data-lang="sw">Kuhusu Sisi</span><span data-lang="ar">من نحن</span></a>
+<a href="books.html"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">الكتب</span></a>
+            </div>
+            <div class="footer-col">
+                <h4><span data-lang="en">Programs</span><span data-lang="rw">Gahunda</span><span data-lang="fr">Programmes</span><span data-lang="sw">Programu</span><span data-lang="ar">البرامج</span></h4>
+                <a href="#quran"><span data-lang="en">Qur'an Courses</span><span data-lang="rw">Amasomo ya Qur'an</span><span data-lang="fr">Cours de Coran</span><span data-lang="sw">Kurso za Qur'an</span><span data-lang="ar">دورات القرآن</span></a>
+                <a href="#tajweed">Tajweed</a>
+                <a href="#tafsir">Tafsir</a>
+                <a href="#hifz">Hifz</a>
+                <a href="#arabic">Arabic</a>
+                <a href="#video-course">Video Course</a>
+            </div>
+            <div class="footer-col">
+                <h4><span data-lang="en">Contact</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contact</span><span data-lang="sw">Wasiliana</span><span data-lang="ar">اتصل بنا</span></h4>
+                <a href="https://wa.me/250781853141" target="_blank" rel="noopener" class="contact-row"><i class="fab fa-whatsapp"></i> +250781853141</a>
+                <a href="mailto:info@nooracademy.com" class="contact-row"><i class="fas fa-envelope"></i> info@nooracademy.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Modern Skills. <span data-lang="en">All rights reserved.</span><span data-lang="rw">Uburenganzira bwose buranazwe.</span><span data-lang="fr">Tous droits réservés.</span><span data-lang="sw">Haki zote zimehifadhiwa.</span><span data-lang="ar">جميع الحقوق محفوظة.</span></span>
+            <span><span data-lang="en">Made with</span><span data-lang="rw">Bikozwe n'</span><span data-lang="fr">Fait avec</span><span data-lang="sw">Imetengenezwa kwa</span><span data-lang="ar">صُنع بـ</span> <i class="fas fa-heart"></i> <span data-lang="en">for the Quran</span><span data-lang="rw">kubwa Qur'an</span><span data-lang="fr">pour le Coran</span><span data-lang="sw">kwa ajili ya Qur'an</span><span data-lang="ar">من أجل القرآن</span></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+// ===== ACTIVE LANGUAGE =====
+// Declared first so every later handler (splash, renders) can read it.
+// Read the saved preference through the shared runtime rather than localStorage
+// directly. It validates against the five languages the selector actually offers,
+// so a stale or hand-edited value can never leave the visitor in a language with
+// no UI. English is the default for a first-time visitor.
+let currentLang = MS_I18N.readStored();
+
+// ===== SPLASH / LOADING SCREEN =====
+(function () {
+    const SPLASH_MS = 10000;
+    const SHOWN_KEY = 'noorSplashShown';
+    const SPLASH_MSGS = {
+        en: ['Loading your lessons...', 'Finding nice reading sounds...', 'Sharpening your memory...', 'Almost there...'],
+        rw: ['Igirwa amasomo yawe...', 'Kurura inshuro nziza zo gusoma...', 'Noza amabazo yawe...', 'Bisigaye gato...'],
+        fr: ['Chargement de vos leçons...', 'Recherche de belles sonorités...', 'Fortification de votre mémoire...', 'Presque terminé...'],
+        sw: ['Inapakia somo lako...', 'Inatafuta sauti nzuri za kusoma...', 'Inafanya ubongo wako kuwa mkali...', 'Karibu kumaliza...'],
+        ar: ['جارٍ تحميل دروسك...', 'جارٍ البحث عن نغمات جميلة للقراءة...', 'تقوية ذاكرتك...', 'شبه الانتهاء...']
+    };
+    const msgs = SPLASH_MSGS[currentLang] || SPLASH_MSGS.en;
+    const el = document.getElementById('splash');
+    if (!el) return;
+
+    // Only welcome visitors once per browser session. The flag lives in
+    // sessionStorage, so it survives navigation (e.g. returning from the
+    // video page) but resets when the browser/tab is closed, bringing the
+    // loading screen back on the next fresh visit.
+    let sessionOk = false;
+    try {
+        sessionStorage.setItem('__splash_t', '1');
+        sessionStorage.removeItem('__splash_t');
+        sessionOk = true;
+    } catch (e) {}
+
+    if (sessionOk && sessionStorage.getItem(SHOWN_KEY)) {
+        document.body.classList.remove('loading');
+        el.remove();
+        return;
+    }
+
+    const barFill = document.getElementById('splashBarFill');
+    const pctEl = document.getElementById('splashPct');
+    const msgEl = document.getElementById('splashMsg');
+    const ring = document.getElementById('splashRing');
+    const RING_C = 2 * Math.PI * 74;
+    if (ring) {
+        ring.style.strokeDasharray = RING_C;
+        ring.style.strokeDashoffset = RING_C;
+    }
+    const t0 = performance.now();
+    let mi = 0;
+    const msgTimer = setInterval(function () {
+        mi = (mi + 1) % msgs.length;
+        if (msgEl) {
+            msgEl.style.opacity = 0;
+            setTimeout(function () {
+                msgEl.textContent = msgs[mi];
+                msgEl.style.opacity = 1;
+            }, 300);
+        }
+    }, 2600);
+    function finish() {
+        // The message rotator used to outlive the splash screen, so a
+        // `setInterval` kept firing against a detached node for the rest of
+        // the page's life.
+        clearInterval(msgTimer);
+        try { sessionStorage.setItem(SHOWN_KEY, '1'); } catch (e) {}
+        document.body.classList.remove('loading');
+        el.classList.add('hide');
+        setTimeout(function () { el.remove(); }, 220);
+    }
+    function tick() {
+        const p = Math.min((performance.now() - t0) / SPLASH_MS, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const pct = Math.round(eased * 100);
+        if (barFill) barFill.style.width = pct + '%';
+        if (pctEl) pctEl.textContent = pct + '%';
+        if (ring) ring.style.strokeDashoffset = RING_C * (1 - eased);
+        if (p < 1) requestAnimationFrame(tick);
+        else finish();
+    }
+    requestAnimationFrame(tick);
+})();
+
+// ===== AUTH STATE =====
+// Shows Sign In / Register when nobody is logged in, and the verified user
+// pill + logout when a session exists. The token is always re-checked
+// against the database (GET /api/auth/me) via verifyAuthSession() below,
+// so expired or deleted accounts fall back to the logged-out state.
+let authDefaultHTML = '';
+function renderAuthState(user) {
+    const authEl = document.getElementById('authButtons');
+    if (!authEl) return;
+    if (!authDefaultHTML) authDefaultHTML = authEl.innerHTML;
+    if (!user) {
+        authEl.innerHTML = authDefaultHTML;
+        // NOTE: do not call setLang() here — it is defined later in this
+        // script and would throw a TDZ error. Filter just these buttons
+        // to the active language instead (currentLang is declared at the
+        // top of this script, so it is always safe to read here).
+        authEl.querySelectorAll('[data-lang]').forEach(function (el) {
+            el.style.display = el.getAttribute('data-lang') === currentLang ? '' : 'none';
+        });
+        return;
+    }
+    authEl.innerHTML = '';
+    const who = document.createElement('span');
+    who.style.cssText = 'display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:100px;font-size:12px;font-weight:700;color:#34d399;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.25);';
+    const ico = document.createElement('i');
+    ico.className = 'fas fa-user-check';
+    ico.style.fontSize = '11px';
+    who.appendChild(ico);
+    // textContent, not innerHTML: the value is whatever is in localStorage.
+    who.appendChild(document.createTextNode(' ' + (user.username || user.name || 'User')));
+    const out = document.createElement('button');
+    out.type = 'button';
+    out.title = 'Logout';
+    out.style.cssText = 'font-size:11px;color:#5f7a6d;cursor:pointer;background:none;border:none;font-family:inherit;padding:4px 8px;border-radius:6px;';
+    out.innerHTML = '<i class="fas fa-right-from-bracket"></i>';
+    out.addEventListener('click', function () {
+        localStorage.removeItem('ms_token');
+        localStorage.removeItem('ms_user');
+        location.reload();
+    });
+    authEl.replaceChildren(who, out);
+}
+function getStoredUser() {
+    try { return JSON.parse(localStorage.getItem('ms_user')); }
+    catch (e) { return null; }
+}
+// Fast first paint from localStorage; the database check follows.
+renderAuthState(getStoredUser());
+async function verifyAuthSession() {
+    const token = localStorage.getItem('ms_token');
+    if (!token) { renderAuthState(null); return; }
+    try {
+        const res = await fetch(API + '/auth/me', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) throw new Error('invalid session');
+        const data = await res.json();
+        const fresh = (data && data.user) || null;
+        if (fresh && fresh.id) {
+            try { localStorage.setItem('ms_user', JSON.stringify(fresh)); } catch (e) {}
+            renderAuthState(fresh);
+        } else {
+            throw new Error('no user');
+        }
+    } catch (e) {
+        // Expired token, deleted account, or offline: logged-out UI.
+        // Offline keeps local pill only if a fetch never ran; a 401 clears it.
+        if (e && e.message === 'invalid session') {
+            localStorage.removeItem('ms_token');
+            localStorage.removeItem('ms_user');
+            renderAuthState(null);
+        }
+    }
+}
+
+// ===== TOAST =====
+function toast(message, type) {
+    const el = document.createElement('div');
+    el.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:20000;padding:13px 18px;border-radius:12px;background:rgba(8,25,18,0.97);border:1px solid var(--border);color:var(--text);font-size:13px;font-weight:600;box-shadow:0 12px 40px -8px rgba(0,0,0,0.6);display:flex;align-items:center;gap:10px;max-width:340px;';
+    el.innerHTML = '<i class="fas ' + (type === 'error' ? 'fa-circle-exclamation" style="color:#f87171;' : type === 'info' ? 'fa-circle-info" style="color:#60a5fa;' : 'fa-circle-check" style="color:#34d399;') + '"></i><span></span>';
+    el.querySelector('span').textContent = message;
+    document.body.appendChild(el);
+    setTimeout(() => { el.style.transition = 'opacity 0.3s'; el.style.opacity = '0'; setTimeout(() => el.remove(), 320); }, 3200);
+}
+
+// ===== DATA HELPERS =====
+// media.js already resolves the API origin (config.js override, with a
+// localhost fallback when the page is opened straight off disk). Reuse it so
+// the two files can never drift apart on the port number.
+const API_ORIGIN = (window.MS_MEDIA && MS_MEDIA.API_ORIGIN)
+    || (window.MODERN_SKILLS_CONFIG && window.MODERN_SKILLS_CONFIG.API_URL)
+    || (location.protocol === 'file:' ? 'http://localhost:3001' : location.origin);
+const API = API_ORIGIN + '/api';
+const lessonCacheKey = 'noorLessonsCache';
+
+// Absolute Supabase public URLs pass through; relative /uploads/... paths are
+// served by the API, while local assets (Images/...) must stay site-relative.
+function resolveMediaUrl(u) {
+    if (window.MS_MEDIA && typeof MS_MEDIA.resolve === 'function') return MS_MEDIA.resolve(u);
+    if (!u) return u;
+    if (/^https?:\/\//i.test(u)) return u;
+    if (/^\/?uploads\//i.test(u)) return API_ORIGIN + '/' + String(u).replace(/^\/+/, '');
+    return u;
+}
+
+const CATEGORY_IMAGES = {
+    quran: 'Images/thumbnails/thumb_seed_11.jpg',
+    tajweed: 'Images/thumbnails/thumb_seed_11.jpg',
+    tafsir: 'Images/thumbnails/thumb_seed_5.jpg',
+    hifz: 'Images/thumbnails/thumb_seed_9.jpg',
+    arabic: 'Images/thumbnails/thumb_seed_3.jpg',
+    english: 'Images/thumbnails/thumb_seed_1.jpg',
+    'video-course': 'Images/thumbnails/thumb_seed_1.jpg'
+};
+const CATEGORY_COLORS = {
+    gold: '#d4a853', green: '#34d399', blue: '#60a5fa', purple: '#a78bfa', rose: '#fb7185'
+};
+const FEATURED_BG = 'Images/thumbnails/thumb_seed_11.jpg';
+
+// Last-resort artwork, so a lesson with no thumbnail and an unknown category
+// still shows a branded image instead of `src="undefined"`.
+const FALLBACK_THUMB = (window.MS_MEDIA && MS_MEDIA.PLACEHOLDER) || FEATURED_BG;
+
+// ===== HTML ESCAPING =====
+// Lesson/category/instructor text comes from the database, so it must never be
+// interpolated raw into an innerHTML template — a title containing `<` or a
+// quote would otherwise break the markup (or inject a script tag).
+function esc(v) {
+    if (window.MS_MEDIA && typeof MS_MEDIA.escapeHtml === 'function') return MS_MEDIA.escapeHtml(v);
+    return String(v == null ? '' : v)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// Up to two letters from a person's name, for avatar placeholders.
+function initials(name) {
+    return String(name || '?')
+        .split(/\s+/).filter(Boolean).map(w => w[0]).join('')
+        .toUpperCase().slice(0, 2) || '?';
+}
+
+// ===== SAMPLE CONTENT (shown when the server is offline) =====
+const DEMO_CATEGORIES = [
+    { slug: 'quran', name: "Qur'an Courses", color: '#f0d9a0' },
+    { slug: 'tajweed', name: 'Tajweed', color: '#d4a853' },
+    { slug: 'tafsir', name: 'Tafsir', color: '#34d399' },
+    { slug: 'hifz', name: 'Hifz', color: '#60a5fa' },
+    { slug: 'arabic', name: 'Arabic', color: '#a78bfa' }
+];
+const DEMO_LESSONS = [
+    { id: 101, title: "Qur'an Reading from Beginner to Fluent", description: "Structured Qur'an reading course with Arabic letters, pronunciation, fluency and guided practice.", category_name: "Qur'an Courses", category_slug: 'quran', category_color: '#f0d9a0', instructor_name: 'Modern Skills Quran Team', duration_minutes: 40, rating: 5, student_count: 120, difficulty: 'Beginner', thumbnail_url: 'Images/thumbnails/thumb_seed_11.jpg' },
+    { id: 1, title: 'Intangiriro ya Makhaarij & Sifaat', description: 'Iga aho buri nyuguti y\'Icyarabu ituruka, n\'imiterere iha buri nyuguti ijwi ryaryo ryihariye. Ni intambwe ya mbere nziza ku batangira.', category_name: 'Tajweed', category_slug: 'tajweed', category_color: '#d4a853', instructor_name: 'Misigiso Issa', duration_minutes: 24, rating: 5, student_count: 328, difficulty: 'Beginner', thumbnail_url: CATEGORY_IMAGES.tajweed },
+    { id: 2, title: 'Tafsir: Surah Al-Fatiha', description: 'Ibisobanuro byoroshye, ibihe ku bihe, by\'isura isomwa cyane muri Qur\'an, hamwe n\'ibyo isobanura n\'inyigisho za buri munsi.', category_name: 'Tafsir', category_slug: 'tafsir', category_color: '#34d399', instructor_name: 'Ustadh Hamza Noor', duration_minutes: 31, rating: 4.9, student_count: 264, difficulty: 'Beginner', thumbnail_url: CATEGORY_IMAGES.tafsir },
+    { id: 3, title: 'Hifz: Uburyo bwo Kwibuka Bufatika', description: 'Uburyo bworoshye bwo kwibuka bukoreshwa na huffaz ku isi yose. Iga kwibuka impapuro ndende utizigamye.', category_name: 'Hifz', category_slug: 'hifz', category_color: '#60a5fa', instructor_name: 'Sheikh Bilal Hassan', duration_minutes: 27, rating: 4.8, student_count: 190, difficulty: 'Intermediate', thumbnail_url: CATEGORY_IMAGES.hifz },
+    { id: 4, title: 'Icyarabu: Inyuguti n\'Amajwi ya Mbere', description: 'Tangira gusoma Icyarabu uhereye ku ntangiriro. Menya inyuguti 28, imiterere yazo n\'amajwi yazo, hamwe n\'ingero z\'ijwi zisobanutse.', category_name: 'Arabic', category_slug: 'arabic', category_color: '#a78bfa', instructor_name: 'Ustadha Mariam Yusuf', duration_minutes: 22, rating: 4.7, student_count: 142, difficulty: 'Beginner', thumbnail_url: CATEGORY_IMAGES.arabic },
+    { id: 5, title: 'Tajweed: Amategeko ya Noon & Meem', description: 'Menya amategeko shingiro ya Tajweed ya noon na meem — idgham, iqlab, ikhfa n\'andi — hamwe n\'ingero z\'ijwi zisobanutse.', category_name: 'Tajweed', category_slug: 'tajweed', category_color: '#d4a853', instructor_name: 'Misigiso Issa', duration_minutes: 35, rating: 4.9, student_count: 215, difficulty: 'Intermediate', thumbnail_url: CATEGORY_IMAGES.tajweed },
+    { id: 6, title: 'Tafsir: Ayat Al-Kursi Yimbitse', description: 'Uyu ni umwe mu mirongo ikomeye ya Qur\'an, asobanuwe mu buryo bworoshye kugira ngo usobanukirwe kandi uhuze n\'ubutumwa bwayo bukomeye.', category_name: 'Tafsir', category_slug: 'tafsir', category_color: '#34d399', instructor_name: 'Ustadh Hamza Noor', duration_minutes: 29, rating: 5, student_count: 173, difficulty: 'Intermediate', thumbnail_url: CATEGORY_IMAGES.tafsir }
+];
+
+function formatCount(n) {
+    if (n == null) return '0';
+    return n >= 1000 ? (n / 1000).toFixed(1).replace('.0', '') + 'k' : n;
+}
+
+// Difficulty labels in every supported language. The previous version only
+// translated Kinyarwanda, so the featured hero showed "Umutangira" to a visitor
+// who had picked English or Arabic.
+const DIFFICULTY_L10N = {
+    Beginner: { en: 'Beginner', rw: 'Umutangira', fr: 'Débutant', sw: 'Mwanzo', ar: 'مبتدئ' },
+    Intermediate: { en: 'Intermediate', rw: 'Urwego rwo Hagati', fr: 'Intermédiaire', sw: 'Wastani', ar: 'متوسط' },
+    Advanced: { en: 'Advanced', rw: 'Abahinze', fr: 'Avancé', sw: 'Juu', ar: 'متقدم' },
+    'All Levels': { en: 'All Levels', rw: 'Ibice Byose', fr: 'Tous niveaux', sw: 'Kila ngazi', ar: 'جميع المستويات' }
+};
+function difficultyLabel(d) {
+    const entry = DIFFICULTY_L10N[d];
+    if (entry) {
+        if (window.MS_I18N && typeof MS_I18N.t === 'function') return MS_I18N.t(entry, currentLang);
+        return entry[currentLang] || entry.en;
+    }
+    if (d) return d;
+    const all = DIFFICULTY_L10N['All Levels'];
+    if (window.MS_I18N && typeof MS_I18N.t === 'function') return MS_I18N.t(all, currentLang);
+    return all[currentLang] || all.en;
+}
+
+function thumbFor(lesson) {
+    return resolveMediaUrl(lesson.thumbnail_url)
+        || CATEGORY_IMAGES[lesson.category_slug]
+        || FALLBACK_THUMB;
+}
+
+// ===== RENDER: FEATURED =====
+function renderFeatured(lessons) {
+    const el = document.getElementById('featured');
+    if (!lessons || !lessons.length) {
+        el.innerHTML = `
+            <div class="featured-bg"><img src="${FEATURED_BG}" alt=""></div>
+            <div class="featured-shade"></div>
+            <div class="featured-inner">
+                <div class="featured-info">
+                    <div class="f-arabic">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+                    <div class="f-badge"><i class="fas fa-book-quran"></i> <span data-lang="en">Modern Skills Academy</span><span data-lang="rw">Modern Skills Academy</span><span data-lang="fr">Modern Skills Academy</span><span data-lang="sw">Modern Skills Academy</span><span data-lang="ar">أكاديمية المهارات الحديثة</span></div>
+                    <h1><span data-lang="en">Learn the Qur'an Online</span><span data-lang="rw">Wige Qur'an Kuri Interineti</span><span data-lang="fr">Apprenez le Coran en ligne</span><span data-lang="sw">Jifunze Qur'an Mtandaoni</span><span data-lang="ar">تعلّم القرآن أونلاين</span></h1>
+                    <p><span data-lang="en">Expert instructors are preparing structured Tajweed, Tafsir, Hifz and Arabic lessons for you. New lessons will appear here very soon.</span><span data-lang="rw">Abigisha babahanga barimo bitegura amasomo atunganyijwe ya Tajweed, Tafsir, Hifz n'Icyarabu kugira ngo uwige. Amasomo mashya azagaragara hano vuba.</span><span data-lang="fr">Des instructeurs experts préparent des leçons structurées de Tajwid, Tafsir, Hifz et d'arabe pour vous. De nouvelles leçons apparaîtront ici très bientôt.</span><span data-lang="sw">Walimu wataalamu wanatayarisha masomo yaliyopangwa ya Tajweed, Tafsir, Hifz na Kiarabu kwa ajili yako. Masomo mapya yataonekana hapa hivi karibuni.</span><span data-lang="ar">يعمل معلمون خبراء على إعداد دروس منظمة في التجويد والتفسير والحفظ والعربية لك. ستظهر دروس جديدة هنا قريبًا جدًا.</span></p>
+                    <div class="f-meta">
+                        <span><i class="fas fa-chalkboard-user"></i> <span data-lang="en">Certified teachers</span><span data-lang="rw">Abigisha bemejwe</span><span data-lang="fr">Professeurs certifiés</span><span data-lang="sw">Walimu waliothibitishwa</span><span data-lang="ar">معلمون معتمدون</span></span>
+                        <span><i class="fas fa-globe"></i> <span data-lang="en">5 languages</span><span data-lang="rw">Indimi 5</span><span data-lang="fr">5 langues</span><span data-lang="sw">Lugha 5</span><span data-lang="ar">5 لغات</span></span>
+                    </div>
+                    <div class="f-btns">
+                        <a href="https://wa.me/250781853141" target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
+                        <a href="#categoryRows" class="btn-ghost"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Lessons</span><span data-lang="rw">Sindagura Amasomo</span><span data-lang="fr">Parcourir les leçons</span><span data-lang="sw">Vinjari Masomo</span><span data-lang="ar">تصفح الدروس</span></a>
+                    </div>
+                </div>
+                <div class="featured-poster"><img src="${FEATURED_BG}" alt=""></div>
+            </div>`;
+        setLang(currentLang);
+        return;
+    }
+    const sorted = [...lessons].sort((a, b) => (Number(b.rating) - Number(a.rating)) || (b.student_count - a.student_count));
+    const l = Object.assign({}, sorted[0]);
+    const paint = function () {
+        const rating = l.rating != null ? Number(l.rating).toFixed(1) : '--';
+        const dur = l.duration_minutes != null ? l.duration_minutes + ' min' : '-- min';
+        const art = thumbFor(l);
+        el.innerHTML = `
+            <div class="featured-bg"><img src="${art}" alt=""></div>
+            <div class="featured-shade"></div>
+            <div class="featured-inner">
+                <div class="featured-info">
+                    <div class="f-arabic">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+                    <div class="f-badge"><span data-lang="en">Featured</span><span data-lang="rw">Bishyizwe Imbere</span><span data-lang="fr">En vedette</span><span data-lang="sw">Yaliyoangaziwa</span><span data-lang="ar">مميز</span><span class="sep">•</span>${esc(l.category_name)}</div>
+                    <h1>${esc(l.title)}</h1>
+                    <p>${l.description ? esc(l.description) : '<span data-lang="en">Learn with clear, step-by-step guidance from our certified teachers.</span><span data-lang="rw">Iga ukurikije amabwiriza asobanutse kuva ku bigisha bacu bemejwe.</span><span data-lang="fr">Apprenez avec des conseils clairs, étape par étape, de nos professeurs certifiés.</span><span data-lang="sw">Jifunze kwa mwongozo ulio wazi, hatua kwa hatua kutoka kwa walimu wetu waliothibitishwa.</span><span data-lang="ar">تعلّم بإرشادات واضحة خطوة بخطوة من معلمينا المعتمدين.</span>'}</p>
+                    ${l.instructor_name ? `<div class="f-instructor"><span class="f-instructor-avatar">${esc(initials(l.instructor_name))}</span><span><em data-lang="en">Taught by</em><em data-lang="rw">Bigishawe na</em><em data-lang="fr">Enseigné par</em><em data-lang="sw">Inafundishwa na</em><em data-lang="ar">يقدّمه</em> <strong>${esc(l.instructor_name)}</strong></span></div>` : ''}
+                    <div class="f-meta">
+                        <span><i class="fas fa-star"></i> ${rating}</span>
+                        <span><i class="fas fa-users"></i> ${formatCount(l.student_count)} <span data-lang="en">students</span><span data-lang="rw">Abanyeshuri</span><span data-lang="fr">étudiants</span><span data-lang="sw">wanafunzi</span><span data-lang="ar">طلاب</span></span>
+                        <span><i class="fas fa-clock"></i> ${dur}</span>
+                        <span><i class="fas fa-signal"></i> ${esc(difficultyLabel(l.difficulty))}</span>
+                    </div>
+                    <div class="f-btns">
+                        <a href="video.html?id=${l.id}" class="btn-gold"><i class="fas fa-play"></i> <span data-lang="en">Watch Now</span><span data-lang="rw">Reba Ubu</span><span data-lang="fr">Regarder maintenant</span><span data-lang="sw">Tazama Sasa</span><span data-lang="ar">شاهد الآن</span></a>
+                        ${l.category_slug ? `<a href="#${encodeURIComponent(l.category_slug)}" class="btn-ghost"><i class="fas fa-layer-group"></i> <span data-lang="en">More in this category</span><span data-lang="rw">Izindi muri iyi gicegu</span><span data-lang="fr">Plus dans cette catégorie</span><span data-lang="sw">Zaidi katika kategoria hii</span><span data-lang="ar">المزيد في هذه الفئة</span></a>` : `<a href="#categoryRows" class="btn-ghost"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Lessons</span><span data-lang="rw">Sindagura Amasomo</span><span data-lang="fr">Parcourir les leçons</span><span data-lang="sw">Vinjari Masomo</span><span data-lang="ar">تصفح الدروس</span></a>`}
+                    </div>
+                </div>
+                <div class="featured-poster"><img src="${art}" alt=""></div>
+            </div>`;
+        setLang(currentLang);
+    };
+    paint();
+    fetch(API + '/lessons/' + l.id).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+        if (d && d.lesson) Object.assign(l, d.lesson);
+        paint();
+    }).catch(function () {});
+}
+
+// ===== RENDER: POSTER CARD =====
+// Relative timestamps ("2 hours ago") in the active language.
+// `Intl.RelativeTimeFormat` handles pluralisation and spacing for each locale,
+// which a hand-rolled `n + 'h'` never could.
+const REL_UNITS = [
+    { limit: 3600, div: 60, unit: 'minute' },
+    { limit: 86400, div: 3600, unit: 'hour' },
+    { limit: 2592000, div: 86400, unit: 'day' },
+    { limit: 31536000, div: 2592000, unit: 'month' }
+];
+const REL_LOCALES = { en: 'en-GB', rw: 'rw-RW', fr: 'fr-FR', sw: 'sw-TZ', ar: 'ar' };
+const relFmtCache = {};
+function relFmt(lang) {
+    if (!relFmtCache[lang]) {
+        try {
+            relFmtCache[lang] = new Intl.RelativeTimeFormat(REL_LOCALES[lang] || 'en-GB', { numeric: 'auto' });
+        } catch (e) {
+            relFmtCache[lang] = new Intl.RelativeTimeFormat('en-GB', { numeric: 'auto' });
+        }
+    }
+    return relFmtCache[lang];
+}
+function timeAgo(dt) {
+    if (!dt) return '';
+    const d = new Date(dt);
+    if (isNaN(d)) return '';
+    const secs = Math.floor((Date.now() - d.getTime()) / 1000);
+    if (secs < 60) return relFmt(currentLang).format(0, 'second');
+    for (const u of REL_UNITS) {
+        if (secs < u.limit) {
+            const n = Math.floor(secs / u.div);
+            if (n < 1) continue;
+            return relFmt(currentLang).format(-n, u.unit);
+        }
+    }
+    return d.toLocaleDateString(REL_LOCALES[currentLang] || 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function posterCard(l) {
+    const dur = l.duration_minutes != null ? l.duration_minutes + ' min' : '--';
+    const rating = l.rating != null ? Number(l.rating).toFixed(1) : '';
+    const color = l.category_color || '#d4a853';
+    const free = l.is_free === 1 || l.is_free === true;
+    const hasVideo = l.has_video || l.video_url || l.video_file_path || l.video_preview_url;
+    const desc = (l.description || '').trim();
+    return `
+        <a class="pcard" href="video.html?id=${encodeURIComponent(l.id)}" title="${esc(l.title)}">
+            <div class="poster">
+                <img src="${thumbFor(l)}" alt="${esc(l.title)}" loading="lazy">
+                <span class="cat-badge" style="border-color:${color};color:${color};">${esc(l.category_name || 'Lesson')}</span>
+                ${free ? '<span class="free-badge"><i class="fas fa-unlock-keyhole"></i> <span data-lang="en">Free</span><span data-lang="rw">Bira</span><span data-lang="fr">Gratuit</span><span data-lang="sw">Bure</span><span data-lang="ar">مجاني</span></span>'
+                       : '<span class="paid-badge"><i class="fas fa-lock"></i> <span data-lang="en">Paid</span><span data-lang="rw">Iishyurwa</span><span data-lang="fr">Payant</span><span data-lang="sw">Inalipwa</span><span data-lang="ar">مدفوع</span></span>'}
+                <span class="dur-badge">${dur}</span>
+                ${hasVideo ? '<span class="vid-badge"><i class="fas fa-play"></i></span>' : ''}
+                <div class="poster-hover"><i class="fas fa-play"></i></div>
+            </div>
+            <h3>${esc(l.title)}</h3>
+            ${desc ? `<p class="pdesc">${esc(desc.length > 110 ? desc.slice(0, 110).trimEnd() + '…' : desc)}</p>` : ''}
+            <div class="pmeta"><i class="fas fa-chalkboard-user"></i> ${esc(l.instructor_name || 'Modern Skills')}</div>
+            <div class="pcredits">
+                <span class="rate"><i class="fas fa-star"></i> ${rating || '--'}</span>
+                <span class="studs"><i class="fas fa-users"></i> ${formatCount(l.student_count)}</span>
+                <span class="age"><i class="far fa-clock"></i> ${esc(timeAgo(l.created_at))}</span>
+                <span class="lng" title="Lesson language"><i class="fas fa-language"></i> ${esc(String(l.language || 'rw').toUpperCase())}</span>
+            </div>
+        </a>`;
+}
+
+// ===== RENDER: INSTRUCTORS / ABASOBANUZI (personas) =====
+function renderInstructors(instructors, lessons) {
+    const section = document.getElementById('instructorsSection');
+    if (!section) return;
+    const list = document.getElementById('instructorsList');
+    if (!list) return;
+    const names = instructors || [];
+    if (!names.length) {
+        section.style.display = '';
+        list.innerHTML = `
+            <div class="empty-instructors">
+                <div class="empty-icon"><i class="fas fa-chalkboard-user"></i></div>
+                <h3><span data-lang="en">No teachers available yet</span><span data-lang="rw">Nta mwarimu ugihari</span><span data-lang="fr">Aucun professeur disponible pour l'instant</span><span data-lang="sw">Hakuna walimu waliopo sasa</span><span data-lang="ar">لا يوجد مدرّسون متاحون بعد</span></h3>
+                <p><span data-lang="en">Our teachers are getting ready. New lessons and teachers will appear here very soon.</span><span data-lang="rw">Abigisha bacu barimo bitegura. Amasomo mashya n'abigisha bizagaragara hano vuba.</span><span data-lang="fr">Nos professeurs se préparent. De nouvelles leçons et de nouveaux professeurs apparaîtront ici très bientôt.</span><span data-lang="sw">Walimu wetu wanatayarisha. Masomo mapya na walimu wapya yatatolewa hapa hivi karibuni.</span><span data-lang="ar">معلمونا يستعدون. ستظهر دروس ومعلمون جدد هنا قريبًا جدًا.</span></p>
+                <div class="empty-actions">
+                    <a href="https://wa.me/250781853141" target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
+                    <a href="#featured" class="btn-ghost"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Lessons</span><span data-lang="rw">Sindagura Amasomo</span><span data-lang="fr">Parcourir les leçons</span><span data-lang="sw">Vinjari Masomo</span><span data-lang="ar">تصفح الدروس</span></a>
+                </div>
+            </div>`;
+        setLang(currentLang);
+        return;
+    }
+    section.style.display = '';
+    const counts = {};
+    (lessons || []).forEach(l => { if (l.instructor_name) counts[l.instructor_name] = (counts[l.instructor_name] || 0) + 1; });
+    list.innerHTML = names.map(i => {
+        const ini = initials(i.name);
+        const avatar = i.avatar_url || '';
+        const count = counts[i.name] || 0;
+        return `
+            <div class="inst-card">
+                <div class="inst-avatar">
+                    ${avatar ? '<img src="' + esc(resolveMediaUrl(avatar)) + '" alt="' + esc(i.name) + '" loading="lazy">' : esc(ini)}
+                </div>
+                <div class="inst-info">
+                    <h4>${esc(i.name)}</h4>
+                    <p class="inst-exp">${esc(i.expertise || '')}</p>
+                    <p class="inst-bio">${esc(i.bio || '')}</p>
+                    <span class="inst-count"><i class="fas fa-video"></i> <b>${count}</b> <span data-lang="en">lesson${count === 1 ? '' : 's'}</span><span data-lang="rw">isomo</span><span data-lang="fr">leçon${count === 1 ? '' : 's'}</span><span data-lang="sw">somo</span><span data-lang="ar">درس</span></span>
+                </div>
+            </div>`;
+    }).join('');
+    setLang(currentLang);
+}
+
+// ===== RENDER: CATEGORY ROWS =====
+function renderCategoryRows(lessons, categories) {
+    const container = document.getElementById('categoryRows');
+    const order = categories && categories.length ? categories : [];
+    if (!lessons || !lessons.length) {
+        container.innerHTML = `
+        <div class="row-head">
+            <h2><span data-lang="en">All Lessons</span><span data-lang="rw">Amasomo Yose</span><span data-lang="fr">Toutes les leçons</span><span data-lang="sw">Masomo Yote</span><span data-lang="ar">جميع الدروس</span></h2>
+        </div>
+        <div class="lessons-loading-section">
+            <div class="lessons-loading-card">
+                <div class="lessons-loading-icon"><i class="fas fa-book-open"></i></div>
+                <div class="lessons-loading-bar-wrap">
+                    <div class="lessons-loading-bar"></div>
+                </div>
+                <h3><span data-lang="en">Loading please wait...</span><span data-lang="rw">Gusoma oya...</span><span data-lang="fr">Chargement en cours...</span><span data-lang="sw">Inapakia...</span><span data-lang="ar">جارٍ التحميل...</span></h3>
+                <p><span data-lang="en">Please wait while we load your lessons.</span><span data-lang="rw">Menya oya dusuze.</span><span data-lang="fr">Veuillez patienter pendant le chargement.</span><span data-lang="sw">Tafadhali subiri.</span><span data-lang="ar">يرجى الانتظار أثناء التحميل.</span></p>
+            </div>
+        </div>`;
+        setLang(currentLang);
+        return;
+    }
+    const orderMap = {};
+    order.forEach((c, i) => orderMap[c.slug] = i);
+    const byCat = {};
+    lessons.forEach(l => {
+        // Group by slug, but fall back to a slugified category name so an
+        // admin upload is never stranded when the slug join is missing.
+        let cs = (l.category_slug || '').trim();
+        if (!cs && l.category_name) {
+            cs = String(l.category_name).toLowerCase().trim()
+                .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        }
+        if (!cs) cs = 'general';
+        if (!byCat[cs]) byCat[cs] = { name: l.category_name, color: l.category_color, description: '', items: [] };
+        byCat[cs].items.push(l);
+        if (!byCat[cs].description && l.description) byCat[cs].description = l.description;
+    });
+    const slugs = Object.keys(byCat).sort((a, b) => (orderMap[a] ?? 999) - (orderMap[b] ?? 999));
+    const catMeta = {};
+    order.forEach(c => { catMeta[c.slug] = c; });
+    const generalTitle = '<span data-lang="en">General</span><span data-lang="rw">Rusange</span><span data-lang="fr">Général</span><span data-lang="sw">Kawaida</span><span data-lang="ar">عام</span>';
+    container.innerHTML = `
+        <div class="row-head">
+            <h2><span data-lang="en">All Lessons</span><span data-lang="rw">Amasomo Yose</span><span data-lang="fr">Toutes les leçons</span><span data-lang="sw">Masomo Yote</span><span data-lang="ar">جميع الدروس</span></h2>
+            <span class="row-total">${lessons.length} <span data-lang="en">lessons</span><span data-lang="rw">amasomo</span><span data-lang="fr">leçons</span><span data-lang="sw">masomo</span><span data-lang="ar">درس</span></span>
+        </div>` + slugs.map(slug => {
+        const cat = byCat[slug];
+        const meta = catMeta[slug] || {};
+        const n = cat.items.length;
+        const teachers = [...new Set(cat.items.map(l => l.instructor_name).filter(Boolean))].slice(0, 3);
+        const color = cat.color || meta.color || '#d4a853';
+        const titleHtml = (slug === 'general' && !(cat.name || meta.name)) ? generalTitle : esc(cat.name || meta.name || slug);
+        return `
+            <section class="row-section cat-block" id="${esc(slug)}">
+                <div class="row-head cat-block-head">
+                    <h2><em>${titleHtml}</em></h2>
+                    <span class="cat-count"><i class="fas fa-video"></i> ${n}</span>
+                </div>
+                ${(meta.description || cat.description) ? `<p class="cat-block-desc">${esc(meta.description || cat.description)}</p>` : ''}
+                ${teachers.length ? `<p class="cat-block-teachers"><i class="fas fa-chalkboard-user"></i> ${teachers.map(esc).join(' &middot; ')}</p>` : ''}
+                <div class="cat-grid" style="--cat:${color};">${cat.items.map(posterCard).join('')}</div>
+            </section>`;
+    }).join('');
+    setLang(currentLang);
+}
+
+// ===== RENDER: CATEGORY GRID (oshakurfilms style) =====
+const CAT_ICONS = {
+    quran: 'fa-book-quran', tajweed: 'fa-voice', tafsir: 'fa-book-open',
+    hifz: 'fa-brain', arabic: 'fa-language', 'video-course': 'fa-video',
+    english: 'fa-language', '': 'fa-graduation-cap'
+};
+const CAT_COLORS_MAP = {
+    gold: '#d4a853', green: '#34d399', blue: '#60a5fa',
+    purple: '#a78bfa', rose: '#fb7185'
+};
+
+function getCatColor(category) {
+    if (!category) return '';
+    const hexMap = { '#d4a853': 'gold', '#f0d9a0': 'gold', '#34d399': 'green', '#6ee7b7': 'green', '#60a5fa': 'blue', '#93c5fd': 'blue', '#a78bfa': 'purple', '#c4b5fd': 'purple', '#fb7185': 'rose', '#fda4af': 'rose' };
+    const c = (category.color || '').toLowerCase();
+    if (CAT_COLORS_MAP[c]) return c;
+    if (hexMap[c]) return hexMap[c];
+    if (category.color) {
+        const r = parseInt(c.replace('#', '').substring(0, 2), 16);
+        const g = parseInt(c.replace('#', '').substring(2, 4), 16);
+        const b = parseInt(c.replace('#', '').substring(4, 6), 16);
+        if (r > 180 && g > 150 && b < 120) return 'gold';
+        if (g > 140 && r < 100 && b < 120) return 'green';
+        if (g > 180 && r < 180 && b > 200) return 'blue';
+        if (b > 150 && r < 150) return 'purple';
+        if (r > 200 && g < 130) return 'rose';
+    }
+    const slug = (category.slug || '').toLowerCase();
+    const name = (category.name || '').toLowerCase();
+    if (slug === 'quran' || name.includes("qur'an") || name.includes('quran')) return 'gold';
+    if (slug === 'tajweed') return 'gold';
+    if (slug === 'tafsir') return 'green';
+    if (slug === 'hifz') return 'blue';
+    if (slug === 'arabic') return 'purple';
+    if (slug === 'video-course' || name.includes('video course')) return 'rose';
+    return '';
+}
+
+function getCatIcon(category) {
+    const slug = (category.slug || '').toLowerCase();
+    const name = (category.name || '').toLowerCase();
+    if (CAT_ICONS[slug]) return CAT_ICONS[slug];
+    if (name.includes('tajweed') || name.includes('recitation')) return 'fa-voice';
+    if (name.includes('tafsir') || name.includes('interpret')) return 'fa-book-open';
+    if (name.includes('hifz') || name.includes('memoriz')) return 'fa-brain';
+    if (name.includes('arabic') || name.includes('language')) return 'fa-language';
+    if (name.includes('video') || name.includes('course')) return 'fa-video';
+    if (name.includes('quran')) return 'fa-book-quran';
+    return 'fa-graduation-cap';
+}
+
+function renderCategoryGrid(lessons, categories) {
+    const container = document.getElementById('categoryGridContainer');
+    if (!container) return;
+
+    if (!lessons || !lessons.length) {
+        container.innerHTML = `
+            <div class="cat-grid-empty">
+                <div class="empty-icon"><i class="fas fa-book-open"></i></div>
+                <h3><span data-lang="en">No lessons available yet</span><span data-lang="rw">Nta masomo ugihari</span><span data-lang="fr">Aucune leçon disponible</span><span data-lang="sw">Masomo hayapo</span><span data-lang="ar">لا توجد دروس متاحة</span></h3>
+                <p><span data-lang="en">Lessons will appear here once they are added by our admin.</span><span data-lang="rw">Amasomo azagaragara hano ryashyizwe n'abagize.</span><span data-lang="fr">Les leçons apparaîtront ici une fois ajoutées.</span><span data-lang="sw">Masomo yatatolewa hapa wakati wa kuongezwa.</span><span data-lang="ar">ستظهر الدروس هنا بعد إضافتها.</span></p>
+                <a href="https://wa.me/250781853141" target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
+            </div>`;
+        setLang(currentLang);
+        return;
+    }
+
+    const order = categories && categories.length ? categories : [];
+    const orderMap = {};
+    order.forEach((c, i) => orderMap[c.slug] = i);
+
+    const byCat = {};
+    lessons.forEach(l => {
+        const cs = l.category_slug || 'general';
+        if (!byCat[cs]) byCat[cs] = { slug: cs, name: l.category_name || 'General', color: l.category_color || '', description: '', items: [] };
+        byCat[cs].items.push(l);
+    });
+    // The admin API reports an authoritative per-category count; only fall back
+    // to counting the lessons we happen to have loaded.
+    order.forEach(c => {
+        if (byCat[c.slug] && c.lesson_count != null) byCat[c.slug].lessonCount = Number(c.lesson_count) || 0;
+    });
+    Object.keys(byCat).forEach(s => {
+        if (byCat[s].lessonCount == null) byCat[s].lessonCount = byCat[s].items.length;
+    });
+
+    const slugs = Object.keys(byCat).sort((a, b) => (orderMap[a] ?? 999) - (orderMap[b] ?? 999));
+
+    const catData = {};
+    order.forEach(c => { catData[c.slug] = c; });
+
+    container.innerHTML = `
+        <div class="category-grid-wrapper">
+            ${slugs.map(slug => {
+        const cat = byCat[slug];
+        const catInfo = catData[slug] || {};
+        const color = getCatColor(catInfo) || getCatColor(cat) || '';
+        const icon = getCatIcon(catInfo) || getCatIcon(cat) || 'fa-graduation-cap';
+        const n = cat.lessonCount;
+        const topLessons = cat.items.slice(0, 3);
+        // The first instructor listed for the category is shown on the card, so
+        // the visitor can see who teaches it before opening the page.
+        const leadTeacher = cat.items.find(l => l.instructor_name);
+        return `
+                <a class="cat-grid-card" data-color="${color}" href="#${encodeURIComponent(slug)}">
+                    <div class="cat-accent-bar"></div>
+                    <div class="cat-card-body">
+                        <div class="cat-icon-circle"><i class="fas ${icon}"></i></div>
+                        <div class="cat-card-title">${esc(cat.name || slug)}</div>
+                        <div class="cat-card-desc">${esc(catInfo.description || cat.description) || '<span data-lang="en">Explore our structured lessons in this category.</span><span data-lang="rw">Reka twige amasomo atunganyijwe mu byiciro bikiri imbere.</span><span data-lang="fr">Explorez nos leçons structurées dans cette catégorie.</span><span data-lang="sw">Chunguza masomo yaliyopangwa katika hii kategorya.</span><span data-lang="ar">استكشف دروسنا المنظمة في هذه الفئة.</span>'}</div>
+                        ${leadTeacher ? `<div class="cat-card-teacher"><span class="cat-teacher-avatar">${esc(initials(leadTeacher.instructor_name))}</span><span>${esc(leadTeacher.instructor_name)}</span></div>` : ''}
+                        <div class="cat-lesson-count"><i class="fas fa-video"></i> <b>${n}</b> <span data-lang="en">lesson${n === 1 ? '' : 's'}</span><span data-lang="rw">isomo</span><span data-lang="fr">leçon${n === 1 ? '' : 's'}</span><span data-lang="sw">somo</span><span data-lang="ar">درس</span></div>
+                        <div class="cat-lesson-strip">
+                            ${topLessons.map(l => {
+            const dur = l.duration_minutes != null ? l.duration_minutes + 'm' : '--';
+            const art = thumbFor(Object.assign({}, l, { category_slug: slug }));
+            const hasVideo = l.has_video || l.video_url || l.video_file_path;
+            return `<div class="strip-thumb"><img src="${art}" alt="${esc(l.title)}" loading="lazy"><span class="strip-dur">${dur}</span>${hasVideo ? '<span class="strip-video-badge"><i class="fas fa-play"></i></span>' : ''}</div>`;
+        }).join('')}
+                        </div>
+                        <div class="cat-view-all"><span data-lang="en">View All Lessons</span><span data-lang="rw">Reba Amasomo Yose</span><span data-lang="fr">Voir toutes les leçons</span><span data-lang="sw">Ona Masomo Yote</span><span data-lang="ar">عرض جميع الدروس</span> <i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </a>`;
+    }).join('')}
+            ${slugs.length === 0 ? `
+            <div class="cat-grid-empty">
+                <div class="empty-icon"><i class="fas fa-book-open"></i></div>
+                <h3><span data-lang="en">No categories found</span><span data-lang="rw">Nta gicegu gihari</span><span data-lang="fr">Aucune catégorie trouvée</span><span data-lang="sw">Hakuna kategoria</span><span data-lang="ar">لم يتم العثور على فئات</span></h3>
+                <p><span data-lang="en">Categories will appear here once lessons are added.</span><span data-lang="rw">Ibyiciro bizagaragara hano ryashyizwe amasomo.</span><span data-lang="fr">Les catégories apparaîtront ici une fois les leçons ajoutées.</span><span data-lang="sw">Kategoria zitaonekana hapa masomo yakiongezwa.</span><span data-lang="ar">ستظهر الفئات هنا بعد إضافة الدروس.</span></p>
+            </div>` : ''}
+        </div>`;
+    setLang(currentLang);
+}
+
+// ===== RENDER: STATS =====
+function animateCounters() {
+    document.querySelectorAll('.stat-num').forEach(el => {
+        const target = parseFloat(el.dataset.count || '0');
+        const dec = parseInt(el.dataset.decimals || '0', 10);
+        const suffix = el.dataset.suffix || '';
+        const dur = 1300;
+        const t0 = performance.now();
+        function tick(t) {
+            const p = Math.min((t - t0) / dur, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            const val = target * eased;
+            el.textContent = dec ? val.toFixed(dec) : Math.round(val).toLocaleString();
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = (dec ? target.toFixed(dec) : Math.round(target).toLocaleString()) + suffix;
+        }
+        requestAnimationFrame(tick);
+    });
+}
+function renderStats(lessons, hasLessons) {
+    const el = document.getElementById('statsBand');
+    if (!el) return;
+    if (!hasLessons || !lessons || !lessons.length) {
+        el.innerHTML = `
+            <div class="empty-stats">
+                <i class="fas fa-chart-simple"></i>
+                <span><span data-lang="en">Statistics appear here once lessons are added.</span><span data-lang="rw">Ibibazo bigaragara hano ama soma yaba yashyizwe.</span><span data-lang="fr">Les statistiques apparaîtront ici une fois les leçons ajoutées.</span><span data-lang="sw">Takwimu zitaonekana hapa masomo yakiongezwa.</span><span data-lang="ar">ستظهر الإحصائيات هنا بعد إضافة الدروس.</span></span>
+            </div>`;
+        setLang(currentLang);
+        return;
+    }
+    const totalStudents = lessons.reduce((s, l) => s + (Number(l.student_count) || 0), 0);
+    const avg = lessons.length ? lessons.reduce((s, l) => s + (Number(l.rating) || 0), 0) / lessons.length : 0;
+    const stats = [
+        { icon: 'fa-book-quran', num: lessons.length, suffix: '+', dec: 0, label: ['Structured Lessons', 'Amasomo Atunganyijwe', 'Leçons Structurées', 'Masomo Yaliyopangwa', 'دروس منظمة'] },
+        { icon: 'fa-user-graduate', num: totalStudents, suffix: '+', dec: 0, label: ['Students Learning', 'Abanyeshuri Bari Kwiga', 'Étudiants Actifs', 'Wanafunzi Wanaojifunza', 'طلاب يتعلمون'] },
+        { icon: 'fa-star', num: avg, suffix: '/5', dec: 1, label: ['Average Rating', 'Igipimo Gisanzwe', 'Note Moyenne', 'Wastani wa Ukadiriaji', 'متوسط التقييم'] }
+    ];
+    el.innerHTML = stats.map(s => `
+        <div class="stat">
+            <div class="stat-icon"><i class="fas ${s.icon}"></i></div>
+            <div class="stat-body">
+                <span class="stat-num" data-count="${s.num}" data-decimals="${s.dec}" data-suffix="${s.suffix}">0</span>
+                <span class="stat-lbl"><span data-lang="en">${s.label[0]}</span><span data-lang="rw">${s.label[1]}</span><span data-lang="fr">${s.label[2]}</span><span data-lang="sw">${s.label[3]}</span><span data-lang="ar">${s.label[4]}</span></span>
+            </div>
+        </div>`).join('');
+    setLang(currentLang);
+    animateCounters();
+}
+
+// ===== DATA LOADING =====
+function renderLoading(container) {
+    if (container) container.innerHTML = '<div class="lessons-loading-card" style="grid-column:1/-1;"><div class="lessons-loading-icon"><i class="fas fa-book-open"></i></div><div class="lessons-loading-bar-wrap"><div class="lessons-loading-bar"></div></div><h3><span data-lang="en">Loading please wait...</span><span data-lang="rw">Gusoma oya...</span><span data-lang="fr">Chargement en cours...</span><span data-lang="sw">Inapakia...</span><span data-lang="ar">جارٍ التحميل...</span></h3><p><span data-lang="en">Please wait while we load your lessons.</span><span data-lang="rw">Menya oya dusuze.</span><span data-lang="fr">Veuillez patienter pendant le chargement.</span><span data-lang="sw">Tafadhali subiri.</span><span data-lang="ar">يرجى الانتظار أثناء التحميل.</span></p></div>';
+}
+function cacheSet(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
+function cacheGet(key) { try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) { return null; } }
+
+async function loadHome() {
+    // Use cached/demo content immediately so page looks normal after splash
+    homeLessons = cacheGet(lessonCacheKey) || DEMO_LESSONS;
+    homeCategories = DEMO_CATEGORIES;
+    homeInstructors = [];
+    paintHome();
+
+    // Refresh from the backend — each endpoint independently settled, so one
+    // slow or failing table can never hide the admin's uploaded lessons.
+    // #categoryRows groups from the lesson rows themselves, so lessons paint
+    // even if /categories or /instructors are down.
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    try {
+        await fetchHomeData(controller.signal);
+    } catch (e) {
+        // Keep cached/demo content; page remains usable offline
+        console.warn('Homepage API refresh failed, using cached lessons:', (e && e.message) || e);
+    } finally {
+        clearTimeout(timeout);
+    }
+    paintHome();
+}
+
+// Shared listing state for the home page. Kept at module scope so a
+// background sync (see the `storage` listener below) can repaint the exact
+// same lesson rows the first paint used, without re-reading the cache.
+let homeLessons = null;
+let homeCategories = null;
+let homeInstructors = [];
+
+function paintHome() {
+    const lessons = homeLessons || DEMO_LESSONS;
+    const categories = homeCategories || DEMO_CATEGORIES;
+    const instructors = homeInstructors || [];
+    const hasLessons = !!(lessons && lessons.length);
+    renderFeatured(lessons);
+    renderCategoryRows(lessons, categories);
+    renderCategoryGrid(lessons, categories);
+    // When the database has lessons, the #categoryRows movie-style rows
+    // are the main listing (like oshakurfilms) — the "Explore by
+    // Category" cards would just duplicate them, so hide that section.
+    // With no data, the grid section stays visible with its empty state.
+    const gridSection = document.getElementById('categoryGridSection');
+    if (gridSection) gridSection.style.display = hasLessons ? 'none' : '';
+    renderInstructors(instructors, lessons);
+    renderStats(lessons, hasLessons);
+}
+
+// Pull fresh lessons/categories/instructors. `cache: 'no-store'` makes sure a
+// lesson the admin just edited is never served from the browser's HTTP cache,
+// so the homepage always reflects the latest admin data.
+async function fetchHomeData(signal) {
+    const [lessonRes, categoryRes, instructorRes] = await Promise.allSettled([
+        fetch(API + '/lessons?limit=200&_=' + Date.now(), { signal, cache: 'no-store' }),
+        fetch(API + '/categories?_=' + Date.now(), { signal, cache: 'no-store' }),
+        fetch(API + '/instructors?_=' + Date.now(), { signal, cache: 'no-store' })
+    ]);
+    if (lessonRes.status === 'fulfilled' && lessonRes.value && lessonRes.value.ok) {
+        try {
+            const lessonData = await lessonRes.value.json();
+            // Only replace when the API actually returns rows — an empty
+            // response must never wipe uploaded lessons off the page.
+            if (lessonData.lessons && lessonData.lessons.length) {
+                homeLessons = lessonData.lessons;
+                cacheSet(lessonCacheKey, homeLessons);
+            } else {
+                console.warn('API returned 0 lessons; keeping cached lessons.');
+            }
+        } catch (e) {
+            console.warn('Could not parse lessons response:', (e && e.message) || e);
+        }
+    } else {
+        console.warn('Lessons API unreachable; keeping cached lessons.');
+    }
+    if (categoryRes.status === 'fulfilled' && categoryRes.value && categoryRes.value.ok) {
+        try {
+            const categoryData = await categoryRes.value.json();
+            if (categoryData.categories && categoryData.categories.length) {
+                homeCategories = categoryData.categories;
+            }
+        } catch (e) {
+            console.warn('Could not parse categories response:', (e && e.message) || e);
+        }
+    }
+    if (instructorRes.status === 'fulfilled' && instructorRes.value && instructorRes.value.ok) {
+        try {
+            const instructorData = await instructorRes.value.json();
+            homeInstructors = (instructorData.instructors || []);
+        } catch (e) {
+            console.warn('Could not parse instructors response:', (e && e.message) || e);
+        }
+    }
+}
+
+// Live sync: when an admin saves (in another tab/window) they broadcast a
+// `noorDataUpdated` marker. The `storage` event only fires in *other*
+// documents, so an open homepage repaints instantly with the edited lesson
+// instead of waiting for a manual refresh.
+async function refreshHomeFromServer() {
+    try {
+        await fetchHomeData();
+        paintHome();
+    } catch (e) {
+        console.warn('Live homepage sync failed:', (e && e.message) || e);
+    }
+}
+window.addEventListener('storage', function (e) {
+    if (e && e.key === 'noorDataUpdated') refreshHomeFromServer();
+});
+
+// ===== LANGUAGE SELECTOR (globe dropdown) =====
+// NOTE: this block must run — and `setLang` must exist as more than just a
+// hoisted function shell — before loadHome() is called below. loadHome()
+// calls renderFeatured() synchronously (before its first `await`), which
+// calls setLang(currentLang), which reads `langOptions` — a `const`. A
+// `const`/`let` is hoisted but stays in the temporal dead zone until its own
+// declaration line actually runs, so calling setLang() here while
+// `langOptions` hadn't been declared yet used to throw "Cannot access
+// 'langOptions' before initialization" on every single page load, which
+// silently aborted the rest of this script (language switching, the
+// language-dropdown toggle, and anything wired up further down).
+const langToggle = document.getElementById('langToggle');
+const langOptions = langToggle.querySelectorAll('.lang-option');
+const langTrigger = document.getElementById('langTrigger');
+const langCurrent = document.getElementById('langCurrent');
+const langLabels = { en: 'EN', rw: 'RW', fr: 'FR', sw: 'SW', ar: 'AR' };
+function setLang(lang) {
+    currentLang = MS_I18N.normalise(lang);
+    document.body.className = document.body.className.replace(/\blang-\w+/g, '').trim();
+    document.body.classList.add('lang-' + currentLang);
+    // Arabic reads right-to-left; the [dir="rtl"] rules further up mirror the
+    // layout, so this must follow the language rather than being fixed to ltr.
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = currentLang;
+    langOptions.forEach(opt => opt.classList.toggle('active', opt.dataset.langCode === currentLang));
+    if (langCurrent) langCurrent.textContent = langLabels[currentLang] || currentLang.toUpperCase();
+    // Shared public-site key so every public page stays in sync (the admin
+    // panel uses its own separate key and is never affected by this).
+    localStorage.setItem(MS_I18N.STORAGE_KEY, currentLang);
+    localStorage.removeItem('noorAdminLang');
+    localStorage.removeItem('noorLang');
+    MS_I18N.applyTranslations(document);
+    document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.dataset.lang === currentLang ? '' : 'none';
+    });
+    langToggle.classList.remove('open');
+    if (langTrigger) langTrigger.setAttribute('aria-expanded', 'false');
+}
+// Follow the language chosen on any other page or tab. assets/js/i18n.js owns the
+// `storage` listener and re-broadcasts it as ms:langchange, so pages stay in step.
+document.addEventListener('ms:langchange', function (e) {
+    var lang = e.detail && e.detail.lang;
+    if (lang && lang !== currentLang) setLang(lang);
+});
+langOptions.forEach(opt => opt.addEventListener('click', () => setLang(opt.dataset.langCode)));
+langOptions.forEach(opt => opt.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(opt.dataset.langCode); } }));
+if (langTrigger) {
+    langTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = langToggle.classList.toggle('open');
+        langTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+}
+document.addEventListener('click', (e) => {
+    if (langToggle && !langToggle.contains(e.target)) { langToggle.classList.remove('open'); if (langTrigger) langTrigger.setAttribute('aria-expanded', 'false'); }
+});
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && langToggle) { langToggle.classList.remove('open'); if (langTrigger) langTrigger.setAttribute('aria-expanded', 'false'); }
+});
+setLang(currentLang);
+
+// ===== REVEAL ON SCROLL =====
+(function () {
+    const els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('revealed')); return; }
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    els.forEach(el => io.observe(el));
+})();
+
+// loadHome() calls renderFeatured() synchronously, which calls setLang(), so
+// it must run after the language-selector setup above (see the NOTE there).
+loadHome();
+
+// ===== SESSION CHECK (database) =====
+verifyAuthSession();
+
+// ===== MOBILE MENU =====
+const menuToggle = document.getElementById('menuToggle');
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+        const nav = document.querySelector('.nav-links');
+        const open = nav.classList.toggle('open');
+        menuToggle.setAttribute('aria-expanded', open);
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+    }));
+}
+</script>
+</body>
+</html>

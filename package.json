@@ -1,0 +1,14 @@
+{
+  "name": "modern-skills",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm --prefix backend install",
+    "start": "npm --prefix backend start",
+    "dev": "npm --prefix backend run dev",
+    "install:backend": "npm --prefix backend install"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
