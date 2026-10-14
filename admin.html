@@ -2650,6 +2650,13 @@ async function api(path, options = {}) {
             headers['Authorization'] = 'Bearer ' + getToken();
             r = await fetch(`${API_BASE}${path}`, { ...options, headers, signal: controller.signal });
         }
+        /* A static host (e.g. GitHub Pages) answers unknown paths like /api/auth/login
+           with an HTML 404 page. Parsing that as JSON throws the cryptic
+           "Unexpected token '<'", so detect it and say what is actually wrong. */
+        const contentType = r.headers.get('content-type') || '';
+        if (!/json/i.test(contentType)) {
+            throw new Error('The backend API is not reachable (it returned a web page instead of data). Deploy the Node backend and set API_URL in config.js to its address.');
+        }
         const data = await r.json();
         if (!r.ok) throw new Error(data.error || 'Request failed');
         return data;
