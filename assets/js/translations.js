@@ -24,22 +24,22 @@ window.MS_TRANSLATIONS = {
         "fr": "...ou collez une URL de couverture",
         "sw": "...au bandika URL ya jalada",
         "ar": "...أو الصق رابط الغلاف",
-        "rw": "...cyangwa pima URL y'ifoto"
+        "rw": "...cyangwa ushyiremo URL y'ifoto y'igifuniko"
     },
     ".txt or .md — fills the content field above.": {
         "fr": ".txt ou .md — remplit le champ de contenu ci-dessus.",
         "sw": ".txt au .md — inajaza sehemu ya maudhui hapo juu.",
         "ar": ".txt أو .md — يملأ حقل المحتوى أعلاه.",
-        "rw": ".txt cyangwa .md — byuzuza umurongo w'ibiri mu gitabo haruguru."
+        "rw": ".txt cyangwa .md — byuzuza ahabugenewe ibirimo haruguru."
     },
     "\"My Lord, increase me in knowledge.\" — Taha 20:114": {
-        "rw": "\"Vuga uti: Nyagasani wanjye, nyongera ubumenyi.\" — Taha 20:114",
+        "rw": "“Nyagasani wanjye, nyongerera ubumenyi.” — Taha 20:114",
         "fr": "« Seigneur, accroît mon savoir. » — Taha 20:114",
         "sw": "\"Mola wangu, niongezee elimu.\" — Taha 20:114",
         "ar": "«وَقُل رَّبِّ زِدْنِي عِلْمًا» — طه 20:114"
     },
     "\"Recite the Qur'an in slow, measured tones.\" — Al-Muzzammil 73:4": {
-        "rw": "“Soma Qur’an ukoreye amategeko yayo.” — Al-Muzzammil 73:4",
+        "rw": "“Soma Qur’an uyitonze kandi uyisome mu buryo bunoze.” — Al-Muzzammil 73:4",
         "fr": "« Récite le Coran avec soin et lenteur. » — Al-Muzzammil 73:4",
         "sw": "\"Soma Qur'an kwa utaratibu na kwa makini.\" — Al-Muzzammil 73:4",
         "ar": "«وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا» — المزمل 73:4"
@@ -57,15 +57,15 @@ window.MS_TRANSLATIONS = {
         "ar": "5 لغات"
     },
     "About us": {
-        "rw": "Turi Bande",
+        "rw": "Ibitwerekeyeho",
         "fr": "À propos",
-        "sw": "Kuhusu Sisi",
+        "sw": "Kuhusu sisi",
         "ar": "من نحن"
     },
     "About Us": {
-        "rw": "Turi Bande",
+        "rw": "Ibitwerekeyeho",
         "fr": "À propos de nous",
-        "sw": "Kuhusu Sisi",
+        "sw": "Kuhusu sisi",
         "ar": "من نحن"
     },
     "Access length (days)": {
@@ -84,10 +84,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Type d'accès",
         "sw": "Aina ya Ufikiaji",
         "ar": "نوع الوصول",
-        "rw": "Ubwoko bw'Uburenganzira"
+        "rw": "Ubwoko bw'uburenganzira bwo gukoresha"
     },
     "Access until": {
-        "rw": "Ufite uburenganzira kugeza: ",
+        "rw": "Uburenganzira kugeza kuri: ",
         "fr": "Accès jusqu’au ",
         "sw": "Ufikiaji hadi ",
         "ar": "الوصول حتى "
@@ -99,7 +99,7 @@ window.MS_TRANSLATIONS = {
         "ar": "حساب"
     },
     "Account Name": {
-        "rw": "Izina ry'Akounti",
+        "rw": "Izina rya konti",
         "fr": "Nom du Compte",
         "sw": "Jina la Akaunti",
         "ar": "اسم الحساب"
@@ -114,25 +114,25 @@ window.MS_TRANSLATIONS = {
         "fr": "Actif",
         "sw": "Amilifu",
         "ar": "نشط",
-        "rw": "Kigira ububasha"
+        "rw": "Birakora"
     },
     "Add Book": {
         "fr": "Ajouter un livre",
         "sw": "Ongeza Kitabu",
         "ar": "إضافة كتاب",
-        "rw": "Ongera Igitabo"
+        "rw": "Ongeraho igitabo"
     },
     "Add Category": {
         "fr": "Ajouter une catégorie",
         "sw": "Ongeza Kategoria",
         "ar": "إضافة فئة",
-        "rw": "Ongera Icyiciro"
+        "rw": "Ongeraho icyiciro"
     },
     "Add Instructor": {
         "fr": "Ajouter un instructeur",
         "sw": "Ongeza Mkufunzi",
         "ar": "إضافة مدرّس",
-        "rw": "Ongera Umwarimu"
+        "rw": "Ongeraho umwarimu"
     },
     "Add Testimonial": {
         "fr": "Ajouter un témoignage",
@@ -141,34 +141,34 @@ window.MS_TRANSLATIONS = {
         "rw": "Ongera Ubuhamya"
     },
     "Add your first category above.": {
-        "rw": "Ongera icyiciro cya mbere aho hejuru.",
+        "rw": "Ongeraho icyiciro cyawe cya mbere ukoresheje igice kiri hejuru.",
         "fr": "Ajoutez votre première catégorie ci-dessus.",
         "sw": "Ongeza kategoria yako ya kwanza hapo juu.",
         "ar": "أضف فئتك الأولى أعلاه."
     },
     "Add your first instructor above.": {
-        "rw": "Ongera umwarimu wa mbere aho hejuru.",
+        "rw": "Ongeraho umwarimu wawe wa mbere ukoresheje igice kiri hejuru.",
         "fr": "Ajoutez votre premier instructeur ci-dessus.",
         "sw": "Ongeza mwalimu wako wa kwanza hapo juu.",
         "ar": "أضف مدرسك الأول أعلاه."
     },
     "Add your first testimonial above.": {
-        "rw": "Ongera ubuhamya bwa mbere aho hejuru.",
+        "rw": "Ongeraho ubuhamya bwa mbere ukoresheje igice kiri hejuru.",
         "fr": "Ajoutez votre premier témoignage ci-dessus.",
-        "sw": "Ongeza onyesho lako la kwanza hapo juu.",
+        "sw": "Ongeza ushuhuda wako wa kwanza hapo juu.",
         "ar": "أضف شهادتك الأولى أعلاه."
     },
     "Admin Access": {
         "fr": "Accès Administrateur",
         "sw": "Upatikanaji wa Msimamizi",
         "ar": "دخول المدير",
-        "rw": "Kwinjira kwa Admin"
+        "rw": "Uburenganzira bw'umuyobozi"
     },
     "Admin Panel": {
-        "fr": "Panneau Admin",
+        "fr": "Panneau d’administration",
         "sw": "Paneli ya Msimamizi",
         "ar": "لوحة الإدارة",
-        "rw": "Umuganda wa Admin"
+        "rw": "Igice cy'ubuyobozi"
     },
     "Admin Password": {
         "fr": "Mot de passe Admin",
@@ -177,7 +177,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Ijambo wibanga rya Admin"
     },
     "Advanced": {
-        "rw": "Abahinze",
+        "rw": "Urwego rwo hejuru",
         "fr": "Avancé",
         "sw": "Juu",
         "ar": "متقدم"
@@ -210,10 +210,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Tous les instructeurs",
         "sw": "Wakufunzi Wote",
         "ar": "جميع المدرّسين",
-        "rw": "Abigisha Bwose"
+        "rw": "Abigisha bose"
     },
     "All Lessons": {
-        "rw": "Amasomo Yose",
+        "rw": "Amasomo yose",
         "fr": "Toutes les leçons",
         "sw": "Masomo Yote",
         "ar": "جميع الدروس"
@@ -225,7 +225,7 @@ window.MS_TRANSLATIONS = {
         "ar": "جميع الدروس مدفوعة. يُحدَّد السعر بواسطة خطة الفيديو الواحد — لا يوجد سعر لكل درس لإدخاله."
     },
     "All Levels": {
-        "rw": "Ibice Byose",
+        "rw": "Inzego zose",
         "fr": "Tous niveaux",
         "sw": "Kila ngazi",
         "ar": "جميع المستويات"
@@ -249,25 +249,25 @@ window.MS_TRANSLATIONS = {
         "rw": "Ubuhamya Bwose"
     },
     "All videos for {n} days": {
-        "rw": "Videwo zose iminsi {n}",
+        "rw": "Videwo zose mu gihe cy'iminsi {n}",
         "fr": "Toutes les vidéos pendant {n} jours",
         "sw": "Video zote kwa siku {n}",
         "ar": "كل المقاطع لمدة {n} يوم"
     },
     "All videos for 30 days": {
-        "rw": "Amavideo yose iminsi 30",
+        "rw": "Videwo zose mu gihe cy'iminsi 30",
         "fr": "Toutes les vidéos pendant 30 jours",
         "sw": "Video zote kwa siku 30",
         "ar": "جميع الفيديوهات لمدة 30 يومًا"
     },
     "All videos for 7 days": {
-        "rw": "Amavideo yose iminsi 7",
+        "rw": "Videwo zose mu gihe cy'iminsi 7",
         "fr": "Toutes les vidéos pendant 7 jours",
         "sw": "Video zote kwa siku 7",
         "ar": "جميع الفيديوهات لمدة 7 أيام"
     },
     "All videos, lifetime access": {
-        "rw": "Videwo zose, ubuzima bwose",
+        "rw": "Videwo zose, uburenganzira bwo kuzigera igihe cyose",
         "fr": "Toutes les vidéos, à vie",
         "sw": "Video zote, maisha yote",
         "ar": "كل المقاطع، مدى الحياة"
@@ -285,19 +285,19 @@ window.MS_TRANSLATIONS = {
         "ar": "المبلغ"
     },
     "An admin is reviewing your payment. This usually takes just a few minutes — this page will unlock automatically once approved.": {
-        "rw": "Umuyobozi arimo asuzuma kwishyura kwawe. Bisanzwe bifata iminota mike — iyi paji izifungura ubwo yemejwe.",
+        "rw": "Umuyobozi arimo kugenzura ubwishyu bwawe. Ubusanzwe bifata iminota mike. Iyi paji izafunguka ubwishyu bumaze kwemezwa.",
         "fr": "Un administrateur examine votre paiement. Cela prend généralement quelques minutes — cette page se déverrouillera automatiquement une fois approuvée.",
         "sw": "Msimamizi anakagua malipo yako. Kawaida huchukua dakika chache tu — ukurasa huu utafunguka kiotomatiki mara ukiidhinishwa.",
         "ar": "يقوم المسؤول بمراجعة دفعتك. يستغرق هذا عادة بضع دقائق فقط — ستُفتح هذه الصفحة تلقائيًا بمجرد الموافقة."
     },
     "Anglais": {
-        "rw": "Kinyarwanda",
-        "fr": "Français",
-        "sw": "Swahili",
-        "ar": "Arabe"
+        "rw": "Icyongereza",
+        "fr": "Anglais",
+        "sw": "Kiingereza",
+        "ar": "الإنجليزية"
     },
     "Approve students who have paid, or revoke their access. Revoking also deactivates their account until re-activated.": {
-        "rw": "Emeza abanyeshuri bashyize amafanga, cyangwa hagarike uburenganzira bwabo. Guhagarika byahagarika kandi konti yabo kugeza igarutse.",
+        "rw": "Emeza abanyeshuri bishyuye cyangwa ubambure uburenganzira bwo kwinjira. Kubambura ubwo burenganzira bihagarika na konti zabo kugeza zongeye gufungurwa.",
         "fr": "Approuvez les étudiants qui ont payé, ou révoquez leur accès. Révoquer désactive aussi leur compte jusqu'à réactivation.",
         "sw": "Thibitisha wanafunzi waliolipa, au ondoa ufikiaji wao. Kuondoa kunazima pia akaunti yao hadi iweze kuwashwa tena.",
         "ar": "وافق على الطلاب الذين دفعوا، أو ألغِ وصولهم. إلغاء الوصول يلغي تفعيل حساباتهم أيضاً حتى إعادة التفعيل."
@@ -315,7 +315,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Umwanditsi"
     },
     "Auto-detected or type e.g. 28 min": {
-        "rw": "Bisuzumwa ku buryo bwite cyangwa andika urugero: 28 min",
+        "rw": "Bihita bimenyekana cyangwa wandike urugero: iminota 28",
         "fr": "Détecté automatiquement ou ex. 28 min",
         "sw": "Hujigwa moja kwa moja au k.m. dakika 28",
         "ar": "يُكتشف تلقائياً أو اكتب مثال: 28 دقيقة"
@@ -339,13 +339,13 @@ window.MS_TRANSLATIONS = {
         "rw": "Subira kuri Site"
     },
     "Back!": {
-        "rw": "Neza!",
-        "fr": "retour !",
-        "sw": "Tena!",
+        "rw": "Subira inyuma!",
+        "fr": "Retour !",
+        "sw": "Rudi nyuma!",
         "ar": "بعودتك!"
     },
     "Beginner": {
-        "rw": "Umutangira",
+        "rw": "Urwego rw'abatangizi",
         "fr": "Débutant",
         "sw": "Mwanzo",
         "ar": "مبتدئ"
@@ -387,7 +387,7 @@ window.MS_TRANSLATIONS = {
         "ar": "الكتب"
     },
     "Books and learning material selected by our instructors — read them right here, in your own language.": {
-        "rw": "Ibitabo n'ibikoresho byo kwiga byatoranyijwe n'abigisha bacu — bibasomera hano, mu rurimi rwawe.",
+        "rw": "Ibitabo n'ibikoresho byo kwiga byatoranyijwe n'abarimu bacu — bisomere hano mu rurimi rwawe.",
         "fr": "Livres et supports pédagogiques choisis par nos instructeurs — à lire ici, dans votre langue.",
         "sw": "Vitabu na nyenzo za kujifunza zilizochaguliwa na walimu wetu — soma hapa, kwa lugha yako.",
         "ar": "كتب ومواد تعليمية مختارة من معلمينا — اقرأها هنا بلغتك."
@@ -399,22 +399,22 @@ window.MS_TRANSLATIONS = {
         "ar": "تصفح الكتب"
     },
     "Browse Lessons": {
-        "rw": "Sindagura Amasomo",
+        "rw": "Shakisha amasomo",
         "fr": "Parcourir les leçons",
-        "sw": "Vinjari Masomo",
+        "sw": "Vinjari masomo",
         "ar": "تصفح الدروس"
     },
     "Cancel": {
         "fr": "Annuler",
         "sw": "Ghairi",
         "ar": "إلغاء",
-        "rw": "Reka"
+        "rw": "Kureka"
     },
     "Caps Lock is on": {
         "fr": "Verr. Maj. activé",
         "sw": "Caps Lock imewashwa",
         "ar": "مفتاح Caps Lock مفعّل",
-        "rw": "Caps Lock irafunze"
+        "rw": "Caps Lock irafunguye"
     },
     "categories": {
         "rw": "byiciro",
@@ -429,7 +429,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Ibyiciro"
     },
     "Categories will appear here once lessons are added.": {
-        "rw": "Ibyiciro bizagaragara hano ryashyizwe amasomo.",
+        "rw": "Ibyiciro bizagaragara hano amasomo amaze kongerwa.",
         "fr": "Les catégories apparaîtront ici une fois les leçons ajoutées.",
         "sw": "Kategoria zitaonekana hapa masomo yakiongezwa.",
         "ar": "ستظهر الفئات هنا بعد إضافة الدروس."
@@ -459,7 +459,7 @@ window.MS_TRANSLATIONS = {
         "ar": "معلمون معتمدون"
     },
     "Check Status": {
-        "rw": "Reba Imiterere",
+        "rw": "Reba uko bihagaze",
         "fr": "Vérifier le Statut",
         "sw": "Angalia Hali",
         "ar": "التحقق من الحالة"
@@ -471,19 +471,19 @@ window.MS_TRANSLATIONS = {
         "ar": "اختر اسم مستخدم"
     },
     "Choose Your Plan": {
-        "rw": "Hitamo Igicaro",
+        "rw": "Hitamo gahunda yawe",
         "fr": "Choisissez votre plan",
         "sw": "Chagua Mpango Wako",
         "ar": "اختر خطتك"
     },
     "Click to play": {
-        "rw": "Kanda kugira ngo uzirebe",
+        "rw": "Kanda kugira ngo ukine",
         "fr": "Cliquez pour lire",
         "sw": "Bofya kucheza",
         "ar": "اضغط للتشغيل"
     },
     "Click to play (YouTube)": {
-        "rw": "Kanda kugira ngo uzirebe (YouTube)",
+        "rw": "Kanda kugira ngo ukine (YouTube)",
         "fr": "Cliquez pour lire (YouTube)",
         "sw": "Bofya kucheza (YouTube)",
         "ar": "اضغط للتشغيل (YouTube)"
@@ -501,13 +501,13 @@ window.MS_TRANSLATIONS = {
         "rw": "Ibara"
     },
     "Complete": {
-        "rw": "Ikiganza",
-        "fr": "Cours complet",
-        "sw": "Kozi kamili",
+        "rw": "Byuzuye",
+        "fr": "Terminé",
+        "sw": "Imekamilika",
         "ar": "الدورة الكاملة"
     },
     "Confirm Password": {
-        "rw": "Subiramo Ijambo Wibanga",
+        "rw": "Emeza ijambo ry'ibanga",
         "fr": "Confirmer le mot de passe",
         "sw": "Thibitisha Nenosiri",
         "ar": "تأكيد كلمة المرور"
@@ -528,10 +528,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Contenu",
         "sw": "Maudhui",
         "ar": "المحتوى",
-        "rw": "Ibiri mu gitabo"
+        "rw": "Ibirimo"
     },
     "Content imported from file.": {
-        "rw": "Ibiri mu gitabo byinjijwe uhereye ku dosiye.",
+        "rw": "Ibirimo byinjijwe bivuye muri dosiye.",
         "fr": "Contenu importé depuis le fichier.",
         "sw": "Maudhui yameingizwa kutoka kwa faili.",
         "ar": "تم استيراد المحتوى من الملف."
@@ -540,10 +540,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Politique de contenu Assurez-vous que tout le contenu est approprié, exact et conforme aux principes d'enseignement coranique. Toutes les leçons sont révisées avant publication.",
         "sw": "Sera ya Maudhui Hakikisha maudhui yote yanafaa, yana usahihi, na yanalingana na kanuni za mafundisho ya Kurani. Masomo yote hupitiwa kabla ya kuchapishwa.",
         "ar": "سياسة المحتوى تأكد من أن كل المحتوى مناسب ودقيق ومتوافق مع مبادئ التعليم القرآني. تتم مراجعة جميع الدروس قبل النشر.",
-        "rw": "Politike y'Ikibazo Urebe neza ibyo byose biri mu buryo bwemewe, buri neza, kandi bigendana n'inkondo z'inyigisho z'Ubuntu. Amasomo yose asuzumwa mbere yo gusohora."
+        "rw": "Amabwiriza agenga ibirimo: Menya neza ko ibirimo byose bikwiye, ari ukuri kandi bihuye n'amahame yo kwigisha Qur'an. Amasomo yose asuzumwa mbere yo gushyirwa ku rubuga."
     },
     "Could not load plans": {
-        "rw": "Ntibyashobotse gushyira ibiciro",
+        "rw": "Ntibyashobotse gupakira gahunda zo kwishyura.",
         "fr": "Impossible de charger les forfaits",
         "sw": "Imeshindwa kupakia mipango",
         "ar": "تعذر تحميل الخطط"
@@ -561,7 +561,7 @@ window.MS_TRANSLATIONS = {
         "ar": "فشل حفظ الكتاب: "
     },
     "Course": {
-        "rw": "Kiganza",
+        "rw": "Isomo ry'amasomo",
         "fr": "Cours",
         "sw": "Kozi",
         "ar": "دورة"
@@ -573,7 +573,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Ifoto y'igitabo"
     },
     "Cover upload failed:": {
-        "rw": "Gushyira ifoto byanze: ",
+        "rw": "Kohereza ifoto y'igifuniko ntibyashobotse: ",
         "fr": "Échec du téléversement de la couverture : ",
         "sw": "Upakiaji wa jalada umeshindwa: ",
         "ar": "فشل رفع الغلاف: "
@@ -585,9 +585,9 @@ window.MS_TRANSLATIONS = {
         "ar": "تم رفع الغلاف — سيُحفظ مع الكتاب."
     },
     "Create": {
-        "rw": "Fungura",
-        "fr": "Créer un",
-        "sw": "Fungua",
+        "rw": "Kora",
+        "fr": "Créer",
+        "sw": "Unda",
         "ar": "إنشاء"
     },
     "Create a password (6+ characters)": {
@@ -612,7 +612,7 @@ window.MS_TRANSLATIONS = {
         "fr": "Tableau de bord",
         "sw": "Dashibodi",
         "ar": "لوحة التحكم",
-        "rw": "Imbonerahamwe"
+        "rw": "Ikibaho cy'ubuyobozi"
     },
     "Date": {
         "fr": "Date",
@@ -639,33 +639,33 @@ window.MS_TRANSLATIONS = {
         "ar": "فشل الحذف: "
     },
     "Delete this book?": {
-        "rw": "Gusiba iki gitabo?",
+        "rw": "Urashaka gusiba iki gitabo?",
         "fr": "Supprimer ce livre ?",
         "sw": "Futa kitabu hiki?",
         "ar": "حذف هذا الكتاب؟"
     },
     "Delete this category? Lessons in it will become uncategorized.": {
-        "rw": "Usabe gusiba iki cyiciro? Amasomo arimo azaba nta cyiciro.",
+        "rw": "Urashaka gusiba iki cyiciro? Amasomo arimo azasigara nta cyiciro afite.",
         "fr": "Supprimer cette catégorie ? Les leçons deviendront sans catégorie.",
         "sw": "Una futi kategoria hii? Masomo yake yatakuwa bila kategoria.",
         "ar": "حذف هذه الفئة؟ ستصبح الدروس بدون فئة."
     },
     "Delete this instructor? Lessons assigned to them will become unassigned.": {
-        "rw": "Usabe gusiba uyu mwarimu? Amasomo amushinzwe azaba nta warimu.",
+        "rw": "Urashaka gusiba uyu mwarimu? Amasomo yari ashinzwe azasigara nta mwarimu ashyizweho.",
         "fr": "Supprimer cet instructeur ? Les leçons seront désassignées.",
         "sw": "Una futi mwalimu huyu? Masomo yake yatakuwa bila mwalimu.",
         "ar": "حذف هذا المدرس؟ ستصبح الدروس بدون مدرس."
     },
     "Delete this lesson?": {
-        "rw": "Usabe gusiba iri somo?",
+        "rw": "Urashaka gusiba iri somo?",
         "fr": "Supprimer cette leçon ?",
         "sw": "Una futi somo hili?",
         "ar": "حذف هذا الدرس؟"
     },
     "Delete this testimonial?": {
-        "rw": "Usabe gusiba ubu buhamya?",
+        "rw": "Urashaka gusiba ubu buhamya?",
         "fr": "Supprimer ce témoignage ?",
-        "sw": "Una futi onyesho hili?",
+        "sw": "Una uhakika unataka kufuta ushuhuda huu?",
         "ar": "حذف هذه الشهادة؟"
     },
     "Describe what students will learn, key takeaways, and any prerequisites...": {
@@ -684,30 +684,30 @@ window.MS_TRANSLATIONS = {
         "fr": "Difficulté",
         "sw": "Ugumu",
         "ar": "الصعوبة",
-        "rw": "Urwego"
+        "rw": "Urwego rw'ingorane"
     },
     "Difficulty Level": {
         "fr": "Niveau de difficulté",
         "sw": "Kiwango cha Ugumu",
         "ar": "مستوى الصعوبة",
-        "rw": "Urwego"
+        "rw": "Urwego rw'ingorane"
     },
     "Displays inline on the Books page (in the reader, not a new tab). PDF only, max 50MB. When set, it replaces the text above.": {
         "fr": "S'affiche directement sur la page Livres (dans le lecteur, sans nouvel onglet). PDF uniquement, 50 Mo max. S'il est défini, il remplace le texte ci-dessus.",
         "sw": "Huonyeshwa moja kwa moja kwenye ukurasa wa Vitabu (kwenye kisomaji, si kichupo kipya). PDF pekee, upeo 50MB. Ukiwekwa, hubadilisha maandishi hapo juu.",
         "ar": "يُعرض مباشرة في صفحة الكتب (داخل القارئ، وليس في تبويب جديد). PDF فقط، بحد أقصى 50 ميجابايت. عند التعيين، يستبدل النص أعلاه.",
-        "rw": "Byigaragaza mu rupapuro rw'Ibitabo (mu isoma, ntabwo mu idirishya rishya). PDF gusa, urenga 50MB. Iyo bishyizweho, bisimbuza inyandiko haruguru."
+        "rw": "Bigaragara ku rupapuro rw'Ibitabo, mu gisomero aho gufungura indi tab. PDF gusa, ntibirenge 50 MB. Iyo ushyizemo dosiye, isimbura inyandiko iri hejuru."
     },
     "Don't have an account?": {
-        "rw": "Nta konti ufite?",
+        "rw": "Nta konti uragira?",
         "fr": "Vous n'avez pas de compte ?",
         "sw": "Huna akaunti?",
         "ar": "ليس لديك حساب؟"
     },
     "Draft": {
-        "rw": "Kitarangizwa",
+        "rw": "Inyandiko itarasohoka",
         "fr": "Brouillon",
-        "sw": "Wachapishwa",
+        "sw": "Rasimu",
         "ar": "مسودة"
     },
     "Duration": {
@@ -723,16 +723,16 @@ window.MS_TRANSLATIONS = {
         "ar": "مثال: 234"
     },
     "e.g. A short description of what this category covers...": {
-        "rw": "Urugero: ibisobanuro bigufi byo iki cyiciro gifite...",
+        "rw": "Urugero: Ibisobanuro bigufi by'ibikubiye muri iki cyiciro...",
         "fr": "ex. Une courte description de ce que couvre cette catégorie...",
-        "sw": "k.m. maelezo mafupi ya kategoria hii inavyogezwa...",
+        "sw": "Mfano: Maelezo mafupi ya mambo yanayopatikana katika kategoria hii...",
         "ar": "مثال: وصف موجز لما تغطيه هذه الفئة..."
     },
     "e.g. FA": {
         "rw": "urugero: FA",
         "fr": "ex. FA",
         "sw": "k.m. FA",
-        "ar": "مثال: فاط"
+        "ar": "مثال: ف. أ."
     },
     "e.g. Fatima Ahmed": {
         "rw": "urugero: Fatima Ahmed",
@@ -743,7 +743,7 @@ window.MS_TRANSLATIONS = {
     "e.g. Introduction to Tajweed — Noon Sakinah": {
         "rw": "Urugero: Intangiriro ya Tajweed — Noon Sakinah",
         "fr": "ex. Introduction au Tajweed — Noon Sakinah",
-        "sw": "k.m. utangirizi wa Tajweed — Noon Sakinah",
+        "sw": "mf. Utangulizi wa Tajweed — Noon Sakinah",
         "ar": "مثال: مقدمة في التجويد — noon sakinah"
     },
     "e.g. Sheikh Ahmad Al-Misri": {
@@ -813,37 +813,37 @@ window.MS_TRANSLATIONS = {
         "rw": "Guhindura Ubuhamya"
     },
     "Email": {
-        "rw": "Imeri",
+        "rw": "Imeyili",
         "fr": "E-mail",
         "sw": "Barua pepe",
         "ar": "البريد الإلكتروني"
     },
     "English": {
-        "rw": "Kinyarwanda",
-        "fr": "French",
-        "sw": "Swahili",
-        "ar": "Arabic"
+        "rw": "Icyongereza",
+        "fr": "Anglais",
+        "sw": "Kiingereza",
+        "ar": "الإنجليزية"
     },
     "Enrolled Students": {
         "fr": "Étudiants inscrits",
         "sw": "Wanafunzi Waliojiandikisha",
         "ar": "الطلاب المسجلون",
-        "rw": "Abanyeshuri"
+        "rw": "Abanyeshuri biyandikishije"
     },
     "Enter a valid email.": {
-        "rw": "Andika imeri nyayo.",
+        "rw": "Andika aderesi ya imeyili yemewe.",
         "fr": "Entrez un e-mail valide.",
         "sw": "Weka barua pepe sahihi.",
         "ar": "أدخل بريدًا إلكترونيًا صحيحًا."
     },
     "Enter a valid phone number.": {
-        "rw": "Andika numero ya telefone yemewe.",
+        "rw": "Andika nimero ya telefoni yemewe.",
         "fr": "Saisissez un numéro de téléphone valide.",
         "sw": "Weka namba ya simu inayofaa.",
         "ar": "أدخل رقم هاتف صالح."
     },
     "Enter admin password...": {
-        "rw": "Shyiramo ijambo wibanga rya Admin...",
+        "rw": "Andika ijambo ry'ibanga ry'umuyobozi...",
         "fr": "Entrez le mot de passe admin...",
         "sw": "Weka nenosiri la msimamizi...",
         "ar": "أدخل كلمة مرور المدير..."
@@ -870,7 +870,7 @@ window.MS_TRANSLATIONS = {
         "fr": "Entrez votre mot de passe pour accéder au tableau de bord",
         "sw": "Weka nenosiri lako ili kufikia dashibodi",
         "ar": "أدخل كلمة المرور للوصول إلى لوحة التحكم",
-        "rw": "Shyiramo ijambo wibanga kugira ngo uinjire"
+        "rw": "Andika ijambo ry'ibanga kugira ngo ufungure ikibaho cy'ubuyobozi."
     },
     "Enter your password.": {
         "rw": "Andika ijambo wibanga ryawe.",
@@ -891,7 +891,7 @@ window.MS_TRANSLATIONS = {
         "ar": "يمكن للجميع التعلم"
     },
     "Expert instructors are preparing structured Tajweed, Tafsir, Hifz and Arabic lessons for you. New lessons will appear here very soon.": {
-        "rw": "Abigisha babahanga barimo bitegura amasomo atunganyijwe ya Tajweed, Tafsir, Hifz n'Icyarabu kugira ngo uwige. Amasomo mashya azagaragara hano vuba.",
+        "rw": "Abigisha b'inzobere barimo gutegura amasomo ateguye neza ya Tajweed, Tafsir, Hifz n'Icyarabu. Amasomo mashya azagaragara hano vuba.",
         "fr": "Des instructeurs experts préparent des leçons structurées de Tajwid, Tafsir, Hifz et d'arabe pour vous. De nouvelles leçons apparaîtront ici très bientôt.",
         "sw": "Walimu wataalamu wanatayarisha masomo yaliyopangwa ya Tajweed, Tafsir, Hifz na Kiarabu kwa ajili yako. Masomo mapya yataonekana hapa hivi karibuni.",
         "ar": "يعمل معلمون خبراء على إعداد دروس منظمة في التجويد والتفسير والحفظ والعربية لك. ستظهر دروس جديدة هنا قريبًا جدًا."
@@ -900,36 +900,36 @@ window.MS_TRANSLATIONS = {
         "fr": "Expertise",
         "sw": "Utaalam",
         "ar": "الخبرة",
-        "rw": "Ubushobozi"
+        "rw": "Ubumenyi bwihariye"
     },
     "Explore our structured lessons in this category.": {
-        "rw": "Reka twige amasomo atunganyijwe mu byiciro bikiri imbere.",
+        "rw": "Reba amasomo yacu ateguye neza ari muri iki cyiciro.",
         "fr": "Explorez nos leçons structurées dans cette catégorie.",
-        "sw": "Chunguza masomo yaliyopangwa katika hii kategorya.",
+        "sw": "Chunguza masomo yetu yaliyopangwa vizuri katika kategoria hii.",
         "ar": "استكشف دروسنا المنظمة في هذه الفئة."
     },
     "Featured": {
-        "rw": "Bishyizwe Imbere",
+        "rw": "Byatoranyijwe",
         "fr": "En vedette",
         "sw": "Yaliyoangaziwa",
         "ar": "مميز"
     },
     "for the Quran": {
-        "rw": "kubwa Qur'an",
+        "rw": "kugira ngo wige Qur'an",
         "fr": "pour le Coran",
         "sw": "kwa ajili ya Qur'an",
         "ar": "من أجل القرآن"
     },
     "Free": {
-        "rw": "Bira",
+        "rw": "Ubuntu",
         "fr": "Gratuit",
         "sw": "Bure",
         "ar": "مجاني"
     },
     "Free Lesson": {
-        "rw": "Bira",
+        "rw": "Isomo ry'ubuntu",
         "fr": "Leçon gratuite",
-        "sw": "Somo Bure",
+        "sw": "Somo la bure",
         "ar": "درس مجاني"
     },
     "Free preview — 15 seconds": {
@@ -939,7 +939,7 @@ window.MS_TRANSLATIONS = {
         "ar": "معاينة مجانية — 15 ثانية"
     },
     "Free preview ended — register or sign in to continue watching.": {
-        "rw": "Igerageza ry'ubuntu ryarangiye — iyandikishe cyangwa winjire kugira ngo ukomeze kureba.",
+        "rw": "Igihe cyo kureba igice cy'ubuntu cyarangiye — iyandikishe cyangwa winjire kugira ngo ukomeze kureba.",
         "fr": "L'aperçu gratuit est terminé — inscrivez-vous ou connectez-vous pour continuer.",
         "sw": "Onyesho la bure limekwisha — jisajili au ingia ili kuendelea kutazama.",
         "ar": "انتهت المعاينة المجانية — سجّل أو ادخل لمتابعة المشاهدة."
@@ -948,10 +948,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Depuis votre appareil — PNG, JPG ou WebP, 5 Mo max",
         "sw": "Kutoka kwa kifaa chako — PNG, JPG au WebP, upeo 5MB",
         "ar": "من جهازك — PNG أو JPG أو WebP، بحد أقصى 5 ميجابايت",
-        "rw": "Uhereye ku gikoresho cyawe — PNG, JPG cyangwa WebP, urenga 5MB"
+        "rw": "Uhereye ku gikoresho cyawe — PNG, JPG cyangwa WebP, ntibirenge 5 MB"
     },
     "Full Name": {
-        "rw": "Amazina Yose",
+        "rw": "Amazina yose",
         "fr": "Nom complet",
         "sw": "Jina Kamili",
         "ar": "الاسم الكامل"
@@ -963,7 +963,7 @@ window.MS_TRANSLATIONS = {
         "ar": "عام"
     },
     "Get lesson updates, reminders and support directly from our teachers.": {
-        "rw": "Bona amakuru y'amasomo, urwibutso n'inkunga ivuye ku bigisha bacu.",
+        "rw": "Jya ubona amakuru mashya y'amasomo, ubutumwa bwo kukwibutsa n'ubufasha biturutse ku bigisha bacu.",
         "fr": "Recevez les mises à jour des leçons, rappels et soutien directement de nos professeurs.",
         "sw": "Pata masasisho ya masomo, vikumbusho na msaada moja kwa moja kutoka kwa walimu wetu.",
         "ar": "احصل على تحديثات الدروس والتذكيرات والدعم مباشرة من معلمينا."
@@ -972,7 +972,7 @@ window.MS_TRANSLATIONS = {
         "fr": "Voir toutes les leçons",
         "sw": "Nenda kwa Masomo Yote",
         "ar": "الانتقال إلى جميع الدروس",
-        "rw": "Reba Amasomo Yose"
+        "rw": "Jya ku masomo yose"
     },
     "h": {
         "rw": "h",
@@ -981,16 +981,19 @@ window.MS_TRANSLATIONS = {
         "ar": "س"
     },
     "Has Access": {
-        "rw": "Afite Uburenganzira",
+        "rw": "Afite uburenganzira bwo kureba",
         "fr": "Accès accordé",
         "sw": "Ana Ufikiaji",
         "ar": "لديه وصول"
     },
     "Hide password": {
-        "rw": "Ibitisha ijambo wibanga"
+        "rw": "Hisha ijambo ry'ibanga",
+        "fr": "Masquer le mot de passe",
+        "sw": "Ficha nenosiri",
+        "ar": "إخفاء كلمة المرور"
     },
     "Highest rating": {
-        "rw": "Amanota menshi",
+        "rw": "Amanota yo hejuru",
         "fr": "Meilleure note",
         "sw": "Alama za Juu",
         "ar": "أعلى تقييم"
@@ -1008,25 +1011,25 @@ window.MS_TRANSLATIONS = {
         "ar": "https://youtube.com/watch?v=..."
     },
     "I've Paid — Submit for Verification": {
-        "rw": "Narishyuye — Ohereza Kugenzurwa",
-        "fr": "J'ai Payé — Soumettre pour Vérification",
-        "sw": "Nimelipa — Wasilisha Kuthibitishwa",
+        "rw": "Nishyuye — ohereza kugira ngo byemezwe",
+        "fr": "J’ai payé — soumettre pour vérification",
+        "sw": "Nimelipa — wasilisha ili kuthibitishwa",
         "ar": "لقد دفعت — إرسال للتحقق"
     },
     "Icyongereza": {
-        "rw": "Ikinyarwanda",
-        "fr": "Igifaransa",
-        "sw": "Igiswahili",
-        "ar": "Icyarabu"
+        "rw": "Icyongereza",
+        "fr": "Anglais",
+        "sw": "Kiingereza",
+        "ar": "الإنجليزية"
     },
     "Import content from file": {
         "fr": "Importer le contenu d'un fichier",
         "sw": "Ingiza maudhui kutoka kwa faili",
         "ar": "استيراد المحتوى من ملف",
-        "rw": "Shyiramo ibiri mu gitabo uhereye ku dosiye"
+        "rw": "Injiza ibirimo uhereye muri dosiye"
     },
     "Incorrect password. Try again.": {
-        "rw": "Ijambo wibanga ritaricumye. Ongera ugerageze.",
+        "rw": "Ijambo ry'ibanga si ryo. Ongera ugerageze.",
         "fr": "Mot de passe incorrect. Réessayez.",
         "sw": "Nenosiri si sahihi. Jaribu tena.",
         "ar": "كلمة المرور غير صحيحة. حاول مرة أخرى."
@@ -1044,9 +1047,9 @@ window.MS_TRANSLATIONS = {
         "rw": "Umwarimu"
     },
     "Instructor not set": {
-        "rw": "Umwarimu atazwi",
+        "rw": "Nta mwarimu watoranyijwe",
         "fr": "Instructeur non défini",
-        "sw": "Mwalimu haijawekwa",
+        "sw": "Mwalimu hajachaguliwa",
         "ar": "لم يتم تحديد المدرّس"
     },
     "instructors": {
@@ -1062,7 +1065,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Abigisha"
     },
     "Intermediate": {
-        "rw": "Urwego rwo Hagati",
+        "rw": "Urwego ruciriritse",
         "fr": "Intermédiaire",
         "sw": "Wastani",
         "ar": "متوسط"
@@ -1074,7 +1077,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Imeri cyangwa ijambo wibanga ntabwo ari byo. Ongera ugerageze."
     },
     "Join Now": {
-        "rw": "Injira",
+        "rw": "Injira nonaha",
         "fr": "Rejoindre maintenant",
         "sw": "Jiunge Sasa",
         "ar": "انضم الآن"
@@ -1092,10 +1095,10 @@ window.MS_TRANSLATIONS = {
         "ar": "JPG أو PNG أو WEBP · بحد أقصى 5 ميغابايت"
     },
     "Kiingereza": {
-        "rw": "Kinyarwanda",
-        "fr": "Kifaransa",
-        "sw": "Kiswahili",
-        "ar": "Kiarabu"
+        "rw": "Icyongereza",
+        "fr": "Anglais",
+        "sw": "Kiingereza",
+        "ar": "الإنجليزية"
     },
     "Language": {
         "rw": "Ururimi",
@@ -1104,19 +1107,19 @@ window.MS_TRANSLATIONS = {
         "ar": "اللغة"
     },
     "Learn the Qur'an Online": {
-        "rw": "Wige Qur'an Kuri Interineti",
+        "rw": "Iga Qur'an kuri interineti",
         "fr": "Apprenez le Coran en ligne",
         "sw": "Jifunze Qur'an Mtandaoni",
         "ar": "تعلّم القرآن أونلاين"
     },
     "Learn the Qur'an the Right Way": {
-        "rw": "Wige Qur'an mu Buryo Bunoze",
+        "rw": "Iga Qur'an mu buryo bukwiye",
         "fr": "Apprenez le Coran de la bonne manière",
         "sw": "Jifunze Qur'an kwa Njia Sahihi",
         "ar": "تعلّم القرآن بالطريقة الصحيحة"
     },
     "Learn with clear, step-by-step guidance from our certified teachers.": {
-        "rw": "Iga ukurikije amabwiriza asobanutse kuva ku bigisha bacu bemejwe.",
+        "rw": "Iga uyobowe neza, intambwe ku yindi, n'abarimu bacu bemewe.",
         "fr": "Apprenez avec des conseils clairs, étape par étape, de nos professeurs certifiés.",
         "sw": "Jifunze kwa mwongozo ulio wazi, hatua kwa hatua kutoka kwa walimu wetu waliothibitishwa.",
         "ar": "تعلّم بإرشادات واضحة خطوة بخطوة من معلمينا المعتمدين."
@@ -1125,10 +1128,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Leçon",
         "sw": "Somo",
         "ar": "الدرس",
-        "rw": "Amasomo"
+        "rw": "Isomo"
     },
     "Lesson chapters and resources are managed by the admin through the dashboard.": {
-        "rw": "Ibice by'isomo n'ibikoresho byabyo biyoborwa n'umuyobozi binyuze mu ruhare rwa dashboard.",
+        "rw": "Ibice by'isomo n'ibikoresho birigize bicungwa n'umuyobozi abinyujije ku kibaho cy'ubuyobozi.",
         "fr": "Les chapitres et ressources de la leçon sont gérés par l'administrateur via le tableau de bord.",
         "sw": "Sura na nyenzo za somo husimamiwa na msimamizi kupitia dashibodi.",
         "ar": "يدير المسؤول فصول الدرس وموارده من خلال لوحة التحكم."
@@ -1146,7 +1149,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Ururimi rw'Isomo"
     },
     "Lesson published": {
-        "rw": "Isomo ryasohotse.",
+        "rw": "Isomo ryashyizwe ku rubuga.",
         "fr": "Leçon publiée",
         "sw": "Somo limechapishwa",
         "ar": "تم نشر الدرس"
@@ -1164,7 +1167,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Izina ry'Isomo"
     },
     "Lesson unpublished": {
-        "rw": "Isomo ryahagaritswe.",
+        "rw": "Isomo ryakuwe ku rubuga.",
         "fr": "Leçon dépubliée",
         "sw": "Somo limefutwa ku chapisho",
         "ar": "تم إلغاء نشر الدرس"
@@ -1173,7 +1176,7 @@ window.MS_TRANSLATIONS = {
         "rw": "amasomo",
         "fr": "leçons",
         "sw": "masomo",
-        "ar": "درس"
+        "ar": "دروس"
     },
     "Lessons": {
         "rw": "Amasomo",
@@ -1182,9 +1185,9 @@ window.MS_TRANSLATIONS = {
         "ar": "الدروس"
     },
     "Lessons will appear here once they are added by our admin.": {
-        "rw": "Amasomo azagaragara hano ryashyizwe n'abagize.",
+        "rw": "Amasomo azagaragara hano amaze kongerwa n'umuyobozi.",
         "fr": "Les leçons apparaîtront ici une fois ajoutées.",
-        "sw": "Masomo yatatolewa hapa wakati wa kuongezwa.",
+        "sw": "Masomo yataonekana hapa baada ya kuongezwa na msimamizi.",
         "ar": "ستظهر الدروس هنا بعد إضافتها."
     },
     "Library": {
@@ -1203,16 +1206,16 @@ window.MS_TRANSLATIONS = {
         "fr": "Chargement des demandes de paiement...",
         "sw": "Inapakia maombi ya malipo...",
         "ar": "جارٍ تحميل طلبات الدفع...",
-        "rw": "Birimo gushyirwa amakuru yo kwishyura..."
+        "rw": "Turimo gupakira ibyifuzo byo kwishyura..."
     },
     "Loading plans...": {
-        "rw": "Birimo gushyirwa ibiciro...",
+        "rw": "Turimo gupakira gahunda zo kwishyura...",
         "fr": "Chargement des forfaits...",
         "sw": "Inapakia mipango...",
         "ar": "جارٍ تحميل الخطط..."
     },
     "Loading please wait...": {
-        "rw": "Gusoma oya...",
+        "rw": "Turimo gupakira. Tegereza gato...",
         "fr": "Chargement en cours...",
         "sw": "Inapakia...",
         "ar": "جارٍ التحميل..."
@@ -1221,7 +1224,7 @@ window.MS_TRANSLATIONS = {
         "fr": "Chargement des étudiants...",
         "sw": "Inapakia wanafunzi...",
         "ar": "جارٍ تحميل الطلاب...",
-        "rw": "Birimo gushyirwa abanyeshuri..."
+        "rw": "Turimo gupakira urutonde rw'abanyeshuri..."
     },
     "Log out": {
         "rw": "Sohoka",
@@ -1251,10 +1254,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Gérez les témoignages d'étudiants affichés sur la page d'accueil",
         "sw": "Dhibiti shuhuda za wanafunzi zinazoonyeshwa kwenye ukurasa wa mwanzo",
         "ar": "إدارة شهادات الطلاب المعروضة على الصفحة الرئيسية",
-        "rw": "Cunga ubuhamya bw'abanyeshuri bugaragara ku rugo"
+        "rw": "Genzura ubuhamya bw'abanyeshuri bugaragara ku rupapuro rw'itangiriro."
     },
     "Master all Tajweed rules with our structured course program.": {
-        "rw": "Menya amategeko ya Tajweed yose ukoresheje amahunda yacu atunganyijwe.",
+        "rw": "Menya amategeko yose ya Tajweed ukoresheje gahunda y'amasomo yacu iteguye neza.",
         "fr": "Maîtrisez toutes les règles du Tajwid avec notre programme structuré.",
         "sw": "Jifunze sheria zote za Tajweed kupitia programu yetu iliyopangwa.",
         "ar": "أتقن جميع أحكام التجويد من خلال برنامجنا المنظم."
@@ -1266,25 +1269,25 @@ window.MS_TRANSLATIONS = {
         "ar": "أكاديمية المهارات الحديثة"
     },
     "Modern Skills is an online academy for Qur'an learning — Tajweed, Tafsir, Hifz and Arabic, taught step by step by certified instructors, in your language.": {
-        "rw": "Modern Skills ni ishuri ryo kuri interineti ryo kwiga Qur'an — Tajweed, Tafsir, Hifz n'Icyarabu, byigishwa buhoro buhoro n'abigisha bemewe, mu rurimi rwawe.",
-        "fr": "Modern Skills est une académie en ligne pour apprendre le Coran — Tajwid, Tafsir, Hifz et arabe, enseignés pas à pas par des instructeurs certifiés, dans votre langue.",
-        "sw": "Modern Skills ni chuo cha mtandaoni cha kujifunza Qur'an — Tajweed, Tafsir, Hifz na Kiarabu, kikifundishwa hatua kwa hatua na walimu waliothibitishwa, kwa lugha yako.",
-        "ar": "Modern Skills أكاديمية عبر الإنترنت لتعلّم القرآن — التجويد والتفسير والحفظ والعربية، تُدرَّس خطوة بخطوة على يد معلمين معتمدين، بلغتك."
+        "rw": "Modern Skills ni ishuri ryo kuri interineti ryigisha Qur'an — Tajweed, Tafsir, Hifz n'Icyarabu. Amasomo atangwa intambwe ku yindi n'abarimu bemewe, mu rurimi wumva.",
+        "fr": "Modern Skills est une académie en ligne dédiée à l’apprentissage du Coran : tajwid, tafsir, mémorisation et arabe. Des enseignants qualifiés vous accompagnent étape par étape dans votre langue.",
+        "sw": "Modern Skills ni akademia ya mtandaoni ya kujifunza Qur'an—Tajweed, Tafsir, Hifz na Kiarabu. Walimu waliohitimu hufundisha hatua kwa hatua kwa lugha yako.",
+        "ar": "Modern Skills أكاديمية عبر الإنترنت لتعلّم القرآن: التجويد والتفسير والحفظ واللغة العربية، على يد معلّمين مؤهلين يرافقونك خطوة بخطوة بلغتك."
     },
     "Monthly Access": {
-        "rw": "Ubwifashisho bwa Kwezi",
+        "rw": "Uburenganzira bw'ukwezi",
         "fr": "Accès Mensuel",
-        "sw": "Ufikiaji wa Mwezi",
+        "sw": "Ufikiaji wa mwezi",
         "ar": "وصول شهري"
     },
     "Monthly Uploads": {
         "fr": "Téléversements mensuels",
-        "sw": "Upakiaji wa Kila Mwezi",
+        "sw": "Vilivyopakiwa mwezi huu",
         "ar": "الرفع الشهري",
-        "rw": "Byashyizwe Ukwezi"
+        "rw": "Ibyashyizweho muri uku kwezi"
     },
     "More in this category": {
-        "rw": "Izindi muri iyi gicegu",
+        "rw": "Ibindi biri muri iki cyiciro",
         "fr": "Plus dans cette catégorie",
         "sw": "Zaidi katika kategoria hii",
         "ar": "المزيد في هذه الفئة"
@@ -1299,13 +1302,13 @@ window.MS_TRANSLATIONS = {
         "fr": "MP4, MOV ou WebM — 500 Mo max",
         "sw": "MP4, MOV au WebM — Upeo 500MB",
         "ar": "MP4 أو MOV أو WebM — بحد أقصى 500 ميجابايت",
-        "rw": "MP4, MOV cyangwa WebM — Urenga 500MB"
+        "rw": "MP4, MOV cyangwa WebM — ntibirenge 500 MB"
     },
     "Navigation": {
         "fr": "Navigation",
         "sw": "Urambuzi",
         "ar": "التنقل",
-        "rw": "Ubuvugiro"
+        "rw": "Kuyobora"
     },
     "Network error. Check your connection and try again.": {
         "rw": "Ikosa ryo guhuza. Reba interineti yawe.",
@@ -1320,7 +1323,7 @@ window.MS_TRANSLATIONS = {
         "ar": "مشكلة في الشبكة. تحقق من اتصالك وحاول مجددًا."
     },
     "Never expires": {
-        "rw": "Ntizigera zirangira",
+        "rw": "Ntabwo birangira",
         "fr": "N'expire jamais",
         "sw": "Haiishi",
         "ar": "لا ينتهي"
@@ -1332,7 +1335,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Isomo Rishya"
     },
     "Newest first": {
-        "rw": "Byishya mbere",
+        "rw": "Banza werekane ibishya",
         "fr": "Plus récentes d'abord",
         "sw": "Mpya kwanza",
         "ar": "الأحدث أولاً"
@@ -1356,63 +1359,63 @@ window.MS_TRANSLATIONS = {
         "ar": "لا توجد كتب بعد"
     },
     "No categories found": {
-        "rw": "Nta gicegu gihari",
+        "rw": "Nta byiciro byabonetse.",
         "fr": "Aucune catégorie trouvée",
         "sw": "Hakuna kategoria",
         "ar": "لم يتم العثور على فئات"
     },
     "No categories yet": {
-        "rw": "Nta cyiciro bahari",
+        "rw": "Nta byiciro birashyirwaho.",
         "fr": "Aucune catégorie",
         "sw": "Hakuna kategoria",
         "ar": "لا توجد فئات"
     },
     "No description available for this lesson.": {
-        "rw": "Nta bisobanuro biriho kuri iyi isomo noneho.",
+        "rw": "Nta bisobanuro by'iri somo biraboneka.",
         "fr": "Aucune description disponible pour cette leçon.",
         "sw": "Hakuna maelezo ya somo hili.",
         "ar": "لا يوجد وصف لهذا الدرس."
     },
     "No instructors yet": {
-        "rw": "Nta bwarimu bariho",
+        "rw": "Nta barimu barashyirwaho.",
         "fr": "Aucun instructeur",
         "sw": "Hakuna walimu",
         "ar": "لا يوجد مدرسون"
     },
     "No lesson available yet.": {
-        "rw": "Nta somo riboneka kiracyo.",
+        "rw": "Nta somo riraboneka kugeza ubu.",
         "fr": "Aucune leçon disponible pour l'instant.",
         "sw": "Hakuna somo bado.",
         "ar": "لا يوجد درس متاح بعد."
     },
     "No lessons available yet": {
-        "rw": "Nta masomo ugihari",
+        "rw": "Nta masomo araboneka kugeza ubu.",
         "fr": "Aucune leçon disponible",
         "sw": "Masomo hayapo",
         "ar": "لا توجد دروس متاحة"
     },
     "No lessons found": {
-        "rw": "Nta masomo abonetse.",
+        "rw": "Nta masomo yabonetse.",
         "fr": "Aucune leçon trouvée",
         "sw": "Hakuna somo",
         "ar": "لم يتم العثور على دروس"
     },
     "No teachers available yet": {
-        "rw": "Nta mwarimu ugihari",
+        "rw": "Nta barimu baraboneka kugeza ubu.",
         "fr": "Aucun professeur disponible pour l'instant",
         "sw": "Hakuna walimu waliopo sasa",
         "ar": "لا يوجد مدرّسون متاحون بعد"
     },
     "No testimonials yet": {
-        "rw": "Nta buhamya bwariho",
+        "rw": "Nta buhamya burashyirwaho.",
         "fr": "Aucun témoignage",
-        "sw": "Hakuna maonyesho",
+        "sw": "Bado hakuna shuhuda.",
         "ar": "لا توجد شهادات"
     },
     "Not published yet": {
-        "rw": "Nturasohotse",
+        "rw": "Ntibirashyirwa ku rubuga.",
         "fr": "Pas encore publiée",
-        "sw": "HaChapishwi bado",
+        "sw": "Bado haijachapishwa.",
         "ar": "لم يُنشر بعد"
     },
     "of": {
@@ -1422,25 +1425,25 @@ window.MS_TRANSLATIONS = {
         "ar": "من"
     },
     "Offline": {
-        "rw": "Nta maresha",
+        "rw": "Ntabwo iri kuri interineti",
         "fr": "Hors ligne",
         "sw": "Nje mtandaoni",
         "ar": "غير متصل"
     },
     "Offline - check connection": {
-        "rw": "Nta interineti - reba umurongo",
-        "fr": "Hors ligne - verifiez la connexion",
+        "rw": "Ntabwo iri kuri interineti — genzura umuyoboro.",
+        "fr": "Hors ligne — vérifiez la connexion.",
         "sw": "Nimeja nje - angalia muunganisho",
         "ar": "غير متصل - تحقق من الاتصال"
     },
     "Oldest first": {
-        "rw": "Byishya mbere (r ya kambere)",
+        "rw": "Banza werekane ibya kera",
         "fr": "Plus anciennes d'abord",
         "sw": "Kongwe kwanza",
         "ar": "الأقدم أولاً"
     },
     "Online": {
-        "rw": "Ku mutego",
+        "rw": "Iri kuri interineti",
         "fr": "En ligne",
         "sw": "Online",
         "ar": "متصل"
@@ -1449,54 +1452,54 @@ window.MS_TRANSLATIONS = {
         "fr": "Facultatif — collez une URL au lieu de téléverser un fichier",
         "sw": "Si lazima — bandika URL badala ya kupakia faili",
         "ar": "اختياري — الصق رابطاً بدلاً من رفع ملف",
-        "rw": "Ntibisabwa — pima URL aho gushyira dosiye"
+        "rw": "Si ngombwa — andika URL aho kohereza dosiye."
     },
     "Our Instructors": {
-        "rw": "Abigisha Bacu",
+        "rw": "Abarimu bacu",
         "fr": "Nos Instructeurs",
         "sw": "Walimu Wetu",
         "ar": "معلمونا"
     },
     "Our teachers are getting ready. New lessons and teachers will appear here very soon.": {
-        "rw": "Abigisha bacu barimo bitegura. Amasomo mashya n'abigisha bizagaragara hano vuba.",
+        "rw": "Abarimu bacu barimo kwitegura. Amasomo mashya n'abarimu bashya bazagaragara hano vuba.",
         "fr": "Nos professeurs se préparent. De nouvelles leçons et de nouveaux professeurs apparaîtront ici très bientôt.",
         "sw": "Walimu wetu wanatayarisha. Masomo mapya na walimu wapya yatatolewa hapa hivi karibuni.",
         "ar": "معلمونا يستعدون. ستظهر دروس ومعلمون جدد هنا قريبًا جدًا."
     },
     "Paid": {
-        "rw": "Iishyurwa",
+        "rw": "Byishyuwe",
         "fr": "Payant",
-        "sw": "Inalipwa",
+        "sw": "Imelipwa",
         "ar": "مدفوع"
     },
     "Paid — enter a price": {
-        "rw": "Byishyu — shyiramo igiciro",
+        "rw": "Byishyuwe — andika igiciro",
         "fr": "Payant — indiquez un prix",
         "sw": "Ya malipo — weka bei",
         "ar": "مدفوع — أدخل السعر"
     },
     "Paid Lesson": {
-        "rw": "Iishyurwa",
+        "rw": "Isomo ryishyurirwa",
         "fr": "Leçon payante",
         "sw": "Somo la Kulipia",
         "ar": "درس مدفوع"
     },
     "Password": {
-        "rw": "Ijambo Wibanga",
+        "rw": "Ijambo ry'ibanga",
         "fr": "Mot de passe",
         "sw": "Nenosiri",
         "ar": "كلمة المرور"
     },
     "Password must be 6 or more characters.": {
-        "rw": "Ijambo wibanga rigomba kuba imyaka 6 cyangwa zirenze.",
+        "rw": "Ijambo ry'ibanga rigomba kugira inyuguti nibura 6.",
         "fr": "Le mot de passe doit avoir 6 caractères ou plus.",
         "sw": "Nenosiri lazima liwe na herufi 6 au zaidi.",
         "ar": "يجب أن تتكون كلمة المرور من 6 أحرف أو أكثر."
     },
     "Passwords do not match. Repeat it well.": {
-        "rw": "Ijambo wibanga ntabwo rihebye. Subiramo neza.",
+        "rw": "Amagambo y'ibanga ntahura. Ongera uyandike neza.",
         "fr": "Les mots de passe ne correspondent pas.",
-        "sw": "Nenosiri hazifanani. Rudia vizuri.",
+        "sw": "Manenosiri hayalingani. Yaandike tena kwa usahihi.",
         "ar": "كلمتا المرور غير متطابقتين."
     },
     "Payment approved! You can now watch the video.": {
@@ -1509,16 +1512,16 @@ window.MS_TRANSLATIONS = {
         "fr": "Soumissions de paiement",
         "sw": "Mawasilisho ya Malipo",
         "ar": "مدفوعات مقدمة",
-        "rw": "Kwishyura Kwoherejwe"
+        "rw": "Ubwishyu bwoherejwe"
     },
     "Payment Submitted!": {
-        "rw": "Kwishyura Kwoherejwe!",
+        "rw": "Ubwishyu bwoherejwe!",
         "fr": "Paiement Soumis !",
         "sw": "Malipo Yamewasilishwa!",
         "ar": "تم إرسال الدفع!"
     },
     "Payment submitted! Waiting for approval.": {
-        "rw": "Kwishyura kwoherejwe! Tegereza kwemezwa.",
+        "rw": "Ubwishyu bwoherejwe! Turategereje ko bwemezwa.",
         "fr": "Paiement envoyé ! En attente de validation.",
         "sw": "Malipo yametumwa! Inasubiri kuthibitishwa.",
         "ar": "تم إرسال الدفع! في انتظار الموافقة."
@@ -1530,13 +1533,13 @@ window.MS_TRANSLATIONS = {
         "ar": "فشل رفع PDF: "
     },
     "PDF uploaded - it will be shown inline on the Books page.": {
-        "rw": "PDF yashyizweho - izagaragazwa mu rupapuro rw'Ibitabo.",
+        "rw": "PDF yoherejwe — izagaragara ku rupapuro rw'Ibitabo.",
         "fr": "PDF téléversé - il s'affichera directement sur la page Livres.",
         "sw": "PDF imepakiwa - itaonyeshwa moja kwa moja kwenye ukurasa wa Vitabu.",
         "ar": "تم رفع PDF - سيُعرض مباشرة في صفحة الكتب."
     },
     "Pending": {
-        "rw": "Bitegereje",
+        "rw": "Birategerejwe",
         "fr": "En attente",
         "sw": "Inasubiri",
         "ar": "قيد المراجعة"
@@ -1560,13 +1563,13 @@ window.MS_TRANSLATIONS = {
         "ar": "رقم الهاتف"
     },
     "Phone Number You Paid From": {
-        "rw": "Numero Wishuriyeho",
+        "rw": "Nimero ya telefoni wakoresheje wishyura",
         "fr": "Numéro de téléphone utilisé pour payer",
         "sw": "Nambari ya Simu Uliyolipia",
         "ar": "رقم الهاتف الذي دفعت منه"
     },
     "Plan": {
-        "rw": "Igicaro",
+        "rw": "Gahunda",
         "fr": "Forfait",
         "sw": "Mpango",
         "ar": "الخطة"
@@ -1575,10 +1578,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Forfaits & Prix",
         "sw": "Mipango & Bei",
         "ar": "الخطط والأسعار",
-        "rw": "Ibiciro n'Amabwiriza"
+        "rw": "Gahunda n'ibiciro"
     },
     "Plans saved": {
-        "rw": "Ibiciro byabitswe",
+        "rw": "Gahunda zabitswe",
         "fr": "Forfaits enregistrés",
         "sw": "Mipango imehifadhiwa",
         "ar": "تم حفظ الخطط"
@@ -1608,25 +1611,25 @@ window.MS_TRANSLATIONS = {
         "ar": "يرجى التحقق من بياناتك والمحاولة مرة أخرى."
     },
     "Please enter the admin password.": {
-        "rw": "Shyiramo ijambo wibanga rya Admin.",
+        "rw": "Andika ijambo ry'ibanga ry'umuyobozi.",
         "fr": "Veuillez saisir le mot de passe admin.",
         "sw": "Tafadhali weke nenosiri la msimamizi.",
         "ar": "يرجى إدخال كلمة مرور المدير."
     },
     "Please select a plan first.": {
-        "rw": "Hitamo igicaro mbere.",
+        "rw": "Banza uhitemo gahunda.",
         "fr": "Veuillez d'abord choisir un forfait.",
         "sw": "Tafadhali chagua mpango kwanza.",
         "ar": "الرجاء اختيار خطة أولاً."
     },
     "Please sign in to watch this video.": {
-        "rw": "Injira mbere yo kureba video.",
+        "rw": "Injira mbere kugira ngo urebe iyi videwo.",
         "fr": "Veuillez vous connecter pour regarder cette vidéo.",
         "sw": "Tafadhali ingia ili kutazama video hii.",
         "ar": "الرجاء تسجيل الدخول لمشاهدة هذا الفيديو."
     },
     "Please wait while we load your lessons.": {
-        "rw": "Menya oya dusuze.",
+        "rw": "Tegereza mu gihe turimo gupakira amasomo yawe.",
         "fr": "Veuillez patienter pendant le chargement.",
         "sw": "Tafadhali subiri.",
         "ar": "يرجى الانتظار أثناء التحميل."
@@ -1635,7 +1638,7 @@ window.MS_TRANSLATIONS = {
         "fr": "PNG, JPG ou WebP — 2 Mo max",
         "sw": "PNG, JPG au WebP — Upeo 2MB",
         "ar": "PNG أو JPG أو WebP — بحد أقصى 2 ميجابايت",
-        "rw": "PNG, JPG cyangwa WebP — Urenga 2MB"
+        "rw": "PNG, JPG cyangwa WebP — ntibirenge 2 MB"
     },
     "Preview:": {
         "fr": "Aperçu :",
@@ -1653,7 +1656,7 @@ window.MS_TRANSLATIONS = {
         "fr": "Prix (RWF)",
         "sw": "Bei (RWF)",
         "ar": "السعر (RWF)",
-        "rw": "Igiteranyo (RWF)"
+        "rw": "Igiciro (RWF)"
     },
     "Pricing": {
         "fr": "Tarification",
@@ -1662,7 +1665,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Igiciro"
     },
     "Privacy Policy": {
-        "rw": "Politike y'Ibanga",
+        "rw": "Amabwiriza yerekeye ubuzima bwite",
         "fr": "Politique de confidentialité",
         "sw": "Sera ya Faragha",
         "ar": "سياسة الخصوصية"
@@ -1674,7 +1677,7 @@ window.MS_TRANSLATIONS = {
         "ar": "صورة الملف الشخصي"
     },
     "Profile photo must be under 5MB.": {
-        "rw": "Profile photo igomba kuba munsi ya 5MB.",
+        "rw": "Ifoto y'umwirondoro igomba kuba munsi ya 5 MB.",
         "fr": "La photo doit faire moins de 5 Mo.",
         "sw": "Picha ya wasifu lazima iwe chini ya 5MB.",
         "ar": "يجب أن تكون صورة الملف الشخصي أقل من 5 ميغابايت."
@@ -1698,7 +1701,7 @@ window.MS_TRANSLATIONS = {
         "ar": "نشر"
     },
     "Publish failed:": {
-        "rw": "Gusohora byanze: ",
+        "rw": "Gushyira ku rubuga ntibyashobotse: ",
         "fr": "Échec de la publication : ",
         "sw": "Kuchapisha kumeshindwa: ",
         "ar": "فشل النشر: "
@@ -1707,16 +1710,16 @@ window.MS_TRANSLATIONS = {
         "fr": "Publié",
         "sw": "Imechapishwa",
         "ar": "منشور",
-        "rw": "Byasohotse"
+        "rw": "Byashyizwe ku rubuga"
     },
     "Quick and easy sign-up": {
-        "rw": "Konti yawe yoroshye gukora",
+        "rw": "Iyandikishe vuba kandi mu buryo bworoshye",
         "fr": "Inscription rapide et facile",
         "sw": "Usajili wa haraka na rahisi",
         "ar": "تسجيل سريع وسهل"
     },
     "Quick Links": {
-        "rw": "Ihuza Ryihuta",
+        "rw": "Amahuza y'ingenzi",
         "fr": "Liens rapides",
         "sw": "Viungo vya Haraka",
         "ar": "روابط سريعة"
@@ -1724,20 +1727,20 @@ window.MS_TRANSLATIONS = {
     "Qur'an Courses": {
         "rw": "Amasomo ya Qur'an",
         "fr": "Cours de Coran",
-        "sw": "Kurso za Qur'an",
+        "sw": "Kozi za Qur'an",
         "ar": "دورات القرآن"
     },
     "Rating": {
         "fr": "Note",
         "sw": "Alama",
         "ar": "التقييم",
-        "rw": "Imanota"
+        "rw": "Urutonde rw'amanota"
     },
     "Rating (1-5)": {
         "fr": "Note (1-5)",
         "sw": "Alama (1-5)",
         "ar": "التقييم (1-5)",
-        "rw": "Imanota (1-5)"
+        "rw": "Urutonde rw'amanota (1–5)"
     },
     "Read": {
         "rw": "Soma",
@@ -1746,14 +1749,14 @@ window.MS_TRANSLATIONS = {
         "ar": "اقرأ"
     },
     "Read & Grow": {
-        "rw": "Soma & Kura",
+        "rw": "Soma kandi utere imbere",
         "fr": "Lisez & Progressez",
-        "sw": "Soma & Kua",
+        "sw": "Soma na uendelee",
         "ar": "اقرأ وانمُ"
     },
     "Recent Lessons": {
         "fr": "Leçons récentes",
-        "sw": "Masomo ya Hivi Karibuni",
+        "sw": "Masomo ya hivi karibuni",
         "ar": "الدروس الأخيرة",
         "rw": "Amasomo aheruka"
     },
@@ -1764,19 +1767,19 @@ window.MS_TRANSLATIONS = {
         "ar": "التسجيل"
     },
     "Register on Modern Skills and start learning the Qur'an today.": {
-        "rw": "Iyandikishe mu Modern Skills utangire kwiga Qur'an uhereye ubu.",
+        "rw": "Iyandikishe kuri Modern Skills maze utangire kwiga Qur'an uyu munsi.",
         "fr": "Inscrivez-vous à Modern Skills et commencez à apprendre le Coran aujourd'hui.",
         "sw": "Jisajili Modern Skills na uanze kujifunza Qur'an leo.",
         "ar": "سجّل في Modern Skills وابدأ تعلّم القرآن اليوم."
     },
     "Register with your details": {
-        "rw": "Iyandikishe hamwe n'amakuru yawe",
+        "rw": "Iyandikishe ukoresheje amakuru yawe",
         "fr": "Inscrivez-vous avec vos informations",
         "sw": "Jisajili kwa taarifa zako",
         "ar": "سجّل ببياناتك"
     },
     "Registration failed.": {
-        "rw": "Kwiyandikisha byanze.",
+        "rw": "Kwiyandikisha ntibyashobotse.",
         "fr": "L’inscription a échoué.",
         "sw": "Usajili umeshindwa.",
         "ar": "فشل التسجيل."
@@ -1788,19 +1791,19 @@ window.MS_TRANSLATIONS = {
         "rw": "Byanzwe"
     },
     "Related Lessons": {
-        "rw": "Amasomo Afitanye",
+        "rw": "Amasomo afitanye isano",
         "fr": "Leçons similaires",
         "sw": "Masomo Yanayohusiana",
         "ar": "دروس ذات صلة"
     },
     "Removed from saved.": {
-        "rw": "Byakuwe mu byabitswe.",
+        "rw": "Byakuwe mu byo wabikiye nyuma.",
         "fr": "Retiré des éléments enregistrés.",
         "sw": "Imeondolewa kwenye ilivyohifadhiwa.",
         "ar": "تمت الإزالة من المحفوظات."
     },
     "Repeat the password": {
-        "rw": "Subiramo ijambo wibanga",
+        "rw": "Ongera wandike ijambo ry'ibanga",
         "fr": "Répétez le mot de passe",
         "sw": "Rudia nenosiri",
         "ar": "كرر كلمة المرور"
@@ -1809,25 +1812,25 @@ window.MS_TRANSLATIONS = {
         "fr": "Réinitialiser",
         "sw": "Weka Upya",
         "ar": "إعادة تعيين",
-        "rw": "Subiramo"
+        "rw": "Subizaho"
     },
     "Role (EN)": {
         "fr": "Rôle (EN)",
         "sw": "Wadhifa (EN)",
         "ar": "الدور (EN)",
-        "rw": "Umurimo (EN)"
+        "rw": "Inshingano (Icyongereza)"
     },
     "Role (Kinyarwanda)": {
         "fr": "Rôle (kinyarwanda)",
         "sw": "Wadhifa (Kinyarwanda)",
         "ar": "الدور (بالكينيارواندا)",
-        "rw": "Umurimo (Ikinyarwanda)"
+        "rw": "Inshingano (Ikinyarwanda)"
     },
     "Role (RW)": {
         "fr": "Rôle (RW)",
         "sw": "Wadhifa (RW)",
         "ar": "الدور (RW)",
-        "rw": "Umurimo (RW)"
+        "rw": "Inshingano (RW)"
     },
     "Save": {
         "rw": "Bika",
@@ -1845,18 +1848,18 @@ window.MS_TRANSLATIONS = {
         "fr": "Enregistrer les modifications",
         "sw": "Hifadhi Mabadiliko",
         "ar": "حفظ التغييرات",
-        "rw": "Bika"
+        "rw": "Bika impinduka"
     },
     "Save Plans": {
         "fr": "Enregistrer les forfaits",
         "sw": "Hifadhi Mipango",
         "ar": "حفظ الخطط",
-        "rw": "Bika Ibiciro"
+        "rw": "Bika gahunda"
     },
     "Saved for later.": {
         "rw": "Byabitswe kugira ngo ubirebe nyuma.",
         "fr": "Enregistré pour plus tard.",
-        "sw": "Imehifadhiwa kwa baadaye.",
+        "sw": "Imehifadhiwa kwa ajili ya baadaye.",
         "ar": "تم الحفظ لوقت لاحق."
     },
     "Saving...": {
@@ -1872,7 +1875,7 @@ window.MS_TRANSLATIONS = {
         "ar": "ابحث عن الدروس..."
     },
     "Search student or phone number...": {
-        "rw": "Shaka umunyeshuri cyangwa numero...",
+        "rw": "Shakisha umunyeshuri cyangwa nimero ya telefoni...",
         "fr": "Rechercher un étudiant ou un numéro...",
         "sw": "Tafuta mwanafunzi au namba...",
         "ar": "ابحث عن طالب أو رقم هاتف..."
@@ -1884,13 +1887,13 @@ window.MS_TRANSLATIONS = {
         "ar": "بحث..."
     },
     "Secure Payment": {
-        "rw": "Kwishura Ku Bwizinga",
-        "fr": "Paiement Sécurisé",
+        "rw": "Kwishyura mu buryo bwizewe",
+        "fr": "Paiement sécurisé",
         "sw": "Malipo Salama",
         "ar": "دفع آمن"
     },
     "Select an access plan and pay via MoMo to get started.": {
-        "rw": "Hitamo igicaro ube twishyure na MoMo.",
+        "rw": "Hitamo gahunda y'uburenganzira bwo kureba, wishyure ukoresheje MoMo kugira ngo utangire.",
         "fr": "Sélectionnez un plan d'accès et payez via MoMo pour commencer.",
         "sw": "Chagua mpango wa ufikiaji na ulipe kupitia MoMo kuanza.",
         "ar": "اختر خطة الوصول وادفع عبر MoMo للبدء."
@@ -1908,7 +1911,7 @@ window.MS_TRANSLATIONS = {
         "ar": "اختر مدرساً..."
     },
     "Send To": {
-        "rw": "Ohereza Kuri",
+        "rw": "Ohereza kuri",
         "fr": "Envoyer à",
         "sw": "Tuma Kwa",
         "ar": "إرسال إلى"
@@ -1917,22 +1920,22 @@ window.MS_TRANSLATIONS = {
         "fr": "Séparez les étiquettes par des virgules",
         "sw": "Tenganisha vitambulisho kwa koma",
         "ar": "افصل بين الوسوم بفواصل",
-        "rw": "Gutandukanya amaterambere n'utundi tuhamya"
+        "rw": "Tandukanya ibirango ukoresheje koma"
     },
     "Set 0 for free lessons. Students will see this price on the video page.": {
         "fr": "Mettez 0 pour les leçons gratuites. Les étudiants verront ce prix sur la page vidéo.",
         "sw": "Weka 0 kwa masomo bila malipo. Wanafunzi wataona bei hii kwenye ukurasa wa video.",
         "ar": "ضع 0 للدروس المجانية. سيرى الطلاب هذا السعر في صفحة الفيديو.",
-        "rw": "Shyiraho 0 kuri amasomo y'ibura. Abanyeshuri bazabona iyi igiciro kuri ramera rya video."
+        "rw": "Shyiraho 0 ku masomo y'ubuntu. Abanyeshuri bazabona iki giciro ku rupapuro rwa videwo."
     },
     "Set the price and the access length a student gets once their payment is approved. Changes apply to new submissions and approvals immediately.": {
         "fr": "Définissez le prix et la durée d'accès accordés après approbation du paiement. Les changements s'appliquent immédiatement aux nouvelles demandes.",
         "sw": "Weka bei na muda wa ufikiaji ambao mwanafunzi anapata baada ya malipo kuthibitishwa. Mabadiliko yanatumika mara moja.",
         "ar": "حدد السعر ومدة الوصول التي يحصل عليها الطالب بعد الموافقة على الدفع. تُطبَّق التغييرات فورًا على الطلبات الجديدة.",
-        "rw": "Shyiraho igiciro n'igihe cy'uburenganzira umunyeshuri abona iyo kwishyura kwemejwe. Impinduka zikora ako kanya."
+        "rw": "Shyiraho igiciro n'igihe umunyeshuri azamara afite uburenganzira bwo kureba nyuma yo kwemezwa k'ubwishyu. Impinduka zikurikizwa ako kanya ku byifuzo bishya n'ibyemezwa."
     },
     "Short biography...": {
-        "rw": "Ibisobanuro by'umuziki w'umwarimu...",
+        "rw": "Amagambo make yerekeye ubuzima n'amateka y'umwarimu...",
         "fr": "Courte biographie...",
         "sw": "Wasifu mfupi...",
         "ar": "نبذة مختصرة..."
@@ -1947,10 +1950,13 @@ window.MS_TRANSLATIONS = {
         "fr": "Afficher sur la page publique Livres",
         "sw": "Onyesha kwenye ukurasa wa Vitabu",
         "ar": "إظهار في صفحة الكتب العامة",
-        "rw": "Garagariza ku rupapuro rw'Ibitabo"
+        "rw": "Byerekane ku rupapuro rusange rw'Ibitabo"
     },
     "Show password": {
-        "rw": "Egaraza ijambo wibanga"
+        "rw": "Erekana ijambo ry'ibanga",
+        "fr": "Afficher le mot de passe",
+        "sw": "Onyesha nenosiri",
+        "ar": "إظهار كلمة المرور"
     },
     "Showing": {
         "rw": "Igaragaza",
@@ -1960,18 +1966,18 @@ window.MS_TRANSLATIONS = {
     },
     "Sign In": {
         "rw": "Injira",
-        "fr": "Connexion",
+        "fr": "Se connecter",
         "sw": "Ingia",
         "ar": "تسجيل الدخول"
     },
     "Sign in failed. Check what you typed.": {
-        "rw": "Kwinjira byanze. Reba neza ibyo wanditse.",
+        "rw": "Kwinjira ntibyashobotse. Reba ibyo wanditse wongere ugerageze.",
         "fr": "Connexion échouée. Vérifiez vos informations.",
         "sw": "Ingia imeshindwa. Angalia ulichoandika.",
         "ar": "فشل تسجيل الدخول. تحقق مما كتبته."
     },
     "Sign in to continue your Qur'an learning journey.": {
-        "rw": "Injira ngo ukomeze urugendo rwawe rwo kwiga Qur’an.",
+        "rw": "Injira kugira ngo ukomeze urugendo rwawe rwo kwiga Qur'an.",
         "fr": "Connectez-vous pour poursuivre votre apprentissage du Coran.",
         "sw": "Ingia ili kuendelea na safari yako ya kujifunza Qur'an.",
         "ar": "سجّل الدخول لمتابعة رحلتك في تعلّم القرآن."
@@ -1983,19 +1989,19 @@ window.MS_TRANSLATIONS = {
         "ar": "سجّل الدخول بحسابك"
     },
     "Signing in...": {
-        "rw": "Kwinjira...",
+        "rw": "Turimo kukwinjiza...",
         "fr": "Connexion...",
         "sw": "Inaingia...",
         "ar": "جارٍ تسجيل الدخول..."
     },
     "Single Video": {
-        "rw": "Video Imwe",
+        "rw": "Videwo imwe",
         "fr": "Vidéo unique",
         "sw": "Video Moja",
         "ar": "فيديو واحد"
     },
     "Sort lessons": {
-        "rw": "Urutonde isomo",
+        "rw": "Tondeka amasomo",
         "fr": "Trier les leçons",
         "sw": "Panga masomo",
         "ar": "ترتيب الدروس"
@@ -2004,10 +2010,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Ordre",
         "sw": "Mpangilio",
         "ar": "الترتيب",
-        "rw": "Gutondeka"
+        "rw": "Uko bikurikirana"
     },
     "Statistics appear here once lessons are added.": {
-        "rw": "Ibibazo bigaragara hano ama soma yaba yashyizwe.",
+        "rw": "Imibare y'ibarurishamibare izagaragara hano amasomo amaze kongerwa.",
         "fr": "Les statistiques apparaîtront ici une fois les leçons ajoutées.",
         "sw": "Takwimu zitaonekana hapa masomo yakiongezwa.",
         "ar": "ستظهر الإحصائيات هنا بعد إضافة الدروس."
@@ -2025,13 +2031,13 @@ window.MS_TRANSLATIONS = {
         "ar": "دروس منظمة خطوة بخطوة"
     },
     "Still pending. Check back again shortly.": {
-        "rw": "Ntikiremejwe. Ongera ugerageze vuba.",
+        "rw": "Biracyategerejwe. Ongera ugenzure nyuma gato.",
         "fr": "Toujours en attente. Revenez dans un instant.",
         "sw": "Bado inasubiri. Angalia tena baadaye.",
         "ar": "لا يزال قيد الانتظار. عد بعد قليل."
     },
     "Student Access": {
-        "rw": "Uburenganzira bw'Abanyeshuri",
+        "rw": "Uburenganzira bw'abanyeshuri",
         "fr": "Accès étudiants",
         "sw": "Ufikiaji wa Wanafunzi",
         "ar": "وصول الطلاب"
@@ -2040,10 +2046,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Nombre d'étudiants",
         "sw": "Idadi ya Wanafunzi",
         "ar": "عدد الطلاب",
-        "rw": "Umubare w'Abanyeshuri"
+        "rw": "Umubare w'abanyeshuri"
     },
     "students": {
-        "rw": "Abanyeshuri",
+        "rw": "abanyeshuri",
         "fr": "étudiants",
         "sw": "wanafunzi",
         "ar": "طلاب"
@@ -2055,7 +2061,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Abanyeshuri"
     },
     "Submission failed. Please try again.": {
-        "rw": "Byanze kohereza. Ongera ugerageze.",
+        "rw": "Kohereza ntibyashobotse. Ongera ugerageze.",
         "fr": "Échec de l'envoi. Veuillez réessayer.",
         "sw": "Kutuma kumeshindwa. Jaribu tena.",
         "ar": "فشل الإرسال. يرجى المحاولة مرة أخرى."
@@ -2067,7 +2073,7 @@ window.MS_TRANSLATIONS = {
         "ar": "تم الإرسال"
     },
     "Submitting...": {
-        "rw": "Kohereza...",
+        "rw": "Turimo kohereza...",
         "fr": "Envoi...",
         "sw": "Inatuma...",
         "ar": "جارٍ الإرسال..."
@@ -2085,19 +2091,19 @@ window.MS_TRANSLATIONS = {
         "rw": "Ibirango"
     },
     "Tajweed pronunciation lessons": {
-        "rw": "Amasomo y’inyuguti ya Tajweed",
+        "rw": "Amasomo y'imivugire ya Tajweed",
         "fr": "Leçons de prononciation Tajwid",
         "sw": "Masomo ya matamshi ya Tajweed",
         "ar": "دروس أحكام التجويد"
     },
     "Taught by": {
-        "rw": "Bigishawe na",
+        "rw": "Yigishwa na",
         "fr": "Enseigné par",
         "sw": "Inafundishwa na",
         "ar": "يقدّمه"
     },
     "Terms of Service": {
-        "rw": "Amategeko",
+        "rw": "Amabwiriza agenga imikoreshereze ya serivisi",
         "fr": "Conditions d'utilisation",
         "sw": "Masharti ya Huduma",
         "ar": "شروط الخدمة"
@@ -2115,7 +2121,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Ubuhamya (Ikinyarwanda)"
     },
     "Testimonial in English...": {
-        "rw": "Ubuhamya mu cyongereza...",
+        "rw": "Ubuhamya mu Cyongereza...",
         "fr": "Témoignage en anglais...",
         "sw": "Shuhuda kwa Kiingereza...",
         "ar": "شهادة باللغة الإنجليزية..."
@@ -2123,17 +2129,17 @@ window.MS_TRANSLATIONS = {
     "testimonials": {
         "rw": "ubuhamya",
         "fr": "témoignages",
-        "sw": "maonyesho",
+        "sw": "shuhuda",
         "ar": "شهادات"
     },
     "Testimonials": {
         "fr": "Témoignages",
         "sw": "Shuhuda",
         "ar": "الشهادات",
-        "rw": "Ibyabo Bavuga"
+        "rw": "Ubuhamya"
     },
     "That number looks wrong. Try again.": {
-        "rw": "Numero yawe ntayo ari yo. Ongera ugerageze.",
+        "rw": "Iyo nimero isa n'itari yo. Ongera ugerageze.",
         "fr": "Ce numéro semble incorrect. Réessayez.",
         "sw": "Nambari hiyo haionekani sahihi. Jaribu tena.",
         "ar": "يبدو هذا الرقم غير صحيح. حاول مجددًا."
@@ -2145,16 +2151,16 @@ window.MS_TRANSLATIONS = {
         "rw": "Ururimi ruvugwa muri iyi video y'isomo."
     },
     "This video is not uploaded yet. Please check back soon.": {
-        "rw": "Iyi video iracyategurwa. Uzayibone vubi.",
+        "rw": "Iyi videwo ntirashyirwaho. Ongera urebe nyuma gato.",
         "fr": "Cette vidéo n'est pas encore en ligne. Revenez bientôt.",
-        "sw": "Video hii bado haijawekwa. Rudi karibuni.",
+        "sw": "Video hii bado haijapakiwa. Tafadhali angalia tena hivi karibuni.",
         "ar": "لم يتم رفع هذا الفيديو بعد. عد قريبًا."
     },
     "Thumbnail Image": {
         "fr": "Image miniature",
-        "sw": "Picha ya Kijarida",
+        "sw": "Picha ya kijipicha",
         "ar": "صورة مصغرة",
-        "rw": "Ifoto ya Thumbnail"
+        "rw": "Ifoto ntoya ya videwo"
     },
     "Time left": {
         "rw": "Igihe gisigaye",
@@ -2164,9 +2170,9 @@ window.MS_TRANSLATIONS = {
     },
     "Tips for Great Lessons Use clear, descriptive titles Add relevant tags for discovery Upload a high-quality thumbnail Keep videos under 30 minutes Categorize lessons accurately": {
         "fr": "Conseils pour de bonnes leçons Utilisez des titres clairs et descriptifs Ajoutez des étiquettes pertinentes pour la recherche Téléversez une miniature de haute qualité Gardez les vidéos sous 30 minutes Classez les leçons avec précision",
-        "sw": "Vidokezo vya Somo Bora Tumia majina wazi na yanayoelekeza Ongeza vitambulisho muhimu kwa utafutaji Pakia kijarida bora cha ubora wa juu Weka video chini ya dakika 30 Weka masomo katika kategoria inayofaa",
+        "sw": "Vidokezo vya kuandaa masomo bora:\n• Tumia vichwa vilivyo wazi na vinavyoeleza vizuri.\n• Ongeza lebo zinazohusiana ili kurahisisha utafutaji.\n• Pakia picha ya kijipicha yenye ubora.\n• Video zisizidi dakika 30.\n• Weka kila somo katika kategoria sahihi.",
         "ar": "نصائح لدروس ممتازة استخدم عناوين واضحة ووصفية أضف وسوماً مناسبة لسهولة البحث ارفع صورة مصغرة عالية الجودة اجعل الفيديوهات أقل من 30 دقيقة صنّف الدروس بدقة",
-        "rw": "Amabwiriza y'Amasomo Meza Koresha izina risobanutse neza Ongera amaterambere meza yo kuboneka Shyira thumbnail nziza kandi yuzuye Ibika amavideo munsi y'iminota 30 Gushira amasomo mu cyiciro gikwiye"
+        "rw": "Inama zo gutegura amasomo meza:\n• Koresha imitwe isobanutse kandi isobanura neza.\n• Ongeraho ibirango bijyanye n'isomo kugira ngo riboneke mu bushakashatsi.\n• Shyiraho ifoto ntoya ifite ireme.\n• Videwo ntizirenge iminota 30.\n• Shyira buri somo mu cyiciro gikwiye."
     },
     "Title": {
         "fr": "Titre",
@@ -2178,16 +2184,16 @@ window.MS_TRANSLATIONS = {
         "fr": "Titre / Rôle",
         "sw": "Wadhifa / Jukumu",
         "ar": "اللقب / الدور",
-        "rw": "Umurimo / Insingano"
+        "rw": "Umutwe / Inshingano"
     },
     "Title A–Z": {
-        "rw": "Umutitulo A–Z",
+        "rw": "Umutwe A–Z",
         "fr": "Titre A–Z",
         "sw": "Jina A–Z",
         "ar": "العنوان أ–ي"
     },
     "Title Z–A": {
-        "rw": "Umutitulo Z–A",
+        "rw": "Umutwe Z–A",
         "fr": "Titre Z–A",
         "sw": "Jina Z–A",
         "ar": "العنوان ي–أ"
@@ -2196,16 +2202,16 @@ window.MS_TRANSLATIONS = {
         "fr": "Total des leçons",
         "sw": "Jumla ya Masomo",
         "ar": "إجمالي الدروس",
-        "rw": "Amasomo Yose"
+        "rw": "Umubare w'amasomo"
     },
     "Total Revenue (RWF)": {
         "fr": "Revenu total (RWF)",
         "sw": "Mapato Jumla (RWF)",
         "ar": "إجمالي الإيرادات (RWF)",
-        "rw": "Amafaranga Yose"
+        "rw": "Amafaranga yinjiye yose (RWF)"
     },
     "Try clearing your filters or add a new lesson.": {
-        "rw": "Gerageza guhagarika abafiri cyangwa kongera isomo rishya.",
+        "rw": "Gerageza gukuraho ibyo wayunguruyemo cyangwa wongereho isomo rishya.",
         "fr": "Essayez de rejeter vos filtres ou ajoutez une leçon.",
         "sw": "Jaribu kufuta vichujio au ongeza somo jipya.",
         "ar": "جرّب مسح عوامل التصفية أو أضف درساً جديداً."
@@ -2217,7 +2223,7 @@ window.MS_TRANSLATIONS = {
         "ar": "شهادة باللغة الكينيارواندية..."
     },
     "Uncategorized": {
-        "rw": "Nta cyiciro",
+        "rw": "Nta cyiciro kirimo",
         "fr": "Sans catégorie",
         "sw": "Haina kategoria",
         "ar": "بدون فئة"
@@ -2229,7 +2235,7 @@ window.MS_TRANSLATIONS = {
         "ar": "افتح هذا الدرس"
     },
     "Unpublish": {
-        "rw": "Kuhagarika",
+        "rw": "Kuraho isomo ku rubuga",
         "fr": "Dépublier",
         "sw": "Ondoa",
         "ar": "إلغاء النشر"
@@ -2244,70 +2250,70 @@ window.MS_TRANSLATIONS = {
         "fr": "Téléverser un livre PDF",
         "sw": "Pakia kitabu PDF",
         "ar": "رفع كتاب PDF",
-        "rw": "Shyira igitabo PDF"
+        "rw": "Ohereza igitabo cya PDF"
     },
     "Upload Lesson": {
-        "fr": "Télécharger une leçon",
+        "fr": "Mettre en ligne une leçon",
         "sw": "Pakia Somo",
         "ar": "رفع درس",
-        "rw": "Shyira Isomo"
+        "rw": "Shyiraho isomo"
     },
     "Upload New Lesson": {
-        "fr": "Téléverser une nouvelle leçon",
+        "fr": "Mettre en ligne une nouvelle leçon",
         "sw": "Pakia Somo Jipya",
         "ar": "رفع درس جديد",
-        "rw": "Shyira Isomo Rishya"
+        "rw": "Ohereza isomo rishya"
     },
     "Upload Thumbnail": {
         "fr": "Téléverser la miniature",
-        "sw": "Pakia Kijarida",
+        "sw": "Pakia picha ya kijipicha",
         "ar": "رفع الصورة المصغرة",
-        "rw": "Shyira Thumbnail"
+        "rw": "Shyiraho ifoto ntoya ya videwo"
     },
     "Upload Video": {
         "fr": "Téléverser la vidéo",
         "sw": "Pakia Video",
         "ar": "رفع الفيديو",
-        "rw": "Shyira Video"
+        "rw": "Shyiraho videwo"
     },
     "Upload Video File": {
         "fr": "Téléverser le fichier vidéo",
         "sw": "Pakia Faili ya Video",
         "ar": "رفع ملف الفيديو",
-        "rw": "Shyira Dosiye ya Video"
+        "rw": "Shyiraho dosiye ya videwo"
     },
     "Uploading...": {
         "fr": "Téléversement...",
         "sw": "Inapakia...",
         "ar": "جارٍ الرفع...",
-        "rw": "Biri Gushyirwa..."
+        "rw": "Turimo kohereza..."
     },
     "Uploads This Month": {
         "fr": "Téléversements ce mois",
         "sw": "Upakiaji Mwezi Huu",
         "ar": "الرفع هذا الشهر",
-        "rw": "Byashyizwe Ukwezi"
+        "rw": "Dosiye zashyizweho muri uku kwezi"
     },
     "User Management": {
         "fr": "Gestion des utilisateurs",
         "sw": "Usimamizi wa Watumiaji",
         "ar": "إدارة المستخدمين",
-        "rw": "Gucunga Abanyeshuri"
+        "rw": "Gucunga abakoresha"
     },
     "Username": {
-        "rw": "Username",
+        "rw": "Izina ry'ukoresha",
         "fr": "Nom d’utilisateur",
         "sw": "Jina la mtumiaji",
         "ar": "اسم المستخدم"
     },
     "Username allows letters, numbers and underscore only.": {
-        "rw": "Username irongera inyuguti, ibiharimbuko, cyangwa underscore gusa.",
+        "rw": "Izina ry'ukoresha rigomba kuba rigizwe n'inyuguti, imibare n'ikimenyetso _ gusa.",
         "fr": "Le nom d’utilisateur n’accepte que lettres, chiffres et tiret bas.",
         "sw": "Jina la mtumiaji linaruhusu herufi, nambari na underscore pekee.",
         "ar": "يسمح اسم المستخدم بالأحرف والأرقام والشرطة السفلية فقط."
     },
     "Username must be 3 or more characters.": {
-        "rw": "Username igomba kuba imyaka 3 cyangwa zirenze.",
+        "rw": "Izina ry'ukoresha rigomba kugira inyuguti nibura 3.",
         "fr": "Le nom d’utilisateur doit avoir 3 caractères ou plus.",
         "sw": "Jina la mtumiaji lazima liwe na herufi 3 au zaidi.",
         "ar": "يجب أن يتكون اسم المستخدم من 3 أحرف أو أكثر."
@@ -2319,7 +2325,7 @@ window.MS_TRANSLATIONS = {
         "rw": "Video"
     },
     "Video coming soon": {
-        "rw": "Video igiye kuza",
+        "rw": "Videwo izaboneka vuba",
         "fr": "Vidéo bientôt disponible",
         "sw": "Video itakuja karibuni",
         "ar": "الفيديو قريبًا"
@@ -2332,9 +2338,9 @@ window.MS_TRANSLATIONS = {
     },
     "Video Guidelines Supported formats: MP4 (H.264), MOV, WebM. Maximum resolution: 1920×1080. Keep file size under 500MB for optimal upload speed.": {
         "fr": "Directives vidéo Formats pris en charge : MP4 (H.264), MOV, WebM. Résolution maximale : 1920×1080. Gardez la taille sous 500 Mo pour une vitesse optimale.",
-        "sw": "Miongozo ya Video Miundo inayotumika: MP4 (H.264), MOV, WebM. Azimio la juu: 1920×1080. Weka ukubwa wa faili chini ya 500MB kwa kasi bora ya upakiaji.",
+        "sw": "Mwongozo wa video. Miundo inayokubaliwa: MP4 (H.264), MOV na WebM. Ubora wa juu ni 1920×1080. Ili kupakia haraka, faili isiwe kubwa kuliko 500 MB.",
         "ar": "إرشادات الفيديو الصيغ المدعومة: MP4 (H.264)، MOV، WebM. الدقة القصوى: 1920×1080. حافظ على حجم الملف أقل من 500 ميجابايت لسرعة رفع مثالية.",
-        "rw": "Amategeko ya Video Ubwoko bwemewe: MP4 (H.264), MOV, WebM. Espolisiyo: 1920×1080. Ibika dosiye bugufi kurenza 500MB kugira ngo ishyirwe vuba."
+        "rw": "Amabwiriza ya videwo. Imiterere yemewe: MP4 (H.264), MOV na WebM. Ingano ntarengwa y'ishusho ni 1920×1080. Kugira ngo yoherezwe vuba, dosiye ntirenze 500 MB."
     },
     "Video URL (YouTube / external)": {
         "fr": "URL de la vidéo (YouTube / externe)",
@@ -2343,10 +2349,10 @@ window.MS_TRANSLATIONS = {
         "rw": "URL ya Video (YouTube / hanze)"
     },
     "videos": {
-        "rw": "videos",
+        "rw": "videwo",
         "fr": "vidéos",
-        "sw": "videos",
-        "ar": "مقاطع"
+        "sw": "video",
+        "ar": "مقاطع الفيديو"
     },
     "View": {
         "rw": "Reba",
@@ -2370,10 +2376,10 @@ window.MS_TRANSLATIONS = {
         "fr": "Voir sur le site",
         "sw": "Tazama kwenye Tovuti",
         "ar": "عرض على الموقع",
-        "rw": "Reba ku Rugo"
+        "rw": "Reba ku rubuga"
     },
     "views": {
-        "rw": "ibisanzwe",
+        "rw": "abarebye",
         "fr": "vues",
         "sw": "mionekano",
         "ar": "مشاهدة"
@@ -2385,20 +2391,20 @@ window.MS_TRANSLATIONS = {
         "ar": "شاهد الدروس في أي مكان"
     },
     "Watch Now": {
-        "rw": "Reba Ubu",
+        "rw": "Reba nonaha",
         "fr": "Regarder maintenant",
         "sw": "Tazama Sasa",
         "ar": "شاهد الآن"
     },
     "Weekly Access": {
-        "rw": "Ubwifashisho bwa Cyumweru",
+        "rw": "Uburenganzira bw'icyumweru",
         "fr": "Accès Hebdomadaire",
-        "sw": "Ufikiaji wa Wiki",
+        "sw": "Ufikiaji wa wiki",
         "ar": "وصول أسبوعي"
     },
     "Welcome": {
-        "rw": "Murakaza",
-        "fr": "Bon",
+        "rw": "Murakaza neza",
+        "fr": "Bienvenue",
         "sw": "Karibu",
         "ar": "مرحبًا"
     },
@@ -2415,31 +2421,31 @@ window.MS_TRANSLATIONS = {
         "ar": "نعم"
     },
     "You own access to this video.": {
-        "rw": "Ufite uburenganzira bwa iyi video.",
+        "rw": "Ufite uburenganzira bwo kureba iyi videwo.",
         "fr": "Vous avez accès à cette vidéo.",
         "sw": "Una ufikiaji wa video hii.",
         "ar": "لديك وصول إلى هذا الفيديو."
     },
     "Your access ends in 2 minutes. Finish up or renew to keep watching.": {
-        "rw": "Uburenganzira bwawe burangira mu minota 2. Rangiza cyangwa uvugurure kugira ngo ukomeze.",
+        "rw": "Uburenganzira bwo kureba burangira mu minota 2. Rangiza kureba cyangwa wongere igihe kugira ngo ukomeze.",
         "fr": "Votre accès se termine dans 2 minutes. Terminez ou renouvelez pour continuer.",
         "sw": "Ufikiaji wako unaisha baada ya dakika 2. Maliza au uongeze ili kuendelea.",
         "ar": "سينتهي وصولك خلال دقيقتين. أنهِ أو جدد للمتابعة."
     },
     "Your access period has ended. Renew your plan to keep watching.": {
-        "rw": "Igihe cyawe cyarangiye. Vugurura igicaro cyawe kugira ngo ukomeze.",
+        "rw": "Igihe wari wemerewe kureba cyarangiye. Ongera gahunda yawe kugira ngo ukomeze kureba.",
         "fr": "Votre période d'accès est terminée. Renouvelez votre forfait pour continuer.",
-        "sw": "Kipindi chako cha ufikiaji kimekwisha. Onyesha mpango wako ili kuendelea.",
+        "sw": "Kipindi chako cha kutazama kimeisha. Sasisha mpango wako ili kuendelea kutazama.",
         "ar": "انتهت فترة الوصول. جدد خطتك للمتابعة."
     },
     "Your account was created!": {
-        "rw": "Konti yawe yakoze neza!",
+        "rw": "Konti yawe yaremwe neza!",
         "fr": "Votre compte a été créé !",
         "sw": "Akaunti yako imeundwa!",
         "ar": "تم إنشاء حسابك!"
     },
     "Your free preview has ended. Unlock the full lesson to continue.": {
-        "rw": "Igerageza ry'ubuntu ryarangiye. Fungura isomo ryose kugira ngo ukomeze.",
+        "rw": "Igihe cyo kureba igice cy'ubuntu cyarangiye. Fungura isomo ryose kugira ngo ukomeze.",
         "fr": "Votre aperçu gratuit est terminé. Débloquez la leçon complète pour continuer.",
         "sw": "Onyesho lako la bure limekwisha. Fungua somo kamili ili kuendelea.",
         "ar": "انتهت معاينتك المجانية. افتح الدرس الكامل للمتابعة."
@@ -2451,25 +2457,25 @@ window.MS_TRANSLATIONS = {
         "ar": "اسمك الكامل"
     },
     "Your previous access period has ended. Pick a plan below to continue watching.": {
-        "rw": "Igihe cyawe cyo kureba cyarangiye. Hitamo igicaro gishya kugira ngo ukomeze.",
+        "rw": "Igihe wari wemerewe kureba cyarangiye. Hitamo gahunda iri hepfo kugira ngo ukomeze kureba.",
         "fr": "Votre période d'accès précédente est terminée. Choisissez un forfait ci-dessous pour continuer.",
         "sw": "Kipindi chako cha ufikiaji kimekwisha. Chagua mpango hapa chini ili kuendelea.",
         "ar": "انتهت فترة الوصول السابقة. اختر خطة أدناه للمتابعة."
     },
     "Your previous submission was not approved.": {
-        "rw": "Kwishyura kwabanjirije ntikwemejwe.",
+        "rw": "Ibyo wari wohereje mbere ntibyemejwe.",
         "fr": "Votre envoi précédent n'a pas été approuvé.",
-        "sw": "Uwasilishaji wako wa awali haukukubaliwa.",
+        "sw": "Ombi lako la awali halikuidhinishwa.",
         "ar": "لم تتم الموافقة على طلبك السابق."
     },
     "Your safety comes first": {
-        "rw": "Umutekano wawe niwo mbere",
+        "rw": "Umutekano wawe ni wo uza mbere ya byose",
         "fr": "Votre sécurité avant tout",
         "sw": "Usalama wako kwanza",
         "ar": "سلامتك أولاً"
     },
     "Your trusted platform for learning the Quran online. Expert instructors, structured lessons, and a supportive community to guide you every step of the way.": {
-        "rw": "Uruhando rwawe rwizerwa rwo kwiga Qur'an kuri interineti. Abigisha babahanga, amasomo atunganyijwe, n'umuryango utera inkunga kugira ngo uyoborwe buri cyiciro.",
+        "rw": "Urubuga rwizewe rwo kwigira Qur'an kuri interineti. Rufite abarimu b'inzobere, amasomo ateguye neza n'umuryango ugushyigikira kuri buri ntambwe.",
         "fr": "Votre plateforme de confiance pour apprendre le Coran en ligne. Instructeurs experts, leçons structurées, et une communauté bienveillante pour vous guider à chaque étape.",
         "sw": "Jukwaa lako la kuaminika la kujifunza Qur'an mtandaoni. Walimu wataalamu, masomo yaliyopangwa, na jumuiya inayokusaidia kila hatua.",
         "ar": "منصتك الموثوقة لتعلم القرآن عبر الإنترنت. معلمون خبراء، دروس منظمة، ومجتمع داعم يرشدك في كل خطوة."
@@ -2478,12 +2484,12 @@ window.MS_TRANSLATIONS = {
         "fr": "Votre vidéo a été téléversée et est maintenant en ligne sur la page d'accueil.",
         "sw": "Video yako imepakiwa na sasa ipo kwenye ukurasa wa mwanzo.",
         "ar": "تم رفع الفيديو وهو الآن منشور على الصفحة الرئيسية.",
-        "rw": "Videwo yawe yashyizweho kandi igaragara ku rugo rukuru."
+        "rw": "Videwo yawe yashyizweho kandi ubu iraboneka ku rupapuro rw'itangiriro."
     },
     "الإنجليزية": {
-        "rw": "الكينيارواندية",
-        "fr": "الفرنسية",
-        "sw": "السواحيلية",
-        "ar": "العربية"
+        "rw": "Icyongereza",
+        "fr": "Anglais",
+        "sw": "Kiingereza",
+        "ar": "الإنجليزية"
     }
 };
