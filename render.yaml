@@ -36,7 +36,7 @@ services:
         value: books
       # --- Admin account created/synced on every boot ---
       - key: ADMIN_EMAIL
-        value: admin@nooracademy.com
+        value: misigaroissa2@gmail.com
       - key: ADMIN_USERNAME
         value: admin
       - key: ADMIN_PASSWORD

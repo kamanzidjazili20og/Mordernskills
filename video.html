@@ -696,9 +696,10 @@ body::before {
     z-index: 1;
 }
 
-.footer a { color: var(--text-sec); text-decoration: none; transition: color 0.2s; }
+.footer a { color: var(--text-sec); text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 7px; }
 .footer a:hover { color: var(--gold); }
-.footer-links { display: flex; gap: 24px; }
+.footer a i { color: var(--gold); font-size: 12px; }
+.footer-links { display: flex; gap: 22px; flex-wrap: wrap; align-items: center; }
 
 @media (max-width: 1024px) {
     .player-wrapper { grid-template-columns: 1fr; padding: 20px; }
@@ -774,311 +775,384 @@ body::before {
 .payment-overlay {
     position: fixed; inset: 0; z-index: 9999;
     display: none; align-items: center; justify-content: center;
-    background: rgba(4,11,8,0.94);
-    backdrop-filter: blur(40px) saturate(150%);
-    padding: 20px;
+    background: rgba(3,10,7,0.92);
+    backdrop-filter: blur(34px) saturate(150%);
+    padding: 24px 16px;
+    overflow-y: auto;
 }
 .payment-overlay.show { display: flex; }
 
 .payment-bg-img {
     position: absolute; inset: 0; z-index: 0;
     background-size: cover; background-position: center;
-    filter: blur(60px) brightness(0.25) saturate(1.5);
-    transform: scale(1.2); opacity: 0.5;
+    filter: blur(64px) brightness(0.28) saturate(1.5);
+    transform: scale(1.2); opacity: 0.45;
+    pointer-events: none;
 }
 
 .payment-card {
-    width: 100%; max-width: 440px;
-    background: linear-gradient(170deg, rgba(14,34,26,0.98) 0%, rgba(8,22,16,0.99) 100%);
-    border: 1px solid rgba(212,168,83,0.15);
-    border-radius: 28px;
-    padding: 0 0 28px;
+    width: 100%; max-width: 470px;
+    margin: auto;
+    background:
+        linear-gradient(170deg, rgba(15,36,27,0.97) 0%, rgba(7,20,14,0.99) 100%) padding-box,
+        linear-gradient(160deg, rgba(212,168,83,0.55) 0%, rgba(212,168,83,0.10) 40%, rgba(52,211,153,0.20) 78%, rgba(212,168,83,0.4) 100%) border-box;
+    border: 1px solid transparent;
+    border-radius: 26px;
+    padding: 0 0 26px;
     text-align: center;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 50px 140px -20px rgba(0,0,0,0.85), 0 0 80px -10px rgba(212,168,83,0.06);
+    box-shadow: 0 50px 140px -30px rgba(0,0,0,0.9), 0 0 100px -50px rgba(212,168,83,0.7);
     animation: paySlideUp .5s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 1;
 }
-@keyframes paySlideUp { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: none; } }
+@keyframes paySlideUp { from { opacity: 0; transform: translateY(40px) scale(0.96); } to { opacity: 1; transform: none; } }
 
 .payment-card::after {
     content: '';
-    position: absolute; top: -80px; right: -60px; width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(212,168,83,0.05) 0%, transparent 70%);
+    position: absolute; top: -90px; right: -70px; width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(212,168,83,0.07) 0%, transparent 70%);
     border-radius: 50%; pointer-events: none;
 }
 
 .pay-top-decor {
-    height: 4px;
-    background: linear-gradient(90deg, #d4a853, #eccf8b, #d4a853, #eccf8b, #d4a853);
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #d4a853, #f0d9a0, #d4a853, transparent);
     background-size: 200% 100%;
-    animation: payTopShimmer 4s linear infinite;
+    animation: payTopShimmer 5s linear infinite;
 }
 @keyframes payTopShimmer { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
 
 .pay-close {
-    position: absolute; top: 16px; right: 16px;
+    position: absolute; top: 14px; right: 14px;
     width: 36px; height: 36px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.08); background: rgba(6,19,14,0.5);
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(6,19,14,0.55);
     color: var(--text-sec); font-size: 14px; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     transition: all .2s; z-index: 5;
     backdrop-filter: blur(8px);
 }
-.pay-close:hover { background: rgba(248,113,113,0.12); color: #f87171; border-color: rgba(248,113,113,0.2); }
+.pay-close:hover { background: rgba(248,113,113,0.14); color: #f87171; border-color: rgba(248,113,113,0.3); transform: rotate(90deg); }
 
-.pay-logo-wrap { padding-top: 28px; margin-bottom: 10px; }
+.pay-logo-wrap { padding-top: 26px; margin-bottom: 12px; }
 
 .pay-logo-ring {
     width: 72px; height: 72px;
     border-radius: 50%;
-    background: conic-gradient(from 0deg, rgba(212,168,83,0.3), rgba(212,168,83,0.05), rgba(52,211,153,0.15), rgba(212,168,83,0.3));
+    background: conic-gradient(from 0deg, rgba(212,168,83,0.4), rgba(212,168,83,0.06), rgba(52,211,153,0.2), rgba(212,168,83,0.4));
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto;
-    animation: payRingSpin 8s linear infinite;
+    animation: payRingSpin 9s linear infinite;
 }
 @keyframes payRingSpin { to { transform: rotate(360deg); } }
 
 .pay-logo {
     width: 58px; height: 58px; border-radius: 50%;
-    background: linear-gradient(145deg, rgba(212,168,83,0.2), rgba(212,168,83,0.06));
-    border: 1.5px solid rgba(212,168,83,0.3);
+    background: linear-gradient(145deg, rgba(212,168,83,0.24), rgba(212,168,83,0.07));
+    border: 1.5px solid rgba(212,168,83,0.35);
     display: flex; align-items: center; justify-content: center;
-    font-size: 24px; color: #d4a853;
-    box-shadow: 0 8px 28px rgba(212,168,83,0.12);
-    animation: payRingSpin 8s linear infinite reverse;
+    font-size: 22px; color: #d4a853;
+    box-shadow: 0 8px 28px rgba(212,168,83,0.16);
+    animation: payRingSpin 9s linear infinite reverse;
 }
 
 .pay-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.8px; color: #34d399;
+    font-size: 9.5px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1px; color: #34d399;
     padding: 5px 14px; border-radius: 100px;
-    background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2);
+    background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.24);
     margin-bottom: 10px;
 }
-.pay-badge i { font-size: 10px; }
+.pay-badge i { font-size: 9.5px; }
 
 .payment-card h2 {
-    font-size: 22px; font-weight: 800; letter-spacing: -0.3px;
-    margin-bottom: 4px; color: #f2f7f4;
+    font-size: 23px; font-weight: 800; letter-spacing: -0.4px;
+    margin-bottom: 6px; color: #f2f7f4;
 }
 .payment-card .pay-sub {
-    font-size: 13px; color: #5f7a6d; margin-bottom: 20px; line-height: 1.5;
-    padding: 0 24px;
+    font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.55;
+    padding: 0 26px;
 }
 
-.pay-amount-box {
-    padding: 18px 24px; border-radius: 18px;
-    background: linear-gradient(145deg, rgba(212,168,83,0.1), rgba(212,168,83,0.03));
-    border: 1.5px solid rgba(212,168,83,0.2);
-    margin: 0 20px 20px;
-    text-align: center;
+/* Numbered section labels — each one lives inside the block it describes, so
+   the pending-review state (which hides those blocks) hides them too. */
+.pay-step {
+    display: flex; align-items: center; gap: 9px;
+    margin: 0 0 10px;
+    text-align: start;
 }
-.pay-amount-label {
-    font-size: 9px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1.2px; color: #5f7a6d; margin-bottom: 4px;
+.pay-step-num {
+    width: 21px; height: 21px; border-radius: 7px; flex: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--grad-gold); color: #14100a;
+    font-size: 11px; font-weight: 800; line-height: 1;
 }
-.pay-amount-value {
-    font-size: 36px; font-weight: 800; letter-spacing: 1px;
-    background: linear-gradient(120deg, #eccf8b, #d4a853, #eccf8b);
-    background-size: 200% 100%;
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: payAmtShimmer 3s ease-in-out infinite;
-    line-height: 1.1;
+.pay-step-label {
+    font-size: 10.5px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.1px; color: var(--text-sec); white-space: nowrap;
 }
-@keyframes payAmtShimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-.pay-amount-lesson {
-    font-size: 11px; color: #a3bbb0; font-weight: 500;
-    max-width: 260px; margin: 4px auto 0;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+.pay-step::after {
+    content: ''; flex: 1; height: 1px; min-width: 12px;
+    background: linear-gradient(90deg, rgba(212,168,83,0.3), rgba(212,168,83,0.02));
 }
+[dir="rtl"] .pay-step::after { transform: scaleX(-1); }
+.pay-details-card .pay-step { padding: 16px 16px 4px; margin: 0; }
+.pay-form .pay-step { margin-bottom: 12px; }
 
-/* Payment details card */
+/* ===== STEP 1 — plan picker ===== */
+.pay-tier-options { display: flex; flex-direction: column; gap: 11px; margin: 0 22px 18px; }
+.pay-tier-card {
+    display: flex; align-items: center; gap: 13px;
+    padding: 13px 14px; border-radius: 16px;
+    background: rgba(4,15,11,0.55);
+    border: 1.5px solid rgba(212,168,83,0.12);
+    cursor: pointer; transition: border-color .22s, background .22s, transform .22s, box-shadow .22s;
+    text-align: start;
+}
+.pay-tier-card:hover {
+    border-color: rgba(212,168,83,0.38);
+    background: rgba(10,26,19,0.8);
+    transform: translateY(-1px);
+}
+.pay-tier-card.selected {
+    border-color: var(--gold);
+    background: linear-gradient(145deg, rgba(212,168,83,0.15), rgba(212,168,83,0.04));
+    box-shadow: 0 0 0 3px rgba(212,168,83,0.1), 0 14px 32px -20px rgba(212,168,83,0.9);
+}
+.pay-tier-icon {
+    width: 42px; height: 42px; border-radius: 13px; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; color: var(--gold);
+    background: rgba(212,168,83,0.1);
+    border: 1px solid rgba(212,168,83,0.22);
+    transition: background .22s, color .22s, border-color .22s;
+}
+.pay-tier-card.selected .pay-tier-icon {
+    background: var(--grad-gold); color: #14100a; border-color: transparent;
+    box-shadow: 0 6px 18px -8px rgba(212,168,83,0.9);
+}
+.pay-tier-info { flex: 1; min-width: 0; }
+.pay-tier-info h4 {
+    font-size: 14.5px; font-weight: 700; color: var(--text);
+    margin-bottom: 3px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.pay-tier-tag {
+    font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px;
+    padding: 3px 7px; border-radius: 6px;
+    color: #34d399; background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.3);
+    line-height: 1;
+}
+.pay-tier-desc { font-size: 11.5px; color: var(--text-muted); display: block; }
+.pay-tier-right {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex: none;
+}
+.pay-tier-price {
+    font-size: 16.5px; font-weight: 800; color: var(--gold); letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+.pay-tier-card.selected .pay-tier-price { color: var(--gold-light); }
+.pay-tier-check { font-size: 15px; color: rgba(255,255,255,0.2); line-height: 1; }
+.pay-tier-check i { font-family: "Font Awesome 6 Free"; font-weight: 900; }
+.pay-tier-check i::before { content: "\f111"; }
+.pay-tier-card.selected .pay-tier-check { color: var(--gold); }
+.pay-tier-card.selected .pay-tier-check i::before { content: "\f058"; }
+
+/* ===== STEP 2 — MoMo instructions ===== */
 .pay-details-card {
-    margin: 0 20px 18px;
+    margin: 0 22px 16px;
     border-radius: 16px;
-    background: rgba(6,19,14,0.5);
-    border: 1px solid rgba(255,255,255,0.04);
+    background: rgba(4,15,11,0.6);
+    border: 1px solid rgba(212,168,83,0.14);
     overflow: hidden;
 }
-
 .pay-detail-row {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 16px;
+    padding: 13px 16px;
     transition: background 0.2s;
 }
-.pay-detail-row:hover {
-    background: rgba(212,168,83,0.03);
-}
-
+.pay-detail-row:hover { background: rgba(212,168,83,0.04); }
 .pay-detail-icon {
     width: 38px; height: 38px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, rgba(212,168,83,0.12), rgba(212,168,83,0.04));
-    border: 1px solid rgba(212,168,83,0.15);
+    border-radius: 11px;
+    background: linear-gradient(135deg, rgba(212,168,83,0.14), rgba(212,168,83,0.04));
+    border: 1px solid rgba(212,168,83,0.18);
     display: flex; align-items: center; justify-content: center;
     font-size: 14px; color: #d4a853;
     flex-shrink: 0;
 }
-
-.pay-detail-content {
-    flex: 1; text-align: left; min-width: 0;
-}
+.pay-detail-content { flex: 1; text-align: start; min-width: 0; }
 .pay-detail-label {
     display: block;
-    font-size: 9px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.8px; color: #5f7a6d;
-    margin-bottom: 1px;
+    font-size: 9px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.9px; color: var(--text-muted);
+    margin-bottom: 2px;
 }
 .pay-detail-value {
     display: block;
     font-size: 15px; font-weight: 700; color: #f2f7f4;
 }
-.pay-phone-val {
-    letter-spacing: 0.5px;
-    color: #34d399;
-}
+.pay-phone-val { letter-spacing: 0.5px; color: #34d399; font-variant-numeric: tabular-nums; }
+[dir="rtl"] .pay-phone-val { direction: ltr; unicode-bidi: isolate; }
 
 .pay-detail-divider {
     height: 1px;
     margin: 0 16px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+    background: linear-gradient(90deg, transparent, rgba(212,168,83,0.16), transparent);
 }
 
 .pay-copy-btn {
-    width: 34px; height: 34px;
-    border-radius: 8px;
-    border: 1px solid rgba(212,168,83,0.12);
-    background: rgba(212,168,83,0.06);
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(212,168,83,0.16);
+    background: rgba(212,168,83,0.07);
     color: #d4a853;
-    font-size: 12px;
+    font-size: 13px;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     transition: all 0.2s;
     flex-shrink: 0;
 }
 .pay-copy-btn:hover {
-    background: rgba(212,168,83,0.15);
-    border-color: rgba(212,168,83,0.3);
-    transform: scale(1.05);
+    background: rgba(212,168,83,0.16);
+    border-color: rgba(212,168,83,0.35);
+    transform: scale(1.06);
 }
 .pay-copy-btn.copied {
-    background: rgba(52,211,153,0.12);
-    border-color: rgba(52,211,153,0.3);
+    background: rgba(52,211,153,0.14);
+    border-color: rgba(52,211,153,0.35);
     color: #34d399;
+}
+
+.pay-amount-val {
+    font-size: 17px !important; font-weight: 800 !important; color: var(--gold) !important;
+    font-variant-numeric: tabular-nums;
 }
 
 .pay-footer {
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    font-size: 11px; color: #5f7a6d;
-    padding: 0 20px;
-    line-height: 1.4;
+    font-size: 11px; color: var(--text-muted);
+    padding: 0 26px;
+    line-height: 1.5;
+    margin-bottom: 16px;
 }
-.pay-footer i { font-size: 13px; flex-shrink: 0; }
+.pay-footer i { font-size: 13px; flex-shrink: 0; color: #34d399 !important; }
 
-/* ===== Payment submission form ===== */
-.pay-form { margin: 0 20px 16px; text-align: left; }
+/* ===== STEP 3 — confirmation form ===== */
+.pay-form { margin: 0 22px 16px; text-align: start; }
 .pay-form-row { margin-bottom: 12px; }
 .pay-form-row label {
-    display: block; font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.6px; color: #5f7a6d; margin-bottom: 6px;
+    display: block; font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 7px;
 }
 .pay-form-row input {
-    width: 100%; padding: 12px 14px; border-radius: 12px;
-    background: rgba(6,19,14,0.6); border: 1.5px solid rgba(255,255,255,0.06);
-    color: #f2f7f4; font-size: 14px; font-weight: 600; letter-spacing: 0.3px;
+    width: 100%; padding: 13px 15px; border-radius: 13px;
+    background: rgba(4,15,11,0.7); border: 1.5px solid rgba(255,255,255,0.07);
+    color: #f2f7f4; font-size: 14.5px; font-weight: 600; letter-spacing: 0.3px;
     transition: all 0.2s; font-family: inherit;
 }
 .pay-form-row input::placeholder { color: #3d5347; font-weight: 500; }
-.pay-form-row input:focus { outline: none; border-color: rgba(212,168,83,0.4); background: rgba(6,19,14,0.85); }
+.pay-form-row input:hover { border-color: rgba(212,168,83,0.28); }
+.pay-form-row input:focus {
+    outline: none; border-color: rgba(212,168,83,0.55);
+    background: rgba(4,15,11,0.9);
+    box-shadow: 0 0 0 4px rgba(212,168,83,0.1);
+}
 .pay-form-error {
-    font-size: 12px; color: #f87171; margin-bottom: 10px; display: none;
-    padding: 8px 12px; border-radius: 10px; background: rgba(248,113,113,0.08);
-    border: 1px solid rgba(248,113,113,0.2);
+    font-size: 12.5px; color: #f87171; margin-bottom: 12px; display: none;
+    padding: 9px 13px; border-radius: 11px; background: rgba(248,113,113,0.09);
+    border: 1px solid rgba(248,113,113,0.24); font-weight: 600;
 }
-.pay-form-error.show { display: block; }
-.pay-tier-options { display:flex; flex-direction:column; gap:10px; margin:0 20px 16px; }
-.pay-tier-card {
-    display:flex; align-items:center; gap:12px;
-    padding:14px 16px; border-radius:14px;
-    background: rgba(10,28,20,0.7); border:1.5px solid rgba(212,168,83,0.1);
-    cursor:pointer; transition: all 0.2s;
-}
-.pay-tier-card:hover { border-color: rgba(212,168,83,0.3); background: rgba(16,38,28,0.8); }
-.pay-tier-card.selected { border-color: var(--gold); background: rgba(212,168,83,0.08); }
-.pay-tier-icon { font-size:22px; color:var(--gold); width:36px; text-align:center; flex-shrink:0; }
-.pay-tier-info { flex:1; }
-.pay-tier-info h4 { font-size:14px; font-weight:700; color:var(--text); margin-bottom:2px; }
-.pay-tier-price { font-size:18px; font-weight:800; color:var(--gold); display:block; margin-bottom:2px; }
-.pay-tier-desc { font-size:11px; color:var(--text-muted); }
-.pay-tier-check { color:var(--text-muted); font-size:12px; flex-shrink:0; }
-.pay-tier-card.selected .pay-tier-check { color:var(--gold); }
-.pay-tier-card.selected .pay-tier-check i { content:"\f058"; }
-.pay-tier-card.selected .pay-tier-check i::before { content:"\f058"; font-family:"Font Awesome 6 Free"; font-weight:900; }
-.pay-amount-val { font-size:16px !important; font-weight:800 !important; color:var(--gold) !important; }
+.pay-form-error.show { display: block; animation: errIn .3s ease both; }
+@keyframes errIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
 .pay-submit-btn {
-    width: 100%; padding: 14px; border-radius: 14px; border: none; cursor: pointer;
+    width: 100%; padding: 15px; border-radius: 14px; border: none; cursor: pointer;
     background: var(--grad-gold); background-size: 200% auto;
-    color: #14100a; font-size: 14px; font-weight: 800; letter-spacing: 0.2px;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: all 0.2s; box-shadow: 0 12px 30px -10px rgba(212,168,83,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
+    color: #14100a; font-size: 14.5px; font-weight: 800; letter-spacing: 0.2px;
+    display: flex; align-items: center; justify-content: center; gap: 9px;
+    transition: transform .22s, box-shadow .22s; box-shadow: 0 14px 34px -12px rgba(212,168,83,0.7), inset 0 1px 0 rgba(255,255,255,0.45);
     font-family: inherit;
+    position: relative; overflow: hidden;
 }
-.pay-submit-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 16px 36px -10px rgba(212,168,83,0.65); }
+.pay-submit-btn::after {
+    content: '';
+    position: absolute; top: 0; left: -80%;
+    width: 50%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent);
+    transform: skewX(-20deg);
+    animation: shineSweep 3.6s ease-in-out infinite;
+}
+@keyframes shineSweep { 0%, 60% { left: -80%; } 100% { left: 150%; } }
+.pay-submit-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 18px 40px -12px rgba(212,168,83,0.85), inset 0 1px 0 rgba(255,255,255,0.45); }
+.pay-submit-btn:active:not(:disabled) { transform: translateY(0); }
 .pay-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.pay-submit-btn i { position: relative; z-index: 1; }
 
 /* ===== Pending / rejected review state ===== */
-.pay-pending { padding: 8px 24px 4px; }
+.pay-pending { padding: 10px 26px 6px; }
 .pay-pending-icon {
-    width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px;
-    background: linear-gradient(145deg, rgba(212,168,83,0.16), rgba(212,168,83,0.04));
-    border: 1.5px solid rgba(212,168,83,0.25);
+    width: 66px; height: 66px; border-radius: 50%; margin: 0 auto 16px;
+    background: linear-gradient(145deg, rgba(212,168,83,0.18), rgba(212,168,83,0.04));
+    border: 1.5px solid rgba(212,168,83,0.28);
     display: flex; align-items: center; justify-content: center;
     font-size: 26px; color: #d4a853;
-    animation: payPulse 2s ease-in-out infinite;
+    animation: payPulse 2.2s ease-in-out infinite;
 }
-@keyframes payPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-.pay-pending h3 { font-size: 18px; font-weight: 800; color: #f2f7f4; margin-bottom: 6px; }
-.pay-pending > p { font-size: 13px; color: #a3bbb0; line-height: 1.5; margin-bottom: 16px; }
+@keyframes payPulse { 0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212,168,83,0.25); } 50% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(212,168,83,0); } }
+.pay-pending h3 { font-size: 19px; font-weight: 800; color: #f2f7f4; margin-bottom: 8px; letter-spacing: -0.3px; }
+.pay-pending > p { font-size: 13px; color: var(--text-sec); line-height: 1.6; margin-bottom: 16px; }
 .pay-pending-details {
-    text-align: left; background: rgba(6,19,14,0.5); border: 1px solid rgba(255,255,255,0.04);
-    border-radius: 14px; padding: 12px 16px; margin-bottom: 16px; font-size: 12px;
+    text-align: start; background: rgba(4,15,11,0.6); border: 1px solid rgba(212,168,83,0.14);
+    border-radius: 14px; padding: 13px 16px; margin-bottom: 16px; font-size: 12.5px;
 }
-.pay-pending-details div { display: flex; justify-content: space-between; padding: 5px 0; color: #a3bbb0; }
-.pay-pending-details strong { color: #f2f7f4; font-weight: 700; }
+.pay-pending-details div {
+    display: flex; justify-content: space-between; gap: 14px;
+    padding: 6px 0; color: var(--text-sec); border-bottom: 1px dashed rgba(212,168,83,0.1);
+}
+.pay-pending-details div:last-child { border-bottom: 0; }
+.pay-pending-details strong { color: #f2f7f4; font-weight: 700; text-align: end; }
 .pay-refresh-btn {
-    width: 100%; padding: 12px; border-radius: 14px; cursor: pointer;
-    background: rgba(52,211,153,0.1); border: 1.5px solid rgba(52,211,153,0.25);
-    color: #34d399; font-size: 13px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 13px; border-radius: 14px; cursor: pointer;
+    background: rgba(52,211,153,0.1); border: 1.5px solid rgba(52,211,153,0.28);
+    color: #34d399; font-size: 13.5px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; gap: 9px;
     transition: all 0.2s; font-family: inherit; margin-bottom: 8px;
 }
-.pay-refresh-btn:hover { background: rgba(52,211,153,0.18); }
+.pay-refresh-btn:hover { background: rgba(52,211,153,0.18); border-color: rgba(52,211,153,0.5); transform: translateY(-1px); }
 .pay-refresh-btn.spinning i { animation: paySpin 0.8s linear infinite; }
 @keyframes paySpin { to { transform: rotate(360deg); } }
 .pay-rejected-note {
-    text-align: left; font-size: 12px; color: #f87171; line-height: 1.5;
-    background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.15);
-    border-radius: 12px; padding: 10px 14px; margin-bottom: 14px;
+    text-align: start; font-size: 12.5px; color: #f87171; line-height: 1.55;
+    background: rgba(248,113,113,0.07); border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 13px; padding: 11px 14px; margin: 0 22px 14px; font-weight: 600;
 }
+.pay-rejected-note i { margin-inline-end: 4px; }
 
 @media (max-width: 540px) {
+    .payment-overlay { padding: 14px 10px; }
     .payment-card { padding: 0 0 22px; border-radius: 22px; }
-    .payment-card h2 { font-size: 18px; }
-    .pay-amount-value { font-size: 28px; }
-    .pay-amount-box { padding: 14px 16px; margin: 0 14px 16px; }
-    .pay-details-card { margin: 0 14px 14px; }
+    .payment-card h2 { font-size: 19px; }
+    .payment-card .pay-sub { padding: 0 18px; }
+    .pay-tier-options { margin: 0 16px 16px; gap: 10px; }
+    .pay-details-card { margin: 0 16px 14px; }
+    .pay-form { margin: 0 16px 14px; }
+    .pay-rejected-note { margin: 0 16px 12px; }
+    .pay-footer { padding: 0 18px; }
     .pay-phone-val { font-size: 14px; }
-    .pay-logo { width: 50px; height: 50px; font-size: 20px; }
-    .pay-logo-ring { width: 62px; height: 62px; }
-    .pay-footer { flex-direction: column; text-align: center; }
+    .pay-logo { width: 52px; height: 52px; font-size: 20px; }
+    .pay-logo-ring { width: 64px; height: 64px; }
+    .pay-tier-price { font-size: 15.5px; }
+    .pay-pending { padding: 8px 18px 4px; }
     .btn-auth { padding: 6px 10px; font-size: 11px; }
 }
+
+/* ===== PAYMENT OVERLAY — RIGHT-TO-LEFT ===== */
+[dir="rtl"] .pay-detail-content { text-align: right; }
+[dir="rtl"] .pay-form, [dir="rtl"] .pay-pending-details, [dir="rtl"] .pay-rejected-note { text-align: right; }
+[dir="rtl"] .pay-close { right: auto; left: 14px; }
 
 /* ===== RIGHT-TO-LEFT (Arabic) MIRRORING ===== */
 [dir="rtl"] .lang-toggle { margin-left: 0; margin-right: 8px; }
@@ -1121,40 +1195,48 @@ body::before {
         </div>
 
         <div class="pay-badge"><i class="fas fa-shield-halved"></i> <span data-lang="en">Secure Payment</span><span data-lang="rw">Kwishura Ku Bwizinga</span><span data-lang="fr">Paiement Sécurisé</span><span data-lang="sw">Malipo Salama</span><span data-lang="ar">دفع آمن</span></div>
-        <h2><span data-lang="en">Choose Your Plan</span><span data-lang="rw">Hitamo Igicaro</span><span data-lang="fr">Choisissez votre plan</span><span data-lang="sw">Chagua Mpango Wako</span><span data-lang="ar">اختر خطتك</span></h2>
+        <h2><span data-lang="en">Unlock Full Access</span><span data-lang="rw">Fungura Ubwifashisho Bwose</span><span data-lang="fr">Débloquez l'accès complet</span><span data-lang="sw">Fungua Ufikiaji Kamili</span><span data-lang="ar">افتح الوصول الكامل</span></h2>
         <p class="pay-sub"><span data-lang="en">Select an access plan and pay via MoMo to get started.</span><span data-lang="rw">Hitamo igicaro ube twishyure na MoMo.</span><span data-lang="fr">Sélectionnez un plan d'accès et payez via MoMo pour commencer.</span><span data-lang="sw">Chagua mpango wa ufikiaji na ulipe kupitia MoMo kuanza.</span><span data-lang="ar">اختر خطة الوصول وادفع عبر MoMo للبدء.</span></p>
 
         <div class="pay-tier-options" id="payTierOptions">
+            <div class="pay-step"><span class="pay-step-num">1</span><span class="pay-step-label"><span data-lang="en">Choose your plan</span><span data-lang="rw">Hitamo igicaro</span><span data-lang="fr">Choisissez votre plan</span><span data-lang="sw">Chagua mpango wako</span><span data-lang="ar">اختر خطتك</span></span></div>
             <div class="pay-tier-card" data-tier="video">
-                <div class="pay-tier-icon"><i class="fas fa-play-circle"></i></div>
+                <div class="pay-tier-icon"><i class="fas fa-play"></i></div>
                 <div class="pay-tier-info">
                     <h4><span data-lang="en">Single Video</span><span data-lang="rw">Video Imwe</span><span data-lang="fr">Vidéo unique</span><span data-lang="sw">Video Moja</span><span data-lang="ar">فيديو واحد</span></h4>
-                    <span class="pay-tier-price">500 RWF</span>
                     <span class="pay-tier-desc"><span data-lang="en">Access one lesson</span><span data-lang="rw">Kubona isomo rimwe</span><span data-lang="fr">Accès à une leçon</span><span data-lang="sw">Fikia somo moja</span><span data-lang="ar">الوصول إلى درس واحد</span></span>
                 </div>
-                <div class="pay-tier-check"><i class="fas fa-circle"></i></div>
+                <div class="pay-tier-right">
+                    <span class="pay-tier-price">500 RWF</span>
+                    <span class="pay-tier-check"><i class="fas fa-circle"></i></span>
+                </div>
             </div>
             <div class="pay-tier-card" data-tier="weekly">
                 <div class="pay-tier-icon"><i class="fas fa-calendar-week"></i></div>
                 <div class="pay-tier-info">
-                    <h4><span data-lang="en">Weekly Access</span><span data-lang="rw">Ubwifashisho bwa Cyumweru</span><span data-lang="fr">Accès Hebdomadaire</span><span data-lang="sw">Ufikiaji wa Wiki</span><span data-lang="ar">وصول أسبوعي</span></h4>
-                    <span class="pay-tier-price">2,000 RWF</span>
+                    <h4><span data-lang="en">Weekly Access</span><span data-lang="rw">Ubwifashisho bwa Cyumweru</span><span data-lang="fr">Accès Hebdomadaire</span><span data-lang="sw">Ufikiaji wa Wiki</span><span data-lang="ar">وصول أسبوعي</span> <span class="pay-tier-tag"><span data-lang="en">Popular</span><span data-lang="rw">Bikunzwe</span><span data-lang="fr">Populaire</span><span data-lang="sw">Maarufu</span><span data-lang="ar">الأكثر شعبية</span></span></h4>
                     <span class="pay-tier-desc"><span data-lang="en">All videos for 7 days</span><span data-lang="rw">Amavideo yose iminsi 7</span><span data-lang="fr">Toutes les vidéos pendant 7 jours</span><span data-lang="sw">Video zote kwa siku 7</span><span data-lang="ar">جميع الفيديوهات لمدة 7 أيام</span></span>
                 </div>
-                <div class="pay-tier-check"><i class="fas fa-circle"></i></div>
+                <div class="pay-tier-right">
+                    <span class="pay-tier-price">2,000 RWF</span>
+                    <span class="pay-tier-check"><i class="fas fa-circle"></i></span>
+                </div>
             </div>
             <div class="pay-tier-card" data-tier="monthly">
                 <div class="pay-tier-icon"><i class="fas fa-calendar-days"></i></div>
                 <div class="pay-tier-info">
                     <h4><span data-lang="en">Monthly Access</span><span data-lang="rw">Ubwifashisho bwa Kwezi</span><span data-lang="fr">Accès Mensuel</span><span data-lang="sw">Ufikiaji wa Mwezi</span><span data-lang="ar">وصول شهري</span></h4>
-                    <span class="pay-tier-price">7,000 RWF</span>
                     <span class="pay-tier-desc"><span data-lang="en">All videos for 30 days</span><span data-lang="rw">Amavideo yose iminsi 30</span><span data-lang="fr">Toutes les vidéos pendant 30 jours</span><span data-lang="sw">Video zote kwa siku 30</span><span data-lang="ar">جميع الفيديوهات لمدة 30 يومًا</span></span>
                 </div>
-                <div class="pay-tier-check"><i class="fas fa-circle"></i></div>
+                <div class="pay-tier-right">
+                    <span class="pay-tier-price">7,000 RWF</span>
+                    <span class="pay-tier-check"><i class="fas fa-circle"></i></span>
+                </div>
             </div>
         </div>
 
         <div class="pay-details-card" id="payDetailsCard">
+            <div class="pay-step"><span class="pay-step-num">2</span><span class="pay-step-label"><span data-lang="en">Send money to this MoMo number</span><span data-lang="rw">Ohereza amafaranga kuri iyi nomero ya MoMo</span><span data-lang="fr">Envoyez l'argent sur ce numéro MoMo</span><span data-lang="sw">Tuma pesa kwa nambari hii ya MoMo</span><span data-lang="ar">أرسل المال إلى رقم MoMo هذا</span></span></div>
             <div class="pay-detail-row">
                 <div class="pay-detail-icon"><i class="fas fa-user"></i></div>
                 <div class="pay-detail-content">
@@ -1187,8 +1269,9 @@ body::before {
             <span data-lang="rw">Nyuma yo kwishura, umuyobozi azemeza uburenganzira bwawe vuba.</span><span data-lang="fr">Après le paiement, l'administrateur approuvera votre accès sous peu.</span><span data-lang="sw">Baada ya kulipa, msimamizi ataidhinisha ufikiaji wako hivi karibuni.</span><span data-lang="ar">بعد الدفع، سيوافق المسؤول على وصولك قريبًا.</span>
         </div>
 
-        <!-- Step 2: confirm payment -->
+        <!-- Step 3: confirm payment -->
         <form class="pay-form" id="paymentForm">
+            <div class="pay-step"><span class="pay-step-num">3</span><span class="pay-step-label"><span data-lang="en">Confirm your payment</span><span data-lang="rw">Emeza kwishyura kwawe</span><span data-lang="fr">Confirmez votre paiement</span><span data-lang="sw">Thibitisha malipo yako</span><span data-lang="ar">أكد دفعتك</span></span></div>
             <div class="pay-form-row">
                 <label><span data-lang="en">Phone Number You Paid From</span><span data-lang="rw">Numero Wishuriyeho</span><span data-lang="fr">Numéro de téléphone utilisé pour payer</span><span data-lang="sw">Nambari ya Simu Uliyolipia</span><span data-lang="ar">رقم الهاتف الذي دفعت منه</span></label>
                 <input type="tel" id="payPhoneInput" placeholder="07XX XXX XXX" required>
@@ -1242,7 +1325,7 @@ body::before {
             <a href="login.html" class="btn-auth login-btn"><i class="fas fa-arrow-right-to-bracket"></i> <span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Connexion</span><span data-lang="sw">Ingia</span><span data-lang="ar">تسجيل الدخول</span></a>
             <a href="register.html" class="btn-auth register-btn"><i class="fas fa-user-plus"></i> <span data-lang="en">Register</span><span data-lang="rw">Iyandikishe</span><span data-lang="fr">S'inscrire</span><span data-lang="sw">Jisajili</span><span data-lang="ar">التسجيل</span></a>
         </div>
-        <a href="https://wa.me/250781853141" target="_blank" rel="noopener" class="btn-admin"><i class="fab fa-whatsapp"></i> <span class="btn-label">WhatsApp</span></a>
+        <a href="https://wa.me/250783198148" target="_blank" rel="noopener" class="btn-admin"><i class="fab fa-whatsapp"></i> <span class="btn-label">WhatsApp</span></a>
     </div>
 </header>
 
@@ -1358,7 +1441,9 @@ body::before {
         <a href="index.html"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">الرئيسية</span></a>
         <a href="#"><span data-lang="en">Privacy Policy</span><span data-lang="rw">Politike y'Ibanga</span><span data-lang="fr">Politique de confidentialité</span><span data-lang="sw">Sera ya Faragha</span><span data-lang="ar">سياسة الخصوصية</span></a>
         <a href="#"><span data-lang="en">Terms of Service</span><span data-lang="rw">Amategeko</span><span data-lang="fr">Conditions d'utilisation</span><span data-lang="sw">Masharti ya Huduma</span><span data-lang="ar">شروط الخدمة</span></a>
-        <a href="https://wa.me/250781853141" target="_blank" rel="noopener"><span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
+        <a href="tel:+250783198148"><i class="fas fa-phone"></i> +250 783 198 148</a>
+        <a href="mailto:misigaroissa2@gmail.com"><i class="fas fa-envelope"></i> misigaroissa2@gmail.com</a>
+        <a href="https://wa.me/250783198148" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
     </div>
 </footer>
 
