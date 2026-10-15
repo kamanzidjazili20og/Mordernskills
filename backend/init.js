@@ -14,7 +14,7 @@ const bcrypt = require('bcryptjs');
 const { driver, supabase, getDbConfig } = require('./config/db');
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Admin@123';
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'misigaroissa2@gmail.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@nooracademy.com';
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
 
 // A password printed to stdout ends up in Render/Railway/Fly log
