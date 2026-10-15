@@ -13,6 +13,7 @@
 // reconnaissance for anyone who finds the port.
 // ============================================================
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -58,12 +59,30 @@ assertRuntimeConfig();
 // ------------------------------------------------------------
 const allowedOriginSet = new Set(env.allowedOrigins);
 
+// A page served by *this very process* (the Render deployment serves the
+// frontend and the API from one origin) sends its own Origin header on
+// every POST. The allowlist only knows about the separately deployed
+// frontend, so without this a sign-in posted from the API's own domain
+// would be rejected in production while working fine in development.
+let selfOrigin = null;
+app.use((req, res, next) => {
+    const origin = req.get('origin');
+    if (origin) {
+        const own = normalizeOrigin(`${req.protocol}://${req.get('host') || ''}`);
+        if (own && normalizeOrigin(origin) === own) selfOrigin = own;
+    }
+    next();
+});
+
 app.use(cors({
     origin(origin, callback) {
         // No Origin header: same-origin navigation, curl, server-to-server.
         if (!origin) return callback(null, true);
 
         const normalized = normalizeOrigin(origin);
+
+        // This process's own origin: frontend and API share one host.
+        if (selfOrigin && normalized === selfOrigin) return callback(null, true);
 
         // Pages opened straight off disk send the literal string "null".
         if (normalized === 'null' && env.allowNullOrigin) return callback(null, true);
@@ -208,7 +227,7 @@ const FRONTEND_FILES = [
     'sitemap.xml',
     'manifest.webmanifest',
     'favicon.ico'
-];
+].filter(file => fs.existsSync(path.join(ROOT, file)));
 
 const FRONTEND_DIRS = ['assets', 'Images'];
 

@@ -2718,7 +2718,7 @@ function showUploadSuccess(lessonData) {
             <h4>${lessonData.title || ''}</h4>
             <p>${inst}${lessonData.rating != null ? ' &middot; ' + Number(lessonData.rating).toFixed(1) + ' <i class="fas fa-star" style="color:var(--gold)"></i>' : ''}</p>
         </div>`;
-    document.getElementById('succViewSite').href = API_ORIGIN + '/video.html?id=' + lessonData.id;
+    document.getElementById('succViewSite').href = 'video.html?id=' + lessonData.id;
     document.getElementById('uploadSuccessModal').classList.add('show');
 }
 

@@ -1,0 +1,3 @@
+# Allows every crawler on the GitHub Pages deployment.
+User-agent: *
+Allow: /

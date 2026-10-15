@@ -5,8 +5,39 @@ services:
     rootDir: backend
     buildCommand: npm install
     startCommand: npm start
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: "10000"
+      - key: DB_DRIVER
+        value: supabase
       - key: JWT_SECRET
         generateValue: true
+      # Frontend origin(s) allowed to call this API. The path is ignored:
+      # the browser always sends the bare https://user.github.io origin.
+      - key: FRONTEND_URL
+        value: https://kamanzidjazili20og.github.io
+      # --- Supabase (Dashboard > Project Settings > API) ---
+      - key: SUPABASE_URL
+        value: https://gwxwhtckompryuyyvxuh.supabase.co
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_AVATAR_BUCKET
+        value: avatars
+      - key: SUPABASE_VIDEO_BUCKET
+        value: videos
+      - key: SUPABASE_THUMBNAIL_BUCKET
+        value: thumbnails
+      - key: SUPABASE_BOOK_BUCKET
+        value: books
+      # --- Admin account created/synced on every boot ---
+      - key: ADMIN_EMAIL
+        value: admin@nooracademy.com
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false

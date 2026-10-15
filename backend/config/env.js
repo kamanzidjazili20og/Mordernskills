@@ -27,9 +27,22 @@ function bool(name, fallback) {
     return /^(1|true|yes|on)$/i.test(String(raw).trim());
 }
 
-/** `https://x.com/` and `https://x.com` must compare equal. */
+/**
+ * `https://x.com/` and `https://x.com` must compare equal — and so must
+ * `https://user.github.io/repo/` (how FRONTEND_URL is written, because it
+ * doubles as a human-readable site URL) and `https://user.github.io`
+ * (what the browser actually puts in the Origin header: an origin never
+ * carries a path). Comparing the full string used to reject every request
+ * coming from a GitHub Pages deployment.
+ */
 function normalizeOrigin(origin) {
-    return String(origin || '').trim().replace(/\/+$/, '').toLowerCase();
+    const raw = String(origin || '').trim();
+    if (!raw || raw === 'null') return raw ? 'null' : '';
+    try {
+        return new URL(raw).origin.toLowerCase();
+    } catch (e) {
+        return raw.replace(/\/+$/, '').toLowerCase();
+    }
 }
 
 // Origins that must always work so a developer's local frontend can
