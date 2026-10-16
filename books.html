@@ -99,6 +99,56 @@ img { display: block; }
 .logout-link { font-size: 11px; color: #5f7a6d; cursor: pointer; background: none; border: none; font-family: inherit; padding: 4px 8px; border-radius: 6px; transition: all .2s; }
 .logout-link:hover { color: #f87171; }
 
+/* ===== MOBILE LANGUAGE DROPDOWN (mirrors the homepage) ===== */
+.lang-select { display: none; position: relative; }
+.lang-trigger {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 13px; border-radius: 11px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    color: var(--text-sec); font-size: 12px; font-weight: 700; letter-spacing: 0.4px;
+    font-family: inherit; cursor: pointer; transition: all .2s; user-select: none;
+}
+.lang-trigger:hover { border-color: rgba(212,168,83,0.45); color: var(--text); background: rgba(212,168,83,0.09); box-shadow: 0 0 18px rgba(212,168,83,0.16); }
+.lang-trigger .globe-icon { color: var(--gold); font-size: 14px; filter: drop-shadow(0 0 7px rgba(212,168,83,0.55)); animation: globeSpin 14s linear infinite; }
+@keyframes globeSpin { to { transform: rotate(360deg); } }
+.lang-caret { font-size: 9px; opacity: 0.75; transition: transform .2s ease; }
+.lang-select.open .lang-caret { transform: rotate(180deg); }
+.lang-menu {
+    position: absolute; top: calc(100% + 10px); right: 0; z-index: 300;
+    min-width: 224px; padding: 7px;
+    background: rgba(7,25,18,0.98);
+    backdrop-filter: blur(22px) saturate(150%);
+    border: 1px solid rgba(212,168,83,0.26);
+    border-radius: 14px;
+    box-shadow: 0 26px 66px -20px rgba(0,0,0,0.8), 0 0 36px -14px rgba(212,168,83,0.35);
+    opacity: 0; visibility: hidden; transform: translateY(8px);
+    transition: opacity .18s ease, transform .18s ease, visibility .18s;
+}
+.lang-select.open .lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.lang-menu .lang-option {
+    display: flex; align-items: center; gap: 11px;
+    padding: 10px 12px; border-radius: 9px;
+    font-size: 13px; font-weight: 600; color: var(--text-sec);
+    cursor: pointer; transition: all .15s;
+    border: none; background: none; width: 100%; text-align: left; font-family: inherit;
+}
+.lang-menu .lang-option:hover { background: rgba(212,168,83,0.09); color: var(--text); }
+.lang-menu .lang-option.active { background: rgba(212,168,83,0.18); color: var(--gold-light); }
+.lang-menu .lang-option.active::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 10px; margin-left: auto; color: var(--gold); }
+.lang-menu .lang-option .flag { font-size: 18px; line-height: 1; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5)); }
+.lang-menu .lang-option .lname { font-weight: 700; }
+.lang-menu .lang-option .lnative { margin-left: auto; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+
+/* ===== HAMBURGER (mirrors the homepage) ===== */
+.menu-toggle {
+    display: none; width: 36px; height: 36px;
+    border-radius: 10px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04); color: var(--text-sec);
+    font-size: 15px; cursor: pointer;
+    align-items: center; justify-content: center; transition: all .2s;
+}
+.menu-toggle:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+
 /* ===== HERO ===== */
 .hero { position: relative; text-align: center; padding: 84px 16px 8px; z-index: 1; }
 .hero::before {
@@ -292,10 +342,40 @@ img { display: block; }
 }
 .footer .logo-accent { font-weight: 700; }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
+    .header { padding: 11px 20px; gap: 12px; }
+    .header-left { gap: 18px; }
+    .nav-links a { padding: 8px 10px; }
+}
+
+@media (max-width: 768px) {
     .wrap { padding: 0 18px; }
-    .header { padding: 11px 16px; }
-    .nav-links { display: none; }
+    .header { padding: 10px 16px; gap: 10px; flex-wrap: nowrap; }
+    .header-left { gap: 10px; min-width: 0; }
+    .logo { font-size: 16px; gap: 8px; white-space: nowrap; }
+    .logo-img { width: 32px; height: 32px; border-radius: 10px; }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        gap: 2px;
+        padding: 10px 16px 16px;
+        background: rgba(5,16,11,0.97);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 20px 40px -18px rgba(0,0,0,0.7);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; font-size: 15px; }
+    .header-right { gap: 8px; flex-shrink: 0; }
+    .menu-toggle { display: flex; }
+    .lang-toggle { display: none; }
+    .lang-select { display: block; }
+    .lang-trigger { padding: 7px 11px; gap: 7px; }
+    .btn-auth { padding: 8px 12px; gap: 0; }
+    .btn-auth .btn-label { display: none; }
+    .btn-auth i { font-size: 13px; }
     .hero { padding-top: 64px; }
     .hero h1 { font-size: 30px; }
     .books-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px 14px; }
@@ -304,7 +384,28 @@ img { display: block; }
     .reader-content.rtl { font-size: 18px; }
     .footer { padding: 22px 18px; }
 }
+
+@media (max-width: 480px) {
+    .header { padding: 9px 12px; gap: 8px; }
+    .logo { font-size: 15px; }
+    .logo-img { width: 28px; height: 28px; border-radius: 9px; }
+    .lang-trigger { padding: 6px 9px; gap: 6px; }
+    .lang-trigger .lang-current { display: none; }
+    .lang-menu .lang-option { padding: 10px 12px; font-size: 13px; }
+    .btn-auth { padding: 8px 10px; }
+    .menu-toggle { width: 34px; height: 34px; }
+}
+
+@media (max-width: 380px) {
+    .header { padding: 8px 10px; gap: 6px; }
+    .header-left { gap: 8px; }
+    .logo { font-size: 14px; gap: 6px; }
+    .logo-img { width: 26px; height: 26px; border-radius: 8px; }
+    .lang-trigger { padding: 6px 8px; gap: 5px; }
+    .btn-auth { padding: 7px 9px; }
+}
 [dir="rtl"] .fa-arrow-left, [dir="rtl"] .fa-arrow-right { transform: scaleX(-1); }
+[dir="rtl"] .lang-menu { right: auto; left: 0; }
 </style>
 <script src="config.js"></script>
 <script src="assets/js/media.js"></script>
@@ -325,6 +426,20 @@ img { display: block; }
         </nav>
     </div>
     <div class="header-right">
+        <div class="lang-select" id="langSelect" title="Switch language">
+            <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-label="Choose language">
+                <i class="fas fa-globe-africa globe-icon"></i>
+                <span class="lang-current" id="langCurrent">EN</span>
+                <i class="fas fa-chevron-down lang-caret"></i>
+            </button>
+            <div class="lang-menu" id="langMenu" role="listbox">
+                <span class="lang-option active" data-lang-code="en" role="option" tabindex="0"><span class="flag">🇬🇧</span><span class="lname">English</span><span class="lnative">English</span></span>
+                <span class="lang-option" data-lang-code="rw" role="option" tabindex="0"><span class="flag">🇷🇼</span><span class="lname">Kinyarwanda</span><span class="lnative">Ikinyarwanda</span></span>
+                <span class="lang-option" data-lang-code="fr" role="option" tabindex="0"><span class="flag">🇫🇷</span><span class="lname">French</span><span class="lnative">Français</span></span>
+                <span class="lang-option" data-lang-code="sw" role="option" tabindex="0"><span class="flag">🇰🇪</span><span class="lname">Swahili</span><span class="lnative">Kiswahili</span></span>
+                <span class="lang-option" data-lang-code="ar" role="option" tabindex="0"><span class="flag">🇸🇦</span><span class="lname">Arabic</span><span class="lnative">العربية</span></span>
+            </div>
+        </div>
         <div class="lang-toggle" id="langToggle" title="Switch language">
             <span class="lang-option active" data-lang-code="en">EN</span>
             <span class="lang-option" data-lang-code="rw">RW</span>
@@ -336,6 +451,7 @@ img { display: block; }
             <a href="login.html" class="btn-auth btn-auth-ghost"><i class="fas fa-arrow-right-to-bracket"></i> <span class="btn-label"><span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Connexion</span><span data-lang="sw">Ingia</span><span data-lang="ar">تسجيل الدخول</span></span></a>
             <a href="register.html" class="btn-auth btn-auth-gold"><i class="fas fa-user-plus"></i> <span class="btn-label"><span data-lang="en">Register</span><span data-lang="rw">Iyandikishe</span><span data-lang="fr">S'inscrire</span><span data-lang="sw">Jisajili</span><span data-lang="ar">التسجيل</span></span></a>
         </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
     </div>
 </header>
 
@@ -378,9 +494,17 @@ function setLang(lang) {
     document.body.classList.add('lang-' + currentLang);
     document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = currentLang;
-    document.querySelectorAll('#langToggle .lang-option').forEach(function (opt) {
+    document.querySelectorAll('.lang-option[data-lang-code]').forEach(function (opt) {
         opt.classList.toggle('active', opt.dataset.langCode === currentLang);
     });
+    var langCurrent = document.getElementById('langCurrent');
+    if (langCurrent) langCurrent.textContent = (currentLang || 'en').toUpperCase();
+    var langSelect = document.getElementById('langSelect');
+    if (langSelect) {
+        langSelect.classList.remove('open');
+        var lt = document.getElementById('langTrigger');
+        if (lt) lt.setAttribute('aria-expanded', 'false');
+    }
     localStorage.setItem(MS_I18N.STORAGE_KEY, currentLang);
     localStorage.removeItem('noorAdminLang');
     localStorage.removeItem('noorLang');
@@ -392,13 +516,49 @@ function setLang(lang) {
     paintCovers();
     paintLangs();
 }
-document.querySelectorAll('#langToggle .lang-option').forEach(function (opt) {
+document.querySelectorAll('.lang-option[data-lang-code]').forEach(function (opt) {
     opt.addEventListener('click', function () { setLang(opt.dataset.langCode); });
+    opt.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(opt.dataset.langCode); } });
 });
 document.addEventListener('ms:langchange', function (e) {
     var lang = e.detail && e.detail.lang;
     if (lang && lang !== currentLang) setLang(lang);
 });
+
+// ===== LANGUAGE DROPDOWN (globe, shown on small screens) =====
+(function () {
+    var sel = document.getElementById('langSelect');
+    var trigger = document.getElementById('langTrigger');
+    if (!sel || !trigger) return;
+    trigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = sel.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function (e) {
+        if (!sel.contains(e.target)) { sel.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { sel.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
+    });
+})();
+
+// ===== MOBILE MENU (hamburger, shown on small screens) =====
+(function () {
+    var toggle = document.getElementById('menuToggle');
+    var nav = document.querySelector('.nav-links');
+    if (!toggle || !nav) return;
+    toggle.addEventListener('click', function () {
+        var open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+            nav.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+})();
 
 var API_ORIGIN = (window.MODERN_SKILLS_CONFIG && window.MODERN_SKILLS_CONFIG.API_URL) || (location.protocol === 'file:' ? 'http://localhost:3001' : location.origin);
 var API_BASE = API_ORIGIN + '/api';

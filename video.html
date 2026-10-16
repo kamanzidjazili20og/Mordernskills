@@ -128,17 +128,6 @@ body::before {
 .lang-toggle { display: flex; align-items: center; gap: 2px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 999px; padding: 3px; margin-left: 8px; }
 .lang-option { padding: 5px 9px; font-size: 10px; font-weight: 700; color: var(--text-muted); cursor: pointer; border-radius: 999px; transition: all .2s; }
 .lang-option.active { background: rgba(212,168,83,0.18); color: var(--gold-light); }
-/* Keep the language switcher reachable on phones instead of hiding it —
-   shrink it and let the nav links give it room. */
-@media (max-width: 720px) {
-    .nav-links { display: none; }
-    .lang-toggle { margin-left: 4px; }
-    .lang-option { padding: 5px 7px; font-size: 9px; }
-}
-@media (max-width: 480px) {
-    .lang-toggle { padding: 2px; gap: 1px; }
-    .lang-option { padding: 4px 6px; font-size: 8.5px; }
-}
 .nav-links a {
     color: var(--text-sec);
     font-size: 14px;
@@ -164,6 +153,56 @@ body::before {
 }
 
 .btn-admin:hover { background: rgba(212,168,83,0.08); }
+
+/* ===== MOBILE LANGUAGE DROPDOWN (mirrors the homepage) ===== */
+.lang-select { display: none; position: relative; }
+.lang-trigger {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 13px; border-radius: 11px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    color: var(--text-sec); font-size: 12px; font-weight: 700; letter-spacing: 0.4px;
+    font-family: inherit; cursor: pointer; transition: all .2s; user-select: none;
+}
+.lang-trigger:hover { border-color: rgba(212,168,83,0.45); color: var(--text); background: rgba(212,168,83,0.09); box-shadow: 0 0 18px rgba(212,168,83,0.16); }
+.lang-trigger .globe-icon { color: var(--gold); font-size: 14px; filter: drop-shadow(0 0 7px rgba(212,168,83,0.55)); animation: globeSpin 14s linear infinite; }
+@keyframes globeSpin { to { transform: rotate(360deg); } }
+.lang-caret { font-size: 9px; opacity: 0.75; transition: transform .2s ease; }
+.lang-select.open .lang-caret { transform: rotate(180deg); }
+.lang-menu {
+    position: absolute; top: calc(100% + 10px); right: 0; z-index: 300;
+    min-width: 224px; padding: 7px;
+    background: rgba(7,25,18,0.98);
+    backdrop-filter: blur(22px) saturate(150%);
+    border: 1px solid rgba(212,168,83,0.26);
+    border-radius: 14px;
+    box-shadow: 0 26px 66px -20px rgba(0,0,0,0.8), 0 0 36px -14px rgba(212,168,83,0.35);
+    opacity: 0; visibility: hidden; transform: translateY(8px);
+    transition: opacity .18s ease, transform .18s ease, visibility .18s;
+}
+.lang-select.open .lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.lang-menu .lang-option {
+    display: flex; align-items: center; gap: 11px;
+    padding: 10px 12px; border-radius: 9px;
+    font-size: 13px; font-weight: 600; color: var(--text-sec);
+    cursor: pointer; transition: all .15s;
+    border: none; background: none; width: 100%; text-align: left; font-family: inherit;
+}
+.lang-menu .lang-option:hover { background: rgba(212,168,83,0.09); color: var(--text); }
+.lang-menu .lang-option.active { background: rgba(212,168,83,0.18); color: var(--gold-light); }
+.lang-menu .lang-option.active::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 10px; margin-left: auto; color: var(--gold); }
+.lang-menu .lang-option .flag { font-size: 18px; line-height: 1; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5)); }
+.lang-menu .lang-option .lname { font-weight: 700; }
+.lang-menu .lang-option .lnative { margin-left: auto; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+
+/* ===== HAMBURGER (mirrors the homepage) ===== */
+.menu-toggle {
+    display: none; width: 36px; height: 36px;
+    border-radius: 10px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04); color: var(--text-sec);
+    font-size: 15px; cursor: pointer;
+    align-items: center; justify-content: center; transition: all .2s;
+}
+.menu-toggle:hover { color: var(--text); background: rgba(255,255,255,0.08); }
 
 .player-wrapper {
     max-width: 1400px;
@@ -704,9 +743,42 @@ body::before {
 @media (max-width: 1024px) {
     .player-wrapper { grid-template-columns: 1fr; padding: 20px; }
     .related-thumb { width: 140px; min-width: 140px; }
-    .header { padding: 12px 20px; }
-    .nav-links { display: none; }
+    .header { padding: 12px 22px; gap: 12px; }
+    .header-left { gap: 18px; }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        gap: 2px;
+        padding: 10px 16px 16px;
+        background: rgba(5,16,11,0.97);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 20px 40px -18px rgba(0,0,0,0.7);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; font-size: 15px; }
+    .menu-toggle { display: flex; }
+    .logo span { white-space: nowrap; }
     .footer { padding: 20px; }
+}
+
+@media (max-width: 768px) {
+    .header { padding: 10px 16px; gap: 10px; }
+    .header-left { gap: 10px; min-width: 0; }
+    .header-right { gap: 8px; flex-shrink: 0; }
+    .lang-toggle { display: none; }
+    .lang-select { display: block; }
+    .lang-trigger { padding: 7px 11px; gap: 7px; }
+    .btn-label { display: none; }
+    .header .btn-auth { padding: 7px 11px; gap: 0; }
+    .header .btn-auth [data-lang] { display: none !important; }
+    .btn-admin { padding: 8px 11px; }
+    .back-link { width: 32px; height: 32px; font-size: 15px; }
+    .logo { gap: 7px; }
+    .logo i { font-size: 18px; }
+    .logo span { font-size: 14px; }
 }
 
 @media (max-width: 640px) {
@@ -719,11 +791,9 @@ body::before {
     .play-big-btn { width: 60px; height: 60px; font-size: 24px; }
     .related-thumb { width: 120px; min-width: 120px; }
     .footer { flex-direction: column; gap: 12px; text-align: center; }
-    .header { padding: 10px 14px; }
-    .header-left { gap: 12px; }
-    .btn-label { display: none; }
-    .back-link { width: 32px; height: 32px; font-size: 15px; }
-    .logo span { font-size: 14px; }
+    .header { padding: 10px 14px; gap: 8px; flex-wrap: nowrap; }
+    .header-left { gap: 10px; min-width: 0; }
+    .header-right { gap: 8px; flex-shrink: 0; }
     .instructor-bar { gap: 10px; }
 }
 
@@ -738,6 +808,29 @@ body::before {
     .play-big-btn { width: 54px; height: 54px; font-size: 22px; }
     .related-thumb { width: 108px; min-width: 108px; }
     .footer-links { gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .header { padding: 9px 12px; gap: 6px; }
+    .header-left { gap: 8px; }
+    .lang-trigger { padding: 6px 9px; gap: 6px; }
+    .lang-trigger .lang-current { display: none; }
+    .lang-menu .lang-option { padding: 10px 12px; font-size: 13px; }
+    .logo span { font-size: 13px; }
+    .logo i { font-size: 17px; }
+    .back-link { width: 30px; height: 30px; font-size: 14px; }
+    .header .btn-auth { padding: 6px 10px; }
+    .menu-toggle { width: 34px; height: 34px; }
+    .header .btn-admin { display: none; }
+}
+
+@media (max-width: 380px) {
+    .header { padding: 8px 10px; gap: 5px; }
+    .header-left { gap: 6px; }
+    .header-right { gap: 6px; }
+    .logo { gap: 5px; }
+    .logo span { font-size: 12px; }
+    .logo i { font-size: 16px; }
+    .lang-trigger { padding: 6px 8px; gap: 5px; }
+    .header .btn-auth { padding: 6px 8px; }
+    .menu-toggle { width: 32px; height: 32px; font-size: 14px; }
 }
 
 /* ===== AUTH BUTTONS ===== */
@@ -1169,6 +1262,7 @@ body::before {
 [dir="rtl"] .fa-angle-left, [dir="rtl"] .fa-angle-right,
 [dir="rtl"] .fa-caret-left, [dir="rtl"] .fa-caret-right,
 [dir="rtl"] .fa-circle-right, [dir="rtl"] .fa-circle-left { transform: scaleX(-1); }
+[dir="rtl"] .lang-menu { right: auto; left: 0; }
 [dir="rtl"] .stars, [dir="rtl"] .num, [dir="rtl"] .d-inline-block { unicode-bidi: isolate; }
 </style>
 <script src="config.js"></script>
@@ -1321,11 +1415,26 @@ body::before {
         </div>
     </div>
     <div class="header-right">
+        <div class="lang-select" id="langSelect" title="Switch language">
+            <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-label="Choose language">
+                <i class="fas fa-globe-africa globe-icon"></i>
+                <span class="lang-current" id="langCurrent">EN</span>
+                <i class="fas fa-chevron-down lang-caret"></i>
+            </button>
+            <div class="lang-menu" id="langMenu" role="listbox">
+                <span class="lang-option active" data-lang-code="en" role="option" tabindex="0"><span class="flag">🇬🇧</span><span class="lname">English</span><span class="lnative">English</span></span>
+                <span class="lang-option" data-lang-code="rw" role="option" tabindex="0"><span class="flag">🇷🇼</span><span class="lname">Kinyarwanda</span><span class="lnative">Ikinyarwanda</span></span>
+                <span class="lang-option" data-lang-code="fr" role="option" tabindex="0"><span class="flag">🇫🇷</span><span class="lname">French</span><span class="lnative">Français</span></span>
+                <span class="lang-option" data-lang-code="sw" role="option" tabindex="0"><span class="flag">🇰🇪</span><span class="lname">Swahili</span><span class="lnative">Kiswahili</span></span>
+                <span class="lang-option" data-lang-code="ar" role="option" tabindex="0"><span class="flag">🇸🇦</span><span class="lname">Arabic</span><span class="lnative">العربية</span></span>
+            </div>
+        </div>
         <div id="authButtons">
             <a href="login.html" class="btn-auth login-btn"><i class="fas fa-arrow-right-to-bracket"></i> <span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Connexion</span><span data-lang="sw">Ingia</span><span data-lang="ar">تسجيل الدخول</span></a>
             <a href="register.html" class="btn-auth register-btn"><i class="fas fa-user-plus"></i> <span data-lang="en">Register</span><span data-lang="rw">Iyandikishe</span><span data-lang="fr">S'inscrire</span><span data-lang="sw">Jisajili</span><span data-lang="ar">التسجيل</span></a>
         </div>
         <a href="https://wa.me/250783198148" target="_blank" rel="noopener" class="btn-admin"><i class="fab fa-whatsapp"></i> <span class="btn-label">WhatsApp</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
     </div>
 </header>
 
@@ -1560,6 +1669,12 @@ document.body.classList.add('lang-' + currentLang);
     document.querySelectorAll('.lang-option').forEach(function(opt) {
         opt.classList.toggle('active', opt.dataset.langCode === currentLang);
     });
+    var langCurrentEl = document.getElementById('langCurrent');
+    if (langCurrentEl) langCurrentEl.textContent = (currentLang || 'en').toUpperCase();
+    var langSelectEl = document.getElementById('langSelect');
+    if (langSelectEl) langSelectEl.classList.remove('open');
+    var langTriggerEl = document.getElementById('langTrigger');
+    if (langTriggerEl) langTriggerEl.setAttribute('aria-expanded', 'false');
     // Shared public-site key so every public page stays in sync (the admin
     // panel uses its own separate key and is never affected by this).
     localStorage.setItem(MS_I18N.STORAGE_KEY, currentLang);
@@ -1584,12 +1699,12 @@ document.body.classList.add('lang-' + currentLang);
     if (typeof localizeLogoutBtn === 'function') localizeLogoutBtn();
 }
 function applyLang() { setLang(currentLang); }
-var langToggleEl = document.getElementById('langToggle');
-if (langToggleEl) {
-    langToggleEl.querySelectorAll('.lang-option').forEach(function(opt) {
-        opt.addEventListener('click', function() { setLang(opt.dataset.langCode); });
+document.querySelectorAll('.lang-option[data-lang-code]').forEach(function(opt) {
+    opt.addEventListener('click', function() { setLang(opt.dataset.langCode); });
+    opt.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(opt.dataset.langCode); }
     });
-}
+});
 applyLang();
 
 // Follow the language chosen on any other page or tab (assets/js/i18n.js owns the
@@ -1598,6 +1713,55 @@ document.addEventListener('ms:langchange', function (e) {
     var lang = e.detail && e.detail.lang;
     if (lang && lang !== currentLang) setLang(lang);
 });
+
+/* Mobile language dropdown — mirrors the homepage behaviour: toggle on the
+   trigger, then close on an outside click or Escape. */
+(function () {
+    var select = document.getElementById('langSelect');
+    var trigger = document.getElementById('langTrigger');
+    if (!select || !trigger) return;
+    trigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = select.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function (e) {
+        if (!select.contains(e.target)) {
+            select.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+        }
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            select.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+        }
+    });
+})();
+
+/* Mobile hamburger — toggles the nav links panel and closes it after a tap. */
+(function () {
+    var toggle = document.getElementById('menuToggle');
+    var nav = document.querySelector('.nav-links');
+    if (!toggle || !nav) return;
+    toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            nav.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+    document.addEventListener('click', function (e) {
+        if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+            nav.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+})();
 
 // ===== HELPERS =====
 /* Set the logout button label for the active language. Guarded because
