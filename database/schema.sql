@@ -19,7 +19,7 @@ CREATE TABLE users (
     password_hash VARCHAR(255) NOT NULL,
     full_name VARCHAR(100) NOT NULL,
     phone_number VARCHAR(20) DEFAULT NULL,
-    role ENUM('admin', 'student') NOT NULL DEFAULT 'student',
+    role ENUM('admin', 'student', 'teacher') NOT NULL DEFAULT 'student',
     avatar_url VARCHAR(500) DEFAULT NULL,
     is_active TINYINT(1) NOT NULL DEFAULT 1,
     last_login TIMESTAMP NULL,

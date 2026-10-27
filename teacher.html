@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Dashboard &mdash; Modern Skills</title>
+<meta name="description" content="Assign Surahs, listen to student recitations, and leave review feedback.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="Images/mordern-skills-logo.png">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all';this.onload=null">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"></noscript>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body.rec-page {
+    min-height: 100vh;
+    color: var(--text);
+    background:
+        radial-gradient(ellipse 48% 34% at 12% -8%, rgba(212,168,83,0.15) 0%, transparent 62%),
+        radial-gradient(ellipse 42% 34% at 92% 4%, rgba(52,211,153,0.08) 0%, transparent 55%),
+        linear-gradient(165deg, #04120d 0%, #061a12 46%, #030b08 100%);
+    padding-bottom: 60px;
+}
+a { color: inherit; }
+
+.rec-header { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--border); background: rgba(4,18,13,0.86); backdrop-filter: blur(18px); }
+.rec-header-inner { max-width: var(--content-max); margin: 0 auto; padding: 14px var(--gutter); display: flex; align-items: center; gap: 24px; }
+.rec-brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; white-space: nowrap; }
+.rec-brand img { width: 36px; height: 36px; border-radius: 11px; border: 1px solid rgba(212,168,83,0.45); object-fit: cover; }
+.rec-nav { display: flex; align-items: center; gap: 4px; margin-inline-start: auto; }
+.rec-nav a { padding: 8px 13px; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: var(--text-sec); text-decoration: none; transition: all .2s var(--ease); }
+.rec-nav a:hover { color: var(--gold-light); background: rgba(212,168,83,0.08); }
+.rec-nav a.active { color: #14100a; background: var(--grad-gold); }
+.rec-user { display: flex; align-items: center; gap: 10px; }
+.rec-user-name { font-size: 12px; font-weight: 600; color: var(--text-sec); }
+.rec-logout { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); color: var(--text-muted); transition: all .2s; }
+.rec-logout:hover { color: var(--gold-light); border-color: var(--border-strong); }
+
+.rec-main { max-width: var(--content-max); margin: 0 auto; padding: 38px var(--gutter) 0; }
+.rec-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px; border: 1px solid rgba(212,168,83,0.3); border-radius: 999px; background: rgba(212,168,83,0.08); color: var(--gold-light); font-size: 10.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+.rec-hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr); gap: 32px; align-items: end; margin-bottom: 28px; }
+.rec-hero h1 { font-size: clamp(30px, 4.2vw, 50px); letter-spacing: -0.035em; margin: 14px 0 10px; }
+.rec-hero h1 em { font-family: var(--font-display); color: var(--gold-light); font-style: italic; }
+.rec-hero p { max-width: 620px; color: var(--text-sec); font-size: 14.5px; margin: 0; }
+.rec-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.rec-stat { padding: 15px 16px; border-radius: var(--radius); border: 1px solid var(--border); background: linear-gradient(150deg, rgba(15,40,29,0.9), rgba(7,22,16,0.85)); }
+.rec-stat span { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+.rec-stat strong { display: block; font-size: 26px; line-height: 1.15; margin-top: 4px; }
+.rec-stat.pending strong { color: var(--warning); }
+.rec-stat.reviewed strong { color: var(--success); }
+.rec-stat.improve strong { color: #fca5a5; }
+
+.rec-tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--border); margin-bottom: 22px; }
+.rec-tab { position: relative; padding: 11px 15px; border: 0; background: none; color: var(--text-muted); font-size: 12.5px; font-weight: 700; border-radius: 8px 8px 0 0; transition: all .2s; display: inline-flex; align-items: center; gap: 7px; }
+.rec-tab:hover { color: var(--gold-light); background: rgba(212,168,83,0.05); }
+.rec-tab.active { color: var(--gold-light); }
+.rec-tab.active::after { content: ''; position: absolute; left: 12px; right: 12px; bottom: -1px; height: 2px; background: var(--grad-gold); border-radius: 2px; }
+.tab-count { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: rgba(212,168,83,0.14); color: var(--gold-light); font-size: 9.5px; display: inline-flex; align-items: center; justify-content: center; }
+.tab-count.alert { background: rgba(251,191,36,0.16); color: #fcd34d; }
+
+.teacher-grid { display: grid; grid-template-columns: minmax(300px, 0.78fr) minmax(0, 1.22fr); gap: 18px; align-items: start; }
+.overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.panel { padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: linear-gradient(155deg, rgba(12,34,24,0.82), rgba(6,20,14,0.78)); box-shadow: var(--shadow-sm); }
+.panel + .panel { margin-top: 18px; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.panel-head h2 { font-size: 16px; margin: 0; display: inline-flex; align-items: center; gap: 8px; letter-spacing: -0.01em; }
+.panel-head h2 i { color: var(--gold); font-size: 13px; }
+.panel-head p { margin: 2px 0 0; font-size: 11.5px; color: var(--text-muted); }
+.panel-link { border: 0; background: none; color: var(--gold-light); font-size: 11.5px; font-weight: 700; padding: 4px; }
+.panel-link:hover { text-decoration: underline; }
+.panel-muted { font-size: 11px; color: var(--text-muted); }
+
+.form-grid { display: grid; gap: 12px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.03em; color: var(--text-sec); margin-bottom: 6px; }
+.form-control { width: 100%; background: rgba(6,19,14,0.65); border: 1px solid var(--border); border-radius: 9px; padding: 11px 12px; font-size: 12.5px; color: var(--text); transition: border-color .2s, box-shadow .2s; }
+.form-control::placeholder { color: var(--text-muted); }
+.form-control:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,168,83,0.12); }
+textarea.form-control { resize: vertical; min-height: 78px; line-height: 1.55; }
+select.form-control { cursor: pointer; }
+.form-note { font-size: 10.5px; color: var(--text-muted); line-height: 1.5; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; line-height: 1; border: 1px solid transparent; border-radius: 10px; transition: all .2s; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn-primary { background: var(--grad-gold); color: #14100a; padding: 11px 16px; font-size: 12.5px; box-shadow: var(--shadow-sm); }
+.btn-primary:hover:not(:disabled) { box-shadow: var(--glow-gold); }
+.btn-secondary { background: rgba(255,255,255,0.04); border-color: var(--border); color: var(--text-sec); padding: 10px 14px; font-size: 12px; }
+.btn-secondary:hover:not(:disabled) { background: var(--bg-hover); border-color: var(--border-strong); color: var(--text); }
+.btn-danger { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.3); color: #fca5a5; padding: 8px 12px; font-size: 11px; }
+.btn-danger:hover:not(:disabled) { background: rgba(248,113,113,0.18); }
+.w-full { width: 100%; }
+
+.rec-list { display: grid; gap: 10px; }
+.rec-empty { padding: 26px 18px; text-align: center; border: 1px dashed var(--border); border-radius: var(--radius); color: var(--text-muted); font-size: 12.5px; }
+.rec-empty i { display: block; font-size: 22px; margin-bottom: 9px; color: rgba(212,168,83,0.5); }
+.spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(212,168,83,0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin .7s linear infinite; vertical-align: -2px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.rec-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: 999px; font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; border: 1px solid transparent; }
+.rec-badge.pending { color: #fcd34d; background: rgba(251,191,36,0.1); border-color: rgba(251,191,36,0.26); }
+.rec-badge.reviewed { color: #6ee7b7; background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.28); }
+.rec-badge.improve { color: #fca5a5; background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.28); }
+.rec-badge.none { color: var(--text-muted); background: rgba(255,255,255,0.04); border-color: var(--border); }
+
+.rec-avatar { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; background: rgba(212,168,83,0.14); border: 1px solid rgba(212,168,83,0.35); color: var(--gold-light); font-size: 11px; font-weight: 800; overflow: hidden; }
+.rec-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.rec-avatar.lg { width: 42px; height: 42px; font-size: 12px; }
+
+.assignment-card { padding: 15px 16px; border-radius: var(--radius); border: 1px solid var(--border); background: rgba(9,28,20,0.65); transition: border-color .2s, transform .2s; }
+.assignment-card:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+.assignment-top { display: flex; align-items: flex-start; gap: 11px; }
+.assignment-top > div:nth-child(2) { flex: 1; min-width: 0; }
+.assignment-top h3 { font-size: 14.5px; margin: 0 0 2px; }
+.assignment-top p { margin: 0; font-size: 11.5px; color: var(--text-muted); }
+.assignment-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 11px; color: var(--text-muted); }
+.assignment-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.assignment-meta i { color: rgba(212,168,83,0.7); font-size: 10px; }
+.assignment-notes { margin: 9px 0 0; padding: 8px 10px; border-inline-start: 2px solid rgba(212,168,83,0.35); background: rgba(212,168,83,0.045); border-radius: 0 7px 7px 0; font-size: 11.5px; color: var(--text-sec); line-height: 1.5; }
+.assignment-actions { display: flex; align-items: center; gap: 8px; margin-top: 11px; flex-wrap: wrap; }
+
+.attention-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(212,168,83,0.09); }
+.attention-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.attention-row > div:nth-child(2) { flex: 1; min-width: 0; }
+.attention-row h3 { font-size: 12.8px; margin: 0 0 1px; }
+.attention-row p { margin: 0; font-size: 10.8px; color: var(--text-muted); }
+.attention-row .btn { padding: 7px 11px; font-size: 10.5px; }
+
+.student-list { display: grid; gap: 2px; }
+.student-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(212,168,83,0.08); }
+.student-row:last-child { border-bottom: 0; }
+.student-row > div:nth-child(2) { flex: 1; min-width: 0; }
+.student-row h3 { font-size: 12.5px; margin: 0 0 1px; }
+.student-row p { margin: 0; font-size: 10.5px; color: var(--text-muted); }
+.student-counts { display: flex; gap: 7px; }
+.student-counts span { padding: 4px 8px; border-radius: 999px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); font-size: 9.5px; color: var(--text-muted); white-space: nowrap; }
+
+.filter-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.filter-chip { padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); color: var(--text-muted); font-size: 11px; font-weight: 700; transition: all .2s; }
+.filter-chip:hover { color: var(--gold-light); border-color: var(--border-strong); }
+.filter-chip.active { color: #14100a; background: var(--grad-gold); border-color: transparent; }
+.filter-select { margin-inline-start: auto; min-width: 210px; max-width: 100%; padding: 9px 11px; font-size: 11.5px; }
+
+.sub-card { padding: 15px 16px; border-radius: var(--radius); border: 1px solid var(--border); background: rgba(9,28,20,0.7); }
+.sub-top { display: flex; align-items: flex-start; gap: 11px; flex-wrap: wrap; }
+.sub-top > div:nth-child(2) { flex: 1; min-width: 160px; }
+.sub-top h3 { font-size: 14px; margin: 0 0 2px; }
+.sub-top h3 span { color: var(--text-muted); font-weight: 500; font-size: 12px; }
+.sub-top p { margin: 0; font-size: 11px; color: var(--text-muted); }
+.sub-feedback { margin-top: 10px; padding: 9px 11px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-size: 11.5px; color: var(--text-sec); line-height: 1.55; }
+.sub-feedback strong { display: block; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
+.sub-actions { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.play-btn { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(212,168,83,0.35); background: rgba(212,168,83,0.09); color: var(--gold-light); font-size: 11.5px; font-weight: 700; transition: all .2s; }
+.play-btn:hover { background: rgba(212,168,83,0.16); box-shadow: var(--glow-gold); }
+.play-btn:disabled { opacity: .55; cursor: wait; }
+.sub-date { font-size: 10.5px; color: var(--text-muted); }
+.review-box { margin-top: 11px; padding-top: 11px; border-top: 1px dashed rgba(212,168,83,0.18); display: grid; gap: 8px; }
+.review-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.review-row select { width: auto; min-width: 170px; padding: 8px 10px; font-size: 11.5px; }
+.review-row .btn { padding: 9px 13px; font-size: 11.5px; }
+.review-state { font-size: 10.5px; color: var(--text-muted); }
+.review-box textarea { min-height: 58px; font-size: 11.5px; }
+
+.teacher-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(212,168,83,0.08); }
+.teacher-row:last-child { border-bottom: 0; }
+.teacher-row > div:nth-child(2) { flex: 1; min-width: 0; }
+.teacher-row h3 { font-size: 12.5px; margin: 0 0 1px; }
+.teacher-row p { margin: 0; font-size: 10.5px; color: var(--text-muted); }
+.access-note { padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.2); background: rgba(251,191,36,0.05); color: #fcd34d; font-size: 10.8px; line-height: 1.5; }
+
+.rec-toast-host { position: fixed; right: 18px; bottom: 18px; z-index: 90; display: grid; gap: 9px; max-width: min(360px, calc(100vw - 36px)); }
+.rec-toast { display: flex; align-items: flex-start; gap: 9px; padding: 12px 15px; border-radius: 12px; border: 1px solid var(--border-strong); background: rgba(8,26,19,0.97); box-shadow: var(--shadow); font-size: 12.5px; line-height: 1.5; animation: recToastIn .25s var(--ease); }
+.rec-toast i { margin-top: 1px; color: var(--gold); }
+.rec-toast.success i { color: var(--success); }
+.rec-toast.error i { color: var(--error); }
+.rec-toast.leaving { opacity: 0; transform: translateY(6px); transition: all .2s; }
+@keyframes recToastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.rec-footer { max-width: var(--content-max); margin: 46px auto 0; padding: 0 var(--gutter); color: var(--text-muted); font-size: 11px; text-align: center; }
+.rec-hidden { display: none !important; }
+
+@media (max-width: 980px) {
+    .rec-hero, .teacher-grid, .overview-grid { grid-template-columns: 1fr; }
+    .rec-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+    .rec-header-inner { gap: 12px; flex-wrap: wrap; }
+    .rec-nav { order: 3; width: 100%; overflow-x: auto; }
+    .rec-user { margin-inline-start: auto; }
+    .rec-user-name { display: none; }
+    .rec-main { padding-top: 26px; }
+    .rec-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .form-row { grid-template-columns: 1fr; }
+    .filter-select { margin-inline-start: 0; width: 100%; }
+}
+</style>
+</head>
+<body class="rec-page">
+<a class="skip-link" href="#dashboard">Skip to dashboard</a>
+
+<header class="rec-header">
+    <div class="rec-header-inner">
+        <a href="index.html" class="rec-brand">
+            <img src="Images/mordern-skills-logo.png" alt="Modern Skills logo">
+            <span>Modern Skills</span>
+        </a>
+        <nav class="rec-nav" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="teacher.html" class="active" aria-current="page">Teacher dashboard</a>
+        </nav>
+        <div class="rec-user">
+            <span class="rec-user-name" id="recUserName"></span>
+            <span id="recUserAvatar"></span>
+            <button type="button" class="rec-logout" id="logoutBtn" title="Sign out" aria-label="Sign out">
+                <i class="fas fa-right-from-bracket"></i>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main class="rec-main" id="dashboard">
+    <section class="rec-hero">
+        <div>
+            <span class="rec-eyebrow"><i class="fas fa-chalkboard-user"></i> Teacher Dashboard</span>
+            <h1>Guide every <em>recitation</em></h1>
+            <p>Assign Surahs with an Ayah range, listen to each submission, and leave clear feedback. Students see the result the next time they open their studio.</p>
+        </div>
+        <div class="rec-stats" aria-label="Recitation progress">
+            <div class="rec-stat pending"><span>Pending</span><strong id="statPending">0</strong></div>
+            <div class="rec-stat reviewed"><span>Reviewed</span><strong id="statReviewed">0</strong></div>
+            <div class="rec-stat improve"><span>Improve</span><strong id="statImprove">0</strong></div>
+            <div class="rec-stat"><span>Total recordings</span><strong id="statTotal">0</strong></div>
+        </div>
+    </section>
+
+    <div class="rec-tabs" role="tablist" aria-label="Dashboard sections">
+        <button type="button" class="rec-tab active" data-tab="overview" role="tab" aria-selected="true">
+            <i class="fas fa-chart-pie"></i> Overview
+        </button>
+        <button type="button" class="rec-tab" data-tab="assignments" role="tab" aria-selected="false">
+            <i class="fas fa-list-check"></i> Assignments <span class="tab-count" id="tabAssignmentCount">0</span>
+        </button>
+        <button type="button" class="rec-tab" data-tab="recordings" role="tab" aria-selected="false">
+            <i class="fas fa-headphones"></i> Recordings <span class="tab-count alert" id="tabPendingCount">0</span>
+        </button>
+        <button type="button" class="rec-tab rec-hidden" data-tab="teachers" id="teachersTab" role="tab" aria-selected="false">
+            <i class="fas fa-user-tie"></i> Teachers
+        </button>
+    </div>
+
+    <!-- Overview -->
+    <section data-view="overview">
+        <div class="teacher-grid overview-grid">
+            <div class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2><i class="fas fa-bell"></i> Needs your attention</h2>
+                        <p>Pending recordings, oldest first.</p>
+                    </div>
+                    <button type="button" class="panel-link" id="viewPendingBtn">View all</button>
+                </div>
+                <div class="rec-list" id="attentionList">
+                    <div class="rec-empty"><span class="spinner"></span> Loading&hellip;</div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2><i class="fas fa-users"></i> Students</h2>
+                        <p>Students with work assigned to you.</p>
+                    </div>
+                    <span class="panel-muted" id="studentCount">0 students</span>
+                </div>
+                <div class="rec-list" id="studentList">
+                    <div class="rec-empty"><span class="spinner"></span> Loading&hellip;</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assignments -->
+    <section data-view="assignments" class="rec-hidden">
+        <div class="teacher-grid">
+            <form class="panel" id="assignmentForm">
+                <div class="panel-head">
+                    <div>
+                        <h2><i class="fas fa-plus"></i> New assignment</h2>
+                        <p>Give the student a Surah and Ayah range.</p>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div>
+                        <label class="form-label" for="assignStudent">Student</label>
+                        <select class="form-control" id="assignStudent" required>
+                            <option value="">Loading students&hellip;</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="assignSurah">Surah</label>
+                        <select class="form-control" id="assignSurah" required>
+                            <option value="">Loading Surahs&hellip;</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label class="form-label" for="assignAyahStart">From Ayah</label>
+                            <input class="form-control" id="assignAyahStart" type="number" min="1" value="1" required>
+                        </div>
+                        <div>
+                            <label class="form-label" for="assignAyahEnd">To Ayah</label>
+                            <input class="form-control" id="assignAyahEnd" type="number" min="1" value="7" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="assignDue">Due date <span style="color:var(--text-muted);font-weight:400">(optional)</span></label>
+                        <input class="form-control" id="assignDue" type="date">
+                    </div>
+                    <div id="assignTeacherWrap" class="rec-hidden">
+                        <label class="form-label" for="assignTeacher">Assign to teacher</label>
+                        <select class="form-control" id="assignTeacher">
+                            <option value="">Me (admin only)</option>
+                        </select>
+                        <div class="form-note">Choose a teacher so it appears on their dashboard, or leave blank for admin-only review.</div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="assignInstructions">Instructions <span style="color:var(--text-muted);font-weight:400">(optional)</span></label>
+                        <textarea class="form-control" id="assignInstructions" maxlength="2000" placeholder="For example: recite slowly, watch the madd, record twice and submit the better one."></textarea>
+                    </div>
+                    <div class="form-note" id="ayahHint">Pick a Surah to see its Ayah count.</div>
+                    <button type="submit" class="btn btn-primary w-full" id="assignmentSubmit">
+                        <i class="fas fa-paper-plane"></i> Create assignment
+                    </button>
+                </div>
+            </form>
+
+            <div class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2><i class="fas fa-list-check"></i> Your assignments</h2>
+                        <p>Each student sees their own assignments in the studio.</p>
+                    </div>
+                    <span class="panel-muted" id="assignmentCount">0</span>
+                </div>
+                <div class="rec-list" id="assignmentList">
+                    <div class="rec-empty"><span class="spinner"></span> Loading&hellip;</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recordings -->
+    <section data-view="recordings" class="rec-hidden">
+        <div class="filter-bar" aria-label="Recording filters">
+            <button type="button" class="filter-chip active" data-status="">All</button>
+            <button type="button" class="filter-chip" data-status="pending">Pending</button>
+            <button type="button" class="filter-chip" data-status="reviewed">Reviewed</button>
+            <button type="button" class="filter-chip" data-status="needs_improvement">Needs improvement</button>
+            <select class="form-control filter-select" id="assignmentFilter" aria-label="Filter by assignment">
+                <option value="">All assignments</option>
+            </select>
+        </div>
+        <div class="rec-list" id="submissionList">
+            <div class="rec-empty"><span class="spinner"></span> Loading recordings&hellip;</div>
+        </div>
+    </section>
+
+    <!-- Teachers (admin only) -->
+    <section data-view="teachers" class="rec-hidden">
+        <div class="teacher-grid">
+            <form class="panel" id="teacherForm">
+                <div class="panel-head">
+                    <div>
+                        <h2><i class="fas fa-user-plus"></i> Grant teacher access</h2>
+                        <p>Promote an existing account by email.</p>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div>
+                        <label class="form-label" for="teacherEmail">Account email</label>
+                        <input class="form-control" id="teacherEmail" type="email" placeholder="teacher@example.com" required>
+                    </div>
+                    <div class="access-note">
+                        <i class="fas fa-circle-info"></i> The account must already exist. After promotion the user signs out and in again to receive the teacher role.
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full" id="teacherSubmit">
+                        <i class="fas fa-user-tie"></i> Grant teacher access
+                    </button>
+                </div>
+            </form>
+            <div class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2><i class="fas fa-users-gear"></i> Teachers</h2>
+                        <p>Accounts that can create assignments and review recordings.</p>
+                    </div>
+                    <span class="panel-muted" id="teacherCount">0</span>
+                </div>
+                <div class="rec-list" id="teacherList">
+                    <div class="rec-empty"><span class="spinner"></span> Loading&hellip;</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="rec-footer">Modern Skills &middot; Teacher recitation review</footer>
+
+<script src="config.js"></script>
+<script src="assets/js/recitation-common.js"></script>
+<script>
+(function () {
+    'use strict';
+
+    var R = window.Recitation;
+    var user = null;
+    var surahs = [];
+    var students = [];
+    var assignments = [];
+    var submissions = [];
+    var teachers = [];
+    var stats = { pending: 0, reviewed: 0, needs_improvement: 0, total: 0 };
+    var statusFilter = '';
+    var assignmentFilter = '';
+    var playback = null;
+    var activeTab = 'overview';
+
+    var els = {
+        userName: document.getElementById('recUserName'),
+        userAvatar: document.getElementById('recUserAvatar'),
+        logout: document.getElementById('logoutBtn'),
+        statPending: document.getElementById('statPending'),
+        statReviewed: document.getElementById('statReviewed'),
+        statImprove: document.getElementById('statImprove'),
+        statTotal: document.getElementById('statTotal'),
+        tabAssignmentCount: document.getElementById('tabAssignmentCount'),
+        tabPendingCount: document.getElementById('tabPendingCount'),
+        teachersTab: document.getElementById('teachersTab'),
+        attentionList: document.getElementById('attentionList'),
+        studentList: document.getElementById('studentList'),
+        studentCount: document.getElementById('studentCount'),
+        viewPending: document.getElementById('viewPendingBtn'),
+        assignmentForm: document.getElementById('assignmentForm'),
+        assignStudent: document.getElementById('assignStudent'),
+        assignSurah: document.getElementById('assignSurah'),
+        assignAyahStart: document.getElementById('assignAyahStart'),
+        assignAyahEnd: document.getElementById('assignAyahEnd'),
+        assignDue: document.getElementById('assignDue'),
+        assignInstructions: document.getElementById('assignInstructions'),
+        assignTeacherWrap: document.getElementById('assignTeacherWrap'),
+        assignTeacher: document.getElementById('assignTeacher'),
+        assignmentSubmit: document.getElementById('assignmentSubmit'),
+        ayahHint: document.getElementById('ayahHint'),
+        assignmentList: document.getElementById('assignmentList'),
+        assignmentCount: document.getElementById('assignmentCount'),
+        assignmentFilter: document.getElementById('assignmentFilter'),
+        submissionList: document.getElementById('submissionList'),
+        teacherForm: document.getElementById('teacherForm'),
+        teacherEmail: document.getElementById('teacherEmail'),
+        teacherSubmit: document.getElementById('teacherSubmit'),
+        teacherList: document.getElementById('teacherList'),
+        teacherCount: document.getElementById('teacherCount')
+    };
+
+    function fmtCount(n, one, many) {
+        return n + ' ' + (n === 1 ? one : many);
+    }
+
+    function renderUser() {
+        var name = (user && (user.full_name || user.username)) || 'Teacher';
+        els.userName.textContent = name;
+        els.userAvatar.innerHTML = R.avatarHtml(name, user && user.avatar_url);
+    }
+
+    function renderStats() {
+        els.statPending.textContent = stats.pending || 0;
+        els.statReviewed.textContent = stats.reviewed || 0;
+        els.statImprove.textContent = stats.needs_improvement || 0;
+        els.statTotal.textContent = stats.total || 0;
+        els.tabPendingCount.textContent = stats.pending || 0;
+        els.tabPendingCount.classList.toggle('alert', (stats.pending || 0) > 0);
+        els.tabAssignmentCount.textContent = assignments.length;
+        els.assignmentCount.textContent = fmtCount(assignments.length, 'assignment', 'assignments');
+    }
+
+    function studentMap() {
+        var map = new Map();
+        function ensure(row) {
+            if (!row || !row.student_id) return null;
+            if (!map.has(row.student_id)) {
+                map.set(row.student_id, {
+                    id: row.student_id,
+                    name: row.student_name || 'Student',
+                    username: row.student_username || '',
+                    email: row.student_email || '',
+                    assignments: 0,
+                    recordings: 0
+                });
+            }
+            return map.get(row.student_id);
+        }
+        assignments.forEach(function (a) {
+            var item = ensure({ student_id: a.student_id, student_name: a.student_name, student_username: a.student_username, student_email: a.student_email });
+            if (item) item.assignments += 1;
+        });
+        submissions.forEach(function (s) {
+            var item = ensure(s);
+            if (item) item.recordings += 1;
+        });
+        return [...map.values()].sort(function (a, b) { return a.name.localeCompare(b.name); });
+    }
+
+    function renderStudents() {
+        var list = studentMap();
+        els.studentCount.textContent = fmtCount(list.length, 'student', 'students');
+        if (!list.length) {
+            els.studentList.innerHTML = '<div class="rec-empty"><i class="fas fa-user-group"></i>No students yet. Create an assignment to get started.</div>';
+            return;
+        }
+        els.studentList.innerHTML = list.map(function (s) {
+            return ''
+                + '<div class="student-row">'
+                + R.avatarHtml(s.name)
+                + '<div><h3>' + R.escapeHtml(s.name) + '</h3><p>' + R.escapeHtml(s.email || s.username || '') + '</p></div>'
+                + '<div class="student-counts">'
+                + '  <span>' + s.assignments + ' assigned</span>'
+                + '  <span>' + s.recordings + ' recorded</span>'
+                + '</div>'
+                + '</div>';
+        }).join('');
+    }
+
+    function renderAttention() {
+        var pending = submissions
+            .filter(function (s) { return s.status === 'pending'; })
+            .sort(function (a, b) { return new Date(a.created_at) - new Date(b.created_at); })
+            .slice(0, 6);
+
+        if (!pending.length) {
+            els.attentionList.innerHTML = '<div class="rec-empty"><i class="fas fa-circle-check"></i>All caught up. No recordings are waiting for review.</div>';
+            return;
+        }
+
+        els.attentionList.innerHTML = pending.map(function (s) {
+            return ''
+                + '<div class="attention-row">'
+                + R.avatarHtml(s.student_name)
+                + '<div>'
+                + '  <h3>' + R.escapeHtml(s.student_name || 'Student') + '</h3>'
+                + '  <p>' + R.escapeHtml(s.surah_name) + ' &middot; ' + R.escapeHtml(R.ayahLabel(s.ayah_start, s.ayah_end)) + ' &middot; ' + R.escapeHtml(R.formatDate(s.created_at)) + '</p>'
+                + '</div>'
+                + '<button type="button" class="btn btn-secondary" data-review-open="' + s.id + '"><i class="fas fa-headphones"></i> Review</button>'
+                + '</div>';
+        }).join('');
+    }
+
+    function renderAssignments() {
+        if (!assignments.length) {
+            els.assignmentList.innerHTML = '<div class="rec-empty"><i class="fas fa-list-check"></i>No assignments yet. Use the form to create the first one.</div>';
+            return;
+        }
+
+        els.assignmentList.innerHTML = assignments.map(function (a) {
+            var meta = R.statusMeta(a.latest_submission_status);
+            var due = a.due_date
+                ? '<span><i class="fas fa-calendar-day"></i>Due ' + R.escapeHtml(R.formatDate(a.due_date)) + '</span>'
+                : '';
+            var count = a.submission_count
+                ? '<span><i class="fas fa-file-audio"></i>' + fmtCount(a.submission_count, 'recording', 'recordings') + '</span>'
+                : '<span><i class="fas fa-file-audio"></i>No recordings</span>';
+            var notes = a.instructions
+                ? '<p class="assignment-notes">' + R.escapeHtml(a.instructions) + '</p>'
+                : '';
+            var deleteBtn = a.submission_count
+                ? ''
+                : '<button type="button" class="btn btn-danger" data-delete-assignment="' + a.id + '"><i class="fas fa-trash"></i> Delete</button>';
+            return ''
+                + '<article class="assignment-card">'
+                + '  <div class="assignment-top">'
+                + R.avatarHtml(a.student_name || 'Student')
+                + '      <div>'
+                + '          <h3>' + R.escapeHtml(a.surah_name) + ' <span style="color:var(--gold);font-weight:600">' + a.surah_number + '</span></h3>'
+                + '          <p>' + R.escapeHtml(a.student_name || 'Student') + ' &middot; ' + R.escapeHtml(R.ayahLabel(a.ayah_start, a.ayah_end)) + '</p>'
+                + '      </div>'
+                + '      <span class="rec-badge ' + meta.cls + '"><i class="fas ' + meta.icon + '"></i>' + meta.label + '</span>'
+                + '  </div>'
+                + notes
+                + '  <div class="assignment-meta">' + due + count + '</div>'
+                + '  <div class="assignment-actions">'
+                + '      <button type="button" class="btn btn-secondary" data-view-recordings="' + a.id + '"><i class="fas fa-headphones"></i> View recordings</button>'
+                + deleteBtn
+                + '  </div>'
+                + '</article>';
+        }).join('');
+    }
+
+    function renderSubmissionCard(s, compact) {
+        var meta = R.statusMeta(s.status);
+        var selectedStatus = (s.status === 'reviewed' || s.status === 'needs_improvement') ? s.status : 'reviewed';
+        var feedback = s.feedback
+            ? '<div class="sub-feedback"><strong>Feedback</strong>' + R.escapeHtml(s.feedback) + '</div>'
+            : '';
+        var reviewed = s.reviewed_at
+            ? 'Last reviewed ' + R.escapeHtml(R.formatDateTime(s.reviewed_at))
+            : 'Not reviewed yet';
+        var reviewBox = compact ? '' : ''
+            + '<div class="review-box">'
+            + '  <div class="review-row">'
+            + '      <select class="form-control" data-review-status>'
+            + '          <option value="reviewed"' + (selectedStatus === 'reviewed' ? ' selected' : '') + '>Reviewed</option>'
+            + '          <option value="needs_improvement"' + (selectedStatus === 'needs_improvement' ? ' selected' : '') + '>Needs improvement</option>'
+            + '      </select>'
+            + '      <button type="button" class="btn btn-primary" data-save-review="' + s.id + '"><i class="fas fa-check"></i> Save review</button>'
+            + '      <span class="review-state">' + reviewed + '</span>'
+            + '  </div>'
+            + '  <textarea class="form-control" data-feedback maxlength="2000" placeholder="What should the student keep doing or improve?">' + R.escapeHtml(s.feedback || '') + '</textarea>'
+            + '</div>';
+        return ''
+            + '<article class="sub-card" data-submission="' + s.id + '">'
+            + '  <div class="sub-top">'
+            + R.avatarHtml(s.student_name || 'Student')
+            + '      <div>'
+            + '          <h3>' + R.escapeHtml(s.student_name || 'Student') + ' <span>' + R.escapeHtml(s.surah_name) + ' &middot; ' + R.escapeHtml(R.ayahLabel(s.ayah_start, s.ayah_end)) + '</span></h3>'
+            + '          <p>' + R.escapeHtml(R.formatDateTime(s.created_at)) + ' &middot; ' + R.formatDuration(s.duration_seconds) + ' &middot; ' + R.formatBytes(s.file_size) + '</p>'
+            + '      </div>'
+            + '      <span class="rec-badge ' + meta.cls + '"><i class="fas ' + meta.icon + '"></i>' + meta.label + '</span>'
+            + '  </div>'
+            + feedback
+            + '  <div class="sub-actions">'
+            + '      <button type="button" class="play-btn" data-play="' + s.id + '"><i class="fas fa-play"></i> Play recording</button>'
+            + '  </div>'
+            + reviewBox
+            + '</article>';
+    }
+
+    function renderSubmissions() {
+        stopPlayback();
+        var list = submissions.filter(function (s) {
+            if (statusFilter && s.status !== statusFilter) return false;
+            if (assignmentFilter && s.assignment_id !== assignmentFilter) return false;
+            return true;
+        });
+
+        if (!list.length) {
+            els.submissionList.innerHTML = '<div class="rec-empty"><i class="fas fa-wave-square"></i>No recordings match these filters yet.</div>';
+            return;
+        }
+
+        els.submissionList.innerHTML = list.map(function (s) { return renderSubmissionCard(s, false); }).join('');
+    }
+
+    function fillAssignmentFilter() {
+        var current = assignmentFilter;
+        var options = ['<option value="">All assignments</option>'].concat(assignments.map(function (a) {
+            return '<option value="' + a.id + '">' + R.escapeHtml((a.student_name || 'Student') + ' — ' + a.surah_name) + '</option>';
+        }));
+        els.assignmentFilter.innerHTML = options.join('');
+        els.assignmentFilter.value = assignments.some(function (a) { return a.id === current; }) ? String(current) : '';
+        assignmentFilter = els.assignmentFilter.value ? Number(els.assignmentFilter.value) : '';
+    }
+
+    function fillStudentSelect() {
+        if (!students.length) {
+            els.assignStudent.innerHTML = '<option value="">No active students found</option>';
+            return;
+        }
+        els.assignStudent.innerHTML = ['<option value="">Choose a student</option>'].concat(students.map(function (s) {
+            var name = s.full_name || s.username || 'Student';
+            return '<option value="' + s.id + '">' + R.escapeHtml(name) + (s.email ? ' — ' + R.escapeHtml(s.email) : '') + '</option>';
+        })).join('');
+    }
+
+    function fillTeacherSelect() {
+        if (user.role !== 'admin') {
+            els.assignTeacherWrap.classList.add('rec-hidden');
+            return;
+        }
+        els.assignTeacherWrap.classList.remove('rec-hidden');
+        var options = ['<option value="">Me (admin only)</option>'].concat(teachers.map(function (t) {
+            var name = t.full_name || t.username || 'Teacher';
+            return '<option value="' + t.id + '">' + R.escapeHtml(name) + (t.email ? ' — ' + R.escapeHtml(t.email) : '') + '</option>';
+        }));
+        els.assignTeacher.innerHTML = options.join('');
+    }
+
+    function renderTeachers() {
+        if (user.role !== 'admin') return;
+        els.teacherCount.textContent = fmtCount(teachers.length, 'teacher', 'teachers');
+        if (!teachers.length) {
+            els.teacherList.innerHTML = '<div class="rec-empty"><i class="fas fa-user-tie"></i>No teacher accounts yet. Promote one with the form.</div>';
+            return;
+        }
+        els.teacherList.innerHTML = teachers.map(function (t) {
+            var name = t.full_name || t.username || 'Teacher';
+            return ''
+                + '<div class="teacher-row">'
+                + R.avatarHtml(name)
+                + '<div><h3>' + R.escapeHtml(name) + '</h3><p>' + R.escapeHtml(t.email || t.username || '') + '</p></div>'
+                + '</div>';
+        }).join('');
+    }
+
+    function updateSurahRange() {
+        var number = Number(els.assignSurah.value);
+        var surah = surahs.find(function (s) { return s.number === number; });
+        if (!surah) {
+            els.ayahHint.textContent = 'Pick a Surah to see its Ayah count.';
+            return;
+        }
+        els.ayahHint.textContent = surah.name + ' has ' + surah.ayahs + ' Ayahs.';
+        els.assignAyahStart.max = surah.ayahs;
+        els.assignAyahEnd.max = surah.ayahs;
+    }
+
+    function fillSurahSelect() {
+        if (!surahs.length) {
+            els.assignSurah.innerHTML = '<option value="">Could not load Surahs</option>';
+            return;
+        }
+        els.assignSurah.innerHTML = ['<option value="">Choose a Surah</option>'].concat(surahs.map(function (s) {
+            return '<option value="' + s.number + '">' + s.number + '. ' + R.escapeHtml(s.name) + ' (' + s.ayahs + ' Ayahs)</option>';
+        })).join('');
+    }
+
+    function fillAssignmentFilters() {
+        fillAssignmentFilter();
+    }
+
+    // ---------------- Data loading ----------------
+    async function loadSurahs() {
+        var data = await R.api('/surahs');
+        surahs = data.surahs || [];
+        fillSurahSelect();
+    }
+
+    async function loadStudents() {
+        var data = await R.api('/students');
+        students = data.students || [];
+        fillStudentSelect();
+    }
+
+    async function loadAssignments() {
+        var data = await R.api('/assignments');
+        assignments = data.assignments || [];
+        renderAssignments();
+        renderStats();
+        renderStudents();
+        fillAssignmentFilters();
+    }
+
+    async function loadSubmissions() {
+        var data = await R.api('/submissions?limit=200');
+        submissions = data.submissions || [];
+        renderSubmissions();
+        renderAttention();
+        renderStudents();
+    }
+
+    async function loadStats() {
+        var data = await R.api('/stats');
+        stats = {
+            pending: (data.stats && data.stats.pending) || 0,
+            reviewed: (data.stats && data.stats.reviewed) || 0,
+            needs_improvement: (data.stats && data.stats.needs_improvement) || 0,
+            total: (data.stats && data.stats.total) || 0
+        };
+        renderStats();
+    }
+
+    async function loadTeachers() {
+        if (user.role !== 'admin') return;
+        var data = await R.api('/teachers');
+        teachers = data.teachers || [];
+        renderTeachers();
+        fillTeacherSelect();
+    }
+
+    async function refreshAll(showToast) {
+        var tasks = [loadAssignments(), loadSubmissions(), loadStats()];
+        if (user.role === 'admin') tasks.push(loadTeachers());
+        var results = await Promise.allSettled(tasks);
+        var failed = results.find(function (r) { return r.status === 'rejected'; });
+        if (failed) {
+            var reason = failed.reason || {};
+            if (reason.status === 401) return;
+            R.toast(reason.message || 'Some data could not be loaded.', 'error');
+        }
+        if (showToast) R.toast('Dashboard refreshed.', 'success');
+    }
+
+    // ---------------- Playback ----------------
+    function stopPlayback() {
+        if (!playback) return;
+        try { playback.audio.pause(); } catch (e) {}
+        URL.revokeObjectURL(playback.url);
+        if (playback.btn) {
+            playback.btn.disabled = false;
+            playback.btn.innerHTML = '<i class="fas fa-play"></i> Play recording';
+        }
+        playback = null;
+    }
+
+    async function togglePlayback(button, id) {
+        if (playback && playback.id === id && playback.btn === button) {
+            if (playback.audio.paused) {
+                try { await playback.audio.play(); } catch (e) {}
+            } else {
+                playback.audio.pause();
+            }
+            return;
+        }
+
+        stopPlayback();
+        button.disabled = true;
+        button.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading&hellip;';
+
+        try {
+            var url = await R.fetchAudio(id);
+            var audio = new Audio(url);
+            playback = { id: id, btn: button, audio: audio, url: url };
+
+            function updateLabel() {
+                if (!playback || playback.audio !== audio) return;
+                button.disabled = false;
+                button.innerHTML = (!audio.paused && !audio.ended)
+                    ? '<i class="fas fa-pause"></i> Pause'
+                    : '<i class="fas fa-play"></i> Play recording';
+            }
+
+            audio.addEventListener('play', updateLabel);
+            audio.addEventListener('pause', updateLabel);
+            audio.addEventListener('ended', updateLabel);
+            audio.addEventListener('error', function () {
+                R.toast('This recording could not be played.', 'error');
+                stopPlayback();
+            });
+
+            await audio.play();
+            updateLabel();
+        } catch (err) {
+            button.disabled = false;
+            button.innerHTML = '<i class="fas fa-play"></i> Play recording';
+            R.toast(err.message || 'Could not load the recording.', 'error');
+        }
+    }
+
+    // ---------------- Tabs ----------------
+    function showTab(name) {
+        activeTab = name;
+        document.querySelectorAll('[data-tab]').forEach(function (btn) {
+            var active = btn.getAttribute('data-tab') === name;
+            btn.classList.toggle('active', active);
+            btn.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        document.querySelectorAll('[data-view]').forEach(function (view) {
+            view.classList.toggle('rec-hidden', view.getAttribute('data-view') !== name);
+        });
+        if (window.innerWidth < 900) window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---------------- Actions ----------------
+    async function createAssignment(event) {
+        event.preventDefault();
+        var studentId = Number(els.assignStudent.value);
+        var surahNumber = Number(els.assignSurah.value);
+        var surah = surahs.find(function (s) { return s.number === surahNumber; });
+        var ayahStart = Number(els.assignAyahStart.value);
+        var ayahEnd = Number(els.assignAyahEnd.value);
+
+        if (!studentId) return R.toast('Choose a student.', 'error');
+        if (!surah) return R.toast('Choose a Surah.', 'error');
+        if (!ayahStart || !ayahEnd || ayahStart < 1 || ayahEnd < ayahStart || ayahEnd > surah.ayahs) {
+            return R.toast('The Ayah range must be between 1 and ' + surah.ayahs + ' for ' + surah.name + '.', 'error');
+        }
+
+        var payload = {
+            studentId: studentId,
+            surahNumber: surah.number,
+            ayahStart: ayahStart,
+            ayahEnd: ayahEnd,
+            instructions: els.assignInstructions.value.trim(),
+            dueDate: els.assignDue.value || null
+        };
+        if (user.role === 'admin' && els.assignTeacher.value) {
+            payload.teacherId = Number(els.assignTeacher.value);
+        }
+
+        els.assignmentSubmit.disabled = true;
+        els.assignmentSubmit.innerHTML = '<span class="spinner"></span> Creating&hellip;';
+
+        try {
+            await R.api('/assignments', { method: 'POST', body: payload });
+            R.toast('Assignment created.', 'success');
+            els.assignStudent.value = '';
+            els.assignSurah.value = '';
+            els.assignAyahStart.value = 1;
+            els.assignAyahEnd.value = 7;
+            els.assignDue.value = '';
+            els.assignInstructions.value = '';
+            els.ayahHint.textContent = 'Pick a Surah to see its Ayah count.';
+            await Promise.all([loadAssignments(), loadStats()]);
+            showTab('assignments');
+        } catch (err) {
+            R.toast(err.message || 'Could not create the assignment.', 'error');
+        } finally {
+            els.assignmentSubmit.disabled = false;
+            els.assignmentSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Create assignment';
+        }
+    }
+
+    async function deleteAssignment(id) {
+        var row = assignments.find(function (a) { return a.id === id; });
+        if (!row) return;
+        if (!window.confirm('Delete the assignment for ' + (row.student_name || 'this student') + ' (' + row.surah_name + ')?')) return;
+        try {
+            await R.api('/assignments/' + id, { method: 'DELETE' });
+            R.toast('Assignment deleted.', 'success');
+            await loadAssignments();
+            await Promise.all([loadSubmissions(), loadStats()]);
+        } catch (err) {
+            R.toast(err.message || 'Could not delete the assignment.', 'error');
+        }
+    }
+
+    async function saveReview(id, card) {
+        var select = card.querySelector('[data-review-status]');
+        var textarea = card.querySelector('[data-feedback]');
+        var button = card.querySelector('[data-save-review]');
+        var status = select ? select.value : '';
+        var feedback = textarea ? textarea.value.trim() : '';
+
+        if (status === 'needs_improvement' && !feedback) {
+            R.toast('Write feedback explaining what the student should improve.', 'error');
+            if (textarea) textarea.focus();
+            return;
+        }
+
+        button.disabled = true;
+        button.innerHTML = '<span class="spinner"></span> Saving&hellip;';
+
+        try {
+            await R.api('/submissions/' + id + '/review', {
+                method: 'PATCH',
+                body: { status: status, feedback: feedback }
+            });
+            R.toast('Review saved.', 'success');
+            await Promise.all([loadSubmissions(), loadAssignments(), loadStats()]);
+            var fresh = els.submissionList.querySelector('[data-submission="' + id + '"]');
+            if (fresh) {
+                fresh.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                fresh.style.borderColor = 'rgba(52,211,153,0.5)';
+                setTimeout(function () { fresh.style.borderColor = ''; }, 1600);
+            }
+        } catch (err) {
+            button.disabled = false;
+            button.innerHTML = '<i class="fas fa-check"></i> Save review';
+            R.toast(err.message || 'Could not save the review.', 'error');
+        }
+    }
+
+    async function promoteTeacher(event) {
+        event.preventDefault();
+        var email = els.teacherEmail.value.trim();
+        if (!email) return;
+        els.teacherSubmit.disabled = true;
+        els.teacherSubmit.innerHTML = '<span class="spinner"></span> Granting&hellip;';
+        try {
+            var data = await R.api('/teachers', { method: 'POST', body: { email: email } });
+            R.toast(data.message || 'Teacher access granted.', 'success');
+            els.teacherEmail.value = '';
+            await loadTeachers();
+            fillTeacherSelect();
+        } catch (err) {
+            R.toast(err.message || 'Could not grant teacher access.', 'error');
+        } finally {
+            els.teacherSubmit.disabled = false;
+            els.teacherSubmit.innerHTML = '<i class="fas fa-user-tie"></i> Grant teacher access';
+        }
+    }
+
+    function openPendingReview() {
+        statusFilter = 'pending';
+        assignmentFilter = '';
+        els.assignmentFilter.value = '';
+        syncStatusChips();
+        renderSubmissions();
+        showTab('recordings');
+    }
+
+    function syncStatusChips() {
+        document.querySelectorAll('[data-status]').forEach(function (chip) {
+            chip.classList.toggle('active', chip.getAttribute('data-status') === statusFilter);
+        });
+    }
+
+    // ---------------- Events ----------------
+    els.logout.addEventListener('click', R.logout);
+
+    document.querySelectorAll('[data-tab]').forEach(function (btn) {
+        btn.addEventListener('click', function () { showTab(btn.getAttribute('data-tab')); });
+    });
+
+    els.viewPending.addEventListener('click', openPendingReview);
+
+    document.querySelectorAll('[data-status]').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            statusFilter = chip.getAttribute('data-status');
+            syncStatusChips();
+            renderSubmissions();
+        });
+    });
+
+    els.assignmentFilter.addEventListener('change', function () {
+        assignmentFilter = els.assignmentFilter.value ? Number(els.assignmentFilter.value) : '';
+        renderSubmissions();
+    });
+
+    els.assignSurah.addEventListener('change', function () {
+        updateSurahRange();
+        var surah = surahs.find(function (s) { return s.number === Number(els.assignSurah.value); });
+        if (surah) {
+            els.assignAyahStart.value = 1;
+            els.assignAyahEnd.value = surah.ayahs;
+        }
+    });
+
+    els.assignmentForm.addEventListener('submit', createAssignment);
+    els.teacherForm.addEventListener('submit', promoteTeacher);
+
+    els.attentionList.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-review-open]');
+        if (!button) return;
+        openPendingReview();
+        var id = button.getAttribute('data-review-open');
+        var card = els.submissionList.querySelector('[data-submission="' + id + '"]');
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    els.assignmentList.addEventListener('click', function (event) {
+        var viewBtn = event.target.closest('[data-view-recordings]');
+        if (viewBtn) {
+            assignmentFilter = Number(viewBtn.getAttribute('data-view-recordings'));
+            statusFilter = '';
+            syncStatusChips();
+            fillAssignmentFilter();
+            els.assignmentFilter.value = String(assignmentFilter);
+            renderSubmissions();
+            showTab('recordings');
+            return;
+        }
+        var delBtn = event.target.closest('[data-delete-assignment]');
+        if (delBtn) {
+            deleteAssignment(Number(delBtn.getAttribute('data-delete-assignment')));
+        }
+    });
+
+    els.submissionList.addEventListener('click', function (event) {
+        var playBtn = event.target.closest('[data-play]');
+        if (playBtn) {
+            togglePlayback(playBtn, Number(playBtn.getAttribute('data-play')));
+            return;
+        }
+        var saveBtn = event.target.closest('[data-save-review]');
+        if (saveBtn) {
+            var card = saveBtn.closest('[data-submission]');
+            if (card) saveReview(Number(saveBtn.getAttribute('data-save-review')), card);
+        }
+    });
+
+    window.addEventListener('beforeunload', function () {
+        stopPlayback();
+    });
+
+    (async function init() {
+        try {
+            user = await R.guard(['teacher', 'admin']);
+        } catch (err) {
+            return;
+        }
+        renderUser();
+        if (user.role === 'admin') {
+            els.teachersTab.classList.remove('rec-hidden');
+        }
+        try {
+            await Promise.all([loadSurahs(), loadStudents()]);
+        } catch (err) {
+            R.toast(err.message || 'Could not load the assignment form.', 'error');
+        }
+        fillTeacherSelect();
+        await refreshAll(false);
+        renderStats();
+    })();
+})();
+</script>
+</body>
+</html>

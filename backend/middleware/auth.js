@@ -50,4 +50,29 @@ function requireAdmin(req, res, next) {
     next();
 }
 
-module.exports = { authenticate, requireAdmin };
+/**
+ * Teachers review recordings. Admins inherit every teacher permission so the
+ * project works before a dedicated teacher account exists.
+ */
+function requireTeacher(req, res, next) {
+    if (!req.user) {
+        return res.status(401).json({ error: 'Access denied. No token provided.' });
+    }
+    if (req.user.role !== 'teacher' && req.user.role !== 'admin') {
+        return res.status(403).json({ error: 'Teacher access required.' });
+    }
+    next();
+}
+
+/** Only student accounts submit recitations. */
+function requireStudent(req, res, next) {
+    if (!req.user) {
+        return res.status(401).json({ error: 'Access denied. No token provided.' });
+    }
+    if (req.user.role !== 'student') {
+        return res.status(403).json({ error: 'Student access required.' });
+    }
+    next();
+}
+
+module.exports = { authenticate, requireAdmin, requireTeacher, requireStudent };

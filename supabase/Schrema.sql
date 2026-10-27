@@ -13,13 +13,13 @@
 --
 --  WHAT THIS FILE CREATES
 --    1. Helper function (updated_at trigger)
---    2. 14 tables
+--    2. 17 tables
 --    3. Indexes
 --    4. 8 views (the exact JSON shapes the Node API reads)
 --    5. Idempotent demo/seed content
 --    6. Auto-increment sequence sync
 --    7. Row Level Security policies
---    8. 4 public Storage buckets + their read policies
+--    8. 5 Storage buckets (4 public + 1 private recitations bucket)
 --
 --  SECURITY MODEL
 --    The Node backend talks to this database through PostgREST using the
@@ -33,6 +33,7 @@
 --    SUPABASE_THUMBNAIL_BUCKET  = thumbnails  (MAX_IMAGE_SIZE_MB  = 5)
 --    SUPABASE_AVATAR_BUCKET     = avatars     (MAX_IMAGE_SIZE_MB  = 5)
 --    SUPABASE_BOOK_BUCKET       = books       (MAX_BOOK_SIZE_MB   = 50)
+--    SUPABASE_RECITATION_BUCKET = recitations (MAX_RECITATION_SIZE_MB = 25)
 --
 --  Bundled image assets (Images/) are part of the repository and are NOT
 --  created here — this file only provisions the database and storage.
@@ -67,7 +68,7 @@ create table if not exists public.users (
   email         text not null unique,
   password_hash text not null,
   full_name     text not null,
-  role          text not null default 'student' check (role in ('admin','student')),
+  role          text not null default 'student' check (role in ('admin','student','teacher')),
   avatar_url    text,
   phone_number  text,
   is_active     boolean not null default true,
@@ -279,6 +280,59 @@ create table if not exists public.books (
   updated_at   timestamptz not null default now()
 );
 
+-- ------------------------------------------------- surah_assignments
+--  A teacher assigns a Surah + Ayah range to one student. The recorder page
+--  (recite.html) only lists the signed-in student's own rows, and the teacher
+--  dashboard only lists rows created by that teacher. Admins can see all.
+create table if not exists public.surah_assignments (
+  id            serial primary key,
+  teacher_id    int references public.users(id) on delete set null,
+  student_id    int not null references public.users(id) on delete cascade,
+  surah_number  int not null check (surah_number between 1 and 114),
+  surah_name    text not null,
+  ayah_start    int not null check (ayah_start >= 1),
+  ayah_end      int not null check (ayah_end >= 1),
+  instructions  text,
+  due_date      date,
+  is_active     boolean not null default true,
+  created_at    timestamptz not null default now(),
+  updated_at    timestamptz not null default now(),
+  check (ayah_end >= ayah_start)
+);
+
+-- (the trg_assignments_updated trigger is created in SECTION 8)
+
+-- ------------------------------------------------- recitation_submissions
+--  One row per uploaded recording. `audio_path` is either a Supabase Storage
+--  object path (storage = 'supabase') or a filename inside
+--  backend/private/recitations (storage = 'local'). Audio is NEVER served
+--  from a public URL: GET /api/recitations/submissions/:id/audio verifies the
+--  caller before streaming it.
+create table if not exists public.recitation_submissions (
+  id               serial primary key,
+  assignment_id    int not null references public.surah_assignments(id) on delete cascade,
+  student_id       int not null references public.users(id) on delete cascade,
+  surah_number     int not null check (surah_number between 1 and 114),
+  surah_name       text not null,
+  ayah_start       int not null check (ayah_start >= 1),
+  ayah_end         int not null check (ayah_end >= 1),
+  storage          text not null default 'local' check (storage in ('supabase','local')),
+  audio_path       text not null,
+  mime_type        text,
+  file_size        bigint,
+  duration_seconds int,
+  status           text not null default 'pending'
+                   check (status in ('pending','reviewed','needs_improvement')),
+  feedback         text,
+  reviewed_by      int references public.users(id) on delete set null,
+  reviewed_at      timestamptz,
+  created_at       timestamptz not null default now(),
+  updated_at       timestamptz not null default now(),
+  check (ayah_end >= ayah_start)
+);
+
+-- (the trg_submissions_updated trigger is created in SECTION 8)
+
 -- --------------------------------------------------------------- profiles
 --  Optional Supabase Auth tie-in, kept for existing installs.
 create table if not exists public.profiles (
@@ -309,6 +363,15 @@ create index if not exists idx_payments_status on public.payments(status);
 
 create index if not exists idx_books_published on public.books(is_published);
 create index if not exists idx_books_sort      on public.books(sort_order);
+
+create index if not exists idx_assignments_student on public.surah_assignments(student_id);
+create index if not exists idx_assignments_teacher on public.surah_assignments(teacher_id);
+create index if not exists idx_assignments_active  on public.surah_assignments(is_active);
+
+create index if not exists idx_submissions_assignment on public.recitation_submissions(assignment_id);
+create index if not exists idx_submissions_student    on public.recitation_submissions(student_id);
+create index if not exists idx_submissions_status     on public.recitation_submissions(status);
+create index if not exists idx_submissions_created    on public.recitation_submissions(created_at);
 
 
 -- ############################################################################
@@ -618,6 +681,10 @@ alter table public.user_preferences   enable row level security;
 alter table public.payments           enable row level security;
 alter table public.payment_plans      enable row level security;
 alter table public.books              enable row level security;
+-- Recitation data is private. The Node API applies the student/teacher/admin
+-- rules before reading, writing or streaming audio, so no anon policies exist.
+alter table public.surah_assignments     enable row level security;
+alter table public.recitation_submissions enable row level security;
 
 -- drop first so this stays re-runnable (CREATE POLICY has no IF NOT EXISTS)
 drop policy if exists "public catalog read"     on public.categories;
@@ -649,10 +716,12 @@ grant select on all tables in schema public to anon, authenticated;
 --  SECTION 7 — STORAGE BUCKETS
 --  Merged in from the former create_buckets.sql.
 --
---  All three are PUBLIC buckets so lesson video, thumbnails and profile
---  photos can be streamed directly by URL. Size limits and MIME allowlists
---  mirror backend/middleware/upload.js exactly, so a file the API accepts is
---  never rejected by Storage (and vice versa).
+--  The lesson video, thumbnail, avatar and book buckets are PUBLIC so those
+--  assets can be streamed directly by URL. The recitations bucket is PRIVATE:
+--  students and teachers read audio only through the authenticated API.
+--  Size limits and MIME allowlists mirror backend/middleware/upload.js
+--  exactly, so a file the API accepts is never rejected by Storage (and vice
+--  versa).
 --
 --  The backend also auto-creates these on boot (backend/services/supabase.js),
 --  so this section is the explicit/declarative guarantee that they exist with
@@ -682,7 +751,14 @@ values
   -- PDF inline (books.html), so it must be publicly readable.
   -- (pdf — matches upload.js bookFilter / MAX_BOOK_SIZE_MB=50)
   ('books', 'books', true, 52428800,
-   array['application/pdf'])
+   array['application/pdf']),
+
+  -- 25 MB PRIVATE bucket for student recitations. Objects are only ever read
+  -- through GET /api/recitations/submissions/:id/audio, which checks the
+  -- caller's role and ownership first. (matches MAX_RECITATION_SIZE_MB=25)
+  ('recitations', 'recitations', false, 26214400,
+   array['audio/webm','audio/ogg','audio/mpeg','audio/mp4','audio/x-m4a',
+         'audio/wav','audio/x-wav','audio/aac'])
 on conflict (id) do nothing;
 
 
@@ -736,6 +812,11 @@ alter table public.users             add column if not exists avatar_url   text;
 alter table public.users             add column if not exists is_active    boolean not null default true;
 alter table public.users             add column if not exists last_login   timestamptz;
 alter table public.users             add column if not exists updated_at   timestamptz not null default now();
+-- Older installs created users with check (role in ('admin','student')). The
+-- recitation teacher dashboard needs the new 'teacher' role.
+alter table public.users drop constraint if exists users_role_check;
+alter table public.users add constraint users_role_check
+  check (role in ('admin','student','teacher'));
 
 alter table public.categories        add column if not exists icon_class   text;
 alter table public.categories        add column if not exists color       text;
@@ -813,10 +894,18 @@ drop trigger if exists trg_books_updated on public.books;
 create trigger trg_books_updated before update on public.books
   for each row execute function public.set_updated_at();
 
+drop trigger if exists trg_assignments_updated on public.surah_assignments;
+create trigger trg_assignments_updated before update on public.surah_assignments
+  for each row execute function public.set_updated_at();
+
+drop trigger if exists trg_submissions_updated on public.recitation_submissions;
+create trigger trg_submissions_updated before update on public.recitation_submissions
+  for each row execute function public.set_updated_at();
+
 
 -- ############################################################################
 --  SECTION 9 — VERIFICATION
---  Expected: 14 tables, 8 views, 4 buckets.
+--  Expected: 17 tables, 8 views, 5 buckets.
 --  If v_category_stats is missing `sort_order`, or categories is missing
 --  `updated_at`, an older version of this file was deployed — re-run it.
 -- ############################################################################
@@ -827,7 +916,7 @@ union all
 select 'views', count(*)::int from information_schema.views where table_schema = 'public'
 union all
 select 'buckets', count(*)::int from storage.buckets
-  where id in ('videos', 'thumbnails', 'avatars', 'books')
+  where id in ('videos', 'thumbnails', 'avatars', 'books', 'recitations')
 order by 1;
 
 -- Column the trg_categories_updated trigger depends on:

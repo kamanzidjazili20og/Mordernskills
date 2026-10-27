@@ -34,6 +34,10 @@ services:
         value: thumbnails
       - key: SUPABASE_BOOK_BUCKET
         value: books
+      - key: SUPABASE_RECITATION_BUCKET
+        value: recitations
+      - key: MAX_RECITATION_SIZE_MB
+        value: "25"
       # --- Admin account created/synced on every boot ---
       - key: ADMIN_EMAIL
         value: admin@nooracademy.com

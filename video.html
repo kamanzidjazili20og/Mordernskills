@@ -1404,6 +1404,7 @@ body::before {
             <a href="index.html"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">الرئيسية</span></a>
             <a href="index.html#categoryRows"><span data-lang="en">Lessons</span><span data-lang="rw">Amasomo</span><span data-lang="fr">Leçons</span><span data-lang="sw">Masomo</span><span data-lang="ar">الدروس</span></a>
             <a href="books.html"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">الكتب</span></a>
+            <a href="recite.html"><span data-lang="en">Recitations</span><span data-lang="rw">Gusoma</span><span data-lang="fr">Récitations</span><span data-lang="sw">Usomaji</span><span data-lang="ar">التلاوات</span></a>
 </nav>
         <a class="skip-link" href="#playerContainer">Skip to content</a>
         <div class="lang-toggle" id="langToggle" title="Switch language">
@@ -1521,6 +1522,72 @@ body::before {
             </div>
 
             <div class="video-tags" id="videoTags"></div>
+
+            <div id="recitationPanel" class="recitation-panel" style="display:none;margin-top:22px;padding:22px;border-radius:16px;background:linear-gradient(145deg,rgba(212,168,83,0.1),rgba(12,32,24,0.92));border:1px solid rgba(212,168,83,0.22);box-shadow:0 30px 60px -40px rgba(212,168,83,0.4);">
+                <div style="display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:16px;">
+                    <div style="display:flex;align-items:flex-start;gap:14px;">
+                        <div style="width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at top,rgba(212,168,83,0.9),rgba(160,120,40,0.9));color:#14100a;box-shadow:0 18px 40px -20px rgba(212,168,83,0.9);">
+                            <i class="fas fa-microphone-lines" style="font-size:18px;"></i>
+                        </div>
+                        <div>
+                            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                                <h3 style="margin:0;font-size:18px;letter-spacing:-0.01em;"><span data-lang="en">Recitation for this lesson</span><span data-lang="rw">Gusoma kuri iri somo</span><span data-lang="fr">Récitation pour cette leçon</span><span data-lang="sw">Usomaji wa somo hili</span><span data-lang="ar">تلاوة لهذا الدرس</span></h3>
+                                <span id="recitationLessonBadge" style="display:none;padding:4px 9px;border-radius:999px;border:1px solid rgba(212,168,83,0.4);font-size:10px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-light);"></span>
+                            </div>
+                            <p style="margin:6px 0 0;color:var(--text-sec);font-size:13px;"><span data-lang="en">Record your recitation for the assigned Surah and ayahs, then submit it to your teacher for review.</span><span data-lang="rw">Andika/record ibisomo byawe kuri Surah n'amagambo yagenewe hanyuma ubihere umwarimu kugirango abisuzume.</span><span data-lang="fr">Enregistrez votre récitation pour le verset assigné et envoyez-la à votre enseignant pour évaluation.</span><span data-lang="sw">Rekodi usomaji wako kwa Surah na aya zilizokabidhiwa kisha utume kwa mwalimu wako ili ikaguliwe.</span><span data-lang="ar">سجّل تلاوتك للآيات الموكلة وأرسلها إلى معلمك للمراجعة.</span></p>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                        <a id="recitationActionBtn" href="recite.html" style="display:inline-flex;align-items:center;gap:9px;padding:10px 18px;border-radius:999px;background:var(--grad-gold);color:#14100a;font-weight:800;text-decoration:none;box-shadow:0 18px 40px -18px rgba(212,168,83,0.9);"><i class="fas fa-microphone"></i> <span data-lang="en">Record &amp; Submit</span><span data-lang="rw">Fata amajwi &amp; Ohereza</span><span data-lang="fr">Enregistrer &amp; Envoyer</span><span data-lang="sw">Rekodi &amp; Tuma</span><span data-lang="ar">سجّل وأرسل</span></a>
+                        <a href="recite.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid var(--border);color:var(--text-sec);text-decoration:none;"><i class="fas fa-arrow-up-right-from-square"></i> <span data-lang="en">Open Recitation Studio</span><span data-lang="rw">Fungura Studio</span><span data-lang="fr">Ouvrir le studio</span><span data-lang="sw">Fungua Studio</span><span data-lang="ar">افتح الاستوديو</span></a>
+                    </div>
+                </div>
+
+                <div id="recitationStudentView" style="display:none;margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;">
+                    <div style="padding:16px 18px;border-radius:14px;border:1px solid var(--border);background:rgba(8,24,17,0.8);display:flex;flex-direction:column;gap:10px;">
+                        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+                            <div>
+                                <div style="font-size:11px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);"><span data-lang="en">Assignment</span><span data-lang="rw">Umwanya</span><span data-lang="fr">Devoir</span><span data-lang="sw">Zoezi</span><span data-lang="ar">التكليف</span></div>
+                                <div id="recitationAssignTitle" style="margin-top:6px;font-size:17px;font-weight:700;letter-spacing:-0.01em;">—</div>
+                                <div id="recitationAssignRange" style="margin-top:4px;color:var(--text-sec);font-size:13px;">—</div>
+                            </div>
+                            <span id="recitationStatusPill" style="padding:6px 12px;border-radius:999px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;border:1px solid var(--border);color:var(--text-muted);">—</span>
+                        </div>
+                        <div id="recitationInstructionsWrap" style="display:none;padding:12px 14px;border-radius:12px;border:1px solid rgba(212,168,83,0.22);background:rgba(212,168,83,0.08);">
+                            <div style="font-size:11px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px;"><i class="fas fa-scroll"></i> <span data-lang="en">Instructions</span><span data-lang="rw">Amabwiriza</span><span data-lang="fr">Consignes</span><span data-lang="sw">Maagizo</span><span data-lang="ar">تعليمات</span></div>
+                            <div id="recitationInstructions" style="font-size:13px;color:var(--text-sec);white-space:pre-wrap;"></div>
+                        </div>
+                        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;color:var(--text-muted);font-size:12px;">
+                            <span id="recitationDueWrap" style="display:none;align-items:center;gap:7px;"><i class="far fa-calendar"></i> <span data-lang="en">Due</span><span data-lang="rw">Itariki</span><span data-lang="fr">Échéance</span><span data-lang="sw">Mwisho</span><span data-lang="ar">الموعد</span>: <span id="recitationDue">—</span></span>
+                            <span id="recitationTeacherWrap" style="display:none;align-items:center;gap:7px;"><i class="fas fa-user-tie"></i> <span data-lang="en">Assigned by</span><span data-lang="rw">Yatanzwe na</span><span data-lang="fr">Assigné par</span><span data-lang="sw">Imetolewa na</span><span data-lang="ar">أُسند بواسطة</span>: <span id="recitationTeacher">—</span></span>
+                        </div>
+                    </div>
+                    <div id="recitationFeedbackCard" style="display:none;padding:16px 18px;border-radius:14px;border:1px solid var(--border);background:rgba(8,24,17,0.8);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                            <div style="font-size:11px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);"><span data-lang="en">Teacher feedback</span><span data-lang="rw">Ibitekerezo by'umwarimu</span><span data-lang="fr">Retour du professeur</span><span data-lang="sw">Maoni ya mwalimu</span><span data-lang="ar">ملاحظات المعلم</span></div>
+                            <span id="recitationReviewedAt" style="font-size:11px;color:var(--text-muted);"></span>
+                        </div>
+                        <div id="recitationFeedback" style="font-size:13px;color:var(--text-sec);white-space:pre-wrap;"></div>
+                    </div>
+                </div>
+
+                <div id="recitationTeacherView" style="display:none;margin-top:18px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                        <div>
+                            <div style="font-size:11px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);"><span data-lang="en">For this lesson</span><span data-lang="rw">Kuri iri somo</span><span data-lang="fr">Pour cette leçon</span><span data-lang="sw">Kwa somo hili</span><span data-lang="ar">لهذا الدرس</span></div>
+                            <div style="margin-top:4px;color:var(--text-sec);font-size:13px;"><span id="recitationTeacherSummary">—</span></div>
+                        </div>
+                        <a id="recitationTeacherAssignLink" href="teacher.html" style="display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;border:1px solid var(--border);color:var(--text-sec);text-decoration:none;"><i class="fas fa-plus"></i> <span data-lang="en">Assign to students</span><span data-lang="rw">Tanga kubanyeshuri</span><span data-lang="fr">Affecter aux élèves</span><span data-lang="sw">Wape wanafunzi</span><span data-lang="ar">أسند للطلاب</span></a>
+                    </div>
+                    <div id="recitationTeacherList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;"></div>
+                    <div id="recitationTeacherEmpty" style="display:none;padding:16px 18px;border-radius:14px;border:1px dashed var(--border);color:var(--text-muted);font-size:13px;text-align:center;">No recitations assigned or submitted for this lesson yet.</div>
+                </div>
+
+                <div id="recitationGuestView" style="display:none;margin-top:16px;padding:14px 16px;border-radius:12px;border:1px solid var(--border);background:rgba(8,24,17,0.7);color:var(--text-sec);font-size:13px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                    <div style="display:flex;align-items:center;gap:10px;"><i class="fas fa-lock" style="color:var(--gold-light);"></i> <span data-lang="en">Sign in as a student to record and submit your recitation for this lesson.</span><span data-lang="rw">Injira nka umunyeshuri kugira ngo ufate amajwi wohereze gusoma kuri iri somo.</span><span data-lang="fr">Connectez-vous en tant qu'élève pour enregistrer et soumettre votre récitation.</span><span data-lang="sw">Ingia kama mwanafunzi ili kurekodi na kutuma usomaji wako wa somo hili.</span><span data-lang="ar">سجّل الدخول كطالب لتسجيل وإرسال تلاوتك لهذا الدرس.</span></div>
+                    <a href="login.html" style="display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:var(--grad-gold);color:#14100a;font-weight:700;text-decoration:none;"><i class="fas fa-arrow-right-to-bracket"></i> <span data-lang="en">Sign in</span><span data-lang="rw">Injira</span><span data-lang="fr">Connexion</span><span data-lang="sw">Ingia</span><span data-lang="ar">تسجيل الدخول</span></a>
+                </div>
+            </div>
 
             <div id="accessStatus" class="access-status" style="display:none;"></div>
 
@@ -1641,6 +1708,122 @@ async function verifyVideoAuthSession() {
             renderVideoAuthState(null);
         }
     }
+}
+
+async function loadLessonRecitationPanel(lessonId) {
+    const panel = document.getElementById('recitationPanel');
+    const actionBtn = document.getElementById('recitationActionBtn');
+    const studentView = document.getElementById('recitationStudentView');
+    const teacherView = document.getElementById('recitationTeacherView');
+    const guestView = document.getElementById('recitationGuestView');
+    const badge = document.getElementById('recitationLessonBadge');
+    if (!panel) return;
+    panel.style.display = 'block';
+    if (badge) { badge.style.display = 'inline-flex'; badge.textContent = 'Lesson #' + lessonId; }
+    if (guestView) guestView.style.display = 'none';
+    if (studentView) studentView.style.display = 'none';
+    if (teacherView) teacherView.style.display = 'none';
+
+    const token = localStorage.getItem('ms_token');
+    const user = getVideoStoredUser();
+    if (!token || !user) {
+        if (guestView) guestView.style.display = 'flex';
+        if (actionBtn) actionBtn.href = 'login.html';
+        return;
+    }
+
+    if (actionBtn) actionBtn.href = 'recite.html?lessonId=' + encodeURIComponent(lessonId);
+
+    try {
+        const res = await fetch(API_BASE + '/recitations/lesson/' + encodeURIComponent(lessonId), {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        const assignments = Array.isArray(data.assignments) ? data.assignments : [];
+        const submissions = Array.isArray(data.submissions) ? data.submissions : [];
+
+        if (user.role === 'student') {
+            const assignment = assignments.find(function(a){ return a.is_active !== false; }) || assignments[0];
+            if (!assignment) {
+                if (guestView) { guestView.style.display = 'flex'; guestView.querySelectorAll('[data-lang]').forEach(function(el){ el.style.display = el.dataset.lang === currentLang ? '' : 'none'; }); }
+                return;
+            }
+            if (actionBtn) actionBtn.href = 'recite.html?assignmentId=' + encodeURIComponent(assignment.id);
+            if (studentView) studentView.style.display = 'grid';
+            const title = document.getElementById('recitationAssignTitle');
+            const range = document.getElementById('recitationAssignRange');
+            const pill = document.getElementById('recitationStatusPill');
+            const instrWrap = document.getElementById('recitationInstructionsWrap');
+            const instr = document.getElementById('recitationInstructions');
+            const dueWrap = document.getElementById('recitationDueWrap');
+            const due = document.getElementById('recitationDue');
+            const tWrap = document.getElementById('recitationTeacherWrap');
+            const tName = document.getElementById('recitationTeacher');
+            const fbCard = document.getElementById('recitationFeedbackCard');
+            const fb = document.getElementById('recitationFeedback');
+            const fbAt = document.getElementById('recitationReviewedAt');
+
+            if (title) title.textContent = assignment.surah_name + ' (' + assignment.surah_number + ')';
+            if (range) range.textContent = 'Ayah ' + assignment.ayah_start + ' – ' + assignment.ayah_end;
+            if (pill) {
+                const sub = submissions.find(function(s){ return s.assignment_id === assignment.id; });
+                if (sub && sub.status === 'reviewed') { pill.textContent = 'Reviewed'; pill.style.color = '#34d399'; pill.style.borderColor = 'rgba(52,211,153,0.4)'; }
+                else if (sub && sub.status === 'needs_improvement') { pill.textContent = 'Needs Improvement'; pill.style.color = '#fca5a5'; pill.style.borderColor = 'rgba(252,165,165,0.4)'; }
+                else if (sub) { pill.textContent = 'Pending'; pill.style.color = '#f59e0b'; pill.style.borderColor = 'rgba(245,158,11,0.4)'; }
+                else { pill.textContent = 'Not Submitted'; pill.style.color = 'var(--text-muted)'; pill.style.borderColor = 'var(--border)'; }
+            }
+            if (instrWrap && instr) {
+                if (assignment.instructions && assignment.instructions.trim()) { instrWrap.style.display = 'block'; instr.textContent = assignment.instructions; }
+                else { instrWrap.style.display = 'none'; }
+            }
+            if (dueWrap && due) {
+                if (assignment.due_date) { dueWrap.style.display = 'inline-flex'; due.textContent = assignment.due_date; }
+                else { dueWrap.style.display = 'none'; }
+            }
+            if (tWrap && tName) {
+                if (assignment.teacher_name) { tWrap.style.display = 'inline-flex'; tName.textContent = assignment.teacher_name; }
+                else { tWrap.style.display = 'none'; }
+            }
+            if (fbCard && fb && fbAt) {
+                const sub = submissions.find(function(s){ return s.assignment_id === assignment.id && (s.status === 'reviewed' || s.status === 'needs_improvement'); });
+                if (sub && sub.feedback) { fbCard.style.display = 'block'; fb.textContent = sub.feedback; fbAt.textContent = sub.reviewed_at ? new Date(sub.reviewed_at).toLocaleString() : ''; }
+                else { fbCard.style.display = 'none'; }
+            }
+            return;
+        }
+
+        if (user.role === 'teacher' || user.role === 'admin') {
+            if (teacherView) teacherView.style.display = 'block';
+            const summary = document.getElementById('recitationTeacherSummary');
+            const list = document.getElementById('recitationTeacherList');
+            const empty = document.getElementById('recitationTeacherEmpty');
+            if (summary) summary.textContent = assignments.length + ' assignment(s) · ' + submissions.length + ' submission(s) for this lesson';
+            if (list) list.innerHTML = '';
+            if (empty) empty.style.display = assignments.length || submissions.length ? 'none' : 'block';
+            if (assignments.length && list) {
+                assignments.slice(0, 6).forEach(function(a){
+                    const card = document.createElement('div');
+                    card.style.cssText = 'padding:14px 16px;border-radius:14px;border:1px solid var(--border);background:rgba(8,24,17,0.8);display:flex;flex-direction:column;gap:8px;';
+                    card.innerHTML = '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;"><div><div style="font-weight:700;">' + escapeHtmlVideo(a.surah_name) + ' (' + a.surah_number + ')</div><div style="font-size:12.5px;color:var(--text-sec);">Ayah ' + a.ayah_start + ' – ' + a.ayah_end + '</div></div><span style="padding:4px 9px;border-radius:999px;border:1px solid var(--border);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);">Assigned</span></div>' + (a.student_name ? '<div style="font-size:12.5px;color:var(--text-sec);"><i class="fas fa-user-graduate"></i> ' + escapeHtmlVideo(a.student_name) + '</div>' : '');
+                    list.appendChild(card);
+                });
+            }
+            if (submissions.length && list && assignments.length === 0) {
+                submissions.slice(0, 6).forEach(function(s){
+                    const card = document.createElement('div');
+                    card.style.cssText = 'padding:14px 16px;border-radius:14px;border:1px solid var(--border);background:rgba(8,24,17,0.8);display:flex;flex-direction:column;gap:8px;';
+                    card.innerHTML = '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;"><div><div style="font-weight:700;">' + escapeHtmlVideo(s.surah_name) + ' (' + s.surah_number + ')</div><div style="font-size:12.5px;color:var(--text-sec);">Ayah ' + s.ayah_start + ' – ' + s.ayah_end + '</div></div><span style="padding:4px 9px;border-radius:999px;border:1px solid rgba(245,158,11,0.4);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#f59e0b;">' + escapeHtmlVideo(s.status.replace('_',' ')) + '</span></div>';
+                    list.appendChild(card);
+                });
+            }
+            return;
+        }
+    } catch (e) {}
+}
+
+function escapeHtmlVideo(s){
+    return String(s||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]; });
 }
 
 const params = new URLSearchParams(window.location.search);
@@ -2896,6 +3079,7 @@ loadPlans();
 
 // ===== LOAD LESSON DATA =====
 verifyVideoAuthSession();
+setTimeout(function(){ try { if (typeof lessonId !== 'undefined' && lessonId) loadLessonRecitationPanel(lessonId); } catch(e){} }, 900);
 (async function () {
     try {
         var lessonId_raw = parseInt(params.get('id')) || 1;

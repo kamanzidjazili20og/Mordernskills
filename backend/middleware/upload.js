@@ -8,7 +8,11 @@ const THUMBNAIL_DIR = path.join(__dirname, '..', 'uploads', 'thumbnails');
 const AVATAR_DIR = path.join(__dirname, '..', 'uploads', 'avatars');
 const BOOK_DIR = path.join(__dirname, '..', 'uploads', 'books');
 
-for (const dir of [VIDEO_DIR, THUMBNAIL_DIR, AVATAR_DIR, BOOK_DIR]) {
+// Recitations are private: this directory is NOT under uploads/, so
+// express.static can never expose a recording without an auth check.
+const RECITATION_DIR = path.join(__dirname, '..', 'private', 'recitations');
+
+for (const dir of [VIDEO_DIR, THUMBNAIL_DIR, AVATAR_DIR, BOOK_DIR, RECITATION_DIR]) {
     fs.mkdirSync(dir, { recursive: true });
 }
 
@@ -88,9 +92,27 @@ const bookFilter = (req, file, cb) => {
     }
 };
 
+// MediaRecorder emits "audio/webm;codecs=opus" in Chrome, "audio/mp4" in
+// Safari and "audio/ogg;codecs=opus" in Firefox. Match on the base MIME type
+// as well as the extension so all three browsers are accepted.
+const RECITATION_EXTENSIONS = ['.webm', '.ogg', '.oga', '.mp3', '.m4a', '.mp4', '.wav', '.aac'];
+const RECITATION_MIME_PREFIXES = ['audio/', 'video/webm'];
+
+const recitationFilter = (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    const mime = String(file.mimetype || '').toLowerCase();
+    const mimeOk = RECITATION_MIME_PREFIXES.some(prefix => mime.startsWith(prefix));
+    if (RECITATION_EXTENSIONS.includes(ext) || mimeOk) {
+        cb(null, true);
+    } else {
+        cb(new Error(`Invalid recording format. Allowed: ${RECITATION_EXTENSIONS.join(', ')}`));
+    }
+};
+
 const MAX_VIDEO_SIZE = (parseInt(process.env.MAX_VIDEO_SIZE_MB) || 500) * 1024 * 1024;
 const MAX_IMAGE_SIZE = (parseInt(process.env.MAX_IMAGE_SIZE_MB) || 5) * 1024 * 1024;
 const MAX_BOOK_SIZE = (parseInt(process.env.MAX_BOOK_SIZE_MB) || 50) * 1024 * 1024;
+const MAX_RECITATION_SIZE = (parseInt(process.env.MAX_RECITATION_SIZE_MB) || 25) * 1024 * 1024;
 
 const uploadVideo = multer({
     storage: videoStorage,
@@ -116,4 +138,20 @@ const uploadBook = multer({
     limits: { fileSize: MAX_BOOK_SIZE }
 });
 
-module.exports = { uploadVideo, uploadImage, uploadAvatar, uploadBook };
+// Keep the recording in memory: it is either mirrored to Supabase Storage or
+// written to the private local folder by the route after ownership checks.
+const uploadRecitation = multer({
+    storage: multer.memoryStorage(),
+    fileFilter: recitationFilter,
+    limits: { fileSize: MAX_RECITATION_SIZE }
+});
+
+module.exports = {
+    uploadVideo,
+    uploadImage,
+    uploadAvatar,
+    uploadBook,
+    uploadRecitation,
+    RECITATION_DIR,
+    MAX_RECITATION_SIZE
+};

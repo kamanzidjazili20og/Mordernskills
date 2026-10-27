@@ -1888,6 +1888,7 @@ body.loading { overflow: hidden; }
             <a href="#categoryRows"><span data-lang="en">Lessons</span><span data-lang="rw">Amasomo</span><span data-lang="fr">Leçons</span><span data-lang="sw">Masomo</span><span data-lang="ar">الدروس</span></a>
             <a href="#about"><span data-lang="en">About us</span><span data-lang="rw">Turi Bande</span><span data-lang="fr">À propos</span><span data-lang="sw">Kuhusu Sisi</span><span data-lang="ar">من نحن</span></a>
             <a href="books.html"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">الكتب</span></a>
+            <a href="recite.html"><span data-lang="en">Recitations</span><span data-lang="rw">Gusoma</span><span data-lang="fr">Récitations</span><span data-lang="sw">Usomaji</span><span data-lang="ar">التلاوات</span></a>
         </nav>
     </div>
     <div class="header-right">
@@ -2141,6 +2142,17 @@ function renderAuthState(user) {
         localStorage.removeItem('ms_user');
         location.reload();
     });
+    // Teachers and admins get a shortcut to the review dashboard; students
+    // reach their studio from the main navigation.
+    if (user.role === 'teacher' || user.role === 'admin') {
+        const dash = document.createElement('a');
+        dash.href = 'teacher.html';
+        dash.title = 'Teacher dashboard';
+        dash.style.cssText = 'display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:100px;font-size:11px;font-weight:700;color:var(--gold-light);background:rgba(212,168,83,0.1);border:1px solid rgba(212,168,83,0.3);text-decoration:none;';
+        dash.innerHTML = '<i class="fas fa-chalkboard-user"></i> Dashboard';
+        authEl.replaceChildren(who, dash, out);
+        return;
+    }
     authEl.replaceChildren(who, out);
 }
 function getStoredUser() {

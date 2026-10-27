@@ -193,6 +193,7 @@ app.use('/api/testimonials', require('./routes/testimonials'));
 app.use('/api/preferences', require('./routes/preferences'));
 app.use('/api/plans', require('./routes/plans'));
 app.use('/api/payments', require('./routes/payments'));
+app.use('/api/recitations', require('./routes/recitations'));
 
 app.use('/api', notFound('api'));
 
@@ -222,6 +223,8 @@ const FRONTEND_FILES = [
     'admin.html',
     'courses.html',
     'books.html',
+    'recite.html',
+    'teacher.html',
     'config.js',
     'robots.txt',
     'sitemap.xml',

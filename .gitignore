@@ -11,6 +11,9 @@ npm-debug.log*
 # user-uploaded content (large binaries)
 backend/uploads/videos/
 
+# private recitation recordings (never served by express.static)
+backend/private/
+
 # runtime data (plans fallback store, etc.)
 backend/data/
 
