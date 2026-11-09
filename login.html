@@ -840,7 +840,8 @@ form.addEventListener('submit', async (e) => {
         }
 
         showToast(lt('welcome') + ((data.user && data.user.username) || 'User') + '!');
-        setTimeout(() => { window.location.href = nextUrl(); }, 1200);
+        const postLoginTarget = (data.user && (data.user.role === 'teacher' || data.user.role === 'admin')) ? 'teacher.html' : nextUrl();
+        setTimeout(() => { window.location.href = postLoginTarget; }, 1200);
     } catch (err) {
         showError(lt('networkError'));
     } finally {

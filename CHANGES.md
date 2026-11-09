@@ -1,5 +1,203 @@
 # Changes — Multi-language, npm start fix, Qur'an category, security fix
 
+## Latest — Studio polish pass
+
+- **Kept `recite.html` and made it the single recitation hub.** It is linked from
+  the main nav and every dashboard, and it is the only page that lists a
+  student's assignments, full take history and per-lesson review — so it stays.
+- **Step strip now tracks real progress.** Watch → Record → Review highlights
+  the step the student is actually on (lesson open, take in progress, take
+  submitted), instead of a permanently lit first step.
+- **Review card moved below the recorder.** The reading order now exactly
+  matches the strip: lesson video, recorder, then the reviewer's comment, then
+  the full recordings list.
+- **"My lessons" is ordered by recent activity** (newest take first, then
+  assigned lessons) and keeps the best-known title for each lesson.
+- **Mobile jump fixed:** selecting an assignment with a lesson now scrolls to
+  the study video, not past it to the recorder.
+- Cleanup: removed the unused lock-hint markup/styles, the unused `pointerHeld`
+  flag, the leftover "hold the mic" wording in the lesson-page widget, and the
+  dead teacher-nav link to the student-only studio.
+
+## Latest — Tap once to record (phone, tablet & desktop)
+
+- **One tap / click on the mic starts recording.** Both the Recitation Studio
+  recorder (`recite.html`) and the shared widget (`assets/js/ms-recorder.js`,
+  used on lesson pages) now start a hands-free take on a single tap instead of
+  requiring a held press. The recording keeps running after the finger or mouse
+  button lifts, so students can recite comfortably.
+- **Stopping is explicit and obvious.** In the studio the mic turns red with a
+  stop icon and finishes the take when tapped again; the Finish button and
+  `Escape`-to-discard work too. In the lesson-page widget the hands-free rail
+  shows Cancel / Pause / a large green Finish.
+- **Every device covered.** Pointer Events drive mouse, touch and pen;
+  `touch-action: none`, no text selection, no context menu on long-press, and a
+  `click` fallback for older Safari. Keyboard: `Enter`/`Space` toggles
+  start/stop on the focused mic, `Escape` cancels. `Space` also toggles the
+  lesson-page widget. Double-taps during microphone warm-up are ignored.
+- **Safety guards.** Takes shorter than 700 ms are discarded with a friendly
+  hint instead of being sent; permission-denied and no-microphone cases keep
+  clear error messages; pause/resume updates its icon and label.
+- On lesson pages, clicking **Record & Submit** now opens the inline recorder
+  *and* starts the take right away (`MSRecorder.start()`); the fallback link to
+  the studio remains when the widget is not mounted.
+
+## Latest — Recitation Studio: video on top, recorder under it, review after your take
+
+- **`recite.html` is now a study studio.** The lesson video the student is
+  studying sits at the top of the main column, the recorder is directly below
+  it, and "My recordings" follows. A three-step strip
+  (Watch the lesson → Record below → Get the admin review) sets expectations.
+- **"My lessons" rail (right column).** Collects every lesson the student has
+  studied or recorded: derived from their submissions (`lesson_id`) plus
+  teacher assignments that point at a lesson. Cards show thumbnail, title,
+  status badge (Pending / Reviewed / Needs another take), recording count and
+  an "Assigned" tag; the lesson on screen is highlighted. Clicking a card with
+  a matching assignment selects that assignment, otherwise it opens the lesson
+  in practice mode. Thumbnails come from `GET /api/lessons` via `media.js`
+  (`MS_MEDIA.thumb`) with the Quran-branded placeholder fallback.
+- **Per-lesson review card after the recorder.** Loads
+  `GET /api/recitations/lesson/:id`, shows the latest take's status pill and
+  the admin/teacher comment (`feedback`) with sent/reviewed timestamps; pending
+  and needs-improvement states get friendly explanatory copy. After a send the
+  card refreshes automatically, so the comment appears for that exact lesson.
+- **Player builder.** YouTube links render as a poster + gold play button that
+  swaps to an autoplay embed; direct files render a native `<video controls>`
+  with the lesson thumbnail as poster; lessons without a video get a friendly
+  empty state (recording still works).
+- **Session memory.** `recite.html?lessonId=N` wins, otherwise the lesson
+  studied last (`localStorage.ms_recite_lesson`) is restored, then the first
+  active assignment, then the first lesson in "My lessons". Selecting a lesson
+  updates the URL with `history.replaceState`.
+- **Fix:** recording in lesson-direct mode no longer says "Choose an
+  assignment first" — `beginCapture` now accepts a lesson target too. Lesson
+  titles in lesson-direct mode are fetched from the public
+  `GET /api/lessons/:id` endpoint (the old call went through the
+  `/recitations` prefix and always failed).
+- Layout: `.rec-layout` becomes a wide studio column + sticky right rail;
+  new styles for the study card, player, review panel, lesson cards and step
+  strip; responsive collapse under 980 px.
+
+## Latest — inline recorder on the lesson page (record without leaving video.html)
+
+- **New shared component `assets/js/ms-recorder.js` (`MSRecorder.mount`).**
+  Telegram-style hold-to-talk recorder as a self-contained widget: injected
+  CSS, gold mic with halo/beat animations, live wave meter (MSVoice.liveMeter),
+  slide-up to lock hands-free (pause + finish rail), slide-left to cancel,
+  Space-key hold, 700 ms too-short guard, 25 MB hard / 23.5 MB soft size gates,
+  2 h maximum, preview bubble with loader before sending, sending state with
+  error fallback, "Sent for review" confirmation. `MSRecorder.stopAll()` is
+  wired to `beforeunload`.
+- **Student lesson page (`video.html`).** Loads `assets/css/voice-ui.css`,
+  `assets/js/voice-ui.js` and `ms-recorder.js`; the recitation panel gets a
+  `#recitationRecorderHost` slot. For students the panel now mounts the inline
+  recorder directly inside the lesson page — with or without a teacher
+  assignment ("no pre-order needed"): assignment takes send `assignmentId`,
+  lesson-direct takes send `lessonId`. "Record & Submit" scrolls the recorder
+  into view instead of navigating; "Open Recitation Studio" still links to
+  `recite.html?lessonId=N` for the full-page experience. After a successful
+  send the panel refreshes so the status pill flips to "Pending" and the take
+  appears in the admin Recitations queue (student name + lesson).
+- `assets/js/ms-recorder.js` also supports an `assignmentId` option and a
+  `send(form)` callback so other pages can reuse the widget later.
+
+## Latest — lesson-direct practice recordings (no teacher pre-order needed)
+
+A student can now record straight from the lesson they are watching —
+no admin/teacher "order" required first.
+
+- **Student (`video.html` → `recite.html`).** Every lesson page's
+  "Record & Submit" button links to `recite.html?lessonId=N`; the studio opens
+  with that lesson as the recorder target even when the teacher has not
+  created an assignment yet: "Lesson practice — open recording". Hold-to-talk,
+  slide gestures, preview bubble are unchanged; sending now posts `lessonId`
+  (instead of `assignmentId`) for lesson-direct recordings. "My recordings"
+  shows them with the lesson name and a "lesson practice" tag. Assignment
+  recordings keep the old flow exactly. Lesson pages now also show the
+  student's recitation panel without an assignment: status pill, feedback
+  card and the same record links (previously the panel fell back to the
+  guest view when nothing was assigned).
+- **Admin (`admin.html`).** Lesson-direct recordings arrive in the
+  Recitations queue showing **the student's name + the lesson they recorded**
+  (film icon + lesson title); assigned ones additionally show the
+  Surah/ayahs. Approve ✓ / needs-improvement ✗ work the same for both kinds.
+  The teacher dashboard lists only assignment-based recordings (unchanged),
+  and lesson-direct ones are administered (reviewed) by the admin panel, as
+  before.
+- **Backend (`POST /api/recitations/submissions`).** Accepts either
+  `assignmentId` (existing flow) or `lessonId` (lesson must exist and be
+  published). Rows carry `lesson_id` with NULL `assignment_id`/surah/ayah.
+  `canAccessSubmission` blocks teachers from lesson-only rows (admin-only
+  review), `GET /recitations/lesson/:lessonId` (student/admin views) now
+  returns both assignment-based and lesson-only recordings via an
+  `or(lesson_id.eq.N, assignment_id.in.(...))` scope.
+- **Database.** New idempotent section 9 in `supabase/recitations_migration.sql`
+  (re-runnable in the SQL editor): adds `lesson_id` columns to both tables,
+  drops NOT NULL of `assignment_id`/`surah_number`/`surah_name`/
+  `ayah_start`/`ayah_end` on submissions, adds `idx_submissions_lesson`.
+  `supabase/Schrema.sql` (fresh installs) matches the new shape. **Run the
+  migration once on the live Supabase project before deploying the backend.**
+
+## Latest — one-click verify (✓/✗) + lesson context on recitations
+
+- **Lesson-aware student flow (recite.html).** The deep link from a lesson
+  (`video.html` → "Record & Submit" → `recite.html?lessonId=N`) now shows the
+  lesson's name: assignment cards carry a lesson chip (film icon + title) and
+  the recorder target repeats it, so the student always sees *which lesson*
+  they are recording — not just the Surah range. The backend decorators now
+  join `lessons.title` (`lesson_title`) on both assignments and submissions.
+- **One-click verify (admin.html + teacher.html).** The old status
+  dropdown + "Save review" form is replaced by a Telegram-style action rail
+  next to the voice bubble: a circular **green ✓** ("well recited — approve")
+  and **red ✗** ("ask for improvement"). Tapping ✓ instantly marks the
+  recording as reviewed (prior improvement notes are cleared; the column is
+  nullable and the backend allows empty feedback on approve). Tapping ✗ opens
+  a small note composer (textarea + Cancel/Send) — the note is required there,
+  both in the browser and on `PATCH /recitations/submissions/:id/review`.
+  Buttons fill with their state colour once a recording is decided and keep
+  working to re-review (e.g. change a note, flip to improve).
+- **Chat-style admin replies (admin.html).** Decided recordings show the
+  admin's answer as a right-aligned gold reply bubble (status label +
+  timestamp + note, or a friendly "approved — keep practising well" line when
+  there is nothing written), the unanswered ones stay plain so the pending
+  rail is obvious.
+
+## Latest — Telegram-style voice recitations + admin Recitations page
+
+The recitation feature now works like a chat voice message: hold to record,
+release to send, a real waveform bubble to review — and the admin panel finally
+sees what students send.
+
+- **Shared voice component (`assets/js/voice-ui.js` + `assets/css/voice-ui.css`).**
+  `MSVoice` renders Telegram-style player bubbles: gold play button, real
+  waveform (peaks decoded once from the audio, cached per recording id),
+  progress scroll and remaining-time countdown. A deterministic fallback
+  waveform is used when decoding fails. Only one recording plays at a time;
+  navigating away ("beforeunload") stops playback everywhere.
+  `MSVoice.liveMeter` powers the red recording bars during capture.
+- **Student studio (`recite.html`).** The recorder is now a Telegram-style
+  dock: **press-and-hold the mic** to record (or hold Space), live WebAudio
+  bars around the mic, drag **up** to lock/keep, drag **left** to cancel
+  (trash arms while dragging), release under 0.7s discards accidental taps.
+  Locked mode adds pause/resume and a finish button plus a slide-up lock
+  button; stop leads to a preview bubble (Redo / Send). Soft-limit at 23.5 MB
+  stops the recording, 25 MB hard cap enforced (size card replaces the timer),
+  max 2 h. "My recordings" renders as voice bubbles via `MSVoice.bubble`.
+  Page now loads `voice-ui.js`.
+- **Teacher page (`teacher.html`).** Student submissions render as the same
+  voice bubbles; the bespoke playback button/waveform code was removed.
+- **Admin panel (`admin.html`).** New **Recitations** sidebar page (with a
+  pending-count badge, like Student Access): stats row (awaiting / reviewed /
+  needs improvement / students recording), status filter, student/Surah search
+  and a refresh button. Each recording appears as a voice bubble (admin token
+  fetched through a new `apiAudio()` blob helper — audio files are private),
+  with student name/email, Surah + ayah range, sent timestamp, status chip,
+  existing feedback, and a review composer (status + feedback textarea →
+  `PATCH /api/recitations/submissions/:id/review`; `needs_improvement`
+  requires feedback). Badge and stats populate on login via
+  `GET /api/recitations/stats`; the list reloads on language switch and keeps
+  filters across refreshes (client-side filtering over one fetch, limit 200).
+
 ## Latest — book PDFs render inline on the Books page (no new tab)
 
 Admins can now publish a book as a **PDF**, and visitors read it inside the

@@ -8,8 +8,10 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="Images/mordern-skills-logo.png">
 <link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/voice-ui.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all';this.onload=null">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"></noscript>
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -152,9 +154,7 @@ select.form-control { cursor: pointer; }
 .sub-feedback { margin-top: 10px; padding: 9px 11px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-size: 11.5px; color: var(--text-sec); line-height: 1.55; }
 .sub-feedback strong { display: block; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
 .sub-actions { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
-.play-btn { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(212,168,83,0.35); background: rgba(212,168,83,0.09); color: var(--gold-light); font-size: 11.5px; font-weight: 700; transition: all .2s; }
-.play-btn:hover { background: rgba(212,168,83,0.16); box-shadow: var(--glow-gold); }
-.play-btn:disabled { opacity: .55; cursor: wait; }
+.sub-voice { flex: 0 1 320px; min-width: min(240px, 100%); display: flex; align-items: center; }
 .sub-date { font-size: 10.5px; color: var(--text-muted); }
 .review-box { margin-top: 11px; padding-top: 11px; border-top: 1px dashed rgba(212,168,83,0.18); display: grid; gap: 8px; }
 .review-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -162,6 +162,25 @@ select.form-control { cursor: pointer; }
 .review-row .btn { padding: 9px 13px; font-size: 11.5px; }
 .review-state { font-size: 10.5px; color: var(--text-muted); }
 .review-box textarea { min-height: 58px; font-size: 11.5px; }
+
+/* Telegram-style verify actions (same look as the admin panel). */
+.rec-actions { display: flex; gap: 8px; }
+.rec-act {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; cursor: pointer; border: 1.5px solid transparent;
+    background: rgba(255,255,255,0.05); color: var(--text-sec);
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.rec-act:hover { transform: translateY(-1px); }
+.rec-act:focus-visible { outline: 2px solid rgba(212,168,83,0.6); outline-offset: 2px; }
+.rec-act.approve { border-color: rgba(52,211,153,0.45); color: #6ee7b7; }
+.rec-act.approve:hover { background: rgba(52,211,153,0.15); color: #a7f3d0; }
+.rec-act.approve.active { background: #34d399; color: #062012; border-color: #34d399; box-shadow: 0 8px 22px -10px rgba(52,211,153,0.85); }
+.rec-act.improve { border-color: rgba(248,113,113,0.45); color: #fca5a5; }
+.rec-act.improve:hover { background: rgba(248,113,113,0.15); color: #fecaca; }
+.rec-act.improve.active { background: #f87171; color: #2b0707; border-color: #f87171; box-shadow: 0 8px 22px -10px rgba(248,113,113,0.85); }
+.rec-act.busy { opacity: 0.55; pointer-events: none; }
 
 .teacher-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(212,168,83,0.08); }
 .teacher-row:last-child { border-bottom: 0; }
@@ -178,13 +197,112 @@ select.form-control { cursor: pointer; }
 .rec-toast.leaving { opacity: 0; transform: translateY(6px); transition: all .2s; }
 @keyframes recToastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
+/* ===== LOGIN OVERLAY (same as Admin) ===== */
+.login-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(212,168,83,0.12) 0%, transparent 55%), rgba(5,15,11,0.97);
+    backdrop-filter: blur(18px);
+}
+.login-overlay.hidden { display: none !important; }
+.login-box {
+    width: 440px;
+    max-width: 94vw;
+    padding: 46px 42px 38px;
+    background: radial-gradient(140% 120% at 50% 0%, rgba(23,52,39,0.98) 0%, rgba(9,22,16,0.98) 100%);
+    border: 1px solid rgba(212,168,83,0.28);
+    border-radius: 26px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 40px 120px -30px rgba(0,0,0,0.85), 0 0 120px -40px rgba(212,168,83,0.4);
+    animation: teacherLoginIn .5s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes teacherLoginIn { from { opacity: 0; transform: translateY(18px) scale(.98); } to { opacity: 1; transform: none; } }
+.login-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+}
+.login-icon {
+    width: 64px; height: 64px;
+    border-radius: 18px;
+    background: var(--grad-gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px;
+    font-size: 28px;
+    color: #14100a;
+    box-shadow: 0 12px 40px -16px rgba(212,168,83,0.9);
+}
+.login-box h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.01em; }
+.login-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 26px; }
+.login-error {
+    display: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(248,113,113,0.12);
+    border: 1px solid rgba(248,113,113,0.32);
+    color: #fca5a5;
+    font-size: 12px;
+    text-align: left;
+    margin-bottom: 16px;
+}
+.login-error.show { display: flex; align-items: center; gap: 8px; }
+.login-form { display: grid; gap: 14px; text-align: left; }
+.login-field label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 7px; }
+.login-input-wrap { position: relative; display: flex; align-items: center; }
+.login-input-wrap i { position: absolute; left: 14px; color: rgba(212,168,83,0.8); font-size: 13px; }
+.login-input {
+    width: 100%;
+    padding: 12px 14px 12px 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(6,19,14,0.8);
+    color: var(--text);
+    font-size: 13px;
+    transition: border-color .2s, box-shadow .2s;
+}
+.login-input:focus { outline: none; border-color: rgba(212,168,83,0.7); box-shadow: 0 0 0 4px rgba(212,168,83,0.1); }
+.login-btn {
+    margin-top: 6px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 0;
+    background: var(--grad-gold);
+    color: #14100a;
+    font-weight: 800;
+    font-size: 13px;
+    box-shadow: 0 18px 40px -18px rgba(212,168,83,0.9);
+}
+.login-btn:disabled { opacity: .6; cursor: not-allowed; }
+.login-foot { margin-top: 18px; font-size: 11px; color: var(--text-muted); }
+
 .rec-footer { max-width: var(--content-max); margin: 46px auto 0; padding: 0 var(--gutter); color: var(--text-muted); font-size: 11px; text-align: center; }
 .rec-hidden { display: none !important; }
 
-@media (max-width: 980px) {
-    .rec-hero, .teacher-grid, .overview-grid { grid-template-columns: 1fr; }
-    .rec-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
+    .lang-select { position: relative; }
+    .lang-menu { position: absolute; right: 0; top: calc(100% + 8px); display: none; flex-direction: column; background: rgba(9,26,19,0.98); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; min-width: 140px; box-shadow: var(--shadow); z-index: 60; }
+    .lang-select.open .lang-menu { display: flex; }
+    .lang-option { display: flex; align-items: center; gap: 8px; padding: 9px 12px; font-size: 12px; color: var(--text-sec); cursor: pointer; }
+    .lang-option:hover { background: rgba(212,168,83,0.08); color: var(--text); }
+    .lang-option.active { color: var(--gold-light); }
+    .lang-trigger:hover { border-color: var(--border-strong); color: var(--text); }
+
+    @media (max-width: 980px) {
+        .rec-hero, .teacher-grid, .overview-grid { grid-template-columns: 1fr; }
+        .rec-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
 @media (max-width: 720px) {
     .rec-header-inner { gap: 12px; flex-wrap: wrap; }
     .rec-nav { order: 3; width: 100%; overflow-x: auto; }
@@ -198,6 +316,25 @@ select.form-control { cursor: pointer; }
 </style>
 </head>
 <body class="rec-page">
+<div class="login-overlay" id="teacherLoginOverlay">
+    <div class="login-box">
+        <div class="login-icon"><i class="fas fa-chalkboard-user"></i></div>
+        <h2>Teacher Dashboard</h2>
+        <p>Sign in with your teacher or admin account to continue</p>
+        <div class="login-error" id="teacherLoginError"><i class="fas fa-circle-exclamation"></i><span id="teacherLoginErrorText">Invalid credentials</span></div>
+        <form class="login-form" id="teacherLoginForm" novalidate>
+            <div class="login-field">
+                <label for="teacherLoginPassword">Password</label>
+                <div class="login-input-wrap">
+                    <i class="fas fa-lock"></i>
+                    <input class="login-input" id="teacherLoginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+                </div>
+            </div>
+            <button class="login-btn" id="teacherLoginBtn" type="submit"><i class="fas fa-right-to-bracket"></i> Sign in to dashboard</button>
+        </form>
+        <div class="login-foot">Use the same credentials as the admin portal</div>
+    </div>
+</div>
 <a class="skip-link" href="#dashboard">Skip to dashboard</a>
 
 <header class="rec-header">
@@ -207,11 +344,22 @@ select.form-control { cursor: pointer; }
             <span>Modern Skills</span>
         </a>
         <nav class="rec-nav" aria-label="Main navigation">
-            <a href="index.html">Home</a>
-            <a href="books.html">Books</a>
-            <a href="teacher.html" class="active" aria-current="page">Teacher dashboard</a>
+            <a href="index.html"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span></a>
+            <a href="books.html"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span></a>
+            <a href="teacher.html" class="active" aria-current="page"><span data-lang="en">Teacher dashboard</span><span data-lang="rw">Imbonerahamwe y'Umwarimu</span></a>
         </nav>
         <div class="rec-user">
+            <div class="lang-select" id="langSelect" title="Switch language" style="margin-right:6px;">
+                <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-label="Choose language" style="padding:8px 12px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text-sec);display:flex;align-items:center;gap:8px;">
+                    <i class="fas fa-globe-africa"></i>
+                    <span class="lang-current" id="langCurrent">EN</span>
+                    <i class="fas fa-chevron-down" style="font-size:9px;"></i>
+                </button>
+                <div class="lang-menu" id="langMenu" role="listbox" style="right:0;left:auto;min-width:150px;">
+                    <span class="lang-option active" data-lang-code="en" role="option" tabindex="0"><span class="flag">🇬🇧</span><span class="lname">English</span></span>
+                    <span class="lang-option" data-lang-code="rw" role="option" tabindex="0"><span class="flag">🇷🇼</span><span class="lname">Kinyarwanda</span></span>
+                </div>
+            </div>
             <span class="rec-user-name" id="recUserName"></span>
             <span id="recUserAvatar"></span>
             <button type="button" class="rec-logout" id="logoutBtn" title="Sign out" aria-label="Sign out">
@@ -410,6 +558,41 @@ select.form-control { cursor: pointer; }
 
 <script src="config.js"></script>
 <script src="assets/js/recitation-common.js"></script>
+<script src="assets/js/voice-ui.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/translations.js"></script>
+<script>
+(function(){
+    var select=document.getElementById('langSelect');
+    var trigger=document.getElementById('langTrigger');
+    var menu=document.getElementById('langMenu');
+    if(!select||!trigger) return;
+    trigger.addEventListener('click',function(e){e.stopPropagation();var o=select.classList.toggle('open');trigger.setAttribute('aria-expanded',o?'true':'false');});
+    document.addEventListener('click',function(e){if(!select.contains(e.target)){select.classList.remove('open');trigger.setAttribute('aria-expanded','false');}});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'){select.classList.remove('open');trigger.setAttribute('aria-expanded','false');}});
+    if(menu){
+        menu.querySelectorAll('.lang-option').forEach(function(opt){
+            opt.addEventListener('click',function(){
+                var code=opt.getAttribute('data-lang-code')||'en';
+                try{ if(window.MS_I18N && typeof MS_I18N.setLang==='function'){ MS_I18N.setLang(code); } else { localStorage.setItem('msPublicLang',code); } }catch(e){}
+                menu.querySelectorAll('.lang-option').forEach(function(o){o.classList.toggle('active',o===opt);});
+                var cur=document.getElementById('langCurrent');
+                if(cur) cur.textContent=(code||'en').toUpperCase();
+                select.classList.remove('open'); trigger.setAttribute('aria-expanded','false');
+                document.querySelectorAll('[data-lang]').forEach(function(el){ el.style.display = el.getAttribute('data-lang')===code?'':'none'; });
+            });
+        });
+    }
+    try{
+        var c=(window.MS_I18N && typeof MS_I18N.readStored==='function')?MS_I18N.readStored():(localStorage.getItem('msPublicLang')||'en');
+        if(c!=='en'&&c!=='rw'){c='en';}
+        var cur=document.getElementById('langCurrent');
+        if(cur) cur.textContent=c.toUpperCase();
+        document.querySelectorAll('[data-lang]').forEach(function(el){ el.style.display = el.getAttribute('data-lang')===c?'':'none'; });
+        if(menu){ menu.querySelectorAll('.lang-option').forEach(function(o){o.classList.toggle('active',o.getAttribute('data-lang-code')===c);}); }
+    }catch(e){}
+})();
+</script>
 <script>
 (function () {
     'use strict';
@@ -424,7 +607,6 @@ select.form-control { cursor: pointer; }
     var stats = { pending: 0, reviewed: 0, needs_improvement: 0, total: 0 };
     var statusFilter = '';
     var assignmentFilter = '';
-    var playback = null;
     var activeTab = 'overview';
 
     var els = {
@@ -598,7 +780,6 @@ select.form-control { cursor: pointer; }
 
     function renderSubmissionCard(s, compact) {
         var meta = R.statusMeta(s.status);
-        var selectedStatus = (s.status === 'reviewed' || s.status === 'needs_improvement') ? s.status : 'reviewed';
         var feedback = s.feedback
             ? '<div class="sub-feedback"><strong>Feedback</strong>' + R.escapeHtml(s.feedback) + '</div>'
             : '';
@@ -608,35 +789,55 @@ select.form-control { cursor: pointer; }
         var reviewBox = compact ? '' : ''
             + '<div class="review-box">'
             + '  <div class="review-row">'
-            + '      <select class="form-control" data-review-status>'
-            + '          <option value="reviewed"' + (selectedStatus === 'reviewed' ? ' selected' : '') + '>Reviewed</option>'
-            + '          <option value="needs_improvement"' + (selectedStatus === 'needs_improvement' ? ' selected' : '') + '>Needs improvement</option>'
-            + '      </select>'
-            + '      <button type="button" class="btn btn-primary" data-save-review="' + s.id + '"><i class="fas fa-check"></i> Save review</button>'
+            + '      <div class="rec-actions">'
+            + '          <button type="button" class="rec-act approve' + (s.status === 'reviewed' ? ' active' : '') + '" data-approve-review="' + s.id + '" title="Well recited \u2014 approve"><i class="fas fa-check"></i></button>'
+            + '          <button type="button" class="rec-act improve' + (s.status === 'needs_improvement' ? ' active' : '') + '" data-improve-review="' + s.id + '" title="Ask for improvement"><i class="fas fa-xmark"></i></button>'
+            + '      </div>'
             + '      <span class="review-state">' + reviewed + '</span>'
             + '  </div>'
-            + '  <textarea class="form-control" data-feedback maxlength="2000" placeholder="What should the student keep doing or improve?">' + R.escapeHtml(s.feedback || '') + '</textarea>'
+            + '  <div data-improve-composer style="display:none;">'
+            + '      <textarea class="form-control" data-feedback maxlength="2000" placeholder="What should the student improve?">' + R.escapeHtml(s.feedback || '') + '</textarea>'
+            + '      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;flex-wrap:wrap;">'
+            + '          <button type="button" class="btn btn-secondary" data-cancel-improve style="padding:6px 12px;font-size:11px;">Cancel</button>'
+            + '          <button type="button" class="btn btn-primary" data-save-review="' + s.id + '" style="padding:8px 14px;font-size:12px;"><i class="fas fa-paper-plane"></i> Send note</button>'
+            + '      </div>'
+            + '  </div>'
             + '</div>';
         return ''
             + '<article class="sub-card" data-submission="' + s.id + '">'
             + '  <div class="sub-top">'
             + R.avatarHtml(s.student_name || 'Student')
             + '      <div>'
-            + '          <h3>' + R.escapeHtml(s.student_name || 'Student') + ' <span>' + R.escapeHtml(s.surah_name) + ' &middot; ' + R.escapeHtml(R.ayahLabel(s.ayah_start, s.ayah_end)) + '</span></h3>'
+            + '          <h3>' + R.escapeHtml(s.student_name || 'Student') + ' <span>' + (s.surah_name
+                ? R.escapeHtml(s.surah_name) + ' &middot; ' + R.escapeHtml(R.ayahLabel(s.ayah_start, s.ayah_end))
+                : (s.lesson_title ? R.escapeHtml(s.lesson_title) : 'Recording'))
+            + '</span></h3>'
             + '          <p>' + R.escapeHtml(R.formatDateTime(s.created_at)) + ' &middot; ' + R.formatDuration(s.duration_seconds) + ' &middot; ' + R.formatBytes(s.file_size) + '</p>'
             + '      </div>'
             + '      <span class="rec-badge ' + meta.cls + '"><i class="fas ' + meta.icon + '"></i>' + meta.label + '</span>'
             + '  </div>'
             + feedback
             + '  <div class="sub-actions">'
-            + '      <button type="button" class="play-btn" data-play="' + s.id + '"><i class="fas fa-play"></i> Play recording</button>'
+            + '      <div class="sub-voice" data-voice="' + s.id + '" data-duration="' + (s.duration_seconds || 0) + '"></div>'
             + '  </div>'
             + reviewBox
             + '</article>';
     }
 
+    function bindVoiceCards(root) {
+        var hosts = root.querySelectorAll('[data-voice]');
+        Array.prototype.forEach.call(hosts, function (host) {
+            var id = Number(host.getAttribute('data-voice'));
+            var duration = Number(host.getAttribute('data-duration')) || 0;
+            MSVoice.bubble(host, {
+                id: id,
+                duration: duration,
+                loader: function () { return R.fetchAudio(id); }
+            });
+        });
+    }
+
     function renderSubmissions() {
-        stopPlayback();
         var list = submissions.filter(function (s) {
             if (statusFilter && s.status !== statusFilter) return false;
             if (assignmentFilter && s.assignment_id !== assignmentFilter) return false;
@@ -649,6 +850,7 @@ select.form-control { cursor: pointer; }
         }
 
         els.submissionList.innerHTML = list.map(function (s) { return renderSubmissionCard(s, false); }).join('');
+        bindVoiceCards(els.submissionList);
     }
 
     function fillAssignmentFilter() {
@@ -790,62 +992,6 @@ select.form-control { cursor: pointer; }
         if (showToast) R.toast('Dashboard refreshed.', 'success');
     }
 
-    // ---------------- Playback ----------------
-    function stopPlayback() {
-        if (!playback) return;
-        try { playback.audio.pause(); } catch (e) {}
-        URL.revokeObjectURL(playback.url);
-        if (playback.btn) {
-            playback.btn.disabled = false;
-            playback.btn.innerHTML = '<i class="fas fa-play"></i> Play recording';
-        }
-        playback = null;
-    }
-
-    async function togglePlayback(button, id) {
-        if (playback && playback.id === id && playback.btn === button) {
-            if (playback.audio.paused) {
-                try { await playback.audio.play(); } catch (e) {}
-            } else {
-                playback.audio.pause();
-            }
-            return;
-        }
-
-        stopPlayback();
-        button.disabled = true;
-        button.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading&hellip;';
-
-        try {
-            var url = await R.fetchAudio(id);
-            var audio = new Audio(url);
-            playback = { id: id, btn: button, audio: audio, url: url };
-
-            function updateLabel() {
-                if (!playback || playback.audio !== audio) return;
-                button.disabled = false;
-                button.innerHTML = (!audio.paused && !audio.ended)
-                    ? '<i class="fas fa-pause"></i> Pause'
-                    : '<i class="fas fa-play"></i> Play recording';
-            }
-
-            audio.addEventListener('play', updateLabel);
-            audio.addEventListener('pause', updateLabel);
-            audio.addEventListener('ended', updateLabel);
-            audio.addEventListener('error', function () {
-                R.toast('This recording could not be played.', 'error');
-                stopPlayback();
-            });
-
-            await audio.play();
-            updateLabel();
-        } catch (err) {
-            button.disabled = false;
-            button.innerHTML = '<i class="fas fa-play"></i> Play recording';
-            R.toast(err.message || 'Could not load the recording.', 'error');
-        }
-    }
-
     // ---------------- Tabs ----------------
     function showTab(name) {
         activeTab = name;
@@ -925,13 +1071,11 @@ select.form-control { cursor: pointer; }
     }
 
     async function saveReview(id, card) {
-        var select = card.querySelector('[data-review-status]');
         var textarea = card.querySelector('[data-feedback]');
         var button = card.querySelector('[data-save-review]');
-        var status = select ? select.value : '';
         var feedback = textarea ? textarea.value.trim() : '';
 
-        if (status === 'needs_improvement' && !feedback) {
+        if (!feedback) {
             R.toast('Write feedback explaining what the student should improve.', 'error');
             if (textarea) textarea.focus();
             return;
@@ -943,19 +1087,30 @@ select.form-control { cursor: pointer; }
         try {
             await R.api('/submissions/' + id + '/review', {
                 method: 'PATCH',
-                body: { status: status, feedback: feedback }
+                body: { status: 'needs_improvement', feedback: feedback }
             });
-            R.toast('Review saved.', 'success');
+            R.toast('Note sent to the student.', 'success');
             await Promise.all([loadSubmissions(), loadAssignments(), loadStats()]);
-            var fresh = els.submissionList.querySelector('[data-submission="' + id + '"]');
-            if (fresh) {
-                fresh.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                fresh.style.borderColor = 'rgba(52,211,153,0.5)';
-                setTimeout(function () { fresh.style.borderColor = ''; }, 1600);
-            }
         } catch (err) {
-            button.disabled = false;
-            button.innerHTML = '<i class="fas fa-check"></i> Save review';
+            if (button.isConnected) {
+                button.disabled = false;
+                button.innerHTML = '<i class="fas fa-paper-plane"></i> Send note';
+            }
+            R.toast(err.message || 'Could not save the review.', 'error');
+        }
+    }
+
+    async function approveReview(id, button) {
+        button.classList.add('busy');
+        try {
+            await R.api('/submissions/' + id + '/review', {
+                method: 'PATCH',
+                body: { status: 'reviewed', feedback: '' }
+            });
+            R.toast('Approved. The student will see \u2713', 'success');
+            await Promise.all([loadSubmissions(), loadAssignments(), loadStats()]);
+        } catch (err) {
+            if (button.isConnected) button.classList.remove('busy');
             R.toast(err.message || 'Could not save the review.', 'error');
         }
     }
@@ -1057,23 +1212,132 @@ select.form-control { cursor: pointer; }
     });
 
     els.submissionList.addEventListener('click', function (event) {
-        var playBtn = event.target.closest('[data-play]');
-        if (playBtn) {
-            togglePlayback(playBtn, Number(playBtn.getAttribute('data-play')));
+        var approveBtn = event.target.closest('[data-approve-review]');
+        if (approveBtn) {
+            approveReview(Number(approveBtn.getAttribute('data-approve-review')), approveBtn);
+            return;
+        }
+        var improveBtn = event.target.closest('[data-improve-review]');
+        if (improveBtn) {
+            var card = improveBtn.closest('[data-submission]');
+            if (card) {
+                var composer = card.querySelector('[data-improve-composer]');
+                if (composer) {
+                    var open = composer.style.display !== 'none';
+                    composer.style.display = open ? 'none' : 'block';
+                    if (!open) {
+                        var box = composer.querySelector('[data-feedback]');
+                        if (box) box.focus();
+                    }
+                }
+            }
+            return;
+        }
+        var cancelBtn = event.target.closest('[data-cancel-improve]');
+        if (cancelBtn) {
+            var wrap = cancelBtn.closest('[data-improve-composer]');
+            if (wrap) wrap.style.display = 'none';
             return;
         }
         var saveBtn = event.target.closest('[data-save-review]');
         if (saveBtn) {
-            var card = saveBtn.closest('[data-submission]');
-            if (card) saveReview(Number(saveBtn.getAttribute('data-save-review')), card);
+            var reviewCard = saveBtn.closest('[data-submission]');
+            if (reviewCard) saveReview(Number(saveBtn.getAttribute('data-save-review')), reviewCard);
         }
     });
 
     window.addEventListener('beforeunload', function () {
-        stopPlayback();
+        MSVoice.stopAll();
     });
 
+    const teacherOverlay = document.getElementById('teacherLoginOverlay');
+    const teacherForm = document.getElementById('teacherLoginForm');
+    const teacherPass = document.getElementById('teacherLoginPassword');
+    const teacherBtn = document.getElementById('teacherLoginBtn');
+    const teacherErr = document.getElementById('teacherLoginError');
+    const teacherErrText = document.getElementById('teacherLoginErrorText');
+    const TEACHER_EMAIL = 'admin@nooracademy.com';
+    const API_ORIGIN_T = (window.MODERN_SKILLS_CONFIG && window.MODERN_SKILLS_CONFIG.API_URL) || (location.protocol === 'file:' ? 'http://localhost:3001' : location.origin);
+    const API_BASE_T = API_ORIGIN_T + '/api';
+
+    function showTeacherError(msg) {
+        if (!teacherErr || !teacherErrText) return;
+        teacherErrText.textContent = msg || 'Login failed. Check your credentials.';
+        teacherErr.classList.add('show');
+    }
+    function hideTeacherError() {
+        if (!teacherErr) return;
+        teacherErr.classList.remove('show');
+    }
+
+    async function checkTeacherSession() {
+        if (!teacherOverlay) return true;
+        const token = localStorage.getItem('ms_token');
+        if (!token) { teacherOverlay.classList.remove('hidden'); return false; }
+        try {
+            const res = await fetch(API_BASE_T + '/auth/me', { headers: { 'Authorization': 'Bearer ' + token } });
+            if (!res.ok) throw new Error('bad');
+            const data = await res.json();
+            const u = data && data.user;
+            if (!u || !u.id) throw new Error('bad');
+            if (u.role !== 'teacher' && u.role !== 'admin') {
+                localStorage.removeItem('ms_token');
+                localStorage.removeItem('ms_user');
+                showTeacherError('This account does not have teacher or admin access.');
+                teacherOverlay.classList.remove('hidden');
+                return false;
+            }
+            try { localStorage.setItem('ms_user', JSON.stringify(u)); } catch(e){}
+            teacherOverlay.classList.add('hidden');
+            return true;
+        } catch (e) {
+            localStorage.removeItem('ms_token');
+            localStorage.removeItem('ms_user');
+            teacherOverlay.classList.remove('hidden');
+            return false;
+        }
+    }
+
+    if (teacherForm) {
+        teacherForm.addEventListener('submit', async function(ev){
+            ev.preventDefault();
+            hideTeacherError();
+            const pass = teacherPass ? teacherPass.value : '';
+            if (!pass) {
+                showTeacherError('Enter your password to continue.');
+                return;
+            }
+            if (teacherBtn) { teacherBtn.disabled = true; teacherBtn.innerHTML = '<span class="spinner"></span> Signing in...'; }
+            try {
+                const res = await fetch(API_BASE_T + '/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: TEACHER_EMAIL, password: pass })
+                });
+                const data = await res.json().catch(function(){ return {}; });
+                if (!res.ok) throw new Error(data.error || data.message || 'Login failed');
+                if (data.token) localStorage.setItem('ms_token', data.token);
+                if (data.user) {
+                    try { localStorage.setItem('ms_user', JSON.stringify(data.user)); } catch(e){}
+                    if (data.user.role !== 'teacher' && data.user.role !== 'admin') {
+                        localStorage.removeItem('ms_token');
+                        localStorage.removeItem('ms_user');
+                        throw new Error('Access denied. Teacher or admin account required.');
+                    }
+                }
+                if (teacherOverlay) teacherOverlay.classList.add('hidden');
+                window.location.reload();
+            } catch (err) {
+                showTeacherError(err.message || 'Login failed');
+            } finally {
+                if (teacherBtn) { teacherBtn.disabled = false; teacherBtn.innerHTML = '<i class="fas fa-right-to-bracket"></i> Sign in to dashboard'; }
+            }
+        });
+    }
+
     (async function init() {
+        const ok = await checkTeacherSession();
+        if (!ok) return;
         try {
             user = await R.guard(['teacher', 'admin']);
         } catch (err) {

@@ -9,6 +9,7 @@
 <meta name="description" content="Modern Skills administration panel. Staff only.">
 <link rel="icon" type="image/png" href="Images/mordern-skills-logo.png">
 <link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/voice-ui.css">
 <!-- Warm the font/CDN origins in parallel instead of discovering them mid-render. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1426,11 +1427,58 @@ body.lang-rw [data-lang="en"] { display: none !important; }
     color: #14100a;
     box-shadow: 0 4px 12px rgba(212,168,83,0.25), inset 0 1px 0 rgba(255,255,255,0.4);
 }
+
+/* ===== Recitations — Telegram-style verify actions ===== */
+.rec-actions { display: flex; gap: 8px; flex: 0 0 auto; }
+.rec-act {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; cursor: pointer; border: 1.5px solid transparent;
+    background: rgba(255,255,255,0.05); color: var(--text-sec);
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.rec-act:hover { transform: translateY(-1px); }
+.rec-act:focus-visible { outline: 2px solid rgba(212,168,83,0.6); outline-offset: 2px; }
+.rec-act.approve { border-color: rgba(52,211,153,0.45); color: #6ee7b7; }
+.rec-act.approve:hover { background: rgba(52,211,153,0.15); color: #a7f3d0; }
+.rec-act.approve.active {
+    background: #34d399; color: #062012; border-color: #34d399;
+    box-shadow: 0 8px 22px -10px rgba(52,211,153,0.85);
+}
+.rec-act.approve.busy { opacity: 0.55; pointer-events: none; }
+.rec-act.improve { border-color: rgba(248,113,113,0.45); color: #fca5a5; }
+.rec-act.improve:hover { background: rgba(248,113,113,0.15); color: #fecaca; }
+.rec-act.improve.active {
+    background: #f87171; color: #2b0707; border-color: #f87171;
+    box-shadow: 0 8px 22px -10px rgba(248,113,113,0.85);
+}
+.rec-act.improve.busy { opacity: 0.55; pointer-events: none; }
+.rec-msg-body { display: flex; align-items: flex-start; gap: 12px; margin-top: 12px; }
+.rec-msg-body .vsu-wrap { flex: 1 1 auto; min-width: 0; }
+.rec-reply {
+    margin-top: 10px; margin-left: auto; max-width: 640px;
+    padding: 10px 14px 11px;
+    border-radius: 16px 16px 4px 16px;
+    background: linear-gradient(135deg, rgba(212,168,83,0.15), rgba(212,168,83,0.05));
+    border: 1px solid rgba(212,168,83,0.28);
+}
+.rec-reply-head {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 4px; flex-wrap: wrap;
+}
+.rec-reply-head i { font-size: 10px; }
+.rec-reply-head .ok { color: #6ee7b7; }
+.rec-reply-head .warn { color: #fca5a5; }
+.rec-reply-body { font-size: 12.5px; color: var(--text-sec); line-height: 1.55; }
+.rec-composer { margin-top: 10px; display: grid; gap: 8px; }
+.rec-composer textarea { min-height: 64px; }
 </style>
 <script src="config.js"></script>
 <script src="assets/js/media.js"></script>
 <script src="assets/js/translations.js"></script>
 <script src="assets/js/i18n.js"></script>
+<script src="assets/js/voice-ui.js"></script>
 </head>
 <body>
 
@@ -1489,6 +1537,7 @@ body.lang-rw [data-lang="en"] { display: none !important; }
         <button class="sidebar-link" data-page="books"><i class="fas fa-book"></i> <span data-lang="en">Books</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">الكتب</span><span data-lang="rw">Ibitabo</span></button>
                         <button class="sidebar-link" data-page="payments"><i class="fas fa-users"></i> <span data-lang="en">Students</span><span data-lang="fr">Étudiants</span><span data-lang="sw">Wanafunzi</span><span data-lang="ar">الطلاب</span><span data-lang="rw">Abanyeshuri</span> <span class="badge" id="pendingPayCount" style="background:#f59e0b;color:#000;display:none;">0</span></button>
         <button class="sidebar-link" data-page="plans"><i class="fas fa-tags"></i> <span data-lang="en">Plans &amp; Prices</span><span data-lang="fr">Forfaits &amp; Prix</span><span data-lang="sw">Mipango &amp; Bei</span><span data-lang="ar">الخطط والأسعار</span><span data-lang="rw">Ibiciro n'Amabwiriza</span></button>
+        <button class="sidebar-link" data-page="recitations"><i class="fas fa-microphone-lines"></i> <span data-lang="en">Recitations</span><span data-lang="fr">Récitations</span><span data-lang="sw">Usomaji</span><span data-lang="ar">التلاوات</span><span data-lang="rw">Gusoma</span> <span class="badge" id="pendingRecCount" style="background:#f59e0b;color:#000;display:none;">0</span></button>
     </nav>
     <div class="sidebar-footer">
         <a href="index.html" class="sidebar-link"><i class="fas fa-arrow-left"></i> <span data-lang="en">Back to Site</span><span data-lang="fr">Retour au site</span><span data-lang="sw">Rudi kwenye Tovuti</span><span data-lang="ar">العودة إلى الموقع</span><span data-lang="rw">Subira kuri Site</span></a>
@@ -2232,6 +2281,51 @@ body.lang-rw [data-lang="en"] { display: none !important; }
             </div>
         </div>
 
+        <div class="page-section" id="page-recitations">
+            <div class="stats-row" style="margin-bottom:20px;">
+                <div class="stat-card">
+                    <div class="stat-icon gold"><i class="fas fa-hourglass-half"></i></div>
+                    <div class="stat-info"><h3 id="recStatPending">—</h3><p data-lang="en">Awaiting review</p><p data-lang="fr">En attente de révision</p><p data-lang="sw">Inasubiri Ukaguzi</p><p data-lang="ar">بانتظار المراجعة</p><p data-lang="rw">Bitegereje kusuzumwa</p></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-circle-check"></i></div>
+                    <div class="stat-info"><h3 id="recStatReviewed">—</h3><p data-lang="en">Reviewed</p><p data-lang="fr">Révisé</p><p data-lang="sw">Imekaguliwa</p><p data-lang="ar">تمت المراجعة</p><p data-lang="rw">Byasuzumwe</p></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="fas fa-rotate-left"></i></div>
+                    <div class="stat-info"><h3 id="recStatImprove">—</h3><p data-lang="en">Needs improvement</p><p data-lang="fr">À améliorer</p><p data-lang="sw">Inahitaji Kuboreshwa</p><p data-lang="ar">يحتاج إلى تحسين</p><p data-lang="rw">Keneye kunyurwa</p></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-user-graduate"></i></div>
+                    <div class="stat-info"><h3 id="recStatStudents">—</h3><p data-lang="en">Students recording</p><p data-lang="fr">Étudiants enregistreurs</p><p data-lang="sw">Wanafunzi Wanaorekodi</p><p data-lang="ar">طلاب مسجلون</p><p data-lang="rw">Abanyeshuri bafata amajwi</p></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-microphone-lines"></i> <span data-lang="en">Recitations sent for review</span><span data-lang="fr">Récitations envoyées</span><span data-lang="sw">Usomaji Uliotumwa</span><span data-lang="ar">التلاوات المرسلة للمراجعة</span><span data-lang="rw">Gusoma kwoherejwe</span></h3>
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                        <input type="text" class="form-control" id="recSearchInput" placeholder="Shaka umunyeshuri cyangwa Surah..." style="width:200px;padding:6px 10px;font-size:12px;">
+                        <select id="recStatusFilter" class="form-control" style="width:auto;padding:6px 10px;font-size:12px;">
+                            <option value="pending" selected>Bitegereje</option>
+                            <option value="reviewed">Byasuzumwe</option>
+                            <option value="needs_improvement">Keneye kunyurwa</option>
+                            <option value="all">Byose</option>
+                        </select>
+                        <button class="btn btn-secondary" id="recRefreshBtn" style="padding:6px 10px;font-size:12px;" title="Refresh"><i class="fas fa-rotate-right"></i></button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <p style="font-size:12px;color:var(--text-muted);margin:-4px 0 14px;">
+                        <span data-lang="en">Students record in the Recitation Studio (recite.html) and the audio arrives here as a private voice message — play it, then reply with feedback below each recording.</span><span data-lang="rw">Abanyeshuri bafata amajwi mu Nyumba ya Gusoma (recite.html), hanyuma amajwi akomeza hano nka message y'amajwi yumunyeshuri — uyumve, uhanitse ibitekerezo hano hasi.</span><span data-lang="fr">Les élèves enregistrent dans le Studio de récitation (recite.html) et l'audio arrive ici comme un message vocal privé — écoutez, puis répondez sous chaque enregistrement.</span><span data-lang="sw">Wanafunzi hurekodi katika Studio ya Usomaji (recite.html) na sauti inakuja hapa kama ujumbe wa sauti wa faragha — sikiliza, kisha jibu na maoni chini ya kila rekodi.</span><span data-lang="ar">يسجّل الطلاب في استوديو التلاوة (recite.html) ويصل الصوت هنا كرسالة صوتية خاصة — استمع ثم ردّ بملاحظاتك أسفل كل تسجيل.</span>
+                    </p>
+                    <div id="recitationsList" style="display:grid;gap:12px;">
+                        <p style="text-align:center;color:var(--text-muted);padding:20px;"><span data-lang="en">Loading recordings...</span><span data-lang="fr">Chargement des enregistrements...</span><span data-lang="sw">Inapakia rekodi...</span><span data-lang="ar">جارٍ تحميل التسجيلات...</span><span data-lang="rw">Birimo gushyirwa amajwi...</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -2892,6 +2986,7 @@ async function loadAllData() {
     populateCategoryFilter();
     populateFormSelects();
     loadPaymentStats();
+    loadRecitationStats();
 
     if (failed.length) {
         console.error('Some admin data failed to load: ' + failed.join(', '));
@@ -3405,6 +3500,7 @@ function navigateTo(page) {
     if (page === 'books') renderBooks();
     if (page === 'plans') renderPlans();
     if (page === 'payments') { renderPayments(); loadPaymentStats(); renderPaymentSubmissions(); }
+    if (page === 'recitations') { renderRecitations(); loadRecitationStats(); }
 
     if (window.innerWidth <= 992) document.getElementById('sidebar').classList.remove('open');
 }
@@ -3469,7 +3565,282 @@ document.getElementById('savePlansBtn').addEventListener('click', async function
     }
 });
 
-// ===== SEARCH & FILTER =====
+// ===== RECITATIONS (Telegram-style voice review) =====
+let recSubmissions = null;
+
+async function apiAudio(path) {
+    let token = getToken();
+    const headers = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+    try {
+        let r = await fetch(`${API_BASE}${path}`, { headers, signal: controller.signal });
+        if ((r.status === 401 || r.status === 403) && await refreshToken()) {
+            headers['Authorization'] = 'Bearer ' + getToken();
+            r = await fetch(`${API_BASE}${path}`, { headers, signal: controller.signal });
+        }
+        if (!r.ok) {
+            let msg = 'Could not load the recording.';
+            try { const j = await r.json(); if (j && j.error) msg = j.error; } catch (e) {}
+            throw new Error(msg);
+        }
+        return await r.blob();
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
+async function loadRecitationStats() {
+    try {
+        const data = await api('/recitations/stats');
+        const st = (data && data.stats) || {};
+        const badge = document.getElementById('pendingRecCount');
+        if (badge) {
+            const pending = st.pending || 0;
+            if (pending > 0) {
+                badge.textContent = pending;
+                badge.style.display = 'inline';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+        const elP = document.getElementById('recStatPending');
+        const elR = document.getElementById('recStatReviewed');
+        const elI = document.getElementById('recStatImprove');
+        const elS = document.getElementById('recStatStudents');
+        if (elP) elP.textContent = st.pending || 0;
+        if (elR) elR.textContent = st.reviewed || 0;
+        if (elI) elI.textContent = st.needs_improvement || 0;
+        if (elS) elS.textContent = (data && data.students) || 0;
+    } catch (err) {
+        console.error('Load recitation stats error:', err);
+    }
+}
+
+function recAvatarHtml(name, url) {
+    if (url) {
+        return '<span style="width:38px;height:38px;flex:0 0 38px;border-radius:50%;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;background:rgba(212,168,83,0.14);border:1px solid rgba(212,168,83,0.35);">' +
+            '<img src="' + resolveMediaUrl(url) + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.remove()"></span>';
+    }
+    const parts = String(name || '?').trim().split(/\s+/);
+    const initials = ((parts[0] ? parts[0][0] : '?') + (parts.length > 1 ? parts[parts.length - 1][0] : '')).toUpperCase();
+    return '<span style="width:38px;height:38px;flex:0 0 38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(212,168,83,0.14);border:1px solid rgba(212,168,83,0.35);color:#d4a853;font-size:12px;font-weight:800;">' +
+        escapeHtml(initials) + '</span>';
+}
+
+function recStatusChip(status) {
+    const dict = ADMIN_L10N.recStatus[adminLang] || ADMIN_L10N.recStatus.en;
+    const label = dict[status] || status;
+    const meta = status === 'reviewed' ? { c: '#6ee7b7', bg: 'rgba(52,211,153,0.1)', b: 'rgba(52,211,153,0.28)', i: 'fa-circle-check' }
+        : status === 'needs_improvement' ? { c: '#fca5a5', bg: 'rgba(248,113,113,0.1)', b: 'rgba(248,113,113,0.28)', i: 'fa-rotate-left' }
+        : { c: '#fcd34d', bg: 'rgba(251,191,36,0.1)', b: 'rgba(251,191,36,0.26)', i: 'fa-hourglass-half' };
+    return '<span style="display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;font-size:9.5px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;border:1px solid ' + meta.b + ';background:' + meta.bg + ';color:' + meta.c + ';">' +
+        '<i class="fas ' + meta.i + '"></i>' + escapeHtml(label) + '</span>';
+}
+
+function recBindVoices(root) {
+    root.querySelectorAll('[data-rec-voice]').forEach(function (host) {
+        const id = Number(host.getAttribute('data-rec-voice'));
+        const dur = Number(host.getAttribute('data-rec-duration')) || 0;
+        MSVoice.bubble(host, {
+            id: id,
+            duration: dur,
+            loader: function () { return apiAudio('/recitations/submissions/' + id + '/audio'); }
+        });
+    });
+}
+
+async function renderRecitations(cachedOnly) {
+    const host = document.getElementById('recitationsList');
+    if (!host) return;
+    if (recSubmissions === null || !cachedOnly) {
+        host.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;"><span data-lang="en">Loading recordings...</span><span data-lang="rw">Birimo gushyirwa amajwi...</span><span data-lang="fr">Chargement des enregistrements...</span><span data-lang="sw">Inapakia rekodi...</span><span data-lang="ar">جارٍ تحميل التسجيلات...</span></p>';
+        try {
+            const data = await api('/recitations/submissions?limit=200');
+            recSubmissions = data.submissions || [];
+        } catch (err) {
+            host.innerHTML = '<p style="text-align:center;color:#f87171;padding:20px;">' + escapeHtml(T(ADMIN_L10N.recLoadFailed)) + '</p>';
+            return;
+        }
+    }
+
+    const search = (document.getElementById('recSearchInput').value || '').trim().toLowerCase();
+    const statusFilter = document.getElementById('recStatusFilter').value;
+    const filtered = recSubmissions.filter(function (s) {
+        if (statusFilter !== 'all' && s.status !== statusFilter) return false;
+        if (search) {
+            const haystack = ((s.student_name || '') + ' ' + (s.student_email || '') + ' ' + (s.surah_name || '')).toLowerCase();
+            if (haystack.indexOf(search) === -1) return false;
+        }
+        return true;
+    });
+
+    if (!filtered.length) {
+        host.innerHTML = '<div style="text-align:center;padding:40px 20px;">' +
+            '<i class="fas fa-inbox" style="font-size:36px;color:var(--text-muted);opacity:0.4;margin-bottom:12px;display:block;"></i>' +
+            '<p style="color:var(--text-muted);font-size:13px;">' + escapeHtml(T(ADMIN_L10N.recEmpty)) + '</p></div>';
+        return;
+    }
+
+    host.innerHTML = filtered.map(function (s) {
+        const sdict = ADMIN_L10N.recStatus[adminLang] || ADMIN_L10N.recStatus.en;
+        const sent = s.created_at ? new Date(s.created_at).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '—';
+        const ayahs = s.ayah_start === s.ayah_end ? 'Ayah ' + s.ayah_start : 'Ayahs ' + s.ayah_start + '–' + s.ayah_end;
+        const reviewedAt = s.reviewed_at ? new Date(s.reviewed_at).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+        const isReviewed = s.status === 'reviewed';
+        const isImprove = s.status === 'needs_improvement';
+        /* Recording target: assigned rows show Surah · ayahs, lesson-only
+           practice rows show the lesson name. */
+        const target = s.surah_name
+            ? escapeHtml(s.surah_name) + ' &middot; ' + escapeHtml(ayahs)
+            : '';
+        /* Telegram-style right-aligned reply bubble for a decided recording. */
+        const reply = (isReviewed || isImprove) ? (
+            '<div class="rec-reply">' +
+            '<div class="rec-reply-head">' +
+            (isReviewed ? '<i class="fas fa-circle-check ok"></i>' : '<i class="fas fa-circle-xmark warn"></i>') +
+            '<span style="color:' + (isReviewed ? '#6ee7b7' : '#fca5a5') + ';">' + escapeHtml(isReviewed ? sdict.reviewed : sdict.needs_improvement) + '</span>' +
+            (reviewedAt ? '<span style="font-weight:600;letter-spacing:0.02em;">&middot; ' + escapeHtml(reviewedAt) + '</span>' : '') +
+            '</div>' +
+            (s.feedback
+                ? '<div class="rec-reply-body">' + escapeHtml(s.feedback) + '</div>'
+                : (isReviewed ? '<div class="rec-reply-body">' + escapeHtml(T(ADMIN_L10N.recApprovedClean)) + '</div>' : '')) +
+            '</div>'
+        ) : '';
+        /* Collapsible note composer — opened by the ✗ button, reused to edit an
+           existing needs_improvement note. */
+        const composer = '<div class="rec-composer" data-rec-composer style="display:none;">' +
+            '<textarea class="form-control" data-rec-feedback rows="2" maxlength="2000" placeholder="' + escapeHtml(T(ADMIN_L10N.recPlaceholder)) + '">' + escapeHtml(s.feedback || '') + '</textarea>' +
+            '<div style="display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;">' +
+            '<button type="button" class="btn btn-secondary" data-rec-cancel-edit style="padding:6px 12px;font-size:11px;">' + escapeHtml(T(ADMIN_L10N.recCancel)) + '</button>' +
+            '<button type="button" class="btn btn-primary" data-rec-send="' + s.id + '" style="padding:8px 14px;font-size:12px;"><i class="fas fa-paper-plane"></i> ' + escapeHtml(T(ADMIN_L10N.recSave)) + '</button>' +
+            '</div>' +
+            '</div>';
+        return '<div data-rec-card="' + s.id + '" style="border:1px solid var(--border);border-radius:14px;background:rgba(6,19,14,0.35);padding:14px 16px;">' +
+            '<div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">' +
+            recAvatarHtml(s.student_name || '?', s.student_avatar_url) +
+            '<div style="flex:1;min-width:170px;">' +
+            '<h4 style="font-size:14px;font-weight:800;margin:0;color:var(--text);">' + escapeHtml(s.student_name || 'Student') +
+            ((target || s.lesson_title) ? '<span style="font-weight:500;color:var(--text-sec);font-size:12.5px;"> &middot; ' +
+                [target,
+                 s.lesson_title ? '<i class="fas fa-video" style="color:rgba(212,168,83,0.8);margin-right:3px;"></i> ' + escapeHtml(s.lesson_title) : ''].filter(Boolean).join(' &middot; ')
+                + '</span>' : '') + '</h4>' +
+            '<p style="margin:3px 0 0;font-size:11px;color:var(--text-muted);">' + escapeHtml(s.student_email || '') + '</p>' +
+            '</div>' +
+            '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">' +
+            '<span style="font-size:11px;color:var(--text-muted);display:inline-flex;align-items:center;gap:5px;"><i class="far fa-paper-plane" style="color:rgba(212,168,83,0.7);"></i>' + escapeHtml(sent) + '</span>' +
+            recStatusChip(s.status) +
+            '</div>' +
+            '</div>' +
+            '<div class="rec-msg-body">' +
+            '<div style="flex:1 1 auto;min-width:0;" data-rec-voice="' + s.id + '" data-rec-duration="' + (s.duration_seconds || 0) + '"></div>' +
+            '<div class="rec-actions">' +
+            '<button type="button" class="rec-act approve' + (isReviewed ? ' active' : '') + '" data-rec-approve="' + s.id + '" title="' + escapeHtml(T(ADMIN_L10N.recApprove)) + '" aria-pressed="' + isReviewed + '"><i class="fas fa-check"></i></button>' +
+            '<button type="button" class="rec-act improve' + (isImprove ? ' active' : '') + '" data-rec-improve="' + s.id + '" title="' + escapeHtml(T(ADMIN_L10N.recImprove)) + '" aria-pressed="' + isImprove + '"><i class="fas fa-xmark"></i></button>' +
+            '</div>' +
+            '</div>' +
+            reply +
+            composer +
+            '</div>';
+    }).join('');
+
+    recBindVoices(host);
+}
+
+document.getElementById('recitationsList').addEventListener('click', function (event) {
+    /* ✓ instantly approves the recording (Telegram reaction style). */
+    const approveBtn = event.target.closest('[data-rec-approve]');
+    if (approveBtn) {
+        approveRec(Number(approveBtn.getAttribute('data-rec-approve')), approveBtn);
+        return;
+    }
+    /* ✗ opens (or toggles) the note composer for "needs improvement". */
+    const improveBtn = event.target.closest('[data-rec-improve]');
+    if (improveBtn) {
+        const card = improveBtn.closest('[data-rec-card]');
+        if (!card) return;
+        toggleRecComposer(card);
+        return;
+    }
+    /* Send button for the improvement note. */
+    const sendBtn = event.target.closest('[data-rec-send]');
+    if (sendBtn) {
+        const card = sendBtn.closest('[data-rec-card]');
+        if (!card) return;
+        sendRecImprovement(Number(sendBtn.getAttribute('data-rec-send')), card, sendBtn);
+        return;
+    }
+    const cancelBtn = event.target.closest('[data-rec-cancel-edit]');
+    if (cancelBtn) {
+        const card = cancelBtn.closest('[data-rec-card]');
+        if (card) toggleRecComposer(card, false);
+    }
+});
+
+function toggleRecComposer(card, force) {
+    const composer = card.querySelector('[data-rec-composer]');
+    const reply = card.querySelector('.rec-reply');
+    if (!composer) return;
+    const open = force !== undefined ? force : composer.style.display === 'none';
+    composer.style.display = open ? 'grid' : 'none';
+    if (reply) reply.style.display = open ? 'none' : '';
+    if (open) {
+        const box = composer.querySelector('[data-rec-feedback]');
+        if (box) { box.focus(); box.setSelectionRange(box.value.length, box.value.length); }
+    }
+}
+
+async function approveRec(id, btn) {
+    btn.classList.add('busy');
+    try {
+        await api('/recitations/submissions/' + id + '/review', { method: 'PATCH', body: JSON.stringify({ status: 'reviewed', feedback: '' }) });
+        toast(T(ADMIN_L10N.recApproved), 'success');
+        await renderRecitations();
+        loadRecitationStats();
+    } catch (err) {
+        btn.classList.remove('busy');
+        toast(err.message || 'Could not save the review', 'error');
+    }
+}
+
+async function sendRecImprovement(id, card, btn) {
+    const textarea = card.querySelector('[data-rec-feedback]');
+    const feedback = textarea ? textarea.value.trim() : '';
+    if (!feedback) {
+        toast(T(ADMIN_L10N.recNeedFeedback), 'error');
+        if (textarea) textarea.focus();
+        return;
+    }
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+    try {
+        await api('/recitations/submissions/' + id + '/review', { method: 'PATCH', body: JSON.stringify({ status: 'needs_improvement', feedback: feedback }) });
+        toast(T(ADMIN_L10N.recReviewSaved), 'success');
+        await renderRecitations();
+        loadRecitationStats();
+    } catch (err) {
+        if (btn.isConnected) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + escapeHtml(T(ADMIN_L10N.recSave));
+        }
+        toast(err.message || 'Could not save the review', 'error');
+    }
+}
+
+document.getElementById('recSearchInput').addEventListener('input', function () {
+    renderRecitations(true);
+});
+document.getElementById('recStatusFilter').addEventListener('change', function () {
+    renderRecitations(true);
+});
+document.getElementById('recRefreshBtn').addEventListener('click', async function () {
+    const btn = this;
+    btn.disabled = true;
+    try { await renderRecitations(); loadRecitationStats(); } finally { btn.disabled = false; }
+});
+
+
 document.getElementById('filterCategory').addEventListener('change', function() {
     currentFilterCategory = this.value;
     currentPageNum = 1;
@@ -4864,8 +5235,30 @@ const ADMIN_L10N = {
         instructors:{ en: 'Instructors', rw: 'Abigisha', fr: 'Instructeurs', sw: 'Walimu', ar: 'المدرسون' },
         payments:   { en: 'Student Access', rw: 'Uburenganzira bw\'Abanyeshuri', fr: 'Accès étudiants', sw: 'Ufikiaji wa Wanafunzi', ar: 'وصول الطلاب' },
         plans:      { en: 'Plans & Prices', rw: 'Ibiciro n\'Amabwiriza', fr: 'Forfaits & Prix', sw: 'Mipango & Bei', ar: 'الخطط والأسعار' },
-        books:      { en: 'Books', rw: 'Ibitabo', fr: 'Livres', sw: 'Vitabu', ar: 'الكتب' }
+        books:      { en: 'Books', rw: 'Ibitabo', fr: 'Livres', sw: 'Vitabu', ar: 'الكتب' },
+        recitations:{ en: 'Recitations', rw: 'Gusoma', fr: 'Récitations', sw: 'Usomaji', ar: 'التلاوات' }
     },
+    recStatus: {
+        en: { pending: 'Awaiting review', reviewed: 'Reviewed', needs_improvement: 'Needs improvement', all: 'All' },
+        rw: { pending: 'Bitegereje kusuzumwa', reviewed: 'Byasuzumwe', needs_improvement: 'Keneye kunyurwa', all: 'Byose' },
+        fr: { pending: 'En attente de révision', reviewed: 'Révisé', needs_improvement: 'À améliorer', all: 'Tous' },
+        sw: { pending: 'Inasubiri ukaguzi', reviewed: 'Imekaguliwa', needs_improvement: 'Inahitaji kuboreshwa', all: 'Zote' },
+        ar: { pending: 'بانتظار المراجعة', reviewed: 'تمت المراجعة', needs_improvement: 'يحتاج إلى تحسين', all: 'الكل' }
+    },
+    recFeedbackLabel: { en: 'Teacher feedback', rw: 'Ibitekerezo by\'umwarimu', fr: 'Commentaire de l\'enseignant', sw: 'Maoni ya Mwalimu', ar: 'ملاحظات المُعلّم' },
+    recSentLabel:     { en: 'Sent', rw: 'Yoherejwe', fr: 'Envoyé', sw: 'Imetumwa', ar: 'أُرسلت' },
+    recSave:          { en: 'Save review', rw: 'Bika usuzume', fr: 'Enregistrer la révision', sw: 'Hifadhi ukaguzi', ar: 'حفظ المراجعة' },
+    recCancel:        { en: 'Cancel', rw: 'Reka', fr: 'Annuler', sw: 'Ghairi', ar: 'إلغاء' },
+    recApprove:       { en: 'Well recited — approve', rw: 'Yasomye neza — emeza', fr: 'Bien récité — approuver', sw: 'Amesoma vizuri — idhinisha', ar: 'تلاوة جيدة — موافقة' },
+    recImprove:       { en: 'Ask for improvement', rw: 'Saba kuvugururwa', fr: 'Demander une amélioration', sw: 'Omba kuboreshwa', ar: 'اطلب التحسين' },
+    recApproved:      { en: 'Approved ✓', rw: 'Byemejwe ✓', fr: 'Approuvé ✓', sw: 'Imeidhinishwa ✓', ar: 'تمت الموافقة ✓' },
+    recApprovedClean: { en: 'Approved — keep practising well.', rw: 'Byemejwe — rokomeza ukorera neza.', fr: 'Approuvé — continue comme ça.', sw: 'Imeidhinishwa — endelea vizuri.', ar: 'تمت الموافقة — واصل التميز.' },
+    recPlaceholder:   { en: 'Write feedback for the student...', rw: 'Andika ibitekerezo ku munyeshuri...', fr: 'Écrire un commentaire pour l\'étudiant...', sw: 'Andika maoni kwa mwanafunzi...', ar: 'اكتب ملاحظات للطالب...' },
+    recEmpty:         { en: 'No recitations match these filters yet.', rw: 'Nta gusoma ruhuye n\'ivyiciro bimwe.', fr: 'Aucune récitation pour ces filtres.', sw: 'Hakuna usomaji unaolingana na vichujio hivi.', ar: 'لا توجد تلاوات مطابقة لهذه المرشحات بعد.' },
+    recLoadFailed:    { en: 'Could not load recitations.', rw: 'Gushyira/gusoma kwanza byanze.', fr: 'Impossible de charger les récitations.', sw: 'Imeshindwa kupakia usomaji.', ar: 'تعذر تحميل التلاوات.' },
+    recReviewSaved:   { en: 'Review saved.', rw: 'Isuzuma ryabitswe.', fr: 'Révision enregistrée.', sw: 'Ukaguzi umehifadhiwa.', ar: 'تم حفظ المراجعة.' },
+    recNeedFeedback:  { en: 'Write feedback explaining what the student should improve.', rw: 'Andika ibitekerezo kuvuga ibisabwa kuzamura.', fr: 'Écrivez ce que l\'étudiant doit améliorer.', sw: 'Andika mwanafunzi anapaswa kuboresha nini.', ar: 'اكتب ما يجب أن يحسّنه الطالب.', },
+    recSearchPh:      { en: 'Search student / Surah...', rw: 'Shaka umunyeshuri cyangwa Surah...', fr: 'Rechercher élève / Sourate...', sw: 'Tafuta mwanafunzi / Sura...', ar: 'ابحث عن طالب أو سورة...' },
     planVideo:   { en: 'Single Video', rw: 'Video Imwe', fr: 'Vidéo unique', sw: 'Video Moja', ar: 'مقطع واحد' },
     planWeekly:  { en: 'Weekly Access', rw: 'Uburenganzira bw\'Icyumweru', fr: 'Accès hebdomadaire', sw: 'Ufikiaji wa Wiki', ar: 'وصول أسبوعي' },
     planMonthly: { en: 'Monthly Access', rw: 'Uburenganzira bw\'Ukwezi', fr: 'Accès mensuel', sw: 'Ufikiaji wa Mwezi', ar: 'وصول شهري' },
@@ -5092,6 +5485,7 @@ function rerenderLocalizedViews() {
         if (typeof currentPage !== 'undefined' && currentPage === 'books') renderBooks();
         if (typeof currentPage !== 'undefined' && currentPage === 'dashboard') renderDashboard();
         if (typeof currentPage !== 'undefined' && currentPage === 'payments') { renderPayments(); renderFilteredSubmissions(); }
+        if (typeof currentPage !== 'undefined' && currentPage === 'recitations') renderRecitations(true);
     } catch (e) {}
 }
 
@@ -5121,7 +5515,8 @@ function updateFormLabels(lang) {
             instBio: 'Short biography...',
             passwordInput: 'Enter admin password...',
             globalSearch: 'Search...',
-            paySearchInput: 'Search student or phone number...'
+            paySearchInput: 'Search student or phone number...',
+            recSearchInput: 'Search student / Surah...'
         },
         rw: {
             lessonTitle: 'Urugero: Intangiriro ya Tajweed — Noon Sakinah',
@@ -5143,7 +5538,8 @@ function updateFormLabels(lang) {
             instBio: 'Ibisobanuro by\'umuziki w\'umwarimu...',
             passwordInput: 'Shyiramo ijambo wibanga rya Admin...',
             globalSearch: 'Shaka...',
-            paySearchInput: 'Shaka umunyeshuri cyangwa numero...'
+            paySearchInput: 'Shaka umunyeshuri cyangwa numero...',
+            recSearchInput: 'Shaka umunyeshuri cyangwa Surah...'
         },
         fr: {
             lessonTitle: 'ex. Introduction au Tajweed — Noon Sakinah',
@@ -5165,7 +5561,8 @@ function updateFormLabels(lang) {
             instBio: 'Courte biographie...',
             passwordInput: 'Entrez le mot de passe admin...',
             globalSearch: 'Rechercher...',
-            paySearchInput: 'Rechercher un étudiant ou un numéro...'
+            paySearchInput: 'Rechercher un étudiant ou un numéro...',
+            recSearchInput: 'Rechercher élève / Sourate...'
         },
         sw: {
             lessonTitle: 'k.m. utangirizi wa Tajweed — Noon Sakinah',
@@ -5187,7 +5584,8 @@ function updateFormLabels(lang) {
             instBio: 'Wasifu mfupi...',
             passwordInput: 'Weka nenosiri la msimamizi...',
             globalSearch: 'Tafuta...',
-            paySearchInput: 'Tafuta mwanafunzi au namba...'
+            paySearchInput: 'Tafuta mwanafunzi au namba...',
+            recSearchInput: 'Tafuta mwanafunzi / Sura...'
         },
         ar: {
             lessonTitle: 'مثال: مقدمة في التجويد — noon sakinah',
@@ -5209,7 +5607,8 @@ function updateFormLabels(lang) {
             instBio: 'نبذة مختصرة...',
             passwordInput: 'أدخل كلمة مرور المدير...',
             globalSearch: 'بحث...',
-            paySearchInput: 'ابحث عن طالب أو رقم هاتف...'
+            paySearchInput: 'ابحث عن طالب أو رقم هاتف...',
+            recSearchInput: 'ابحث عن طالب أو سورة...'
         }
     };
     var active = placeholders[lang] || placeholders.en;
@@ -5282,6 +5681,8 @@ var payModeLabels = ADMIN_L10N.payMode[lang] || ADMIN_L10N.payMode.en;
     }
     var paySearch = document.getElementById('paySearchInput');
     if (paySearch) paySearch.placeholder = phVal('paySearchInput');
+    var recSearch = document.getElementById('recSearchInput');
+    if (recSearch) recSearch.placeholder = phVal('recSearchInput');
     adminLangToggle.title = T(ADMIN_L10N.switchLanguage);
 
     /* Options that render bare text, so they cannot carry [data-lang] spans. */
@@ -5293,6 +5694,7 @@ var payModeLabels = ADMIN_L10N.payMode[lang] || ADMIN_L10N.payMode.en;
     labelOptions('paySubStatusFilter', ADMIN_L10N.subStatus[lang] || ADMIN_L10N.subStatus.en);
     labelOptions('payStatusFilter', ADMIN_L10N.accessState[lang] || ADMIN_L10N.accessState.en);
     labelOptions('editTestActive', ADMIN_L10N.yesNo[lang] || ADMIN_L10N.yesNo.en);
+    labelOptions('recStatusFilter', ADMIN_L10N.recStatus[lang] || ADMIN_L10N.recStatus.en);
 }
 
 adminLangOptions.forEach(opt => {

@@ -287,6 +287,7 @@ create table if not exists public.books (
 create table if not exists public.surah_assignments (
   id            serial primary key,
   teacher_id    int references public.users(id) on delete set null,
+  lesson_id     int references public.lessons(id) on delete set null,
   student_id    int not null references public.users(id) on delete cascade,
   surah_number  int not null check (surah_number between 1 and 114),
   surah_name    text not null,
@@ -308,14 +309,18 @@ create table if not exists public.surah_assignments (
 --  backend/private/recitations (storage = 'local'). Audio is NEVER served
 --  from a public URL: GET /api/recitations/submissions/:id/audio verifies the
 --  caller before streaming it.
+--  assignment_id/surah/ayah are NULL for lesson-only practice recordings made
+--  straight from a lesson page ("Record & Submit") without a teacher
+--  pre-order; those rows carry lesson_id instead.
 create table if not exists public.recitation_submissions (
   id               serial primary key,
-  assignment_id    int not null references public.surah_assignments(id) on delete cascade,
+  assignment_id    int references public.surah_assignments(id) on delete cascade,
+  lesson_id        int references public.lessons(id) on delete set null,
   student_id       int not null references public.users(id) on delete cascade,
-  surah_number     int not null check (surah_number between 1 and 114),
-  surah_name       text not null,
-  ayah_start       int not null check (ayah_start >= 1),
-  ayah_end         int not null check (ayah_end >= 1),
+  surah_number     int check (surah_number between 1 and 114),
+  surah_name       text,
+  ayah_start       int check (ayah_start >= 1),
+  ayah_end         int check (ayah_end >= 1),
   storage          text not null default 'local' check (storage in ('supabase','local')),
   audio_path       text not null,
   mime_type        text,

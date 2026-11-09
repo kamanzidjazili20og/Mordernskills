@@ -158,3 +158,36 @@ select
      where id = 'recitations' and public = false) as private_bucket,
   (select count(*) from pg_constraint
      where conname = 'users_role_check' and pg_get_constraintdef(oid) like '%teacher%') as teacher_role;
+
+
+-- ############################################################################
+--  9. Lesson-only submissions (record straight from a lesson, no pre-order)
+-- ############################################################################
+--  A student can record practice from any published lesson they are on
+--  ("Record & Submit") without waiting for a teacher assignment. Such rows
+--  have NULL assignment/surah/ayah fields and only lesson_id set; assigned
+--  recordings keep the old shape. Assignments gain lesson_id too, so a
+--  lesson-linked assignment points at its lesson.
+
+alter table public.recitation_submissions add column if not exists lesson_id int references public.lessons(id) on delete set null;
+alter table public.surah_assignments      add column if not exists lesson_id int references public.lessons(id) on delete set null;
+
+alter table public.recitation_submissions alter column assignment_id drop not null;
+alter table public.recitation_submissions alter column surah_number drop not null;
+alter table public.recitation_submissions alter column surah_name   drop not null;
+alter table public.recitation_submissions alter column ayah_start   drop not null;
+alter table public.recitation_submissions alter column ayah_end     drop not null;
+
+create index if not exists idx_submissions_lesson on public.recitation_submissions(lesson_id);
+
+select
+  (select count(*) from information_schema.columns
+     where table_schema = 'public' and table_name = 'recitation_submissions'
+       and column_name = 'lesson_id') as submissions_lesson_column,
+  (select count(*) from information_schema.columns
+     where table_schema = 'public' and table_name = 'surah_assignments'
+       and column_name = 'lesson_id') as assignments_lesson_column,
+  (select count(*) from information_schema.columns
+     where table_schema = 'public' and table_name = 'recitation_submissions'
+       and column_name in ('assignment_id','surah_number','surah_name','ayah_start','ayah_end')
+       and is_nullable = 'YES') as nullable_recording_columns;

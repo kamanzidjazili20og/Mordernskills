@@ -8,6 +8,7 @@
 <meta name="robots" content="noindex, follow">
 <link rel="icon" type="image/png" href="Images/mordern-skills-logo.png">
 <link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/voice-ui.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" media="print" onload="this.media='all';this.onload=null">
@@ -138,7 +139,7 @@ a { color: inherit; }
 
 .rec-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+    grid-template-columns: minmax(0, 1.4fr) minmax(330px, 0.6fr);
     gap: 26px;
     align-items: start;
 }
@@ -253,8 +254,6 @@ a { color: inherit; }
 
 /* Recorder */
 .rec-recorder {
-    position: sticky;
-    top: 86px;
     padding: 20px;
     border-radius: var(--radius-lg);
     border: 1px solid rgba(212,168,83,0.24);
@@ -313,29 +312,24 @@ a { color: inherit; }
     color: var(--text);
 }
 .rec-wave {
-    height: 44px;
+    height: 46px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    margin-bottom: 14px;
+    gap: 3px;
+    margin-bottom: 12px;
 }
 .rec-wave span {
-    width: 3px;
-    height: 7px;
+    flex: 0 0 4px;
+    max-width: 4px;
+    height: 14%;
     border-radius: 999px;
-    background: rgba(212,168,83,0.35);
-    transition: height .2s;
+    background: rgba(212,168,83,0.4);
+    transition: height .07s linear, background .15s;
 }
-.rec-wave.active span { animation: recWave 0.9s ease-in-out infinite; background: rgba(52,211,153,0.75); }
-.rec-wave.active span:nth-child(3n) { animation-delay: .15s; }
-.rec-wave.active span:nth-child(3n+1) { animation-delay: .3s; }
-.rec-wave.active span:nth-child(4n) { animation-delay: .45s; }
-.rec-wave.paused span { animation-play-state: paused; }
-@keyframes recWave {
-    0%, 100% { height: 6px; opacity: .55; }
-    50% { height: 32px; opacity: 1; }
-}
+.rec-wave.dim span { background: rgba(212,168,83,0.18); }
+.rec-wave.recording span { background: rgba(110,231,183,0.82); }
+.rec-wave.paused span { background: rgba(212,168,83,0.55); animation: none; }
 .rec-status {
     min-height: 18px;
     text-align: center;
@@ -343,13 +337,128 @@ a { color: inherit; }
     color: var(--text-muted);
     margin-bottom: 14px;
 }
-.rec-controls { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-.rec-controls .btn { padding: 11px 16px; font-size: 12.5px; }
-.rec-controls .btn[hidden] { display: none; }
-#recordBtn { background: linear-gradient(120deg, #e8c877, #c79a45); color: #14100a; }
-#recordBtn.recording { background: linear-gradient(120deg, #f87171, #dc2626); color: #fff; }
-#previewAudio { width: 100%; margin-top: 14px; height: 38px; }
-#submitBtn { width: 100%; margin-top: 12px; padding: 12px 16px; font-size: 13px; }
+.rec-status strong { color: var(--text); font-weight: 700; }
+
+/* Telegram-style capture bar */
+.rec-capture {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    transition: border-color .2s, background .2s;
+}
+.rec-capture:active { border-color: rgba(248,113,113,0.35); }
+.rec-cancel {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px dashed var(--border-strong);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .2s;
+}
+.rec-cancel:disabled { opacity: .3; cursor: default; }
+.rec-cancel.show { opacity: 1; border-color: rgba(248,113,113,0.45); color: #fca5a5; }
+.rec-cancel.armed {
+    background: #dc2626;
+    border-color: #dc2626;
+    border-style: solid;
+    color: #fff;
+    transform: scale(1.07);
+    box-shadow: 0 8px 22px -6px rgba(220,38,38,0.55);
+}
+.rec-hold-hint {
+    flex: 1;
+    min-width: 0;
+    font-size: 11.5px;
+    line-height: 1.45;
+    color: var(--text-muted);
+    text-align: center;
+    transition: color .2s;
+}
+.rec-hold-hint strong { color: var(--text); font-weight: 700; }
+.rec-hold-hint.danger { color: #f87171; font-weight: 800; }
+.rec-capture-dock { position: relative; flex: 0 0 auto; margin-inline-start: auto; }
+.rec-mic {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    background: linear-gradient(120deg, #e8c877, #c79a45);
+    color: #14100a;
+    box-shadow: 0 10px 26px -8px rgba(212,168,83,0.6);
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .15s, box-shadow .15s, background .2s, color .2s;
+}
+.rec-mic:hover { transform: scale(1.04); }
+.rec-mic:active { transform: scale(0.97); }
+.rec-mic:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+.rec-mic.holding {
+    background: linear-gradient(120deg, #f87171, #dc2626);
+    color: #fff;
+    cursor: grabbing;
+    animation: micPulse 1.6s infinite;
+}
+.rec-mic.locked {
+    background: linear-gradient(120deg, #f87171, #dc2626);
+    color: #fff;
+    animation: micPulse 2.2s infinite;
+}
+.rec-mic.locked.paused {
+    background: linear-gradient(120deg, #fbbf24, #d97706);
+    animation: none;
+}
+@keyframes micPulse {
+    0% { box-shadow: 0 0 0 0 rgba(248,113,113,0.55); }
+    70% { box-shadow: 0 0 0 16px rgba(248,113,113,0); }
+    100% { box-shadow: 0 0 0 0 rgba(248,113,113,0); }
+}
+.rec-locked-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.rec-locked-controls .btn { padding: 10px 14px; font-size: 12px; }
+.rec-mini-hint { margin-top: 10px; font-size: 10.5px; color: var(--text-muted); text-align: center; }
+
+/* Review-your-take (ready) view */
+.rec-ready { display: grid; gap: 12px; }
+.rec-ready-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    justify-content: center;
+}
+.rec-ready-bubble { display: flex; justify-content: center; width: 100%; }
+.rec-ready-actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.rec-ready-actions .btn { padding: 11px 15px; font-size: 12.5px; }
+.btn-ghost-red {
+    border-color: rgba(248,113,113,0.4) !important;
+    color: #fca5a5 !important;
+    background: rgba(248,113,113,0.07);
+}
+.btn-ghost-red:hover { background: rgba(248,113,113,0.13); }
+.btn-send {
+    background: linear-gradient(120deg, #34d399, #059669) !important;
+    color: #04120d !important;
+    border-color: transparent !important;
+}
+.btn-send:hover { box-shadow: 0 10px 24px -10px rgba(52,211,153,0.6); }
 .rec-hint { margin-top: 10px; font-size: 10.5px; color: var(--text-muted); text-align: center; }
 .rec-hidden { display: none !important; }
 
@@ -377,21 +486,7 @@ a { color: inherit; }
 }
 .sub-feedback strong { display: block; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
 .sub-actions { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-.play-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 8px 13px;
-    border-radius: 999px;
-    border: 1px solid rgba(212,168,83,0.35);
-    background: rgba(212,168,83,0.09);
-    color: var(--gold-light);
-    font-size: 11.5px;
-    font-weight: 700;
-    transition: all .2s;
-}
-.play-btn:hover { background: rgba(212,168,83,0.16); box-shadow: var(--glow-gold); }
-.play-btn:disabled { opacity: .55; cursor: wait; }
+.sub-voice { flex: 0 1 320px; min-width: min(240px, 100%); display: flex; align-items: center; }
 .sub-date { font-size: 11px; color: var(--text-muted); }
 
 /* Toasts / avatars */
@@ -433,9 +528,260 @@ a { color: inherit; }
 
 .rec-footer { max-width: var(--content-max); margin: 46px auto 0; padding: 0 var(--gutter); color: var(--text-muted); font-size: 11px; text-align: center; }
 
+/* ===== Studio: lesson video on top, recorder right under it ===== */
+.rec-steps {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    margin: -4px 0 28px;
+    color: var(--text-muted);
+    font-size: 11.5px;
+}
+.rec-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.025);
+    font-weight: 600;
+}
+.rec-step i { color: rgba(212,168,83,0.75); font-size: 11px; }
+.rec-step.on { color: var(--gold-light); border-color: rgba(212,168,83,0.4); background: rgba(212,168,83,0.08); }
+.rec-steps .sep { font-size: 9px; color: rgba(212,168,83,0.4); }
+
+.rec-main-col { display: flex; flex-direction: column; gap: 26px; min-width: 0; }
+.rec-side-col { display: grid; gap: 30px; position: sticky; top: 86px; }
+.rec-main-col .rec-section { margin-top: 0; }
+
+.rec-study {
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(212,168,83,0.24);
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse 70% 40% at 50% -10%, rgba(212,168,83,0.12), transparent 60%),
+        linear-gradient(160deg, rgba(12,34,24,0.96), rgba(5,17,12,0.97));
+    box-shadow: var(--shadow);
+}
+.rec-study-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 20px 22px 16px;
+}
+.rec-study-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+}
+.rec-study-title h2 { font-size: 21px; letter-spacing: -0.02em; margin: 7px 0 5px; }
+.rec-study-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px 15px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+}
+.rec-study-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.rec-study-meta i { color: rgba(212,168,83,0.7); font-size: 10.5px; }
+.rec-study-tools { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.rec-study-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text-sec);
+    font-size: 11.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .2s;
+}
+.rec-study-link:hover { color: var(--gold-light); border-color: var(--border-strong); }
+
+.rec-player {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #020805;
+    border-top: 1px solid rgba(212,168,83,0.14);
+}
+.rec-player iframe,
+.rec-player > video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #000;
+    object-fit: contain;
+}
+.rec-player-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    padding: 26px;
+    background:
+        radial-gradient(ellipse 60% 60% at 50% 45%, rgba(212,168,83,0.08), transparent 70%),
+        linear-gradient(160deg, rgba(9,30,21,0.92), rgba(4,14,10,0.96));
+    color: var(--text-muted);
+    font-size: 12.5px;
+    line-height: 1.55;
+}
+.rec-player-empty i { font-size: 30px; color: rgba(212,168,83,0.5); }
+.rec-player-empty strong { color: var(--text); display: block; margin-bottom: 3px; font-size: 13.5px; }
+.rec-player-poster { position: absolute; inset: 0; cursor: pointer; }
+.rec-player-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rec-player-poster::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.5));
+    pointer-events: none;
+}
+.rec-play-btn {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(120deg, #e8c877, #c79a45);
+    color: #14100a;
+    font-size: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 48px -14px rgba(212,168,83,0.9), inset 0 1px 0 rgba(255,255,255,0.4);
+    z-index: 2;
+    transition: transform .15s, box-shadow .2s;
+}
+.rec-play-btn:hover { transform: translate(-50%, -50%) scale(1.07); }
+
+.rec-study-feedback {
+    margin: 0;
+    padding: 15px 17px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: rgba(8,24,17,0.72);
+}
+.rec-study-feedback-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.rec-study-feedback-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+.rec-study-feedback-title i { color: var(--gold); }
+.rec-study-feedback p {
+    margin: 9px 0 0;
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--text-sec);
+    white-space: pre-wrap;
+}
+.rec-study-feedback-meta {
+    margin-top: 9px;
+    font-size: 10.5px;
+    color: var(--text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+}
+.rec-study-feedback-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.rec-study-feedback.good { border-color: rgba(52,211,153,0.32); background: rgba(52,211,153,0.06); }
+.rec-study-feedback.improve { border-color: rgba(248,113,113,0.32); background: rgba(248,113,113,0.06); }
+.rec-study-feedback.pending { border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.05); }
+
+/* My lessons */
+.rec-lessons { display: grid; gap: 10px; }
+.rec-lesson-card {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: linear-gradient(150deg, rgba(13,36,26,0.86), rgba(6,20,14,0.8));
+    cursor: pointer;
+    text-align: start;
+    font: inherit;
+    color: inherit;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+.rec-lesson-card:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+.rec-lesson-card.selected {
+    border-color: rgba(212,168,83,0.65);
+    box-shadow: 0 0 0 1px rgba(212,168,83,0.18), var(--glow-gold);
+}
+.rec-lesson-thumb {
+    position: relative;
+    flex: 0 0 96px;
+    width: 96px;
+    aspect-ratio: 16 / 10;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #04140e;
+    border: 1px solid rgba(212,168,83,0.14);
+}
+.rec-lesson-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rec-lesson-thumb .rec-lesson-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(2,10,7,0.38);
+    color: #f3e2b0;
+    font-size: 13px;
+}
+.rec-lesson-info { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 5px; justify-content: center; }
+.rec-lesson-info h4 {
+    margin: 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.rec-lesson-sub { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 10.5px; color: var(--text-muted); }
+.rec-lesson-sub span { display: inline-flex; align-items: center; gap: 5px; }
+.rec-lesson-card .rec-badge { font-size: 8.5px; padding: 4px 7px; align-self: center; flex-shrink: 0; }
+
 @media (max-width: 980px) {
     .rec-hero, .rec-layout { grid-template-columns: 1fr; }
-    .rec-recorder { position: static; }
+    .rec-side-col { position: static; }
     .rec-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (max-width: 720px) {
@@ -447,11 +793,14 @@ a { color: inherit; }
     .rec-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .rec-timer { font-size: 34px; }
     .rec-section-head { align-items: center; }
+    .rec-study-head { padding: 16px; }
+    .rec-player-empty { font-size: 11.5px; padding: 18px; }
+    .rec-lesson-thumb { flex-basis: 82px; width: 82px; }
 }
 </style>
 </head>
 <body class="rec-page">
-<a class="skip-link" href="#assignments">Skip to assignments</a>
+<a class="skip-link" href="#studyPanel">Skip to the studio</a>
 
 <header class="rec-header">
     <div class="rec-header-inner">
@@ -479,7 +828,7 @@ a { color: inherit; }
         <div>
             <span class="rec-eyebrow"><i class="fas fa-microphone-lines"></i> Qur'an Recitation</span>
             <h1>Your recitation <em>studio</em></h1>
-            <p>Open an assignment, record the assigned Ayahs, listen back, and submit when you are happy. Your teacher will review it and leave feedback here.</p>
+            <p>Watch the lesson you are studying, then record your recitation right under the video. When the admin finishes the review, the comment comes back to this page &mdash; for that exact lesson.</p>
         </div>
         <div class="rec-stats" aria-label="Recitation progress">
             <div class="rec-stat pending"><span>Pending</span><strong id="statPending">0</strong></div>
@@ -489,23 +838,42 @@ a { color: inherit; }
         </div>
     </section>
 
-    <div class="rec-layout">
-        <section id="assignments" aria-labelledby="assignmentsTitle">
-            <div class="rec-section-head">
-                <div>
-                    <h2 id="assignmentsTitle">Assignments</h2>
-                    <p>Choose a Surah and start recording.</p>
-                </div>
-                <button type="button" class="rec-icon-btn" id="refreshBtn" title="Refresh assignments and recordings" aria-label="Refresh">
-                    <i class="fas fa-rotate-right"></i>
-                </button>
-            </div>
-            <div class="rec-list" id="assignmentList">
-                <div class="rec-loading"><i class="fas fa-circle-notch fa-spin"></i>Loading your assignments&hellip;</div>
-            </div>
-        </section>
+    <div class="rec-steps" aria-hidden="true">
+        <span class="rec-step on" id="stepWatch"><i class="fas fa-play"></i> Watch the lesson</span>
+        <i class="fas fa-chevron-right sep"></i>
+        <span class="rec-step" id="stepRecord"><i class="fas fa-microphone"></i> Record below</span>
+        <i class="fas fa-chevron-right sep"></i>
+        <span class="rec-step" id="stepReview"><i class="fas fa-comment-dots"></i> Get the admin review</span>
+    </div>
 
-        <aside class="rec-recorder" id="recorderPanel" aria-labelledby="recorderTitle">
+
+    <div class="rec-layout">
+        <div class="rec-main-col">
+            <section class="rec-study" id="studyPanel" aria-labelledby="studyTitle">
+                <div class="rec-study-head">
+                    <div class="rec-study-title">
+                        <span class="rec-study-eyebrow"><i class="fas fa-book-open-reader"></i> Now studying</span>
+                        <h2 id="studyTitle">Pick a lesson to study</h2>
+                        <div class="rec-study-meta" id="studyMeta"></div>
+                    </div>
+                    <div class="rec-study-tools">
+                        <span class="rec-badge none" id="studyStatusPill"><i class="fas fa-microphone"></i>Not started</span>
+                        <a class="rec-study-link" id="studyOpenLink" href="video.html" style="display:none;">
+                            <i class="fas fa-up-right-from-square"></i> Lesson page
+                        </a>
+                    </div>
+                </div>
+
+                <div class="rec-player" id="studyPlayer">
+                    <div class="rec-player-empty">
+                        <i class="fas fa-clapperboard"></i>
+                        <div><strong>No lesson video on screen</strong>
+                        Pick one of your lessons or an assignment &mdash; the video plays right here, with the recorder directly below it.</div>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="rec-recorder" id="recorderPanel" aria-labelledby="recorderTitle">
             <div class="rec-recorder-head">
                 <h2 id="recorderTitle"><i class="fas fa-microphone"></i> Recorder</h2>
                 <span class="rec-live-dot" id="liveDot">Recording</span>
@@ -513,57 +881,116 @@ a { color: inherit; }
 
             <div class="recorder-empty" id="recorderEmpty">
                 <i class="fas fa-hand-pointer"></i>
-                Choose an assignment to begin.<br>
+                Choose a lesson or an assignment to begin.<br>
                 Your microphone stays off until you press record.
             </div>
 
             <div id="recorderBody" class="rec-hidden">
                 <div class="recording-target" id="recordingTarget"></div>
                 <div class="rec-timer" id="recTimer" aria-live="off">0:00</div>
-                <div class="rec-wave" id="recWave" aria-hidden="true">
-                    <span></span><span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span><span></span>
-                </div>
+                <div class="rec-wave dim" id="recWave" aria-hidden="true"></div>
                 <div class="rec-status" id="recStatus" aria-live="polite">Ready when you are.</div>
 
-                <div class="rec-controls">
-                    <button type="button" class="btn" id="recordBtn"><i class="fas fa-circle"></i> Start recording</button>
-                    <button type="button" class="btn btn-secondary" id="pauseBtn" hidden><i class="fas fa-pause"></i> Pause</button>
-                    <button type="button" class="btn btn-secondary" id="stopBtn" hidden><i class="fas fa-stop"></i> Stop</button>
-                    <button type="button" class="btn btn-secondary" id="resetBtn" hidden><i class="fas fa-rotate-left"></i> Re-record</button>
+                <div class="rec-capture" id="recCapture">
+                    <button type="button" class="rec-cancel" id="cancelBtn" aria-label="Cancel the recording">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <div class="rec-hold-hint" id="recHoldHint"><strong>Tap</strong> the mic to record</div>
+                    <div class="rec-capture-dock">
+                        <button type="button" class="rec-mic" id="micBtn" aria-label="Tap to record your recitation">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <audio id="previewAudio" controls hidden></audio>
-                <button type="button" class="btn btn-primary" id="submitBtn" hidden>
-                    <i class="fas fa-paper-plane"></i> Submit for review
-                </button>
+                <div class="rec-locked-controls rec-hidden" id="lockedControls">
+                    <button type="button" class="btn btn-secondary" id="lockedCancel"><i class="fas fa-trash"></i> Cancel</button>
+                    <button type="button" class="btn btn-secondary" id="lockedPause"><i class="fas fa-pause"></i> Pause</button>
+                    <button type="button" class="btn" id="lockedFinish"><i class="fas fa-stop"></i> Finish</button>
+                </div>
+
+                <div class="rec-ready rec-hidden" id="readyView">
+                    <span class="rec-ready-title"><i class="fas fa-comments"></i> Preview your take</span>
+                    <div class="rec-ready-bubble" id="readyBubble"></div>
+                    <div class="rec-ready-actions">
+                        <button type="button" class="btn btn-secondary btn-ghost-red" id="discardBtn"><i class="fas fa-trash"></i> Redo</button>
+                        <button type="button" class="btn btn-primary btn-send" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> Send for review
+                        </button>
+                    </div>
+                    <div class="rec-ready-status rec-status" id="readyStatus" aria-live="polite"></div>
+                </div>
+
                 <div class="rec-hint">Ayah recitation only &middot; maximum 25 MB &middot; use a quiet room</div>
             </div>
-        </aside>
-    </div>
+            </aside>
 
-    <section class="rec-section" id="recordings" aria-labelledby="recordingsTitle">
-        <div class="rec-section-head">
-            <div>
-                <h2 id="recordingsTitle">My recordings</h2>
-                <p>Listen to your submissions and read your teacher's feedback.</p>
+            <div class="rec-study-feedback rec-hidden" id="studyFeedback" aria-live="polite">
+                <div class="rec-study-feedback-head">
+                    <span class="rec-study-feedback-title"><i class="fas fa-comment-dots"></i> Review for this lesson</span>
+                    <span class="rec-badge none" id="studyFeedbackBadge"></span>
+                </div>
+                <p id="studyFeedbackText"></p>
+                <div class="rec-study-feedback-meta" id="studyFeedbackMeta"></div>
             </div>
+
+            <section class="rec-section" id="recordings" aria-labelledby="recordingsTitle">
+                <div class="rec-section-head">
+                    <div>
+                        <h2 id="recordingsTitle">My recordings</h2>
+                        <p>Listen to your submissions and read the reviewer's feedback.</p>
+                    </div>
+                </div>
+                <div class="rec-list" id="submissionList">
+                    <div class="rec-loading"><i class="fas fa-circle-notch fa-spin"></i>Loading your recordings&hellip;</div>
+                </div>
+            </section>
         </div>
-        <div class="rec-list" id="submissionList">
-            <div class="rec-loading"><i class="fas fa-circle-notch fa-spin"></i>Loading your recordings&hellip;</div>
+
+        <div class="rec-side-col">
+            <section aria-labelledby="myLessonsTitle">
+                <div class="rec-section-head">
+                    <div>
+                        <h2 id="myLessonsTitle">My lessons</h2>
+                        <p>Every lesson you study &amp; record stays here.</p>
+                    </div>
+                    <a href="books.html" class="rec-icon-btn" title="Browse lessons" aria-label="Browse lessons">
+                        <i class="fas fa-compass"></i>
+                    </a>
+                </div>
+                <div class="rec-lessons" id="lessonList">
+                    <div class="rec-loading"><i class="fas fa-circle-notch fa-spin"></i>Gathering your lessons&hellip;</div>
+                </div>
+            </section>
+
+            <section id="assignments" aria-labelledby="assignmentsTitle">
+                <div class="rec-section-head">
+                    <div>
+                        <h2 id="assignmentsTitle">Assignments</h2>
+                        <p>Choose a Surah and start recording.</p>
+                    </div>
+                    <button type="button" class="rec-icon-btn" id="refreshBtn" title="Refresh lessons, assignments and recordings" aria-label="Refresh">
+                        <i class="fas fa-rotate-right"></i>
+                    </button>
+                </div>
+                <div class="rec-list" id="assignmentList">
+                    <div class="rec-loading"><i class="fas fa-circle-notch fa-spin"></i>Loading your assignments&hellip;</div>
+                </div>
+            </section>
         </div>
-    </section>
+    </div>
 </main>
 
 <footer class="rec-footer">Modern Skills &middot; Recitation practice with teacher review</footer>
 
 <script src="config.js"></script>
+<script src="assets/js/media.js"></script>
 <script src="assets/js/recitation-common.js"></script>
+<script src="assets/js/voice-ui.js"></script>
 <script>
 (function () {
     'use strict';
+
 
     var R = window.Recitation;
     var user = null;
@@ -572,19 +999,39 @@ a { color: inherit; }
     var stats = null;
     var selectedId = null;
     var selectedAssignment = null;
+    var lessonTarget = null; // recording straight from a lesson link: { id, title }
+
+    var lessonCache = {};        // lesson id -> full lesson detail
+    var lessonThumbs = {};       // lesson id -> public lesson row (thumbnail/category)
+    var lessonThumbsLoaded = false;
+    var lessonSubs = [];         // my submissions for the lesson on screen
+    var currentLesson = null;    // lesson on screen (video + review)
+    var lessonSeq = 0;           // guards stale async lesson loads
 
     var mediaRecorder = null;
     var stream = null;
+    var wakeLock = null;
     var chunks = [];
-    var blob = null;
-    var previewUrl = null;
+    var recordedBlob = null;
     var timerId = null;
     var accumulatedMs = 0;
     var startedAt = 0;
-    var state = 'idle';
+    var recState = 'idle'; // idle | hold | locked | paused | stopping | ready | sending | sent
+    var recPaused = false;
     var discardOnStop = false;
-    var playback = null;
+    var recordedBytes = 0;
+    var sizeStopTriggered = false;
+    var draftBubble = null;
+    var meter = null;
+    var startingCapture = false;
+    var captureSeq = 0;
+    var lastInteractionAt = 0;
+    var lastPointerAt = 0;
+    var drag = { active: false, x0: 0, y0: 0, cancel: false, locked: false };
     var MAX_BYTES = 25 * 1024 * 1024;
+    var SOFT_BYTES = 23.5 * 1024 * 1024;
+    var MAX_MS = 7200 * 1000;
+    var MIN_MS = 700;
 
     var els = {
         userName: document.getElementById('recUserName'),
@@ -597,6 +1044,20 @@ a { color: inherit; }
         refresh: document.getElementById('refreshBtn'),
         assignmentList: document.getElementById('assignmentList'),
         submissionList: document.getElementById('submissionList'),
+        lessonList: document.getElementById('lessonList'),
+        studyPanel: document.getElementById('studyPanel'),
+        studyTitle: document.getElementById('studyTitle'),
+        studyMeta: document.getElementById('studyMeta'),
+        studyPlayer: document.getElementById('studyPlayer'),
+        studyOpenLink: document.getElementById('studyOpenLink'),
+        studyStatusPill: document.getElementById('studyStatusPill'),
+        studyFeedback: document.getElementById('studyFeedback'),
+        studyFeedbackBadge: document.getElementById('studyFeedbackBadge'),
+        studyFeedbackText: document.getElementById('studyFeedbackText'),
+        studyFeedbackMeta: document.getElementById('studyFeedbackMeta'),
+        stepWatch: document.getElementById('stepWatch'),
+        stepRecord: document.getElementById('stepRecord'),
+        stepReview: document.getElementById('stepReview'),
         recorderPanel: document.getElementById('recorderPanel'),
         recorderEmpty: document.getElementById('recorderEmpty'),
         recorderBody: document.getElementById('recorderBody'),
@@ -605,11 +1066,18 @@ a { color: inherit; }
         timer: document.getElementById('recTimer'),
         wave: document.getElementById('recWave'),
         status: document.getElementById('recStatus'),
-        record: document.getElementById('recordBtn'),
-        pause: document.getElementById('pauseBtn'),
-        stop: document.getElementById('stopBtn'),
-        reset: document.getElementById('resetBtn'),
-        preview: document.getElementById('previewAudio'),
+        capture: document.getElementById('recCapture'),
+        mic: document.getElementById('micBtn'),
+        cancel: document.getElementById('cancelBtn'),
+        holdHint: document.getElementById('recHoldHint'),
+        lockedControls: document.getElementById('lockedControls'),
+        lockedCancel: document.getElementById('lockedCancel'),
+        lockedPause: document.getElementById('lockedPause'),
+        lockedFinish: document.getElementById('lockedFinish'),
+        readyView: document.getElementById('readyView'),
+        readyBubble: document.getElementById('readyBubble'),
+        readyStatus: document.getElementById('readyStatus'),
+        discard: document.getElementById('discardBtn'),
         submit: document.getElementById('submitBtn')
     };
 
@@ -639,6 +1107,9 @@ a { color: inherit; }
 
         els.assignmentList.innerHTML = assignments.map(function (a) {
             var meta = R.statusMeta(a.latest_submission_status);
+            var lesson = a.lesson_title
+                ? '<span><i class="fas fa-video"></i>' + R.escapeHtml(a.lesson_title) + '</span>'
+                : '';
             var notes = a.instructions
                 ? '<p class="assignment-notes">' + R.escapeHtml(a.instructions) + '</p>'
                 : '';
@@ -659,8 +1130,8 @@ a { color: inherit; }
                 + '      </div>'
                 + '      <span class="rec-badge ' + meta.cls + '"><i class="fas ' + meta.icon + '"></i>' + meta.label + '</span>'
                 + '  </div>'
-                + notes
-                + '  <div class="assignment-meta">' + due + count + '</div>'
+            + notes
+            + '  <div class="assignment-meta">' + lesson + due + count + '</div>'
                 + '  <div class="assignment-actions">'
                 + '      <button type="button" class="btn btn-primary" data-record="' + a.id + '"><i class="fas fa-microphone"></i>' + cta + '</button>'
                 + '  </div>'
@@ -668,19 +1139,7 @@ a { color: inherit; }
         }).join('');
     }
 
-    function stopPlayback() {
-        if (!playback) return;
-        try { playback.audio.pause(); } catch (e) {}
-        URL.revokeObjectURL(playback.url);
-        if (playback.btn) {
-            playback.btn.disabled = false;
-            playback.btn.innerHTML = '<i class="fas fa-play"></i> Play recording';
-        }
-        playback = null;
-    }
-
     function renderSubmissions() {
-        stopPlayback();
         if (!submitted.length) {
             els.submissionList.innerHTML = '<div class="rec-empty"><i class="fas fa-wave-square"></i>No recordings yet. Your first submission will appear here.</div>';
             return;
@@ -689,27 +1148,320 @@ a { color: inherit; }
         els.submissionList.innerHTML = submitted.map(function (s) {
             var meta = R.statusMeta(s.status);
             var feedback = s.feedback
-                ? '<div class="sub-feedback"><strong>Teacher feedback</strong>' + R.escapeHtml(s.feedback) + '</div>'
+                ? '<div class="sub-feedback"><strong>' + (s.status === 'needs_improvement' ? 'What to improve' : 'Teacher feedback') + '</strong>' + R.escapeHtml(s.feedback) + '</div>'
                 : '';
             var reviewDate = s.reviewed_at
                 ? '<span class="sub-date">Reviewed ' + R.escapeHtml(R.formatDateTime(s.reviewed_at)) + '</span>'
                 : '';
+            var titleHtml = s.surah_name
+                ? R.escapeHtml(s.surah_name) + ' <span style="color:var(--text-muted);font-weight:500">' + R.escapeHtml(R.ayahLabel(s.ayah_start, s.ayah_end)) + '</span>'
+                : (s.lesson_title ? '<span style="color:var(--gold)"><i class="fas fa-video"></i> ' + R.escapeHtml(s.lesson_title) + '</span> <span style="color:var(--text-muted);font-weight:500">lesson practice</span>' : 'Recording');
             return ''
                 + '<article class="sub-card">'
                 + '  <div class="sub-top">'
                 + '      <div>'
-                + '          <h3>' + R.escapeHtml(s.surah_name) + ' <span style="color:var(--text-muted);font-weight:500">' + R.escapeHtml(R.ayahLabel(s.ayah_start, s.ayah_end)) + '</span></h3>'
-                + '          <p>' + R.escapeHtml(R.formatDateTime(s.created_at)) + ' &middot; ' + R.formatDuration(s.duration_seconds) + ' &middot; ' + R.formatBytes(s.file_size) + '</p>'
+                + '          <h3>' + titleHtml + '</h3>'
+                + '          <p>' + R.escapeHtml(R.formatDateTime(s.created_at)) + ' &middot; ' + R.formatBytes(s.file_size) + '</p>'
                 + '      </div>'
                 + '      <span class="rec-badge ' + meta.cls + '"><i class="fas ' + meta.icon + '"></i>' + meta.label + '</span>'
                 + '  </div>'
-                + feedback
                 + '  <div class="sub-actions">'
-                + '      <button type="button" class="play-btn" data-play="' + s.id + '"><i class="fas fa-play"></i> Play recording</button>'
+                + '      <div class="sub-voice" data-voice="' + s.id + '" data-duration="' + (s.duration_seconds || 0) + '"></div>'
                 + reviewDate
                 + '  </div>'
+                + feedback
                 + '</article>';
         }).join('');
+
+        bindVoiceCards(els.submissionList);
+    }
+
+    function bindVoiceCards(root) {
+        var hosts = root.querySelectorAll('[data-voice]');
+        Array.prototype.forEach.call(hosts, function (host) {
+            var id = Number(host.getAttribute('data-voice'));
+            var duration = Number(host.getAttribute('data-duration')) || 0;
+            MSVoice.bubble(host, {
+                id: id,
+                duration: duration,
+                loader: function () { return R.fetchAudio(id); }
+            });
+        });
+    }
+
+    /* ---------------- Study deck: lesson video + per-lesson review ---------------- */
+
+    function resolveMedia(url) {
+        if (window.MS_MEDIA && typeof MS_MEDIA.resolve === 'function') return MS_MEDIA.resolve(url);
+        var u = String(url == null ? '' : url).trim();
+        if (!u) return '';
+        if (/^(https?:)?\/\//i.test(u) || /^(data|blob):/i.test(u)) return u;
+        if (/^\/?uploads\//i.test(u)) return R.API_ORIGIN + '/' + u.replace(/^\/+/, '');
+        return u;
+    }
+
+    function lessonArt(lesson) {
+        if (window.MS_MEDIA && typeof MS_MEDIA.thumb === 'function') return MS_MEDIA.thumb(lesson);
+        return resolveMedia(lesson && lesson.thumbnail_url) || 'Images/thumbnails/thumb_seed_11.jpg';
+    }
+
+    function youtubeId(url) {
+        var m = String(url || '').match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{6,})/);
+        return m ? m[1] : null;
+    }
+
+    function collectMyLessons() {
+        var map = {};
+        var order = [];
+        function touch(id, title, status, assigned) {
+            if (!map[id]) {
+                map[id] = { id: id, title: title || ('Lesson #' + id), status: status || null, count: 0, assigned: Boolean(assigned), lastAt: 0 };
+                order.push(id);
+            } else if (title && (!map[id].title || /^Lesson #/.test(map[id].title))) {
+                map[id].title = title;
+            }
+            return map[id];
+        }
+        submitted.forEach(function (s) {
+            if (!s.lesson_id) return;
+            var item = touch(Number(s.lesson_id), s.lesson_title, s.status, false);
+            item.count += 1;
+            item.lastAt = Math.max(item.lastAt, s.created_at ? Date.parse(s.created_at) || 0 : 0);
+        });
+        assignments.forEach(function (a) {
+            if (!a.lesson_id) return;
+            var item = touch(Number(a.lesson_id), a.lesson_title, null, true);
+            item.assigned = true;
+        });
+        return order.map(function (id) { return map[id]; }).sort(function (a, b) {
+            if (a.lastAt && b.lastAt) return b.lastAt - a.lastAt;
+            if (a.lastAt) return -1;
+            if (b.lastAt) return 1;
+            return 0;
+        });
+    }
+
+    function renderMyLessons() {
+        var list = collectMyLessons();
+        if (!list.length) {
+            els.lessonList.innerHTML = '<div class="rec-empty"><i class="fas fa-graduation-cap"></i>No lessons yet. Open any lesson, record under its video, and it stays here as yours.</div>';
+            return;
+        }
+        els.lessonList.innerHTML = list.map(function (l) {
+            var art = lessonThumbs[l.id] ? lessonArt(lessonThumbs[l.id]) : 'Images/thumbnails/thumb_seed_11.jpg';
+            var selected = (lessonTarget && Number(lessonTarget.id) === l.id)
+                || (selectedAssignment && selectedAssignment.lesson_id && Number(selectedAssignment.lesson_id) === l.id);
+            var meta = l.status ? R.statusMeta(l.status) : null;
+            var badge = meta
+                ? '<span class="rec-badge ' + meta.cls + '"><i class="fas ' + meta.icon + '"></i>' + meta.label + '</span>'
+                : (l.assigned ? '<span class="rec-badge none"><i class="fas fa-bookmark"></i>Assigned</span>' : '<span class="rec-badge none"><i class="fas fa-microphone"></i>No take yet</span>');
+            var count = l.count ? '<span><i class="fas fa-file-audio"></i>' + l.count + (l.count === 1 ? ' recording' : ' recordings') + '</span>' : '';
+            var assignedTag = l.assigned ? '<span><i class="fas fa-bookmark"></i>Assigned</span>' : '';
+            return ''
+                + '<button type="button" class="rec-lesson-card' + (selected ? ' selected' : '') + '" data-lesson="' + l.id + '">'
+                + '  <span class="rec-lesson-thumb">'
+                + '      <img src="' + R.escapeHtml(art) + '" alt="" loading="lazy" onerror="this.onerror=null;this.src=\'Images/thumbnails/thumb_seed_11.jpg\'">'
+                + '      <span class="rec-lesson-play"><i class="fas fa-play"></i></span>'
+                + '  </span>'
+                + '  <span class="rec-lesson-info">'
+                + '      <h4>' + R.escapeHtml(l.title) + '</h4>'
+                + '      <span class="rec-lesson-sub">' + count + assignedTag + '</span>'
+                + '  </span>'
+                + '  ' + badge
+                + '</button>';
+        }).join('');
+    }
+
+    async function loadLessonThumbs() {
+        if (lessonThumbsLoaded) return;
+        try {
+            var res = await fetch(R.API + '/lessons?limit=100&sort=newest');
+            if (!res.ok) return;
+            var data = await res.json();
+            (data.lessons || []).forEach(function (l) { lessonThumbs[Number(l.id)] = l; });
+            lessonThumbsLoaded = true;
+        } catch (e) { /* thumbnails are decoration */ }
+    }
+
+    function renderStudyEmpty(message) {
+        currentLesson = null;
+        lessonSubs = [];
+        els.studyTitle.textContent = 'Pick a lesson to study';
+        els.studyMeta.innerHTML = '';
+        els.studyOpenLink.style.display = 'none';
+        els.studyPlayer.innerHTML = '<div class="rec-player-empty"><i class="fas fa-clapperboard"></i>'
+            + '<div><strong>No lesson video on screen</strong>'
+            + R.escapeHtml(message || 'Choose one of your lessons or an assignment — the video plays right here, with the recorder directly below it.')
+            + '</div></div>';
+        els.studyFeedback.classList.add('rec-hidden');
+        els.studyStatusPill.className = 'rec-badge none';
+        els.studyStatusPill.innerHTML = '<i class="fas fa-microphone"></i>Not started';
+        updateStudySteps();
+        renderMyLessons();
+    }
+
+    /* Playing an embedded YouTube video (or any study player) must never
+       block or restart the microphone take — the player and the recorder
+       are independent, and the timer keeps running while the video plays. */
+    function buildPlayer(lesson) {
+        var host = els.studyPlayer;
+        var raw = lesson && (lesson.video_file_path || lesson.video_url);
+        var src = resolveMedia(raw);
+        var poster = lessonArt(lesson);
+        host.innerHTML = '';
+        if (!src) {
+            host.innerHTML = '<div class="rec-player-empty"><i class="fas fa-video-slash"></i>'
+                + '<div><strong>No video attached</strong>'
+                + 'This lesson has no video yet. You can still record your recitation below.</div></div>';
+            return;
+        }
+        var yt = youtubeId(src);
+        if (yt) {
+            var wrap = document.createElement('div');
+            wrap.className = 'rec-player-poster';
+            var img = document.createElement('img');
+            img.alt = '';
+            img.src = poster;
+            img.addEventListener('error', function () { img.src = 'Images/thumbnails/thumb_seed_11.jpg'; });
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'rec-play-btn';
+            btn.setAttribute('aria-label', 'Play the lesson video');
+            btn.innerHTML = '<i class="fas fa-play"></i>';
+            btn.addEventListener('click', function () {
+                host.innerHTML = '';
+                var frame = document.createElement('iframe');
+                frame.src = 'https://www.youtube.com/embed/' + yt + '?rel=0&autoplay=1&playsinline=1&modestbranding=1';
+                frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                frame.allowFullscreen = true;
+                frame.title = (lesson.title || 'Lesson video');
+                host.appendChild(frame);
+            });
+            wrap.appendChild(img);
+            wrap.appendChild(btn);
+            host.appendChild(wrap);
+            return;
+        }
+        var video = document.createElement('video');
+        video.controls = true;
+        video.playsInline = true;
+        video.preload = 'metadata';
+        video.poster = poster;
+        video.src = src;
+        host.appendChild(video);
+    }
+
+    function renderStudyLesson() {
+        var l = currentLesson;
+        if (!l) { renderStudyEmpty(); return; }
+        els.studyTitle.textContent = l.title || ('Lesson #' + l.id);
+        var bits = [];
+        if (l.category_name) bits.push('<span><i class="fas fa-layer-group"></i>' + R.escapeHtml(l.category_name) + '</span>');
+        if (l.instructor_name) bits.push('<span><i class="fas fa-user-tie"></i>' + R.escapeHtml(l.instructor_name) + '</span>');
+        if (l.duration_minutes) bits.push('<span><i class="fas fa-clock"></i>' + l.duration_minutes + ' min</span>');
+        if (l.difficulty) bits.push('<span><i class="fas fa-signal"></i>' + R.escapeHtml(l.difficulty) + '</span>');
+        els.studyMeta.innerHTML = bits.join('');
+        els.studyOpenLink.style.display = 'inline-flex';
+        els.studyOpenLink.href = 'video.html?id=' + encodeURIComponent(l.id);
+        buildPlayer(l);
+    }
+
+    async function loadStudyLesson(lessonId) {
+        var id = Number(lessonId);
+        if (!id) return;
+        var seq = ++lessonSeq;
+
+        var lesson = lessonCache[id];
+        if (!lesson) {
+            try {
+                var res = await fetch(R.API + '/lessons/' + id);
+                if (res.ok) {
+                    var data = await res.json();
+                    lesson = data.lesson || null;
+                }
+            } catch (e) { lesson = null; }
+            if (seq !== lessonSeq) return;
+            if (lesson) lessonCache[id] = lesson;
+        }
+
+        currentLesson = lesson || {
+            id: id,
+            title: ((lessonTarget && Number(lessonTarget.id) === id && lessonTarget.title) || (selectedAssignment && Number(selectedAssignment.lesson_id) === id && selectedAssignment.lesson_title) || ('Lesson #' + id))
+        };
+        lessonSubs = [];
+        if (lessonTarget && Number(lessonTarget.id) === id) {
+            lessonTarget.title = currentLesson.title;
+            showLessonTarget();
+        } else if (!selectedAssignment && currentLesson) {
+            lessonTarget = { id: id, title: currentLesson.title };
+            showLessonTarget();
+        }
+        renderStudyLesson();
+        renderLessonReview();
+        renderMyLessons();
+
+        try {
+            var subData = await R.api('/lesson/' + id);
+            if (seq !== lessonSeq) return;
+            lessonSubs = subData.submissions || [];
+        } catch (e) {
+            lessonSubs = [];
+        }
+        renderLessonReview();
+        renderMyLessons();
+    }
+
+    function renderLessonReview() {
+        updateStudySteps();
+        var latest = lessonSubs[0] || null;
+        if (!currentLesson || !latest) {
+            els.studyFeedback.classList.add('rec-hidden');
+            els.studyStatusPill.className = 'rec-badge none';
+            els.studyStatusPill.innerHTML = '<i class="fas fa-microphone"></i>Not started';
+            return;
+        }
+        var meta = R.statusMeta(latest.status);
+        els.studyStatusPill.className = 'rec-badge ' + meta.cls;
+        els.studyStatusPill.innerHTML = '<i class="fas ' + meta.icon + '"></i>' + meta.label;
+        els.studyFeedback.className = 'rec-study-feedback ' + (meta.cls === 'reviewed' ? 'good' : meta.cls === 'improve' ? 'improve' : 'pending');
+        els.studyFeedbackBadge.className = 'rec-badge ' + meta.cls;
+        els.studyFeedbackBadge.innerHTML = '<i class="fas ' + meta.icon + '"></i>' + meta.label;
+
+        var text = latest.feedback;
+        if (!text) {
+            text = latest.status === 'pending'
+                ? 'Your recording is with the review team. When the admin finishes the review, the comment will appear right here — for this lesson.'
+                : latest.status === 'needs_improvement'
+                    ? 'The reviewer asked for another take. Listen to your recording below, then record again.'
+                    : 'Reviewed — well done.';
+        }
+        els.studyFeedbackText.textContent = text;
+
+        var bits = [];
+        if (latest.lesson_title) bits.push('<span><i class="fas fa-video"></i>' + R.escapeHtml(latest.lesson_title) + '</span>');
+        if (latest.created_at) bits.push('<span><i class="fas fa-clock"></i>Sent ' + R.escapeHtml(R.formatDateTime(latest.created_at)) + '</span>');
+        if (latest.reviewed_at) bits.push('<span><i class="fas fa-circle-check"></i>Reviewed ' + R.escapeHtml(R.formatDateTime(latest.reviewed_at)) + '</span>');
+        els.studyFeedbackMeta.innerHTML = bits.join('');
+    }
+
+    function updateStudySteps() {
+        var recording = recState === 'hold' || recState === 'locked' || recState === 'stopping';
+        var hasTake = lessonSubs.length > 0;
+        if (els.stepWatch) els.stepWatch.classList.toggle('on', !recording && !hasTake);
+        if (els.stepRecord) els.stepRecord.classList.toggle('on', recording || (!hasTake && Boolean(currentLesson)));
+        if (els.stepReview) els.stepReview.classList.toggle('on', !recording && hasTake);
+    }
+
+    async function refreshLessonReview() {
+        if (!currentLesson || !currentLesson.id) return;
+        var id = Number(currentLesson.id);
+        try {
+            var data = await R.api('/lesson/' + id);
+            if (!currentLesson || Number(currentLesson.id) !== id) return;
+            lessonSubs = data.submissions || [];
+            renderLessonReview();
+            renderMyLessons();
+        } catch (e) { /* feedback refresh is best-effort */ }
     }
 
     async function loadAssignments() {
@@ -745,7 +1497,11 @@ a { color: inherit; }
     async function refreshAll() {
         els.refresh.classList.add('spinning');
         try {
-            await Promise.all([loadAssignments(), loadSubmissions(), loadStats()]);
+            await Promise.all([loadAssignments(), loadSubmissions(), loadStats(), loadLessonThumbs()]);
+            if (selectedId) selectedAssignment = currentAssignment();
+            else if (lessonTarget) selectedAssignment = null;
+            renderMyLessons();
+            await refreshLessonReview();
         } catch (err) {
             R.toast(err.message || 'Could not refresh.', 'error');
         } finally {
@@ -753,7 +1509,9 @@ a { color: inherit; }
         }
     }
 
-    // ---------------- Recorder ----------------
+    var kbHeld = false;
+
+    // ---------------- Recorder (Telegram-style) ----------------
     function extensionForMime(mime) {
         mime = String(mime || '').toLowerCase();
         if (mime.indexOf('ogg') !== -1) return '.ogg';
@@ -775,12 +1533,20 @@ a { color: inherit; }
 
     function elapsedMs() {
         var ms = accumulatedMs;
-        if (state === 'recording') ms += Date.now() - startedAt;
+        if ((recState === 'hold' || (recState === 'locked' && !recPaused)) && startedAt) ms += Date.now() - startedAt;
         return ms;
     }
 
+    /* Total recorded time across pauses — shown live and sent on upload. */
+    function totalRecordedMs() {
+        return Math.max(elapsedMs(), accumulatedMs);
+    }
+
     function renderTimer() {
-        els.timer.textContent = R.formatDuration(elapsedMs() / 1000);
+        els.timer.textContent = R.formatDuration(totalRecordedMs() / 1000);
+        if ((recState === 'hold' || (recState === 'locked' && !recPaused)) && totalRecordedMs() >= MAX_MS) {
+            finishCapture('You reached the 2-hour recording limit.');
+        }
     }
 
     function stopTimer() {
@@ -790,23 +1556,63 @@ a { color: inherit; }
         }
     }
 
+    function startTimer() {
+        stopTimer();
+        timerId = setInterval(renderTimer, 200);
+    }
+
     function stopStream() {
         if (stream) {
             stream.getTracks().forEach(function (track) { try { track.stop(); } catch (e) {} });
             stream = null;
         }
+        if (wakeLock) {
+            try { wakeLock.release(); } catch (e) {}
+            wakeLock = null;
+        }
     }
 
-    function releasePreview() {
-        if (previewUrl) {
-            URL.revokeObjectURL(previewUrl);
-            previewUrl = null;
-        }
+    /* Keep the screen awake while reciting — important on long phone takes. */
+    function requestWakeLock() {
+        if (!navigator.wakeLock || !navigator.wakeLock.request) return;
         try {
-            els.preview.pause();
-            els.preview.removeAttribute('src');
-            els.preview.load();
+            navigator.wakeLock.request('screen').then(function (lock) {
+                wakeLock = lock;
+                lock.addEventListener('release', function () { wakeLock = null; });
+            }).catch(function () {});
         } catch (e) {}
+    }
+
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible' && (recState === 'hold' || recState === 'locked') && !wakeLock) requestWakeLock();
+    });
+
+    /* Silence any native lesson video so it does not play into the mic. */
+    function pauseStudyVideos() {
+        try {
+            document.querySelectorAll('video').forEach(function (v) { try { v.pause(); } catch (e) {} });
+        } catch (e) {}
+    }
+
+    function micErrorMessage(err) {
+        var name = err && err.name ? err.name : '';
+        if (name === 'NotAllowedError' || name === 'SecurityError') return 'Microphone was blocked. Tap the lock/camera icon in the browser address bar, allow the mic, then try again.';
+        if (name === 'NotFoundError' || name === 'DevicesNotFoundError' || name === 'OverconstrainedError') return 'No microphone was found. Connect one and try again.';
+        if (name === 'NotReadableError' || name === 'AbortError') return 'Microphone is busy in another app or tab. Close it there, then try again.';
+        if (window.isSecureContext === false) return 'Microphone needs a secure connection (HTTPS). Ask the admin to open the site over HTTPS and try again.';
+        return 'Microphone access was blocked. Allow it in your browser settings and try again.';
+    }
+
+    async function acquireMic() {
+        var constraints = { audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } };
+        try {
+            return await navigator.mediaDevices.getUserMedia(constraints);
+        } catch (err) {
+            if (err && (err.name === 'OverconstrainedError' || err.name === 'NotFoundError')) {
+                return await navigator.mediaDevices.getUserMedia({ audio: true });
+            }
+            throw err;
+        }
     }
 
     function showRecorderEmpty() {
@@ -814,7 +1620,6 @@ a { color: inherit; }
         els.recorderBody.classList.add('rec-hidden');
         els.liveDot.classList.remove('show');
         stopTimer();
-        renderTimer();
     }
 
     function selectAssignment(id) {
@@ -822,7 +1627,8 @@ a { color: inherit; }
         selectedAssignment = currentAssignment();
         if (!selectedAssignment) return;
 
-        resetRecording(true);
+        resetRecorder(true);
+        lessonTarget = null;
         renderAssignments();
 
         els.recorderEmpty.classList.add('rec-hidden');
@@ -832,181 +1638,358 @@ a { color: inherit; }
             + '<p>' + R.escapeHtml(R.ayahLabel(selectedAssignment.ayah_start, selectedAssignment.ayah_end))
             + (selectedAssignment.due_date ? ' &middot; Due ' + R.escapeHtml(R.formatDate(selectedAssignment.due_date)) : '')
             + '</p>'
+            + (selectedAssignment.lesson_title ? '<p style="margin-top:2px;color:var(--gold)"><i class="fas fa-video"></i> ' + R.escapeHtml(selectedAssignment.lesson_title) + '</p>' : '')
             + (selectedAssignment.instructions ? '<p style="margin-top:6px;color:var(--text-sec)">' + R.escapeHtml(selectedAssignment.instructions) + '</p>' : '');
         updateRecorderUI();
 
-        if (window.innerWidth < 980) {
-            els.recorderPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (selectedAssignment.lesson_id) {
+            try { localStorage.setItem('ms_recite_lesson', String(selectedAssignment.lesson_id)); } catch (e) {}
+            loadStudyLesson(Number(selectedAssignment.lesson_id));
+        } else {
+            renderStudyEmpty('This assignment is not attached to a lesson video — record the assigned ayahs below. Your review will still appear here.');
         }
+
+        renderMyLessons();
+
+        if (window.innerWidth < 980) {
+            var jumpTo = selectedAssignment.lesson_id ? els.studyPanel : els.recorderPanel;
+            if (jumpTo) jumpTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    /* Recording straight from a lesson link (video page -> Record & Submit):
+       no teacher pre-order needed, the recording attaches to the lesson. */
+    /* The video lesson on screen is itself a valid recording target.
+       If a teacher assignment is selected it wins; otherwise the lesson
+       (with its title/description) is used, so the student never has to
+       hear "choose an assignment" while standing on a video. */
+    function resolveTarget() {
+        if (selectedAssignment && selectedAssignment.id) {
+            return { kind: 'assignment', id: Number(selectedAssignment.id), assignment: selectedAssignment };
+        }
+        if (lessonTarget && lessonTarget.id) {
+            return {
+                kind: 'lesson',
+                id: Number(lessonTarget.id),
+                title: lessonTarget.title || (currentLesson && Number(currentLesson.id) === Number(lessonTarget.id) ? currentLesson.title : null) || ('Lesson #' + lessonTarget.id)
+            };
+        }
+        if (currentLesson && currentLesson.id) {
+            return { kind: 'lesson', id: Number(currentLesson.id), title: currentLesson.title || ('Lesson #' + currentLesson.id) };
+        }
+        return null;
+    }
+
+    function showLessonTarget() {
+        var target = lessonTarget || (currentLesson ? { id: currentLesson.id, title: currentLesson.title } : null);
+        if (target && !lessonTarget) lessonTarget = { id: Number(target.id), title: target.title || null };
+        els.recorderEmpty.classList.add('rec-hidden');
+        els.recorderBody.classList.remove('rec-hidden');
+        els.recordingTarget.innerHTML = ''
+            + '<h3>' + R.escapeHtml(lessonTarget && lessonTarget.title ? lessonTarget.title : 'Lesson recitation') + '</h3>'
+            + '<p style="color:var(--gold)"><i class="fas fa-video"></i> Lesson practice &mdash; open recording</p>'
+            + '<p style="margin-top:6px;color:var(--text-sec)">Watch the lesson video above, then tap the mic and recite the part you practiced. It goes to the admin review queue.</p>';
+        updateRecorderUI();
+    }
+
+    async function enterLessonMode(lessonId) {
+        var id = Number(lessonId);
+        if (!id) return;
+        selectedId = null;
+        selectedAssignment = null;
+        lessonTarget = { id: id, title: null };
+        resetRecorder(true);
+        renderAssignments();
+        showLessonTarget();
+        renderMyLessons();
+        try { localStorage.setItem('ms_recite_lesson', String(id)); } catch (e) {}
+        try { history.replaceState(null, '', 'recite.html?lessonId=' + encodeURIComponent(id)); } catch (e) {}
+        if (window.innerWidth < 980) {
+            els.studyPanel.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+        await loadStudyLesson(id);
+    }
+
+    function setHint(html, danger) {
+        els.holdHint.innerHTML = html;
+        els.holdHint.classList.toggle('danger', Boolean(danger));
     }
 
     function updateRecorderUI() {
-        var recording = state === 'recording';
-        var paused = state === 'paused';
-        var ready = state === 'ready';
-        var submitting = state === 'submitting';
-        var stopping = state === 'stopping';
+        var s = recState;
+        var captureMatters = s !== 'ready' && s !== 'sending' && s !== 'sent';
 
-        els.record.hidden = recording || paused || ready || submitting || stopping;
-        els.record.disabled = submitting;
-        els.record.classList.toggle('recording', recording);
-        els.record.innerHTML = '<i class="fas fa-circle"></i> Start recording';
+        els.capture.classList.toggle('rec-hidden', !captureMatters);
+        els.readyView.classList.toggle('rec-hidden', captureMatters);
+        els.lockedControls.classList.toggle('rec-hidden', s !== 'locked');
 
-        els.pause.hidden = !(recording || paused);
-        els.pause.disabled = submitting;
-        els.pause.innerHTML = paused
-            ? '<i class="fas fa-play"></i> Resume'
-            : '<i class="fas fa-pause"></i> Pause';
+        var holding = s === 'hold' || s === 'locked';
+        els.mic.classList.toggle('holding', s === 'hold');
+        els.mic.classList.toggle('locked', s === 'locked');
+        els.mic.classList.toggle('paused', s === 'locked' && recPaused);
 
-        els.stop.hidden = !(recording || paused);
-        els.stop.disabled = submitting;
+        var micIcon = els.mic.querySelector('i');
+        if (micIcon) micIcon.className = s === 'locked' ? 'fas fa-stop' : 'fas fa-microphone';
+        els.mic.setAttribute('aria-label', s === 'locked' ? 'Stop the recording' : 'Tap to record your recitation');
 
-        els.reset.hidden = !(ready || submitting);
-        els.reset.disabled = submitting;
+        els.cancel.disabled = s !== 'locked';
+        els.cancel.classList.toggle('show', s !== 'idle');
+        els.cancel.classList.toggle('armed', Boolean(drag.cancel));
 
-        els.preview.hidden = !ready;
-        els.submit.hidden = !ready;
-        els.submit.disabled = submitting;
-        els.submit.innerHTML = submitting
-            ? '<i class="fas fa-circle-notch fa-spin"></i> Submitting&hellip;'
-            : '<i class="fas fa-paper-plane"></i> Submit for review';
 
-        els.liveDot.classList.toggle('show', recording || paused);
-        els.wave.classList.toggle('active', recording || paused);
-        els.wave.classList.toggle('paused', paused);
+        var recordingWave = (s === 'hold' || s === 'locked') && !recPaused;
+        els.wave.classList.toggle('recording', recordingWave);
+        els.wave.classList.toggle('paused', Boolean(recPaused));
+        els.wave.classList.toggle('dim', !recordingWave && !recPaused);
 
-        if (recording) els.status.textContent = 'Recording\u2026 speak clearly.';
-        else if (paused) els.status.textContent = 'Paused. Resume when you are ready.';
-        else if (ready) els.status.textContent = 'Recording ready. Listen back, then submit.';
-        else if (submitting) els.status.textContent = 'Uploading your recitation\u2026';
-        else if (stopping) els.status.textContent = 'Finishing the recording\u2026';
-        else els.status.textContent = 'Ready when you are.';
+        if (drag.cancel) {
+            setHint('<i class="fas fa-trash"></i> Release to discard the recording', true);
+        } else if (s === 'idle') {
+            setHint('<strong>Tap</strong> the mic to start recording');
+        } else if (s === 'hold') {
+            setHint('Starting&hellip; recording will continue hands-free');
+        } else if (s === 'locked') {
+            setHint(recPaused
+                ? '<strong>Paused.</strong> Tap the mic to finish, or resume below.'
+                : 'Recording hands-free &mdash; <strong>tap the mic</strong> to finish.');
+        } else if (s === 'stopping') {
+            setHint('Saving your take&hellip;');
+        }
 
+        els.liveDot.classList.toggle('show', recordingWave || recPaused);
+        updateStudySteps();
         renderTimer();
     }
 
-    async function startRecording() {
-        if (!selectedAssignment) return R.toast('Choose an assignment first.', 'error');
+    async function beginCapture() {
+        var message;
+        if (startingCapture) return false;
+        if (!resolveTarget()) {
+            R.toast('Choose a lesson or an assignment first.', 'error');
+            return false;
+        }
+        if (window.isSecureContext === false) {
+            R.toast('Microphone needs a secure connection (HTTPS). Ask the admin to open the site over HTTPS and try again.', 'error');
+            return false;
+        }
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) {
             R.toast('This browser cannot record audio. Try Chrome, Edge, Firefox or Safari.', 'error');
-            return;
+            return false;
         }
 
-        releasePreview();
-        blob = null;
+        startingCapture = true;
+        var captureId = ++captureSeq;
+        setHint('<i class="fas fa-circle-notch fa-spin"></i> Starting the microphone&hellip;');
+        if (draftBubble) { draftBubble.destroy(); draftBubble = null; }
+        recordedBlob = null;
         discardOnStop = false;
+        recordedBytes = 0;
+        sizeStopTriggered = false;
+        accumulatedMs = 0;
+        startedAt = 0;
+        recPaused = false;
 
         try {
-            stream = await navigator.mediaDevices.getUserMedia({
-                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
-            });
+            stream = await acquireMic();
         } catch (err) {
-            var message = 'Microphone access was blocked. Allow it in your browser settings and try again.';
-            if (err && (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError')) {
-                message = 'No microphone was found. Connect one and try again.';
-            }
+            if (captureId === captureSeq) startingCapture = false;
+            message = micErrorMessage(err);
             R.toast(message, 'error');
-            els.status.textContent = message;
-            return;
+            if (captureId === captureSeq) {
+                recState = 'idle';
+                updateRecorderUI();
+            }
+            return false;
+        }
+        pauseStudyVideos();
+        requestWakeLock();
+
+        if (captureId !== captureSeq) {
+            try { stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) {}
+            stream = null;
+            return false;
         }
 
         var mime = pickMime();
         try {
             mediaRecorder = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
         } catch (err) {
-            stopStream();
-            R.toast('This browser could not start the recorder.', 'error');
-            return;
+            try {
+                mediaRecorder = new MediaRecorder(stream);
+            } catch (err2) {
+                startingCapture = false;
+                stopStream();
+                R.toast('This browser could not start the recorder.', 'error');
+                return false;
+            }
+        }
+        if (stream && stream.getAudioTracks && stream.getAudioTracks()[0]) {
+            stream.getAudioTracks()[0].onended = function () {
+                if (recState === 'hold' || recState === 'locked') {
+                    R.toast('Microphone stopped. Tap the mic to record again.', 'error');
+                    cancelCapture(true);
+                }
+            };
         }
 
         chunks = [];
-        accumulatedMs = 0;
-        discardOnStop = false;
         mediaRecorder.ondataavailable = function (event) {
-            if (event.data && event.data.size) chunks.push(event.data);
+            if (event.data && event.data.size) {
+                chunks.push(event.data);
+                recordedBytes += event.data.size;
+                if (recordedBytes > SOFT_BYTES && !sizeStopTriggered && !discardOnStop) {
+                    sizeStopTriggered = true;
+                    R.toast('Recording is nearly 25 MB — finishing your take now.', 'info');
+                    finishCapture('');
+                }
+            }
         };
         mediaRecorder.onstop = handleRecordingStop;
         mediaRecorder.onerror = function () {
             R.toast('The recorder stopped unexpectedly. Please try again.', 'error');
-            resetRecording(true);
+            cancelCapture(true);
         };
 
         mediaRecorder.start(250);
+        startingCapture = false;
         startedAt = Date.now();
-        state = 'recording';
-        stopTimer();
-        timerId = setInterval(renderTimer, 200);
+        recState = 'hold';
+        if (meter) meter.start(stream);
+        startTimer();
+        updateRecorderUI();
+        // Click / tap / key press starts a hands-free take straight away.
+        enterLocked();
+        return true;
+    }
+
+    function enterLocked() {
+        recState = 'locked';
+        drag.locked = true;
+        drag.cancel = false;
         updateRecorderUI();
     }
 
-    function pauseRecording() {
-        if (!mediaRecorder) return;
-        if (state === 'recording') {
+    function pauseToggle() {
+        if (recState !== 'locked' || !mediaRecorder) return;
+        if (!recPaused) {
             accumulatedMs += Date.now() - startedAt;
             try { mediaRecorder.pause(); } catch (e) {}
+            recPaused = true;
             stopTimer();
-            state = 'paused';
-            updateRecorderUI();
-        } else if (state === 'paused') {
+            if (meter) meter.pause();
+        } else {
             try { mediaRecorder.resume(); } catch (e) {}
+            recPaused = false;
             startedAt = Date.now();
-            state = 'recording';
-            timerId = setInterval(renderTimer, 200);
-            updateRecorderUI();
+            startTimer();
+            if (meter) meter.resume();
+        }
+        els.lockedPause.innerHTML = recPaused
+            ? '<i class="fas fa-play"></i> Resume'
+            : '<i class="fas fa-pause"></i> Pause';
+        els.lockedPause.setAttribute('aria-label', recPaused ? 'Resume' : 'Pause');
+        updateRecorderUI();
+    }
+
+    function stopRecorderInternals() {
+        if (meter) meter.stop();
+        stopTimer();
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            try { mediaRecorder.stop(); } catch (e) { handleRecordingStop(); }
+        } else {
+            handleRecordingStop();
         }
     }
 
-    function stopRecording() {
-        if (!mediaRecorder) return;
-        if (state === 'recording') accumulatedMs += Date.now() - startedAt;
-        stopTimer();
-        state = 'stopping';
+    function cancelCapture(silent) {
+        if (recState !== 'hold' && recState !== 'locked' && recState !== 'stopping') return;
+        discardOnStop = true;
+        recState = 'stopping';
         updateRecorderUI();
-        els.status.textContent = 'Finishing the recording\u2026';
-        try { mediaRecorder.stop(); } catch (e) { handleRecordingStop(); }
+        stopRecorderInternals();
+        if (!silent) R.toast('Recording discarded. Tap the mic to try again.', 'info');
+    }
+
+    function finishCapture(note) {
+        if (recState !== 'hold' && recState !== 'locked') return;
+        if (note) R.toast(note, 'info');
+        if (elapsedMs() < MIN_MS) {
+            discardOnStop = true;
+            recState = 'stopping';
+            updateRecorderUI();
+            stopRecorderInternals();
+            R.toast('Too short — tap, then recite a little longer.', 'info');
+            return;
+        }
+        recState = 'stopping';
+        updateRecorderUI();
+        stopRecorderInternals();
     }
 
     function handleRecordingStop() {
         stopStream();
         var type = (mediaRecorder && mediaRecorder.mimeType) || 'audio/webm';
         mediaRecorder = null;
+        accumulatedMs = totalRecordedMs();
+        startedAt = 0;
         stopTimer();
         renderTimer();
 
         if (discardOnStop) {
             discardOnStop = false;
             chunks = [];
-            if (state !== 'idle') {
-                state = 'idle';
-                updateRecorderUI();
-            }
+            recordedBlob = null;
+            accumulatedMs = 0;
+            recState = 'idle';
+            updateRecorderUI();
             return;
         }
 
         if (!chunks.length) {
-            state = 'idle';
+            accumulatedMs = 0;
+            recState = 'idle';
             updateRecorderUI();
             R.toast('Nothing was recorded. Please try again.', 'error');
             return;
         }
 
-        blob = new Blob(chunks, { type: type });
+        recordedBlob = new Blob(chunks, { type: type });
         chunks = [];
-        releasePreview();
-        previewUrl = URL.createObjectURL(blob);
-        els.preview.src = previewUrl;
-        state = 'ready';
+        recState = 'ready';
         updateRecorderUI();
-
-        if (blob.size > MAX_BYTES) {
-            els.status.textContent = 'This recording is larger than 25 MB. Please re-record a shorter passage.';
-            els.submit.disabled = true;
-        }
+        buildReadyBubble();
     }
 
-    function resetRecording(keepSelection) {
-        // Detach the old handlers first so a late onstop event cannot mix the
-        // previous recording with a new one started moments later.
+    function buildReadyBubble() {
+        if (draftBubble) { draftBubble.destroy(); draftBubble = null; }
+        els.readyBubble.innerHTML = '';
+        var totalSec = Math.max(1, Math.round(totalRecordedMs() / 1000));
+        var duration = totalSec;
+        draftBubble = MSVoice.bubble(els.readyBubble, {
+            id: 'draft-' + Date.now(),
+            duration: duration,
+            loader: function () { return Promise.resolve(recordedBlob); }
+        });
+        var tooBig = recordedBlob && recordedBlob.size > MAX_BYTES;
+        els.readyStatus.textContent = tooBig
+            ? 'This take is over the 25 MB limit. Discard it and record a shorter passage.'
+            : 'Listen back, then send it to your teacher for review.';
+        els.submit.disabled = Boolean(tooBig);
+    }
+
+    function discardDraft() {
+        if (draftBubble) { draftBubble.destroy(); draftBubble = null; }
+        recordedBlob = null;
+        accumulatedMs = 0;
+        recordedBytes = 0;
+        recState = 'idle';
+        updateRecorderUI();
+        R.toast('Take discarded. Tap the mic when ready.', 'info');
+    }
+
+    function resetRecorder(keepSelection) {
+        captureSeq++;
+        startingCapture = false;
         discardOnStop = true;
         if (mediaRecorder) {
             mediaRecorder.onstop = null;
@@ -1015,94 +1998,72 @@ a { color: inherit; }
                 try { mediaRecorder.stop(); } catch (e) {}
             }
         }
-        stopStream();
         mediaRecorder = null;
+        stopStream();
+        if (meter) meter.stop();
         stopTimer();
         chunks = [];
-        blob = null;
+        recordedBlob = null;
+        if (draftBubble) { draftBubble.destroy(); draftBubble = null; }
+        recordedBytes = 0;
         accumulatedMs = 0;
         startedAt = 0;
-        state = 'idle';
-        releasePreview();
+        recPaused = false;
+        recState = 'idle';
+        els.lockedPause.innerHTML = '<i class="fas fa-pause"></i> Pause';
+        els.lockedPause.setAttribute('aria-label', 'Pause');
         updateRecorderUI();
-        if (!keepSelection) R.toast('Recorder cleared. You can start again.', 'info');
+        if (!keepSelection) R.toast('Recorder reset. You can start again.', 'info');
     }
 
-    async function submitRecording() {
-        if (!selectedAssignment) return R.toast('Choose an assignment first.', 'error');
-        if (!blob) return R.toast('Record something first.', 'error');
-        if (blob.size > MAX_BYTES) return R.toast('Recording is larger than 25 MB. Please re-record.', 'error');
+    async function sendRecording() {
+        var target = resolveTarget();
+        if (!target) return R.toast('Choose what you are recording for first.', 'error');
+        if (!recordedBlob) return R.toast('Record something first.', 'error');
+        if (recordedBlob.size > MAX_BYTES) return R.toast('Recording is larger than 25 MB. Please re-record.', 'error');
 
         var form = new FormData();
-        form.append('assignmentId', String(selectedAssignment.id));
-        form.append('durationSeconds', String(Math.max(1, Math.round(accumulatedMs / 1000))));
-        form.append('audio', blob, 'recitation' + extensionForMime(blob.type));
+        if (target.kind === 'lesson') {
+            form.append('lessonId', String(target.id));
+        } else {
+            form.append('assignmentId', String(target.id));
+        }
+        form.append('durationSeconds', String(Math.max(1, Math.round(totalRecordedMs() / 1000))));
+        form.append('audio', recordedBlob, 'recitation' + extensionForMime(recordedBlob.type));
 
-        state = 'submitting';
-        updateRecorderUI();
+        recState = 'sending';
+        els.submit.disabled = true;
+        els.submit.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending&hellip;';
 
         try {
             await R.api('/submissions', { method: 'POST', body: form });
-            R.toast('Recitation submitted. Your teacher will review it.', 'success');
-            state = 'idle';
-            resetRecording(true);
-            await refreshAll();
-            if (selectedAssignment) {
-                els.recordingTarget.innerHTML = ''
-                    + '<h3>' + R.escapeHtml(selectedAssignment.surah_name) + ' <span style="color:var(--gold);font-weight:600">' + selectedAssignment.surah_number + '</span></h3>'
-                    + '<p>' + R.escapeHtml(R.ayahLabel(selectedAssignment.ayah_start, selectedAssignment.ayah_end)) + '</p>';
-            }
-        } catch (err) {
-            state = 'ready';
-            updateRecorderUI();
-            R.toast(err.message || 'Could not submit the recording.', 'error');
-        }
-    }
-
-    // ---------------- Playback ----------------
-    async function togglePlayback(button, id) {
-        if (playback && playback.id === id && playback.btn === button) {
-            if (playback.audio.paused) {
-                try { await playback.audio.play(); } catch (e) {}
-            } else {
-                playback.audio.pause();
-            }
-            return;
-        }
-
-        stopPlayback();
-        button.disabled = true;
-        button.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading&hellip;';
-
-        try {
-            var url = await R.fetchAudio(id);
-            var audio = new Audio(url);
-            playback = { id: id, btn: button, audio: audio, url: url };
-
-            function updateLabel() {
-                if (!playback || playback.audio !== audio) return;
-                button.disabled = false;
-                if (!audio.paused && !audio.ended) {
-                    button.innerHTML = '<i class="fas fa-pause"></i> Pause';
-                } else {
-                    button.innerHTML = '<i class="fas fa-play"></i> Play recording';
+            R.toast('Recitation sent. It will be reviewed and you will see feedback here.', 'success');
+            recState = 'sent';
+            els.readyView.classList.remove('rec-hidden');
+            els.capture.classList.add('rec-hidden');
+            els.readyStatus.textContent = 'Sent! It is now awaiting review.';
+            if (draftBubble) { draftBubble.destroy(); draftBubble = null; }
+            setTimeout(function () {
+                resetRecorder(true);
+                els.submit.disabled = false;
+                els.submit.innerHTML = '<i class="fas fa-paper-plane"></i> Send for review';
+                if (lessonTarget) {
+                    showLessonTarget();
+                } else if (selectedAssignment) {
+                    els.recordingTarget.innerHTML = ''
+                        + '<h3>' + R.escapeHtml(selectedAssignment.surah_name) + ' <span style="color:var(--gold);font-weight:600">' + selectedAssignment.surah_number + '</span></h3>'
+                        + '<p>' + R.escapeHtml(R.ayahLabel(selectedAssignment.ayah_start, selectedAssignment.ayah_end)) + '</p>'
+                        + (selectedAssignment.lesson_title ? '<p style="margin-top:2px;color:var(--gold)"><i class="fas fa-video"></i> ' + R.escapeHtml(selectedAssignment.lesson_title) + '</p>' : '')
+                        + (selectedAssignment.instructions ? '<p style="margin-top:6px;color:var(--text-sec)">' + R.escapeHtml(selectedAssignment.instructions) + '</p>' : '');
                 }
-            }
-
-            audio.addEventListener('play', updateLabel);
-            audio.addEventListener('pause', updateLabel);
-            audio.addEventListener('ended', updateLabel);
-            audio.addEventListener('error', function () {
-                R.toast('This recording could not be played.', 'error');
-                stopPlayback();
-            });
-
-            await audio.play();
-            updateLabel();
+            }, 1400);
+            await refreshAll();
         } catch (err) {
-            button.disabled = false;
-            button.innerHTML = '<i class="fas fa-play"></i> Play recording';
-            R.toast(err.message || 'Could not load the recording.', 'error');
+            recState = 'ready';
+            els.submit.disabled = false;
+            els.submit.innerHTML = '<i class="fas fa-paper-plane"></i> Send for review';
+            updateRecorderUI();
+            R.toast(err.message || 'Could not send the recording.', 'error');
         }
     }
 
@@ -1117,24 +2078,150 @@ a { color: inherit; }
         selectAssignment(id);
     });
 
-    els.submissionList.addEventListener('click', function (event) {
-        var button = event.target.closest('[data-play]');
-        if (!button) return;
-        togglePlayback(button, Number(button.getAttribute('data-play')));
+    els.lessonList.addEventListener('click', function (event) {
+        var card = event.target.closest('[data-lesson]');
+        if (!card) return;
+        var lessonId = Number(card.getAttribute('data-lesson'));
+        if (!lessonId) return;
+        var assigned = assignments.find(function (a) {
+            return Number(a.lesson_id) === lessonId && a.is_active !== false;
+        });
+        if (assigned) selectAssignment(assigned.id);
+        else enterLessonMode(lessonId);
     });
 
-    els.record.addEventListener('click', startRecording);
-    els.pause.addEventListener('click', pauseRecording);
-    els.stop.addEventListener('click', stopRecording);
-    els.reset.addEventListener('click', function () { resetRecording(true); });
-    els.submit.addEventListener('click', submitRecording);
+    function guardMicDown() {
+        if (startingCapture) return false;
+        if (recState !== 'idle' && recState !== 'ready') return false;
+        if (!resolveTarget()) {
+            if (!currentLesson) showRecorderEmpty();
+            R.toast('Choose a lesson or an assignment first.', 'error');
+            return false;
+        }
+        return true;
+    }
+
+    els.mic.addEventListener('pointerdown', function (event) {
+        lastInteractionAt = lastPointerAt = Date.now();
+        if (recState === 'locked') {
+            event.preventDefault();
+            finishCapture('');
+            return;
+        }
+        if (!guardMicDown()) return;
+        event.preventDefault();
+        drag = { active: true, x0: event.clientX, y0: event.clientY, cancel: false, locked: false, kb: false };
+        if (els.mic.setPointerCapture && event.pointerId !== undefined) {
+            try { els.mic.setPointerCapture(event.pointerId); } catch (e) {}
+        }
+        beginCapture();
+    });
+
+    els.mic.addEventListener('pointermove', function (event) {
+        if (!drag.active || drag.kb || recState !== 'hold') return;
+        var dy = event.clientY - drag.y0;
+        var dx = event.clientX - drag.x0;
+        var wasCancel = drag.cancel;
+        drag.cancel = dx < -64;
+        if (!drag.locked && dy < -46) enterLocked();
+        if (drag.cancel !== wasCancel || drag.cancel) updateRecorderUI();
+    });
+
+    function endPointerHold() {
+        lastPointerAt = Date.now();
+        if (!drag.active || drag.kb) return;
+        drag.active = false;
+        var wasCancel = drag.cancel;
+        drag.cancel = false;
+        if (wasCancel) {
+            cancelCapture(false);
+            return;
+        }
+        // Release never stops the take: recording is hands-free until the
+        // mic is tapped again (or Finish is pressed).
+        updateRecorderUI();
+    }
+
+    els.mic.addEventListener('pointerup', endPointerHold);
+    els.mic.addEventListener('pointercancel', endPointerHold);
+    els.mic.addEventListener('lostpointercapture', function () {
+        if (drag.active && !drag.kb) endPointerHold();
+    });
+    els.mic.addEventListener('contextmenu', function (event) { event.preventDefault(); });
+
+    els.mic.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        if (event.repeat) { event.preventDefault(); return; }
+        event.preventDefault();
+        lastInteractionAt = Date.now();
+        if (recState === 'locked') {
+            finishCapture('');
+            return;
+        }
+        if (!guardMicDown()) return;
+        drag = { active: true, x0: 0, y0: 0, cancel: false, locked: false, kb: true };
+        kbHeld = true;
+        beginCapture();
+    });
+
+    els.mic.addEventListener('keyup', function (event) {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        lastInteractionAt = Date.now();
+        if (!kbHeld) return;
+        kbHeld = false;
+        if (drag.kb) { drag.active = false; drag.kb = false; }
+        updateRecorderUI();
+    });
+
+    // Universal fallback: browsers without Pointer Events (very old Safari)
+    // still get tap-to-start / tap-to-stop through the click event.
+    els.mic.addEventListener('click', function () {
+        var now = Date.now();
+        if (now - lastInteractionAt < 600 || now - lastPointerAt < 1000) return;
+        if (recState === 'locked') { finishCapture(''); return; }
+        if (!guardMicDown()) return;
+        beginCapture();
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        if (recState === 'hold' || recState === 'locked') {
+            event.preventDefault();
+            cancelCapture(false);
+        }
+    });
+
+    els.cancel.addEventListener('click', function () {
+        if (recState === 'locked') cancelCapture(false);
+    });
+
+    els.lockedCancel.addEventListener('click', function () {
+        if (recState === 'locked') cancelCapture(false);
+    });
+    els.lockedPause.addEventListener('click', pauseToggle);
+    els.lockedFinish.addEventListener('click', function () {
+        if (recState === 'locked') finishCapture('');
+    });
+
+    els.discard.addEventListener('click', function () {
+        if (recState === 'sending' || recState === 'sent') return;
+        discardDraft();
+    });
+
+    els.submit.addEventListener('click', sendRecording);
 
     window.addEventListener('beforeunload', function () {
-        stopPlayback();
-        releasePreview();
-        stopStream();
-        stopTimer();
+        MSVoice.stopAll();
+        if (recState === 'hold' || recState === 'locked') {
+            resetRecorder(true);
+        } else {
+            stopStream();
+            stopTimer();
+        }
     });
+
+    if (meter === null) meter = MSVoice.liveMeter(els.wave, 26);
 
     (async function init() {
         try {
@@ -1163,13 +2250,37 @@ a { color: inherit; }
                         selectAssignment(match.id);
                         return;
                     }
+                    // No teacher pre-order for this lesson — record practice
+                    // straight against the lesson itself.
+                    await enterLessonMode(lid);
+                    return;
+                }
+            }
+            // Reopen the lesson this student studied last (kept as "My lessons").
+            var lastLesson = 0;
+            try { lastLesson = Number(localStorage.getItem('ms_recite_lesson')) || 0; } catch (e) {}
+            if (lastLesson) {
+                var lastMatch = assignments.find(function (a) { return Number(a.lesson_id) === lastLesson && a.is_active !== false; });
+                if (lastMatch) {
+                    selectAssignment(lastMatch.id);
+                    return;
+                }
+                if (collectMyLessons().some(function (l) { return l.id === lastLesson; })) {
+                    await enterLessonMode(lastLesson);
+                    return;
                 }
             }
         } catch (e) {}
         if (assignments.length) {
             selectAssignment(assignments[0].id);
         } else {
-            showRecorderEmpty();
+            var mine = collectMyLessons();
+            if (mine.length) {
+                await enterLessonMode(mine[0].id);
+            } else {
+                showRecorderEmpty();
+                renderMyLessons();
+            }
         }
     })();
 })();

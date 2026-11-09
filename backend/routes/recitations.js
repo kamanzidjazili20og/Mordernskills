@@ -96,6 +96,9 @@ async function canAccessSubmission(user, submission) {
   if (user.role === 'student') return submission.student_id === user.id;
 
   if (user.role === 'teacher') {
+    // Lesson-only practice recordings (no assignment) are outside a teacher's
+    // scope — the admin reviews those directly.
+    if (!submission.assignment_id) return false;
     const { data, error } = await supabase
       .from('surah_assignments')
       .select('teacher_id')
@@ -140,9 +143,23 @@ async function decorateSubmissions(rows) {
   const users = new Map((usersResult.data || []).map(u => [u.id, u]));
   const assignments = new Map((assignmentsResult.data || []).map(a => [a.id, a]));
 
+  // Lesson context so the student (and reviewer) can see which lesson the
+  // recording belongs to, not just the Surah range.
+  const lessonIds = [...new Set(
+    list
+      .map(r => r.lesson_id || (assignments.get(r.assignment_id) || {}).lesson_id)
+      .filter(Boolean)
+  )];
+  const lessonsResult = lessonIds.length
+    ? await supabase.from('lessons').select('id,title').in('id', lessonIds)
+    : { data: [], error: null };
+  if (lessonsResult.error) throw lessonsResult.error;
+  const lessons = new Map((lessonsResult.data || []).map(l => [l.id, l]));
+
   return list.map(row => {
     const student = users.get(row.student_id) || {};
     const assignment = assignments.get(row.assignment_id) || {};
+    const lesson = lessons.get(row.lesson_id || assignment.lesson_id) || {};
     return {
       id: row.id,
       assignment_id: row.assignment_id,
@@ -166,6 +183,8 @@ async function decorateSubmissions(rows) {
       teacher_id: assignment.teacher_id || null,
       instructions: assignment.instructions || null,
       due_date: assignment.due_date || null,
+      lesson_id: assignment.lesson_id || row.lesson_id || null,
+      lesson_title: lesson.title || null,
       audio_url: `/api/recitations/submissions/${row.id}/audio`
     };
   });
@@ -203,14 +222,24 @@ async function decorateAssignments(rows) {
     if (!latestByAssignment.has(sub.assignment_id)) latestByAssignment.set(sub.assignment_id, sub);
   }
 
+  // Which lesson each assignment belongs to, so cards can show the lesson name.
+  const lessonIds = [...new Set(list.map(a => a.lesson_id).filter(Boolean))];
+  const lessonsResult = lessonIds.length
+    ? await supabase.from('lessons').select('id,title').in('id', lessonIds)
+    : { data: [], error: null };
+  if (lessonsResult.error) throw lessonsResult.error;
+  const lessons = new Map((lessonsResult.data || []).map(l => [l.id, l]));
+
   return list.map(row => {
     const student = users.get(row.student_id) || {};
     const latest = latestByAssignment.get(row.id);
+    const lesson = lessons.get(row.lesson_id) || {};
     return {
       ...row,
       student_name: student.full_name || student.username || 'Student',
       student_username: student.username || null,
       student_email: student.email || null,
+      lesson_title: lesson.title || null,
       submission_count: countByAssignment.get(row.id) || 0,
       latest_submission_id: latest ? latest.id : null,
       latest_submission_status: latest ? latest.status : null
@@ -577,24 +606,48 @@ router.post('/submissions', authenticate, requireStudent, (req, res) => {
 
     try {
       const assignmentId = asInt(req.body.assignmentId);
+      const lessonIdDirect = asInt(req.body.lessonId);
       const durationSeconds = asInt(req.body.durationSeconds);
 
-      if (!assignmentId) return res.status(400).json({ error: 'Choose an assignment first.' });
+      // Either a teacher assignment or a published lesson the student came
+      // from. No admin/teacher pre-order is required for the lesson path —
+      // a student recording practice straight from the lesson page just
+      // references it, and the recording sticks to that lesson.
+      if (!assignmentId && !lessonIdDirect) {
+        return res.status(400).json({ error: 'Choose what you are recording for first.' });
+      }
       if (durationSeconds !== null && (durationSeconds < 0 || durationSeconds > 7200)) {
         return res.status(400).json({ error: 'Recording length is out of range.' });
       }
 
-      const { data: assignmentRows, error: assignmentError } = await supabase
-        .from('surah_assignments')
-        .select('*')
-        .eq('id', assignmentId)
-        .eq('student_id', req.user.id)
-        .eq('is_active', true)
-        .limit(1);
-      if (assignmentError) throw assignmentError;
-      const assignment = assignmentRows && assignmentRows[0];
-      if (!assignment) {
-        return res.status(404).json({ error: 'That assignment is not available for your account.' });
+      let assignment = null;
+      let lessonId = null;
+      if (assignmentId) {
+        const { data: assignmentRows, error: assignmentError } = await supabase
+          .from('surah_assignments')
+          .select('*')
+          .eq('id', assignmentId)
+          .eq('student_id', req.user.id)
+          .eq('is_active', true)
+          .limit(1);
+        if (assignmentError) throw assignmentError;
+        assignment = assignmentRows && assignmentRows[0];
+        if (!assignment) {
+          return res.status(404).json({ error: 'That assignment is not available for your account.' });
+        }
+        lessonId = assignment.lesson_id || null;
+      } else {
+        const { data: lessonRows, error: lessonError } = await supabase
+          .from('lessons')
+          .select('id,is_published')
+          .eq('id', lessonIdDirect)
+          .limit(1);
+        if (lessonError) throw lessonError;
+        const lesson = lessonRows && lessonRows[0];
+        if (!lesson || lesson.is_published === false) {
+          return res.status(404).json({ error: 'That lesson is not available for recording.' });
+        }
+        lessonId = lesson.id;
       }
 
       let stored = null;
@@ -620,13 +673,13 @@ router.post('/submissions', authenticate, requireStudent, (req, res) => {
       const { data: inserted, error: insertError } = await supabase
         .from('recitation_submissions')
         .insert({
-          assignment_id: assignment.id,
-          lesson_id: assignment.lesson_id || null,
+          assignment_id: assignment ? assignment.id : null,
+          lesson_id: lessonId,
           student_id: req.user.id,
-          surah_number: assignment.surah_number,
-          surah_name: assignment.surah_name,
-          ayah_start: assignment.ayah_start,
-          ayah_end: assignment.ayah_end,
+          surah_number: assignment ? assignment.surah_number : null,
+          surah_name: assignment ? assignment.surah_name : null,
+          ayah_start: assignment ? assignment.ayah_start : null,
+          ayah_end: assignment ? assignment.ayah_end : null,
           storage: storageType,
           audio_path: audioPath,
           mime_type: recordingMime(req.file),
@@ -716,13 +769,18 @@ router.get('/lesson/:lessonId', authenticate, async (req, res) => {
       if (error) throw error;
       const assignments = await decorateAssignments(data || []);
       const assignmentIds = assignments.map(a => a.id);
+      // Recordings made for this lesson either through an assignment or
+      // straight from the lesson page (lesson-only practice rows).
+      const lessonScope = assignmentIds.length
+        ? `lesson_id.eq.${lessonId},assignment_id.in.(${assignmentIds.join(',')})`
+        : `lesson_id.eq.${lessonId}`;
       let submissions = [];
-      if (assignmentIds.length) {
+      {
         const { data: subData, error: subError } = await supabase
           .from('recitation_submissions')
           .select('*')
           .eq('student_id', req.user.id)
-          .in('assignment_id', assignmentIds)
+          .or(lessonScope)
           .order('created_at', { ascending: false });
         if (subError) throw subError;
         submissions = await decorateSubmissions(subData || []);
@@ -765,11 +823,14 @@ router.get('/lesson/:lessonId', authenticate, async (req, res) => {
       const assignments = await decorateAssignments(data || []);
       const assignmentIds = assignments.map(a => a.id);
       let submissions = [];
-      if (assignmentIds.length) {
+      {
+        const adminLessonScope = assignmentIds.length
+          ? `lesson_id.eq.${lessonId},assignment_id.in.(${assignmentIds.join(',')})`
+          : `lesson_id.eq.${lessonId}`;
         const { data: subData, error: subError } = await supabase
           .from('recitation_submissions')
           .select('*')
-          .in('assignment_id', assignmentIds)
+          .or(adminLessonScope)
           .order('created_at', { ascending: false });
         if (subError) throw subError;
         submissions = await decorateSubmissions(subData || []);

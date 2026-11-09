@@ -16,6 +16,7 @@
 <meta name="twitter:image" content="Images/mordern-skills-logo.png">
 <link rel="icon" type="image/png" href="Images/mordern-skills-logo.png">
 <link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/voice-ui.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" media="print" onload="this.media='all';this.onload=null">
@@ -1269,6 +1270,8 @@ body::before {
 <script src="assets/js/media.js"></script>
 <script src="assets/js/translations.js"></script>
 <script src="assets/js/i18n.js"></script>
+<script src="assets/js/voice-ui.js"></script>
+<script src="assets/js/ms-recorder.js"></script>
 </head>
 <body>
 
@@ -1571,6 +1574,8 @@ body::before {
                     </div>
                 </div>
 
+                <div id="recitationRecorderHost" style="display:none;margin-top:18px;"></div>
+
                 <div id="recitationTeacherView" style="display:none;margin-top:18px;">
                     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
                         <div>
@@ -1717,12 +1722,14 @@ async function loadLessonRecitationPanel(lessonId) {
     const teacherView = document.getElementById('recitationTeacherView');
     const guestView = document.getElementById('recitationGuestView');
     const badge = document.getElementById('recitationLessonBadge');
+    const recorderHost = document.getElementById('recitationRecorderHost');
     if (!panel) return;
     panel.style.display = 'block';
     if (badge) { badge.style.display = 'inline-flex'; badge.textContent = 'Lesson #' + lessonId; }
     if (guestView) guestView.style.display = 'none';
     if (studentView) studentView.style.display = 'none';
     if (teacherView) teacherView.style.display = 'none';
+    if (recorderHost) recorderHost.style.display = 'none';
 
     const token = localStorage.getItem('ms_token');
     const user = getVideoStoredUser();
@@ -1745,11 +1752,13 @@ async function loadLessonRecitationPanel(lessonId) {
 
         if (user.role === 'student') {
             const assignment = assignments.find(function(a){ return a.is_active !== false; }) || assignments[0];
-            if (!assignment) {
-                if (guestView) { guestView.style.display = 'flex'; guestView.querySelectorAll('[data-lang]').forEach(function(el){ el.style.display = el.dataset.lang === currentLang ? '' : 'none'; }); }
-                return;
-            }
-            if (actionBtn) actionBtn.href = 'recite.html?assignmentId=' + encodeURIComponent(assignment.id);
+            /* Open recording: even with no teacher pre-order, the student records
+               straight from this lesson link and the end result still goes into the
+               admin review queue. */
+            const latestMine = submissions.length ? submissions[0] : null;
+            if (actionBtn) actionBtn.href = assignment
+                ? 'recite.html?assignmentId=' + encodeURIComponent(assignment.id)
+                : 'recite.html?lessonId=' + encodeURIComponent(lessonId);
             if (studentView) studentView.style.display = 'grid';
             const title = document.getElementById('recitationAssignTitle');
             const range = document.getElementById('recitationAssignRange');
@@ -1764,32 +1773,52 @@ async function loadLessonRecitationPanel(lessonId) {
             const fb = document.getElementById('recitationFeedback');
             const fbAt = document.getElementById('recitationReviewedAt');
 
-            if (title) title.textContent = assignment.surah_name + ' (' + assignment.surah_number + ')';
-            if (range) range.textContent = 'Ayah ' + assignment.ayah_start + ' – ' + assignment.ayah_end;
+            if (title) title.textContent = assignment ? assignment.surah_name + ' (' + assignment.surah_number + ')' : 'Lesson recitation';
+            if (range) range.textContent = assignment
+                ? 'Ayah ' + assignment.ayah_start + ' - ' + assignment.ayah_end
+                : 'Open recording — recite any part of this lesson';
             if (pill) {
-                const sub = submissions.find(function(s){ return s.assignment_id === assignment.id; });
+                const sub = assignment
+                    ? submissions.find(function(s){ return s.assignment_id === assignment.id; })
+                    : latestMine;
                 if (sub && sub.status === 'reviewed') { pill.textContent = 'Reviewed'; pill.style.color = '#34d399'; pill.style.borderColor = 'rgba(52,211,153,0.4)'; }
                 else if (sub && sub.status === 'needs_improvement') { pill.textContent = 'Needs Improvement'; pill.style.color = '#fca5a5'; pill.style.borderColor = 'rgba(252,165,165,0.4)'; }
                 else if (sub) { pill.textContent = 'Pending'; pill.style.color = '#f59e0b'; pill.style.borderColor = 'rgba(245,158,11,0.4)'; }
                 else { pill.textContent = 'Not Submitted'; pill.style.color = 'var(--text-muted)'; pill.style.borderColor = 'var(--border)'; }
             }
-            if (instrWrap && instr) {
-                if (assignment.instructions && assignment.instructions.trim()) { instrWrap.style.display = 'block'; instr.textContent = assignment.instructions; }
-                else { instrWrap.style.display = 'none'; }
+            if (assignment) {
+                if (instrWrap && instr) {
+                    if (assignment.instructions && assignment.instructions.trim()) { instrWrap.style.display = 'block'; instr.textContent = assignment.instructions; }
+                    else { instrWrap.style.display = 'none'; }
+                }
+                if (dueWrap && due) {
+                    if (assignment.due_date) { dueWrap.style.display = 'inline-flex'; due.textContent = assignment.due_date; }
+                    else { dueWrap.style.display = 'none'; }
+                }
+                if (tWrap && tName) {
+                    if (assignment.teacher_name) { tWrap.style.display = 'inline-flex'; tName.textContent = assignment.teacher_name; }
+                    else { tWrap.style.display = 'none'; }
+                }
+                if (fbCard && fb && fbAt) {
+                    const sub = submissions.find(function(s){ return s.assignment_id === assignment.id && (s.status === 'reviewed' || s.status === 'needs_improvement'); });
+                    if (sub && sub.feedback) { fbCard.style.display = 'block'; fb.textContent = sub.feedback; fbAt.textContent = sub.reviewed_at ? new Date(sub.reviewed_at).toLocaleString() : ''; }
+                    else { fbCard.style.display = 'none'; }
+                }
+            } else {
+                if (instrWrap) instrWrap.style.display = 'none';
+                if (dueWrap) dueWrap.style.display = 'none';
+                if (tWrap) tWrap.style.display = 'none';
+                if (fbCard && fb && fbAt) {
+                    const sub = latestMine && (latestMine.status === 'reviewed' || latestMine.status === 'needs_improvement') ? latestMine : null;
+                    if (sub && sub.feedback) { fbCard.style.display = 'block'; fb.textContent = sub.feedback; fbAt.textContent = sub.reviewed_at ? new Date(sub.reviewed_at).toLocaleString() : ''; }
+                    else { fbCard.style.display = 'none'; }
+                }
             }
-            if (dueWrap && due) {
-                if (assignment.due_date) { dueWrap.style.display = 'inline-flex'; due.textContent = assignment.due_date; }
-                else { dueWrap.style.display = 'none'; }
-            }
-            if (tWrap && tName) {
-                if (assignment.teacher_name) { tWrap.style.display = 'inline-flex'; tName.textContent = assignment.teacher_name; }
-                else { tWrap.style.display = 'none'; }
-            }
-            if (fbCard && fb && fbAt) {
-                const sub = submissions.find(function(s){ return s.assignment_id === assignment.id && (s.status === 'reviewed' || s.status === 'needs_improvement'); });
-                if (sub && sub.feedback) { fbCard.style.display = 'block'; fb.textContent = sub.feedback; fbAt.textContent = sub.reviewed_at ? new Date(sub.reviewed_at).toLocaleString() : ''; }
-                else { fbCard.style.display = 'none'; }
-            }
+
+            // Inline Telegram-style recorder: no admin pre-order needed — the
+            // student records straight on this lesson page and the take lands
+            // in the admin review queue.
+            mountStudentRecorder(lessonId, assignment ? assignment.id : null);
             return;
         }
 
@@ -1825,6 +1854,56 @@ async function loadLessonRecitationPanel(lessonId) {
 function escapeHtmlVideo(s){
     return String(s||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]; });
 }
+
+let lessonRecorderInst = null;
+
+function mountStudentRecorder(lessonId, assignmentId) {
+    const host = document.getElementById('recitationRecorderHost');
+    if (!host || !window.MSRecorder) return;
+    if (lessonRecorderInst) { try { lessonRecorderInst.destroy(); } catch (e) {} lessonRecorderInst = null; }
+    host.innerHTML = '';
+    host.style.display = 'block';
+    lessonRecorderInst = MSRecorder.mount(host, {
+        title: assignmentId ? 'Recitation for this assignment' : 'Lesson recitation',
+        note: assignmentId
+            ? 'Tap the mic, recite the assigned ayahs, then send your take for review.'
+            : 'No pre-order needed — tap the mic, recite any part of this lesson, and send your take to the review queue.',
+        lessonId: lessonId,
+        assignmentId: assignmentId || null,
+        toast: function (message, type) { toast(message, type); },
+        send: async function (form) {
+            const token = localStorage.getItem('ms_token');
+            const res = await fetch(API_BASE + '/recitations/submissions', {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + token },
+                body: form
+            });
+            if (!res.ok) {
+                let message = 'Upload failed — please try again.';
+                try {
+                    const err = await res.json();
+                    if (err && err.error) message = err.error;
+                } catch (e) {}
+                throw new Error(message);
+            }
+        },
+        onSent: function () { try { loadLessonRecitationPanel(lessonId); } catch (e) {} }
+    });
+}
+
+(function bindRecorderActionInterceptor(){
+    const btn = document.getElementById('recitationActionBtn');
+    if (!btn || btn.dataset.recorderBound === '1') return;
+    btn.dataset.recorderBound = '1';
+    btn.addEventListener('click', function (event) {
+        if (!lessonRecorderInst) return;
+        event.preventDefault();
+        lessonRecorderInst.open();
+        // A click on "Record & Submit" immediately starts the take as well,
+        // so the student never has to hunt for the mic button.
+        if (typeof lessonRecorderInst.start === 'function') lessonRecorderInst.start();
+    });
+})();
 
 const params = new URLSearchParams(window.location.search);
 const lessonId = parseInt(params.get('id')) || 1;
