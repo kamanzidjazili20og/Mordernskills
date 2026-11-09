@@ -6,7 +6,10 @@
        id        : unique key for waveform caching,
        duration  : seconds (title bar length while the blob loads),
        loader    : async () => Blob (authorized fetch lives in the page),
-       compact   : smaller bubble for dense lists
+       compact   : smaller bubble for dense lists,
+       onPlayed  : optional () => void, fired once playback has started
+                   (review dashboards use it for the Listen → Comment →
+                   Send gate so a review can't be sent before listening)
      }
 
    MSVoice.liveMeter(container) -> { start(stream), stop(), setLevel(lvl) }
@@ -166,6 +169,15 @@
             icons.load.style.display = name === 'load' ? '' : 'none';
         }
 
+        var playedNotified = false;
+        function notifyPlayed() {
+            if (playedNotified) return;
+            playedNotified = true;
+            if (typeof opts.onPlayed === 'function') {
+                try { opts.onPlayed(); } catch (e) { }
+            }
+        }
+
         function paint(progress) {
             var p = Math.max(0, Math.min(1, progress || 0));
             var active = p * bars.length;
@@ -235,11 +247,13 @@
                     }, 450);
                     setIcon('play');
                     if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+                    notifyPlayed();
                 });
 
                 audio.currentTime = 0;
                 await audio.play();
                 if (destroyed) { releaseAudio(); return; }
+                notifyPlayed();
                 setIcon('pause');
                 if (rafId) cancelAnimationFrame(rafId);
                 rafId = requestAnimationFrame(tick);
@@ -262,7 +276,7 @@
                 return;
             }
             if (audio && audio.paused) {
-                try { await audio.play(); } catch (e) { }
+                try { await audio.play(); notifyPlayed(); } catch (e) { }
                 setIcon('pause');
                 rafId = requestAnimationFrame(tick);
                 return;

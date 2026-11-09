@@ -156,12 +156,33 @@ select.form-control { cursor: pointer; }
 .sub-actions { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
 .sub-voice { flex: 0 1 320px; min-width: min(240px, 100%); display: flex; align-items: center; }
 .sub-date { font-size: 10.5px; color: var(--text-muted); }
-.review-box { margin-top: 11px; padding-top: 11px; border-top: 1px dashed rgba(212,168,83,0.18); display: grid; gap: 8px; }
+.review-box { margin-top: 12px; padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(212,168,83,0.14); background: rgba(5,15,11,0.42); display: grid; gap: 12px; }
+.review-step { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--text-sec); }
+.review-step-num { width: 22px; height: 22px; border-radius: 50%; flex: 0 0 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; color: #14100a; background: var(--grad-gold); box-shadow: 0 4px 12px rgba(212,168,83,0.28); }
+.review-step-sub { margin-inline-start: auto; font-size: 10px; font-weight: 600; letter-spacing: .02em; text-transform: none; color: var(--text-muted); }
+.review-listened-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: .02em; text-transform: none; border: 1px solid rgba(251,191,36,0.32); background: rgba(251,191,36,0.08); color: #fcd34d; }
+.review-listened-badge.is-done { border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.1); color: #6ee7b7; }
 .review-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .review-row select { width: auto; min-width: 170px; padding: 8px 10px; font-size: 11.5px; }
 .review-row .btn { padding: 9px 13px; font-size: 11.5px; }
 .review-state { font-size: 10.5px; color: var(--text-muted); }
-.review-box textarea { min-height: 58px; font-size: 11.5px; }
+.review-box textarea { width: 100%; min-height: 76px; font-size: 12px; line-height: 1.6; padding: 11px 13px; border-radius: 12px; border: 1px solid var(--border); background: rgba(6,19,14,0.6); color: var(--text); outline: none; resize: vertical; transition: border-color .2s ease, box-shadow .2s ease; }
+.review-box textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,168,83,0.12); }
+.review-box textarea.has-error { border-color: rgba(248,113,113,0.55); box-shadow: 0 0 0 3px rgba(248,113,113,0.12); }
+.review-feedback-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 10.5px; color: var(--text-muted); }
+.review-feedback-error { color: #fca5a5; font-weight: 700; display: none; align-items: center; gap: 5px; }
+.review-feedback-error.show { display: inline-flex; }
+.review-send-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.review-send-btn { flex: 1 1 200px; justify-content: center; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 12px; font-size: 13px; font-weight: 800; font-family: inherit; cursor: pointer; border: 1px solid transparent; transition: transform .2s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease; }
+.review-send-btn:focus-visible { outline: 2px solid rgba(212,168,83,0.65); outline-offset: 2px; }
+.review-send-btn:disabled { opacity: .52; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.review-send-btn.approve { background: linear-gradient(120deg, #34d399, #059669); color: #04120d; border-color: rgba(52,211,153,0.5); box-shadow: 0 12px 28px -14px rgba(52,211,153,0.7); }
+.review-send-btn.approve:not(:disabled):hover { transform: translateY(-2px); }
+.review-send-btn.improve { background: rgba(248,113,113,0.07); color: #fca5a5; border-color: rgba(248,113,113,0.42); }
+.review-send-btn.improve:not(:disabled):hover { background: rgba(248,113,113,0.14); transform: translateY(-2px); }
+.review-send-btn.is-busy { pointer-events: none; }
+.review-send-hint { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin: 0; }
+.review-send-hint i { color: var(--gold); }
 
 /* Telegram-style verify actions (same look as the admin panel). */
 .rec-actions { display: flex; gap: 8px; }
@@ -778,33 +799,60 @@ select.form-control { cursor: pointer; }
         }).join('');
     }
 
+    /* Tracks which recordings this reviewer has played. Send stays locked
+       for pending cards until the audio was heard (Listen → Comment → Send),
+       exactly like the admin panel; decided cards skip the gate so an
+       existing comment can be edited without re-listening. */
+    var recListened = window.__recListened || (window.__recListened = new Set());
+
+    function reviewSyncGate(card) {
+        if (!card) return;
+        var id = Number(card.getAttribute('data-submission'));
+        var locked = card.getAttribute('data-rec-locked') === '1';
+        var listened = !locked || recListened.has(id);
+        var badge = card.querySelector('[data-rec-listened]');
+        if (badge) {
+            badge.classList.toggle('is-done', listened);
+            badge.innerHTML = listened
+                ? '<i class="fas fa-check"></i> Listened'
+                : '<i class="fas fa-headphones"></i> Not listened yet';
+        }
+        var hint = card.querySelector('[data-rec-send-hint]');
+        if (hint) {
+            hint.innerHTML = listened
+                ? '<i class="fas fa-comment-dots"></i> Ready — the student will see your comment right after you send.'
+                : '<i class="fas fa-headphones"></i> Press play and listen before sending your review.';
+        }
+        card.querySelectorAll('[data-approve-review], [data-improve-review]').forEach(function (btn) {
+            btn.disabled = !listened || btn.classList.contains('is-busy');
+        });
+    }
+
     function renderSubmissionCard(s, compact) {
         var meta = R.statusMeta(s.status);
         var feedback = s.feedback
-            ? '<div class="sub-feedback"><strong>Feedback</strong>' + R.escapeHtml(s.feedback) + '</div>'
+            ? '<div class="sub-feedback"><strong>Student sees this comment</strong>' + R.escapeHtml(s.feedback) + '</div>'
             : '';
         var reviewed = s.reviewed_at
             ? 'Last reviewed ' + R.escapeHtml(R.formatDateTime(s.reviewed_at))
             : 'Not reviewed yet';
+        var decided = s.status === 'reviewed' || s.status === 'needs_improvement';
+        var locked = decided ? '0' : '1';
         var reviewBox = compact ? '' : ''
             + '<div class="review-box">'
-            + '  <div class="review-row">'
-            + '      <div class="rec-actions">'
-            + '          <button type="button" class="rec-act approve' + (s.status === 'reviewed' ? ' active' : '') + '" data-approve-review="' + s.id + '" title="Well recited \u2014 approve"><i class="fas fa-check"></i></button>'
-            + '          <button type="button" class="rec-act improve' + (s.status === 'needs_improvement' ? ' active' : '') + '" data-improve-review="' + s.id + '" title="Ask for improvement"><i class="fas fa-xmark"></i></button>'
-            + '      </div>'
-            + '      <span class="review-state">' + reviewed + '</span>'
+            + '  <div class="review-step"><span class="review-step-num">1</span> Listen <span class="review-listened-badge" data-rec-listened></span><span class="review-step-sub">' + reviewed + '</span></div>'
+            + '  <div class="sub-actions" style="margin-top:0;"><div class="sub-voice" data-voice="' + s.id + '" data-duration="' + (s.duration_seconds || 0) + '"></div></div>'
+            + '  <div class="review-step"><span class="review-step-num">2</span> Your comment <span class="review-step-sub">The student will see exactly this</span></div>'
+            + '  <textarea class="form-control" data-feedback maxlength="2000" placeholder="Write a kind, specific comment — what went well, or what to improve next…">' + R.escapeHtml(s.feedback || '') + '</textarea>'
+            + '  <div class="review-feedback-foot"><span data-rec-count>0 / 2000</span><span class="review-feedback-error" data-rec-error><i class="fas fa-triangle-exclamation"></i><span>Write feedback explaining what the student should improve.</span></span></div>'
+            + '  <div class="review-send-row">'
+            + '      <button type="button" class="review-send-btn approve" data-approve-review="' + s.id + '"><i class="fas fa-check"></i> Approve &amp; Send</button>'
+            + '      <button type="button" class="review-send-btn improve" data-improve-review="' + s.id + '"><i class="fas fa-rotate-left"></i> Needs improvement &amp; Send</button>'
             + '  </div>'
-            + '  <div data-improve-composer style="display:none;">'
-            + '      <textarea class="form-control" data-feedback maxlength="2000" placeholder="What should the student improve?">' + R.escapeHtml(s.feedback || '') + '</textarea>'
-            + '      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;flex-wrap:wrap;">'
-            + '          <button type="button" class="btn btn-secondary" data-cancel-improve style="padding:6px 12px;font-size:11px;">Cancel</button>'
-            + '          <button type="button" class="btn btn-primary" data-save-review="' + s.id + '" style="padding:8px 14px;font-size:12px;"><i class="fas fa-paper-plane"></i> Send note</button>'
-            + '      </div>'
-            + '  </div>'
+            + '  <p class="review-send-hint" data-rec-send-hint></p>'
             + '</div>';
         return ''
-            + '<article class="sub-card" data-submission="' + s.id + '">'
+            + '<article class="sub-card" data-submission="' + s.id + '" data-rec-status="' + R.escapeHtml(s.status || 'pending') + '" data-rec-locked="' + locked + '">'
             + '  <div class="sub-top">'
             + R.avatarHtml(s.student_name || 'Student')
             + '      <div>'
@@ -817,9 +865,6 @@ select.form-control { cursor: pointer; }
             + '      <span class="rec-badge ' + meta.cls + '"><i class="fas ' + meta.icon + '"></i>' + meta.label + '</span>'
             + '  </div>'
             + feedback
-            + '  <div class="sub-actions">'
-            + '      <div class="sub-voice" data-voice="' + s.id + '" data-duration="' + (s.duration_seconds || 0) + '"></div>'
-            + '  </div>'
             + reviewBox
             + '</article>';
     }
@@ -829,11 +874,31 @@ select.form-control { cursor: pointer; }
         Array.prototype.forEach.call(hosts, function (host) {
             var id = Number(host.getAttribute('data-voice'));
             var duration = Number(host.getAttribute('data-duration')) || 0;
+            var card = host.closest('[data-submission]');
             MSVoice.bubble(host, {
                 id: id,
                 duration: duration,
-                loader: function () { return R.fetchAudio(id); }
+                loader: function () { return R.fetchAudio(id); },
+                onPlayed: function () {
+                    recListened.add(id);
+                    reviewSyncGate(card || document.querySelector('[data-submission="' + id + '"]'));
+                }
             });
+        });
+        root.querySelectorAll('[data-submission]').forEach(function (card) {
+            reviewSyncGate(card);
+            var box = card.querySelector('[data-feedback]');
+            var count = card.querySelector('[data-rec-count]');
+            var syncCount = function () { if (count) count.textContent = (box ? box.value.length : 0) + ' / 2000'; };
+            if (box) {
+                box.addEventListener('input', function () {
+                    box.classList.remove('has-error');
+                    var err = card.querySelector('[data-rec-error]');
+                    if (err) err.classList.remove('show');
+                    syncCount();
+                });
+                syncCount();
+            }
         });
     }
 
@@ -1070,49 +1135,60 @@ select.form-control { cursor: pointer; }
         }
     }
 
-    async function saveReview(id, card) {
+    /* One shared send path: Listen → Comment → Send, identical for approve
+       and needs-improvement. Approve keeps whatever comment was typed
+       (comment is optional for approve, required for improvement), and a
+       pending card cannot be sent before its audio was played. */
+    async function sendReview(id, status, card, button) {
+        if (!card) return;
         var textarea = card.querySelector('[data-feedback]');
-        var button = card.querySelector('[data-save-review]');
         var feedback = textarea ? textarea.value.trim() : '';
-
-        if (!feedback) {
-            R.toast('Write feedback explaining what the student should improve.', 'error');
-            if (textarea) textarea.focus();
+        var locked = card.getAttribute('data-rec-locked') === '1';
+        if (locked && !recListened.has(id)) {
+            R.toast('Please press play and listen to the recording first.', 'error');
+            var playBtn = card.querySelector('.vsu-play');
+            if (playBtn) playBtn.focus();
             return;
         }
-
-        button.disabled = true;
-        button.innerHTML = '<span class="spinner"></span> Saving&hellip;';
-
+        if (status === 'needs_improvement' && !feedback) {
+            R.toast('Write feedback explaining what the student should improve.', 'error');
+            if (textarea) { textarea.classList.add('has-error'); textarea.focus(); }
+            var err = card.querySelector('[data-rec-error]');
+            if (err) err.classList.add('show');
+            return;
+        }
+        var buttons = card.querySelectorAll('[data-approve-review], [data-improve-review]');
+        var originals = new Map();
+        buttons.forEach(function (b) {
+            originals.set(b, b.innerHTML);
+            b.disabled = true;
+            b.classList.add('is-busy');
+        });
+        if (button) button.innerHTML = '<span class="spinner"></span> Sending&hellip;';
         try {
             await R.api('/submissions/' + id + '/review', {
                 method: 'PATCH',
-                body: { status: 'needs_improvement', feedback: feedback }
+                body: { status: status, feedback: feedback }
             });
-            R.toast('Note sent to the student.', 'success');
+            recListened.add(id);
+            R.toast('Review sent to the student.', 'success');
             await Promise.all([loadSubmissions(), loadAssignments(), loadStats()]);
         } catch (err) {
-            if (button.isConnected) {
-                button.disabled = false;
-                button.innerHTML = '<i class="fas fa-paper-plane"></i> Send note';
-            }
+            buttons.forEach(function (b) {
+                if (b.isConnected) {
+                    b.disabled = false;
+                    b.classList.remove('is-busy');
+                    b.innerHTML = originals.get(b) || b.innerHTML;
+                }
+            });
             R.toast(err.message || 'Could not save the review.', 'error');
         }
     }
 
+    async function saveReview(id, card) { return sendReview(id, 'needs_improvement', card, card.querySelector('[data-improve-review]')); }
     async function approveReview(id, button) {
-        button.classList.add('busy');
-        try {
-            await R.api('/submissions/' + id + '/review', {
-                method: 'PATCH',
-                body: { status: 'reviewed', feedback: '' }
-            });
-            R.toast('Approved. The student will see \u2713', 'success');
-            await Promise.all([loadSubmissions(), loadAssignments(), loadStats()]);
-        } catch (err) {
-            if (button.isConnected) button.classList.remove('busy');
-            R.toast(err.message || 'Could not save the review.', 'error');
-        }
+        var card = button && button.closest ? button.closest('[data-submission]') : document.querySelector('[data-submission="' + id + '"]');
+        return sendReview(id, 'reviewed', card, button);
     }
 
     async function promoteTeacher(event) {
@@ -1214,35 +1290,12 @@ select.form-control { cursor: pointer; }
     els.submissionList.addEventListener('click', function (event) {
         var approveBtn = event.target.closest('[data-approve-review]');
         if (approveBtn) {
-            approveReview(Number(approveBtn.getAttribute('data-approve-review')), approveBtn);
+            sendReview(Number(approveBtn.getAttribute('data-approve-review')), 'reviewed', approveBtn.closest('[data-submission]'), approveBtn);
             return;
         }
         var improveBtn = event.target.closest('[data-improve-review]');
         if (improveBtn) {
-            var card = improveBtn.closest('[data-submission]');
-            if (card) {
-                var composer = card.querySelector('[data-improve-composer]');
-                if (composer) {
-                    var open = composer.style.display !== 'none';
-                    composer.style.display = open ? 'none' : 'block';
-                    if (!open) {
-                        var box = composer.querySelector('[data-feedback]');
-                        if (box) box.focus();
-                    }
-                }
-            }
-            return;
-        }
-        var cancelBtn = event.target.closest('[data-cancel-improve]');
-        if (cancelBtn) {
-            var wrap = cancelBtn.closest('[data-improve-composer]');
-            if (wrap) wrap.style.display = 'none';
-            return;
-        }
-        var saveBtn = event.target.closest('[data-save-review]');
-        if (saveBtn) {
-            var reviewCard = saveBtn.closest('[data-submission]');
-            if (reviewCard) saveReview(Number(saveBtn.getAttribute('data-save-review')), reviewCard);
+            sendReview(Number(improveBtn.getAttribute('data-improve-review')), 'needs_improvement', improveBtn.closest('[data-submission]'), improveBtn);
         }
     });
 

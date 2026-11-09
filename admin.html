@@ -1428,7 +1428,149 @@ body.lang-rw [data-lang="en"] { display: none !important; }
     box-shadow: 0 4px 12px rgba(212,168,83,0.25), inset 0 1px 0 rgba(255,255,255,0.4);
 }
 
-/* ===== Recitations — Telegram-style verify actions ===== */
+/* ===== Recitations — Listen → Comment → Send review cards =====
+   Professional, always-visible workflow. Each card enforces the same order:
+   1 LISTEN to the voice message, 2 WRITE the comment the student will see,
+   3 SEND it. Send stays disabled until the recording has been played, so a
+   review can never go out unheard. */
+.rec-card {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: linear-gradient(165deg, rgba(13,32,24,0.78), rgba(6,19,14,0.72));
+    padding: 18px;
+    display: grid;
+    gap: 16px;
+    transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+.rec-card:hover { border-color: rgba(212,168,83,0.22); box-shadow: 0 18px 44px -28px rgba(0,0,0,0.9); }
+.rec-card.is-sent { border-color: rgba(52,211,153,0.35); }
+.rec-card-head { display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.rec-card-head .rec-identity { flex: 1 1 220px; min-width: 0; }
+.rec-card-title { font-size: 14.5px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.35; }
+.rec-card-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.rec-card-sub span { display: inline-flex; align-items: center; gap: 5px; }
+.rec-card-sub i { color: rgba(212,168,83,0.75); font-size: 10.5px; }
+.rec-card-badges { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rec-sent-at { font-size: 11px; color: var(--text-muted); display: inline-flex; align-items: center; gap: 5px; }
+.rec-sent-at i { color: rgba(212,168,83,0.75); }
+.rec-section {
+    border-radius: 14px;
+    border: 1px solid rgba(212,168,83,0.13);
+    background: rgba(5,15,11,0.42);
+    padding: 14px 16px;
+    display: grid;
+    gap: 10px;
+}
+.rec-step {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-sec);
+}
+.rec-step-num {
+    width: 22px; height: 22px; border-radius: 50%; flex: 0 0 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; letter-spacing: 0;
+    color: #14100a; background: var(--grad-gold);
+    box-shadow: 0 4px 12px rgba(212,168,83,0.28);
+}
+.rec-step .rec-step-hint {
+    margin-inline-start: auto; font-size: 10px; font-weight: 600;
+    letter-spacing: .02em; text-transform: none; color: var(--text-muted);
+}
+.rec-listened-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 9px; border-radius: 999px; font-size: 10px; font-weight: 700;
+    letter-spacing: .02em; text-transform: none;
+    border: 1px solid rgba(251,191,36,0.32); background: rgba(251,191,36,0.08); color: #fcd34d;
+}
+.rec-listened-badge.is-done {
+    border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.1); color: #6ee7b7;
+}
+.rec-listen-hint { font-size: 11.5px; color: var(--text-muted); line-height: 1.55; display: flex; gap: 7px; align-items: flex-start; }
+.rec-listen-hint i { margin-top: 2px; color: var(--gold); }
+.rec-card [data-rec-voice] { min-width: 0; }
+.rec-feedback-label { font-size: 12px; font-weight: 700; color: var(--text-sec); display: flex; align-items: center; gap: 7px; }
+.rec-feedback-label i { color: var(--gold); font-size: 11px; }
+.rec-feedback-note { font-size: 10.5px; font-weight: 600; color: var(--text-muted); margin-inline-start: auto; }
+.rec-feedback {
+    width: 100%; min-height: 78px; resize: vertical;
+    padding: 11px 13px; border-radius: 12px;
+    border: 1px solid var(--border); background: rgba(6,19,14,0.6);
+    color: var(--text); font: inherit; font-size: 13px; line-height: 1.6;
+    outline: none; transition: border-color .2s ease, box-shadow .2s ease;
+}
+.rec-feedback::placeholder { color: var(--text-muted); }
+.rec-feedback:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,168,83,0.12); }
+.rec-feedback.has-error { border-color: rgba(248,113,113,0.55); box-shadow: 0 0 0 3px rgba(248,113,113,0.12); }
+.rec-feedback-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 10.5px; color: var(--text-muted); }
+.rec-feedback-count { font-variant-numeric: tabular-nums; }
+.rec-feedback-error { color: #fca5a5; font-weight: 700; display: none; align-items: center; gap: 5px; }
+.rec-feedback-error.show { display: inline-flex; }
+.rec-send-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.rec-send-btn {
+    flex: 1 1 200px; justify-content: center; min-height: 44px;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 12px;
+    font-size: 13px; font-weight: 800; font-family: inherit;
+    cursor: pointer; border: 1px solid transparent;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease, border-color .2s ease;
+}
+.rec-send-btn:focus-visible { outline: 2px solid rgba(212,168,83,0.65); outline-offset: 2px; }
+.rec-send-btn:disabled { opacity: .52; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.rec-send-btn.approve {
+    background: linear-gradient(120deg, #34d399, #059669); color: #04120d;
+    border-color: rgba(52,211,153,0.5);
+    box-shadow: 0 12px 28px -14px rgba(52,211,153,0.7);
+}
+.rec-send-btn.approve:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 16px 34px -14px rgba(52,211,153,0.75); }
+.rec-send-btn.improve {
+    background: rgba(248,113,113,0.07); color: #fca5a5;
+    border-color: rgba(248,113,113,0.42);
+}
+.rec-send-btn.improve:not(:disabled):hover { background: rgba(248,113,113,0.14); transform: translateY(-2px); }
+.rec-send-btn.is-busy { pointer-events: none; }
+.rec-send-hint { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+.rec-send-hint i { color: var(--gold); }
+.rec-sent-banner {
+    display: none; align-items: center; gap: 9px;
+    padding: 11px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; line-height: 1.5;
+    border: 1px solid rgba(52,211,153,0.35); background: rgba(52,211,153,0.08); color: #a7f3d0;
+}
+.rec-sent-banner.show { display: flex; }
+.rec-sent-banner i { color: #34d399; }
+.rec-sent-banner small { display: block; font-weight: 500; color: var(--text-sec); margin-top: 1px; }
+.rec-reply {
+    padding: 12px 15px;
+    border-radius: 14px 14px 4px 14px;
+    background: linear-gradient(135deg, rgba(212,168,83,0.14), rgba(212,168,83,0.04));
+    border: 1px solid rgba(212,168,83,0.3);
+}
+.rec-reply.is-improve { border-color: rgba(248,113,113,0.3); background: linear-gradient(135deg, rgba(248,113,113,0.1), rgba(248,113,113,0.03)); }
+.rec-reply-head {
+    display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+    font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 4px;
+}
+.rec-reply-head i { font-size: 10px; }
+.rec-reply-head .ok { color: #6ee7b7; }
+.rec-reply-head .warn { color: #fca5a5; }
+.rec-reply-head .when { font-size: 10px; font-weight: 600; letter-spacing: .02em; text-transform: none; color: var(--text-muted); }
+.rec-reply-body { font-size: 12.5px; color: var(--text-sec); line-height: 1.6; white-space: pre-wrap; }
+[dir="rtl"] .rec-step .rec-step-hint,
+[dir="rtl"] .rec-feedback-note { margin-inline-start: 0; }
+[dir="rtl"] .rec-send-btn.approve,
+[dir="rtl"] .rec-send-btn.improve { flex: 1 1 200px; }
+@media (max-width: 640px) {
+    .rec-card { padding: 14px; border-radius: 14px; }
+    .rec-send-btn { flex: 1 1 100%; }
+    .rec-step .rec-step-hint { margin-inline-start: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .rec-card, .rec-send-btn { transition: none; }
+    .rec-card:hover, .rec-send-btn.approve:not(:disabled):hover,
+    .rec-send-btn.improve:not(:disabled):hover { transform: none; }
+}
+/* Legacy one-tap verify rail (kept for teacher.html parity; no longer used in admin). */
 .rec-actions { display: flex; gap: 8px; flex: 0 0 auto; }
 .rec-act {
     width: 36px; height: 36px; border-radius: 50%;
@@ -1455,22 +1597,6 @@ body.lang-rw [data-lang="en"] { display: none !important; }
 .rec-act.improve.busy { opacity: 0.55; pointer-events: none; }
 .rec-msg-body { display: flex; align-items: flex-start; gap: 12px; margin-top: 12px; }
 .rec-msg-body .vsu-wrap { flex: 1 1 auto; min-width: 0; }
-.rec-reply {
-    margin-top: 10px; margin-left: auto; max-width: 640px;
-    padding: 10px 14px 11px;
-    border-radius: 16px 16px 4px 16px;
-    background: linear-gradient(135deg, rgba(212,168,83,0.15), rgba(212,168,83,0.05));
-    border: 1px solid rgba(212,168,83,0.28);
-}
-.rec-reply-head {
-    display: flex; align-items: center; gap: 7px;
-    font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: 4px; flex-wrap: wrap;
-}
-.rec-reply-head i { font-size: 10px; }
-.rec-reply-head .ok { color: #6ee7b7; }
-.rec-reply-head .warn { color: #fca5a5; }
-.rec-reply-body { font-size: 12.5px; color: var(--text-sec); line-height: 1.55; }
 .rec-composer { margin-top: 10px; display: grid; gap: 8px; }
 .rec-composer textarea { min-height: 64px; }
 </style>
@@ -2316,8 +2442,8 @@ body.lang-rw [data-lang="en"] { display: none !important; }
                     </div>
                 </div>
                 <div class="panel-body">
-                    <p style="font-size:12px;color:var(--text-muted);margin:-4px 0 14px;">
-                        <span data-lang="en">Students record in the Recitation Studio (recite.html) and the audio arrives here as a private voice message — play it, then reply with feedback below each recording.</span><span data-lang="rw">Abanyeshuri bafata amajwi mu Nyumba ya Gusoma (recite.html), hanyuma amajwi akomeza hano nka message y'amajwi yumunyeshuri — uyumve, uhanitse ibitekerezo hano hasi.</span><span data-lang="fr">Les élèves enregistrent dans le Studio de récitation (recite.html) et l'audio arrive ici comme un message vocal privé — écoutez, puis répondez sous chaque enregistrement.</span><span data-lang="sw">Wanafunzi hurekodi katika Studio ya Usomaji (recite.html) na sauti inakuja hapa kama ujumbe wa sauti wa faragha — sikiliza, kisha jibu na maoni chini ya kila rekodi.</span><span data-lang="ar">يسجّل الطلاب في استوديو التلاوة (recite.html) ويصل الصوت هنا كرسالة صوتية خاصة — استمع ثم ردّ بملاحظاتك أسفل كل تسجيل.</span>
+                    <p style="font-size:12px;color:var(--text-muted);margin:-4px 0 14px;line-height:1.6;">
+                        <span data-lang="en">Students record in the Recitation Studio (recite.html) and the audio arrives here — <strong style="color:var(--text-sec);">listen</strong>, <strong style="color:var(--text-sec);">write your comment</strong>, then <strong style="color:var(--text-sec);">send</strong>. The student sees your comment on their lesson page as soon as you send it.</span><span data-lang="rw">Abanyeshuri bafatira amajwi mu Cyumba cyo Gusoma (recite.html), hanyuma amajwi bakafatira aho kugira ngo bayumve, bandike ibitekerezo byabo, maze bayohereze ku mwarimu. Iyo umunyeshuri amaze kohereza amajwi, ibitekerezo bye bihita bibikwa ku rupapuro rw’isomo rye</span><span data-lang="fr">Les élèves enregistrent dans le Studio de récitation (recite.html) et l'audio arrive ici — <strong style="color:var(--text-sec);">écoutez</strong>, <strong style="color:var(--text-sec);">écrivez votre commentaire</strong>, puis <strong style="color:var(--text-sec);">envoyez</strong>. L'élève voit votre commentaire dès l'envoi.</span><span data-lang="sw">Wanafunzi hurekodi katika Studio ya Usomaji (recite.html) na sauti inakuja hapa — <strong style="color:var(--text-sec);">sikiliza</strong>, <strong style="color:var(--text-sec);">andika maoni yako</strong>, kisha <strong style="color:var(--text-sec);">tuma</strong>. Mwanafunzi ataona maoni yako mara utakapotuma.</span><span data-lang="ar">يسجّل الطلاب في استوديو التلاوة (recite.html) ويصل الصوت هنا — <strong style="color:var(--text-sec);">استمع</strong>، <strong style="color:var(--text-sec);">اكتب تعليقك</strong>، ثم <strong style="color:var(--text-sec);">أرسل</strong>. يرى الطالب تعليقك فور إرسالك.</span>
                     </p>
                     <div id="recitationsList" style="display:grid;gap:12px;">
                         <p style="text-align:center;color:var(--text-muted);padding:20px;"><span data-lang="en">Loading recordings...</span><span data-lang="fr">Chargement des enregistrements...</span><span data-lang="sw">Inapakia rekodi...</span><span data-lang="ar">جارٍ تحميل التسجيلات...</span><span data-lang="rw">Birimo gushyirwa amajwi...</span></p>
@@ -3639,15 +3765,75 @@ function recStatusChip(status) {
         '<i class="fas ' + meta.i + '"></i>' + escapeHtml(label) + '</span>';
 }
 
+/* Ids the admin has actually played in this session. A card starts Locked
+   ("Not listened yet" + disabled Send) and unlocks the moment its voice
+   bubble reports playback via onPlayed — so a review can never be sent
+   before the recording was heard. Already-decided cards skip the gate so
+   an existing comment can be corrected without re-listening. */
+var recListened = (typeof window !== 'undefined' && window.__recListened) || (window.__recListened = new Set());
+
+function recT(key, fallback) {
+    var strings = ADMIN_L10N[key];
+    if (strings) return T(strings);
+    return fallback || key;
+}
+
+function recSyncCardGate(card) {
+    if (!card) return;
+    var id = Number(card.getAttribute('data-rec-card'));
+    var status = card.getAttribute('data-rec-status') || '';
+    var locked = card.getAttribute('data-rec-locked') === '1';
+    var listened = !locked || recListened.has(id);
+    var badge = card.querySelector('[data-rec-listened]');
+    if (badge) {
+        badge.classList.toggle('is-done', listened);
+        badge.innerHTML = listened
+            ? '<i class="fas fa-check"></i> ' + escapeHtml(recT('recListened', 'Listened'))
+            : '<i class="fas fa-headphones"></i> ' + escapeHtml(recT('recNotListened', 'Not listened yet'));
+    }
+    var hint = card.querySelector('[data-rec-send-hint]');
+    if (hint) {
+        hint.innerHTML = listened
+            ? '<i class="fas fa-comment-dots"></i> ' + escapeHtml(recT('recSendReady', 'Ready — the student will see your comment right after you send.'))
+            : '<i class="fas fa-headphones"></i> ' + escapeHtml(recT('recListenFirst', 'Press play and listen before sending your review.'));
+    }
+    card.querySelectorAll('[data-rec-approve], [data-rec-improve-send]').forEach(function (btn) {
+        btn.disabled = !listened || btn.classList.contains('is-busy');
+    });
+}
+
 function recBindVoices(root) {
     root.querySelectorAll('[data-rec-voice]').forEach(function (host) {
         const id = Number(host.getAttribute('data-rec-voice'));
         const dur = Number(host.getAttribute('data-rec-duration')) || 0;
+        var card = host.closest('[data-rec-card]');
         MSVoice.bubble(host, {
             id: id,
             duration: dur,
-            loader: function () { return apiAudio('/recitations/submissions/' + id + '/audio'); }
+            loader: function () { return apiAudio('/recitations/submissions/' + id + '/audio'); },
+            onPlayed: function () {
+                recListened.add(id);
+                var c = card || document.querySelector('[data-rec-card="' + id + '"]');
+                recSyncCardGate(c);
+            }
         });
+    });
+    root.querySelectorAll('[data-rec-card]').forEach(function (card) {
+        recSyncCardGate(card);
+        var box = card.querySelector('[data-rec-feedback]');
+        var count = card.querySelector('[data-rec-count]');
+        var syncCount = function () {
+            if (count) count.textContent = (box ? box.value.length : 0) + ' / 2000';
+        };
+        if (box) {
+            box.addEventListener('input', function () {
+                box.classList.remove('has-error');
+                var err = card.querySelector('[data-rec-error]');
+                if (err) err.classList.remove('show');
+                syncCount();
+            });
+            syncCount();
+        }
     });
 }
 
@@ -3670,7 +3856,7 @@ async function renderRecitations(cachedOnly) {
     const filtered = recSubmissions.filter(function (s) {
         if (statusFilter !== 'all' && s.status !== statusFilter) return false;
         if (search) {
-            const haystack = ((s.student_name || '') + ' ' + (s.student_email || '') + ' ' + (s.surah_name || '')).toLowerCase();
+            const haystack = ((s.student_name || '') + ' ' + (s.student_email || '') + ' ' + (s.surah_name || '') + ' ' + (s.lesson_title || '')).toLowerCase();
             if (haystack.indexOf(search) === -1) return false;
         }
         return true;
@@ -3686,146 +3872,177 @@ async function renderRecitations(cachedOnly) {
     host.innerHTML = filtered.map(function (s) {
         const sdict = ADMIN_L10N.recStatus[adminLang] || ADMIN_L10N.recStatus.en;
         const sent = s.created_at ? new Date(s.created_at).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '—';
-        const ayahs = s.ayah_start === s.ayah_end ? 'Ayah ' + s.ayah_start : 'Ayahs ' + s.ayah_start + '–' + s.ayah_end;
+        const ayahs = (s.ayah_start == null && s.ayah_end == null)
+            ? ''
+            : (s.ayah_start === s.ayah_end ? 'Ayah ' + s.ayah_start : 'Ayahs ' + (s.ayah_start || '?') + '–' + (s.ayah_end || '?'));
         const reviewedAt = s.reviewed_at ? new Date(s.reviewed_at).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
         const isReviewed = s.status === 'reviewed';
         const isImprove = s.status === 'needs_improvement';
+        const decided = isReviewed || isImprove;
+        const studentName = escapeHtml(s.student_name || 'Student');
         /* Recording target: assigned rows show Surah · ayahs, lesson-only
-           practice rows show the lesson name. */
+           practice rows show the lesson name — so the reviewer always knows
+           what the student recorded before writing the comment. */
         const target = s.surah_name
-            ? escapeHtml(s.surah_name) + ' &middot; ' + escapeHtml(ayahs)
-            : '';
-        /* Telegram-style right-aligned reply bubble for a decided recording. */
-        const reply = (isReviewed || isImprove) ? (
-            '<div class="rec-reply">' +
+            ? escapeHtml(s.surah_name) + (ayahs ? ' &middot; ' + escapeHtml(ayahs) : '')
+            : (s.lesson_title ? '<i class="fas fa-video" style="color:rgba(212,168,83,0.8);margin-right:4px;"></i> ' + escapeHtml(s.lesson_title) : '');
+        const targetLine = target
+            ? [target, (s.lesson_title && s.surah_name ? '<i class="fas fa-video" style="color:rgba(212,168,83,0.8);margin-right:4px;"></i> ' + escapeHtml(s.lesson_title) : '')].filter(Boolean).join(' &middot; ')
+            : 'Recording';
+        /* What the student already sees: kept above the composer so the
+           admin can read the last sent comment before writing the next one. */
+        const reply = decided ? (
+            '<div class="rec-reply' + (isImprove ? ' is-improve' : '') + '">' +
             '<div class="rec-reply-head">' +
-            (isReviewed ? '<i class="fas fa-circle-check ok"></i>' : '<i class="fas fa-circle-xmark warn"></i>') +
+            (isReviewed ? '<i class="fas fa-circle-check ok"></i>' : '<i class="fas fa-rotate-left warn"></i>') +
             '<span style="color:' + (isReviewed ? '#6ee7b7' : '#fca5a5') + ';">' + escapeHtml(isReviewed ? sdict.reviewed : sdict.needs_improvement) + '</span>' +
-            (reviewedAt ? '<span style="font-weight:600;letter-spacing:0.02em;">&middot; ' + escapeHtml(reviewedAt) + '</span>' : '') +
+            '<span class="when">' + escapeHtml(recT('recStudentSees', 'Student sees this comment')) + (reviewedAt ? ' &middot; ' + escapeHtml(reviewedAt) : '') + '</span>' +
             '</div>' +
             (s.feedback
                 ? '<div class="rec-reply-body">' + escapeHtml(s.feedback) + '</div>'
                 : (isReviewed ? '<div class="rec-reply-body">' + escapeHtml(T(ADMIN_L10N.recApprovedClean)) + '</div>' : '')) +
             '</div>'
         ) : '';
-        /* Collapsible note composer — opened by the ✗ button, reused to edit an
-           existing needs_improvement note. */
-        const composer = '<div class="rec-composer" data-rec-composer style="display:none;">' +
-            '<textarea class="form-control" data-rec-feedback rows="2" maxlength="2000" placeholder="' + escapeHtml(T(ADMIN_L10N.recPlaceholder)) + '">' + escapeHtml(s.feedback || '') + '</textarea>' +
-            '<div style="display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;">' +
-            '<button type="button" class="btn btn-secondary" data-rec-cancel-edit style="padding:6px 12px;font-size:11px;">' + escapeHtml(T(ADMIN_L10N.recCancel)) + '</button>' +
-            '<button type="button" class="btn btn-primary" data-rec-send="' + s.id + '" style="padding:8px 14px;font-size:12px;"><i class="fas fa-paper-plane"></i> ' + escapeHtml(T(ADMIN_L10N.recSave)) + '</button>' +
-            '</div>' +
-            '</div>';
-        return '<div data-rec-card="' + s.id + '" style="border:1px solid var(--border);border-radius:14px;background:rgba(6,19,14,0.35);padding:14px 16px;">' +
-            '<div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">' +
+        const locked = decided ? '0' : '1';
+        const sentBanner = '<div class="rec-sent-banner" data-rec-sent-banner role="status"><i class="fas fa-paper-plane"></i><span>' + escapeHtml(recT('recSentToStudent', 'Sent to student')) + '</span></div>';
+        return '<article class="rec-card' + (decided ? ' is-sent' : '') + '" data-rec-card="' + s.id + '" data-rec-status="' + escapeHtml(s.status || 'pending') + '" data-rec-locked="' + locked + '">' +
+            '<header class="rec-card-head">' +
             recAvatarHtml(s.student_name || '?', s.student_avatar_url) +
-            '<div style="flex:1;min-width:170px;">' +
-            '<h4 style="font-size:14px;font-weight:800;margin:0;color:var(--text);">' + escapeHtml(s.student_name || 'Student') +
-            ((target || s.lesson_title) ? '<span style="font-weight:500;color:var(--text-sec);font-size:12.5px;"> &middot; ' +
-                [target,
-                 s.lesson_title ? '<i class="fas fa-video" style="color:rgba(212,168,83,0.8);margin-right:3px;"></i> ' + escapeHtml(s.lesson_title) : ''].filter(Boolean).join(' &middot; ')
-                + '</span>' : '') + '</h4>' +
-            '<p style="margin:3px 0 0;font-size:11px;color:var(--text-muted);">' + escapeHtml(s.student_email || '') + '</p>' +
+            '<div class="rec-identity">' +
+            '<h4 class="rec-card-title">' + studentName + '<span style="font-weight:500;color:var(--text-sec);font-size:12.5px;"> &middot; ' + targetLine + '</span></h4>' +
+            '<p class="rec-card-sub">' +
+            (s.student_email ? '<span><i class="fas fa-envelope"></i>' + escapeHtml(s.student_email) + '</span>' : '') +
+            '<span><i class="far fa-paper-plane"></i>' + escapeHtml(recT('recSentLabel', 'Sent')) + ' ' + escapeHtml(sent) + '</span>' +
+            '</p>' +
             '</div>' +
-            '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">' +
-            '<span style="font-size:11px;color:var(--text-muted);display:inline-flex;align-items:center;gap:5px;"><i class="far fa-paper-plane" style="color:rgba(212,168,83,0.7);"></i>' + escapeHtml(sent) + '</span>' +
+            '<div class="rec-card-badges">' +
+            '<span class="rec-listened-badge" data-rec-listened></span>' +
             recStatusChip(s.status) +
             '</div>' +
+            '</header>' +
+            '<section class="rec-section" aria-label="Listen">' +
+            '<div class="rec-step"><span class="rec-step-num">1</span>' + escapeHtml(recT('recListenStep', 'Listen')) +
+            '<span class="rec-step-hint">' + escapeHtml(recT('recListenSub', 'Press play and listen to the full recording')) + '</span></div>' +
+            '<div data-rec-voice="' + s.id + '" data-rec-duration="' + (s.duration_seconds || 0) + '"></div>' +
+            '<p class="rec-listen-hint"><i class="fas fa-headphones"></i><span>' + escapeHtml(recT('recListenHint', 'Listen carefully and make sure you understand the recitation before writing your comment.')) + '</span></p>' +
+            '</section>' +
+            '<section class="rec-section" aria-label="Write comment">' +
+            '<label class="rec-feedback-label" for="recFeedback-' + s.id + '"><i class="fas fa-comment-dots"></i> ' + escapeHtml(recT('recCommentLabel', 'Your comment to the student')) +
+            '<span class="rec-feedback-note">' + escapeHtml(recT('recStudentWillSee', 'The student will see exactly this')) + '</span></label>' +
+            '<textarea class="rec-feedback" id="recFeedback-' + s.id + '" data-rec-feedback rows="3" maxlength="2000" placeholder="' + escapeHtml(T(ADMIN_L10N.recPlaceholder)) + '">' + escapeHtml(s.feedback || '') + '</textarea>' +
+            '<div class="rec-feedback-foot">' +
+            '<span class="rec-feedback-count" data-rec-count>0 / 2000</span>' +
+            '<span class="rec-feedback-error" data-rec-error><i class="fas fa-triangle-exclamation"></i><span>' + escapeHtml(T(ADMIN_L10N.recNeedFeedback)) + '</span></span>' +
             '</div>' +
-            '<div class="rec-msg-body">' +
-            '<div style="flex:1 1 auto;min-width:0;" data-rec-voice="' + s.id + '" data-rec-duration="' + (s.duration_seconds || 0) + '"></div>' +
-            '<div class="rec-actions">' +
-            '<button type="button" class="rec-act approve' + (isReviewed ? ' active' : '') + '" data-rec-approve="' + s.id + '" title="' + escapeHtml(T(ADMIN_L10N.recApprove)) + '" aria-pressed="' + isReviewed + '"><i class="fas fa-check"></i></button>' +
-            '<button type="button" class="rec-act improve' + (isImprove ? ' active' : '') + '" data-rec-improve="' + s.id + '" title="' + escapeHtml(T(ADMIN_L10N.recImprove)) + '" aria-pressed="' + isImprove + '"><i class="fas fa-xmark"></i></button>' +
-            '</div>' +
-            '</div>' +
+            '</section>' +
             reply +
-            composer +
-            '</div>';
+            '<div class="rec-send-row">' +
+            '<button type="button" class="rec-send-btn approve" data-rec-approve="' + s.id + '"><i class="fas fa-check"></i> ' + escapeHtml(recT('recApproveSend', 'Approve & Send to student')) + '</button>' +
+            '<button type="button" class="rec-send-btn improve" data-rec-improve-send="' + s.id + '"><i class="fas fa-rotate-left"></i> ' + escapeHtml(recT('recImproveSend', 'Needs improvement & Send')) + '</button>' +
+            '</div>' +
+            '<p class="rec-send-hint" data-rec-send-hint></p>' +
+            sentBanner +
+            '</article>';
     }).join('');
 
     recBindVoices(host);
 }
 
 document.getElementById('recitationsList').addEventListener('click', function (event) {
-    /* ✓ instantly approves the recording (Telegram reaction style). */
+    /* Approve & Send — keeps whatever comment the admin typed (the old
+       one-tap approve wiped it by sending an empty feedback). */
     const approveBtn = event.target.closest('[data-rec-approve]');
     if (approveBtn) {
-        approveRec(Number(approveBtn.getAttribute('data-rec-approve')), approveBtn);
+        const card = approveBtn.closest('[data-rec-card]');
+        sendRecReview(Number(approveBtn.getAttribute('data-rec-approve')), 'reviewed', card, approveBtn);
         return;
     }
-    /* ✗ opens (or toggles) the note composer for "needs improvement". */
-    const improveBtn = event.target.closest('[data-rec-improve]');
+    /* Needs improvement & Send — same composer, required comment. */
+    const improveBtn = event.target.closest('[data-rec-improve-send]');
     if (improveBtn) {
         const card = improveBtn.closest('[data-rec-card]');
-        if (!card) return;
-        toggleRecComposer(card);
-        return;
-    }
-    /* Send button for the improvement note. */
-    const sendBtn = event.target.closest('[data-rec-send]');
-    if (sendBtn) {
-        const card = sendBtn.closest('[data-rec-card]');
-        if (!card) return;
-        sendRecImprovement(Number(sendBtn.getAttribute('data-rec-send')), card, sendBtn);
-        return;
-    }
-    const cancelBtn = event.target.closest('[data-rec-cancel-edit]');
-    if (cancelBtn) {
-        const card = cancelBtn.closest('[data-rec-card]');
-        if (card) toggleRecComposer(card, false);
+        sendRecReview(Number(improveBtn.getAttribute('data-rec-improve-send')), 'needs_improvement', card, improveBtn);
     }
 });
 
-function toggleRecComposer(card, force) {
-    const composer = card.querySelector('[data-rec-composer]');
-    const reply = card.querySelector('.rec-reply');
-    if (!composer) return;
-    const open = force !== undefined ? force : composer.style.display === 'none';
-    composer.style.display = open ? 'grid' : 'none';
-    if (reply) reply.style.display = open ? 'none' : '';
-    if (open) {
-        const box = composer.querySelector('[data-rec-feedback]');
-        if (box) { box.focus(); box.setSelectionRange(box.value.length, box.value.length); }
-    }
-}
-
-async function approveRec(id, btn) {
-    btn.classList.add('busy');
-    try {
-        await api('/recitations/submissions/' + id + '/review', { method: 'PATCH', body: JSON.stringify({ status: 'reviewed', feedback: '' }) });
-        toast(T(ADMIN_L10N.recApproved), 'success');
-        await renderRecitations();
-        loadRecitationStats();
-    } catch (err) {
-        btn.classList.remove('busy');
-        toast(err.message || 'Could not save the review', 'error');
-    }
-}
-
-async function sendRecImprovement(id, card, btn) {
-    const textarea = card.querySelector('[data-rec-feedback]');
-    const feedback = textarea ? textarea.value.trim() : '';
-    if (!feedback) {
-        toast(T(ADMIN_L10N.recNeedFeedback), 'error');
-        if (textarea) textarea.focus();
+/* One shared send path for both decisions, so Listen → Comment → Send is
+   identical whether the admin approves or asks for another take. */
+async function sendRecReview(id, status, card, btn) {
+    if (!card) return;
+    var textarea = card.querySelector('[data-rec-feedback]');
+    var feedback = textarea ? textarea.value.trim() : '';
+    var locked = card.getAttribute('data-rec-locked') === '1';
+    if (locked && !recListened.has(id)) {
+        toast(recT('recListenFirstToast', 'Please press play and listen to the recording first.'), 'error');
+        var voiceHost = card.querySelector('[data-rec-voice] .vsu-play');
+        if (voiceHost) voiceHost.focus();
         return;
     }
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+    if (status === 'needs_improvement' && !feedback) {
+        toast(T(ADMIN_L10N.recNeedFeedback), 'error');
+        if (textarea) {
+            textarea.classList.add('has-error');
+            textarea.focus();
+        }
+        var err = card.querySelector('[data-rec-error]');
+        if (err) err.classList.add('show');
+        return;
+    }
+    var buttons = card.querySelectorAll('[data-rec-approve], [data-rec-improve-send]');
+    var originals = new Map();
+    buttons.forEach(function (b) {
+        originals.set(b, b.innerHTML);
+        b.disabled = true;
+        b.classList.add('is-busy');
+    });
+    if (btn) btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> ' + escapeHtml(recT('recSending', 'Sending…'));
+    var banner = card.querySelector('[data-rec-sent-banner]');
+    if (banner) banner.classList.remove('show');
     try {
-        await api('/recitations/submissions/' + id + '/review', { method: 'PATCH', body: JSON.stringify({ status: 'needs_improvement', feedback: feedback }) });
-        toast(T(ADMIN_L10N.recReviewSaved), 'success');
+        await api('/recitations/submissions/' + id + '/review', {
+            method: 'PATCH',
+            body: JSON.stringify({ status: status, feedback: feedback })
+        });
+        recListened.add(id);
+        toast(recT('recSentToStudentToast', 'Review sent to the student.'), 'success');
         await renderRecitations();
         loadRecitationStats();
-    } catch (err) {
-        if (btn.isConnected) {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + escapeHtml(T(ADMIN_L10N.recSave));
+        /* After the re-render the fresh card carries the Sent banner; show
+           it briefly so the admin sees the handoff succeeded. */
+        var fresh = document.querySelector('[data-rec-card="' + id + '"]');
+        var freshBanner = fresh ? fresh.querySelector('[data-rec-sent-banner]') : null;
+        if (fresh && freshBanner) {
+            fresh.classList.add('is-sent');
+            freshBanner.classList.add('show');
+            setTimeout(function () { if (freshBanner.isConnected) freshBanner.classList.remove('show'); }, 5000);
         }
-        toast(err.message || 'Could not save the review', 'error');
+        if (fresh && fresh.getAttribute('data-rec-status') === 'pending') {
+            await renderRecitations();
+        }
+    } catch (error) {
+        buttons.forEach(function (b) {
+            if (b.isConnected) {
+                b.disabled = false;
+                b.classList.remove('is-busy');
+                b.innerHTML = originals.get(b) || b.innerHTML;
+            }
+        });
+        toast(error.message || 'Could not save the review', 'error');
     }
+}
+
+/* Kept for any older cached markup that still uses these names. */
+function toggleRecComposer(card, force) {
+    if (!card) return;
+    var box = card.querySelector('[data-rec-feedback]');
+    if (force) { box && box.focus(); box && box.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+}
+async function approveRec(id, btn) {
+    var card = btn && btn.closest ? btn.closest('[data-rec-card]') : null;
+    return sendRecReview(id, 'reviewed', card || document.querySelector('[data-rec-card="' + id + '"]'), btn);
+}
+async function sendRecImprovement(id, card, btn) {
+    return sendRecReview(id, 'needs_improvement', card, btn);
 }
 
 document.getElementById('recSearchInput').addEventListener('input', function () {
@@ -5247,17 +5464,33 @@ const ADMIN_L10N = {
     },
     recFeedbackLabel: { en: 'Teacher feedback', rw: 'Ibitekerezo by\'umwarimu', fr: 'Commentaire de l\'enseignant', sw: 'Maoni ya Mwalimu', ar: 'ملاحظات المُعلّم' },
     recSentLabel:     { en: 'Sent', rw: 'Yoherejwe', fr: 'Envoyé', sw: 'Imetumwa', ar: 'أُرسلت' },
-    recSave:          { en: 'Save review', rw: 'Bika usuzume', fr: 'Enregistrer la révision', sw: 'Hifadhi ukaguzi', ar: 'حفظ المراجعة' },
+    recSave:          { en: 'Save review', rw: 'Bika isuzuma', fr: 'Enregistrer la révision', sw: 'Hifadhi ukaguzi', ar: 'حفظ المراجعة' },
     recCancel:        { en: 'Cancel', rw: 'Reka', fr: 'Annuler', sw: 'Ghairi', ar: 'إلغاء' },
     recApprove:       { en: 'Well recited — approve', rw: 'Yasomye neza — emeza', fr: 'Bien récité — approuver', sw: 'Amesoma vizuri — idhinisha', ar: 'تلاوة جيدة — موافقة' },
-    recImprove:       { en: 'Ask for improvement', rw: 'Saba kuvugururwa', fr: 'Demander une amélioration', sw: 'Omba kuboreshwa', ar: 'اطلب التحسين' },
+    recImprove:       { en: 'Ask for improvement', rw: 'Saba gukorwa neza', fr: 'Demander une amélioration', sw: 'Omba kuboreshwa', ar: 'اطلب التحسين' },
     recApproved:      { en: 'Approved ✓', rw: 'Byemejwe ✓', fr: 'Approuvé ✓', sw: 'Imeidhinishwa ✓', ar: 'تمت الموافقة ✓' },
-    recApprovedClean: { en: 'Approved — keep practising well.', rw: 'Byemejwe — rokomeza ukorera neza.', fr: 'Approuvé — continue comme ça.', sw: 'Imeidhinishwa — endelea vizuri.', ar: 'تمت الموافقة — واصل التميز.' },
+    recApprovedClean: { en: 'Approved — keep practising well.', rw: 'Byemejwe neza! Komeza utere imbere kandi ukomeze umurava mu byo ukora.', fr: 'Approuvé — continue comme ça.', sw: 'Imeidhinishwa — endelea vizuri.', ar: 'تمت الموافقة — واصل التميز.' },
     recPlaceholder:   { en: 'Write feedback for the student...', rw: 'Andika ibitekerezo ku munyeshuri...', fr: 'Écrire un commentaire pour l\'étudiant...', sw: 'Andika maoni kwa mwanafunzi...', ar: 'اكتب ملاحظات للطالب...' },
-    recEmpty:         { en: 'No recitations match these filters yet.', rw: 'Nta gusoma ruhuye n\'ivyiciro bimwe.', fr: 'Aucune récitation pour ces filtres.', sw: 'Hakuna usomaji unaolingana na vichujio hivi.', ar: 'لا توجد تلاوات مطابقة لهذه المرشحات بعد.' },
-    recLoadFailed:    { en: 'Could not load recitations.', rw: 'Gushyira/gusoma kwanza byanze.', fr: 'Impossible de charger les récitations.', sw: 'Imeshindwa kupakia usomaji.', ar: 'تعذر تحميل التلاوات.' },
+    recEmpty:         { en: 'No recitations match these filters yet.', rw: 'Nta somo rihuye n’ibi byiciro ribonetse.', fr: 'Aucune récitation pour ces filtres.', sw: 'Hakuna usomaji unaolingana na vichujio hivi.', ar: 'لا توجد تلاوات مطابقة لهذه المرشحات بعد.' },
+    recLoadFailed:    { en: 'Could not load recitations.', rw: 'Ntibyashobotse gushira amajwi.', fr: 'Impossible de charger les récitations.', sw: 'Imeshindwa kupakia usomaji.', ar: 'تعذر تحميل التلاوات.' },
     recReviewSaved:   { en: 'Review saved.', rw: 'Isuzuma ryabitswe.', fr: 'Révision enregistrée.', sw: 'Ukaguzi umehifadhiwa.', ar: 'تم حفظ المراجعة.' },
-    recNeedFeedback:  { en: 'Write feedback explaining what the student should improve.', rw: 'Andika ibitekerezo kuvuga ibisabwa kuzamura.', fr: 'Écrivez ce que l\'étudiant doit améliorer.', sw: 'Andika mwanafunzi anapaswa kuboresha nini.', ar: 'اكتب ما يجب أن يحسّنه الطالب.', },
+    recNeedFeedback:  { en: 'Write feedback explaining what the student should improve.', rw: 'Andika ibitekerezo byo umunyeshuri agomba gukora neza.', fr: 'Écrivez ce que l\'étudiant doit améliorer.', sw: 'Andika mwanafunzi anapaswa kuboresha nini.', ar: 'اكتب ما يجب أن يحسّنه الطالب.', },
+    recListenStep:    { en: 'Listen', rw: 'Umva', fr: 'Écouter', sw: 'Sikiliza', ar: 'استمع' },
+    recListenSub:     { en: 'Press play and listen to the full recording', rw: 'Kanda play umve amajwi yose', fr: 'Appuyez sur lecture et écoutez tout', sw: 'Bonyeza cheza na usikilize rekodi nzima', ar: 'اضغط تشغيل واستمع إلى التسجيل كاملاً' },
+    recListenHint:    { en: 'Listen carefully and make sure you understand the recitation before writing your comment.', rw: 'Tega amatwi witonze, wige neza usome ingero witonze, kandi wandike ibitekerezo byawe.', fr: 'Écoutez attentivement et assurez-vous de comprendre la récitation avant d\'écrire votre commentaire.', sw: 'Sikiliza kwa makini na uhakikishe unaelewa usomaji kabla hujaandika maoni yako.', ar: 'استمع بعناية وتأكد من فهم التلاوة قبل كتابة تعليقك.' },
+    recListened:      { en: 'Listened', rw: 'Yamaze yumvwa', fr: 'Écouté', sw: 'Imesikiliza', ar: 'تم الاستماع' },
+    recNotListened:   { en: 'Not listened yet', rw: 'Nturumvwa', fr: 'Pas encore écouté', sw: 'Haijasikilizwa bado', ar: 'لم يُستمع بعد' },
+    recCommentLabel:  { en: 'Your comment to the student', rw: 'Ibitekerezo byawe ku munyeshuri', fr: 'Votre commentaire pour l\'étudiant', sw: 'Maoni yako kwa mwanafunzi', ar: 'تعليقك للطالب' },
+    recStudentWillSee:{ en: 'The student will see exactly this', rw: 'Umunyeshuri azabona ibi byonyine', fr: 'L\'élève verra exactement ceci', sw: 'Mwanafunzi ataona hivi haswa', ar: 'سيرى الطالب هذا بالضبط' },
+    recStudentSees:   { en: 'Student sees this comment', rw: 'Umunyeshuri abona ibitekerezo', fr: 'L\'élève voit ce commentaire', sw: 'Mwanafunzi anaona maoni haya', ar: 'الطالب يرى هذا التعليق' },
+    recApproveSend:   { en: 'Approve & Send to student', rw: 'Emeza & Ohereza ku munyeshuri', fr: 'Approuver et envoyer à l\'élève', sw: 'Idhinisha & Tuma kwa mwanafunzi', ar: 'موافقة وإرسال إلى الطالب' },
+    recImproveSend:   { en: 'Needs improvement & Send', rw: 'Akeneye gukorwa neza & Ohereza ku munyeshuri', fr: 'À améliorer et envoyer', sw: 'Inahitaji kuboreshwa & Tuma', ar: 'يحتاج إلى تحسين وإرسال' },
+    recSendReady:     { en: 'Ready — the student will see your comment right after you send.', rw: 'Byiteguye — umunyeshuri azabona ibitekerezo byawe ako kanya nyuma yo kubihereza.', fr: 'Prêt — l\'élève verra votre commentaire juste après l\'envoi.', sw: 'Tayari — mwanafunzi ataona maoni yako mara baada ya kutuma.', ar: 'جاهز — سيرى الطالب تعليقك فور الإرسال.' },
+    recListenFirst:   { en: 'Press play and listen before sending your review.', rw: 'Kanda play umve mbere yo kohereza isuzuma.', fr: 'Appuyez sur lecture et écoutez avant d\'envoyer votre révision.', sw: 'Bonyeza cheza na usikilize kabla ya kutuma ukaguzi wako.', ar: 'اضغط تشغيل واستمع قبل إرسال مراجعتك.' },
+    recListenFirstToast: { en: 'Please press play and listen to the recording first.', rw: 'Nyamuneka kanda play umve amajwi mbere.', fr: 'Veuillez appuyer sur lecture et écouter d\'abord.', sw: 'Tafadhali bonyeza cheza na usikilize rekodi kwanza.', ar: 'يرجى الضغط على تشغيل والاستماع إلى التسجيل أولاً.' },
+    recSending:       { en: 'Sending…', rw: 'Biri kohereza…', fr: 'Envoi…', sw: 'Inatuma…', ar: 'جارٍ الإرسال…' },
+    recSentToStudent: { en: 'Sent to student', rw: 'Byoherejwe ku munyeshuri', fr: 'Envoyé à l\'élève', sw: 'Imetumwa kwa mwanafunzi', ar: 'أُرسلت إلى الطالب' },
+    recSentToStudentToast: { en: 'Review sent to the student.', rw: 'Isuzuma ryoherejwe ku munyeshuri.', fr: 'Révision envoyée à l\'élève.', sw: 'Ukaguzi umetumwa kwa mwanafunzi.', ar: 'أُرسلت المراجعة إلى الطالب.' },
     recSearchPh:      { en: 'Search student / Surah...', rw: 'Shaka umunyeshuri cyangwa Surah...', fr: 'Rechercher élève / Sourate...', sw: 'Tafuta mwanafunzi / Sura...', ar: 'ابحث عن طالب أو سورة...' },
     planVideo:   { en: 'Single Video', rw: 'Video Imwe', fr: 'Vidéo unique', sw: 'Video Moja', ar: 'مقطع واحد' },
     planWeekly:  { en: 'Weekly Access', rw: 'Uburenganzira bw\'Icyumweru', fr: 'Accès hebdomadaire', sw: 'Ufikiaji wa Wiki', ar: 'وصول أسبوعي' },
