@@ -7,7 +7,7 @@
 window.MODERN_SKILLS_CONFIG = window.MODERN_SKILLS_CONFIG || (function () {
 
   // IMPORTANT: Replace this with your actual Render backend URL.
-  var DEPLOYED_API_URL = 'https://YOUR-BACKEND-NAME.onrender.com';
+  var DEPLOYED_API_URL = 'https://mordernskills.onrender.com';
 
   var host = location.hostname;
 
