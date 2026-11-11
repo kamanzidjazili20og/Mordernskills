@@ -1,0 +1,794 @@
+/* ==========================================================================
+   Modern Skills — TV / Large landscape mode
+   --------------------------------------------------------------------------
+   Optimises the site for very big screens (living-room TVs, lobby displays).
+   Four levels, each scaling containers, typography, cards and controls so the
+   layout fills the panel the way oshakurfilms.com does instead of leaving a
+   small 1320px island in the middle of a huge screen.
+
+   Levels
+     L1  >=1600px  large desktop / small TV   (scale ~ 1.15)
+     L2  >=1920px  Full-HD TV (1080p)         (scale ~ 1.3)
+     L3  >=2560px  QHD TV                     (scale ~ 1.65)
+     L4  >=3840px  4K TV                      (scale ~ 2.3)
+
+   This file is loaded AFTER every page's inline styles, so these overrides
+   win on equal specificity. Keep selectors identical to the page rules.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   L1 — large desktop / small TV (>=1600px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1600px) {
+    :root { --content-max: 1520px; --gutter: 44px; }
+    body { font-size: 17px; }
+
+    /* Shell */
+    .wrap { max-width: 1520px; padding: 0 44px; }
+    .header { padding: 14px 44px; }
+    .header-left { gap: 44px; }
+    .logo { font-size: 21px; }
+    .logo .logo-img { width: 40px; height: 40px; border-radius: 13px; }
+    .logo i { font-size: 24px; }
+    .nav-links a { font-size: 15px; padding: 9px 16px; }
+    .lang-trigger { font-size: 13px; padding: 8px 15px; }
+    .lang-option { font-size: 14px; }
+    .btn-admin { font-size: 14px; padding: 9px 18px; }
+
+    /* Splash */
+    .splash-emblem { width: 176px; height: 176px; }
+    .splash-logo { width: 130px; height: 130px; }
+    .splash-title { font-size: 50px; }
+    .splash-arabic { font-size: 25px; }
+    .splash-msg { font-size: 14px; }
+    .splash-pct { font-size: 14px; }
+    .splash-bar-wrap { width: min(340px, 74vw); }
+    .splash-footer { font-size: 12px; }
+
+    /* Featured hero */
+    .featured { min-height: 82vh; }
+    .featured-inner { max-width: 1520px; padding: 0 44px 76px; gap: 56px; }
+    .featured-info { max-width: 760px; }
+    .f-arabic { font-size: 31px; }
+    .f-badge { font-size: 14px; padding: 8px 17px; }
+    .featured-info h1 { font-size: 58px; }
+    .featured-info p { font-size: 17px; max-width: 640px; }
+    .f-meta { font-size: 14px; gap: 20px; }
+    .f-meta span { padding: 6px 13px; }
+    .f-instructor { font-size: 15px; }
+    .f-instructor-avatar { width: 40px; height: 40px; font-size: 14px; }
+    .btn-gold, .btn-ghost { font-size: 15px; padding: 15px 30px; border-radius: 14px; }
+    .featured-poster { width: 272px; border-radius: 20px; }
+
+    /* Stats band */
+    .stats-band { padding: 32px 40px; border-radius: 22px; }
+    .stat { gap: 18px; }
+    .stat-icon { width: 60px; height: 60px; font-size: 23px; border-radius: 18px; }
+    .stat-num { font-size: 32px; }
+    .stat-lbl { font-size: 14px; }
+    .empty-stats { font-size: 16px; }
+
+    /* About band */
+    .about-band { padding: 40px 42px; border-radius: 22px; }
+    .about-eyebrow { font-size: 12.5px; }
+    .about-band h2 { font-size: 30px; }
+    .about-band > div:first-child > p { font-size: 15.5px; }
+    .about-feat { font-size: 15px; padding: 14px 16px; border-radius: 14px; }
+    .about-feat i { font-size: 17px; }
+    .about-cta { margin-top: 24px; }
+
+    /* Section rows */
+    .row-section { margin-top: 64px; }
+    .row-head { margin-bottom: 22px; }
+    .row-head h2 { font-size: 24px; }
+    .row-head h2::after { width: 48px; height: 4px; }
+    .view-more { font-size: 14px; }
+    .row-total { font-size: 13px; padding: 6px 14px; }
+    .cat-count { font-size: 13px; padding: 6px 14px; }
+    .cat-block-desc { font-size: 14px; max-width: 840px; }
+    .cat-block-teachers { font-size: 13.5px; }
+
+    /* Poster cards */
+    .h-row { gap: 20px; }
+    .h-row .pcard { width: 224px; }
+    .cat-grid { gap: 26px 20px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+    .pcard .poster { border-radius: 18px; }
+    .pcard h3 { font-size: 15.5px; margin-top: 13px; }
+    .pcard .pdesc { font-size: 12.5px; }
+    .pcard .pmeta { font-size: 13px; }
+    .pcard .pcredits { font-size: 12px; }
+    .cat-badge { font-size: 11px; padding: 5px 10px; }
+    .dur-badge { font-size: 11px; padding: 4px 9px; }
+    .free-badge, .paid-badge { font-size: 10.5px; padding: 4px 9px; }
+    .vid-badge { width: 30px; height: 30px; font-size: 10.5px; }
+    .poster-hover i { width: 62px; height: 62px; font-size: 20px; }
+
+    /* Empty states */
+    .empty-lessons, .empty-instructors { padding: 72px 32px; }
+    .empty-lessons h3, .empty-instructors h3 { font-size: 24px; }
+    .empty-lessons p, .empty-instructors p { font-size: 16px; }
+    .empty-lessons .empty-icon, .empty-instructors .empty-icon { width: 96px; height: 96px; font-size: 38px; }
+
+    /* Instructors */
+    .inst-grid { gap: 20px; }
+    .inst-card { padding: 20px; border-radius: 20px; gap: 16px; }
+    .inst-avatar { width: 62px; height: 62px; font-size: 20px; }
+    .inst-info h4 { font-size: 15.5px; }
+    .inst-exp { font-size: 12.5px; }
+    .inst-bio { font-size: 12.5px; }
+    .inst-count { font-size: 11.5px; }
+
+    /* Category grid section (fallback) */
+    .category-grid-section { margin-top: 64px; }
+    .category-section { margin-bottom: 56px; }
+    .category-section-head h2 { font-size: 25px; }
+    .category-section-head .view-all { font-size: 15px; padding: 9px 18px; }
+    .category-lessons-grid { gap: 22px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+    .lesson-grid-badge { font-size: 11px; }
+    .lesson-grid-duration { font-size: 12px; }
+
+    /* WhatsApp CTA */
+    .wa-bar { padding: 26px 28px; border-radius: 22px; }
+    .wa-icon { width: 56px; height: 56px; font-size: 25px; }
+    .wa-left h3 { font-size: 17px; }
+    .wa-left p { font-size: 13.5px; }
+    .btn-wa { font-size: 14px; padding: 13px 26px; }
+
+    /* Footer */
+    .footer-inner { max-width: 1520px; padding: 60px 44px 0; }
+    .footer-grid { gap: 48px; }
+    .footer-brand h3 { font-size: 20px; }
+    .footer-brand p { font-size: 14px; max-width: 420px; }
+    .footer-social a { width: 42px; height: 42px; font-size: 15px; }
+    .footer-col h4 { font-size: 14px; }
+    .footer-col a, .footer-col span { font-size: 14px; }
+    .footer-bottom { font-size: 13px; }
+
+    /* Skyline backdrop scales with the panel */
+    .skyline { height: 280px; }
+
+    /* ---- video.html ---- */
+    .player-wrapper { max-width: 1600px; padding: 32px 48px; gap: 32px; grid-template-columns: 1fr 430px; }
+    .video-info-section { padding: 28px; border-radius: 18px; }
+    .video-info-header .tag { font-size: 12.5px; }
+    .video-info-header h1 { font-size: 30px; }
+    .video-stats-row { gap: 22px; }
+    .video-stats-row .stat { font-size: 15px; }
+    .video-stats-row .stat i { font-size: 14px; }
+    .btn-action { font-size: 14px; padding: 12px 24px; border-radius: 12px; }
+    .instructor-avatar { width: 54px; height: 54px; border-radius: 14px; }
+    .instructor-info h4 { font-size: 16.5px; }
+    .instructor-info p, .instructor-info a { font-size: 14px; }
+    .instructor-price { padding: 12px 20px; }
+    .instructor-price-value { font-size: 22px; }
+    .video-description h3 { font-size: 18px; }
+    .video-description p { font-size: 15px; }
+    .video-tags span { font-size: 13px; padding: 7px 15px; }
+    .player-sidebar h3 { font-size: 19px; }
+    .related-info h4 { font-size: 14.5px; }
+    .related-info .rel-instructor { font-size: 13px; }
+    .related-info .rel-meta { font-size: 12px; }
+    .related-thumb { width: 156px; min-width: 156px; }
+    .play-big-btn { width: 92px; height: 92px; font-size: 36px; }
+
+    /* ---- books.html ---- */
+    .wrap { max-width: 1520px; }
+    .hero h1 { font-size: 38px; }
+    .hero p { font-size: 16px; max-width: 720px; }
+    .hero .eyebrow { font-size: 13px; }
+    .books-grid { gap: 30px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+    .book-body h3 { font-size: 17.5px; }
+    .book-author { font-size: 13px; }
+    .book-desc { font-size: 13.5px; }
+    .book-read { font-size: 13px; }
+}
+
+/* --------------------------------------------------------------------------
+   L2 — Full-HD TV (>=1920px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1920px) {
+    :root { --content-max: 1760px; --gutter: 56px; }
+    body { font-size: 18.5px; }
+
+    /* Shell */
+    .wrap { max-width: 1760px; padding: 0 56px; }
+    .header { padding: 16px 56px; }
+    .header-left { gap: 52px; }
+    .logo { font-size: 23px; }
+    .logo .logo-img { width: 44px; height: 44px; border-radius: 14px; }
+    .logo i { font-size: 27px; }
+    .nav-links { gap: 6px; }
+    .nav-links a { font-size: 16.5px; padding: 10px 19px; }
+    .lang-trigger { font-size: 14px; padding: 9px 17px; }
+    .lang-menu { min-width: 260px; }
+    .lang-option { font-size: 15.5px; padding: 12px 14px; }
+    .lang-option .flag { font-size: 21px; }
+    .btn-admin { font-size: 15px; padding: 10px 20px; }
+    .header::after { width: 280px; }
+
+    /* Splash */
+    .splash-emblem { width: 206px; height: 206px; }
+    .splash-logo { width: 152px; height: 152px; }
+    .splash-title { font-size: 60px; }
+    .splash-arabic { font-size: 30px; }
+    .splash-eyebrow { font-size: 13px; letter-spacing: 6px; }
+    .splash-status-dot { width: 10px; height: 10px; }
+    .splash-msg { font-size: 16px; min-width: 240px; }
+    .splash-pct { font-size: 16px; }
+    .splash-bar { height: 6px; }
+    .splash-bar-wrap { width: min(390px, 74vw); }
+    .splash-dots span { width: 10px; height: 10px; }
+    .splash-footer { font-size: 14px; letter-spacing: 4px; bottom: 38px; }
+
+    /* Featured hero */
+    .featured { min-height: 86vh; }
+    .featured-inner { max-width: 1760px; padding: 0 56px 88px; gap: 68px; }
+    .featured-info { max-width: 880px; }
+    .f-arabic { font-size: 37px; }
+    .f-badge { font-size: 15.5px; padding: 9px 20px; }
+    .featured-info h1 { font-size: 68px; letter-spacing: -1.2px; }
+    .featured-info p { font-size: 18.5px; max-width: 720px; margin-bottom: 24px; }
+    .f-meta { font-size: 15.5px; gap: 22px; margin-bottom: 32px; }
+    .f-meta span { padding: 7px 15px; }
+    .f-meta i { font-size: 14px; }
+    .f-instructor { font-size: 16.5px; gap: 13px; margin-bottom: 20px; }
+    .f-instructor-avatar { width: 46px; height: 46px; font-size: 16px; }
+    .btn-gold, .btn-ghost { font-size: 17px; padding: 17px 34px; border-radius: 16px; }
+    .featured-poster { width: 320px; border-radius: 24px; }
+
+    /* Stats band */
+    .stats-band { margin-top: -40px; padding: 38px 48px; gap: 18px; border-radius: 26px; }
+    .stat { gap: 20px; }
+    .stat-icon { width: 70px; height: 70px; font-size: 27px; border-radius: 20px; }
+    .stat-num { font-size: 38px; }
+    .stat-lbl { font-size: 15px; }
+    .stat + .stat { padding-left: 28px; }
+    .empty-stats { font-size: 17px; }
+    .empty-stats i { font-size: 32px; }
+
+    /* About band */
+    .about-band { padding: 48px 52px; border-radius: 26px; }
+    .about-eyebrow { font-size: 13.5px; }
+    .about-band h2 { font-size: 35px; }
+    .about-band > div:first-child > p { font-size: 17px; max-width: 680px; }
+    .about-feats { gap: 14px; }
+    .about-feat { font-size: 16.5px; padding: 16px 18px; border-radius: 16px; gap: 14px; }
+    .about-feat i { font-size: 19px; }
+    .about-cta { margin-top: 28px; }
+
+    /* Section rows */
+    .row-section { margin-top: 78px; }
+    .row-head { margin-bottom: 26px; }
+    .row-head h2 { font-size: 28px; }
+    .row-head h2::after { width: 56px; height: 4px; }
+    .view-more { font-size: 15.5px; }
+    .row-total { font-size: 14px; padding: 7px 16px; }
+    .cat-count { font-size: 14px; padding: 7px 16px; }
+    .cat-count i { font-size: 12px; }
+    .cat-block-desc { font-size: 15px; max-width: 1000px; }
+    .cat-block-teachers { font-size: 15px; margin-bottom: 16px; }
+    .cat-block-teachers i { font-size: 13px; }
+
+    /* Poster cards */
+    .h-row { gap: 24px; }
+    .h-row .pcard { width: 264px; }
+    .cat-grid { gap: 32px 26px; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); }
+    .pcard .poster { border-radius: 22px; }
+    .pcard h3 { font-size: 18px; margin-top: 15px; }
+    .pcard .pdesc { font-size: 14.5px; margin-top: 8px; }
+    .pcard .pmeta { font-size: 14.5px; margin-top: 6px; }
+    .pcard .pcredits { font-size: 13.5px; margin-top: 9px; }
+    .pcard .pcredits i { font-size: 11px; }
+    .cat-badge { font-size: 12.5px; padding: 6px 12px; border-radius: 10px; }
+    .dur-badge { font-size: 12.5px; padding: 5px 11px; }
+    .free-badge, .paid-badge { font-size: 12px; padding: 5px 11px; }
+    .free-badge i, .paid-badge i { font-size: 10px; }
+    .vid-badge { width: 36px; height: 36px; font-size: 13px; }
+    .poster-hover i { width: 76px; height: 76px; font-size: 25px; }
+
+    /* Empty states */
+    .empty-lessons, .empty-instructors { padding: 84px 36px; border-radius: 28px; }
+    .empty-lessons h3, .empty-instructors h3 { font-size: 27px; }
+    .empty-lessons p, .empty-instructors p { font-size: 17.5px; max-width: 640px; }
+    .empty-lessons .empty-icon, .empty-instructors .empty-icon { width: 112px; height: 112px; font-size: 44px; border-radius: 32px; }
+
+    /* Instructors */
+    .inst-grid { grid-template-columns: repeat(5, 1fr); gap: 24px; }
+    .inst-card { padding: 24px; border-radius: 22px; gap: 18px; }
+    .inst-avatar { width: 72px; height: 72px; font-size: 24px; }
+    .inst-info h4 { font-size: 18px; }
+    .inst-exp { font-size: 14px; }
+    .inst-bio { font-size: 14px; }
+    .inst-count { font-size: 13px; padding: 4px 12px; }
+    .inst-count i { font-size: 11px; }
+
+    /* Category grid section (fallback) */
+    .category-grid-section { margin-top: 78px; }
+    .category-section { margin-bottom: 64px; }
+    .category-section-head h2 { font-size: 29px; }
+    .category-section-head .view-all { font-size: 16px; padding: 10px 20px; }
+    .category-lessons-grid { gap: 26px; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); }
+    .lesson-grid-badge { font-size: 12.5px; padding: 5px 10px; }
+    .lesson-grid-duration { font-size: 13px; padding: 4px 10px; }
+
+    /* WhatsApp CTA */
+    .wa-bar { margin-top: 84px; padding: 32px 36px; border-radius: 26px; gap: 22px; }
+    .wa-icon { width: 66px; height: 66px; font-size: 29px; }
+    .wa-left h3 { font-size: 20px; }
+    .wa-left p { font-size: 15px; }
+    .btn-wa { font-size: 15px; padding: 15px 30px; border-radius: 14px; }
+
+    /* Footer */
+    .footer-inner { max-width: 1760px; padding: 70px 56px 0; }
+    .footer-grid { gap: 56px; }
+    .footer-brand h3 { font-size: 23px; }
+    .footer-brand p { font-size: 15px; max-width: 500px; margin-bottom: 20px; }
+    .footer-social { gap: 12px; }
+    .footer-social a { width: 48px; height: 48px; font-size: 17px; }
+    .footer-col h4 { font-size: 15.5px; margin-bottom: 18px; }
+    .footer-col h4::after { width: 28px; }
+    .footer-col a, .footer-col span { font-size: 15px; margin-bottom: 13px; }
+    .footer-bottom { font-size: 14px; margin-top: 48px; padding: 24px 0; }
+
+    .skyline { height: 320px; }
+
+    /* ---- video.html ---- */
+    .player-wrapper { max-width: 1900px; padding: 40px 56px; gap: 40px; grid-template-columns: 1fr 500px; }
+    .player-container { border-radius: 20px; }
+    .video-info-section { padding: 34px; border-radius: 22px; margin-top: 28px; }
+    .video-info-header .tag { font-size: 14px; }
+    .video-info-header h1 { font-size: 38px; margin-bottom: 12px; }
+    .video-stats-row { gap: 26px; }
+    .video-stats-row .stat { font-size: 16.5px; gap: 8px; }
+    .video-stats-row .stat i { font-size: 15px; }
+    .video-stats-row .price-badge-stat { font-size: 15px; padding: 5px 14px; }
+    .video-actions { gap: 12px; }
+    .btn-action { font-size: 16px; padding: 14px 28px; border-radius: 14px; }
+    .instructor-bar { padding: 20px 0; margin: 20px 0; gap: 18px; }
+    .instructor-avatar { width: 64px; height: 64px; border-radius: 16px; }
+    .instructor-info h4 { font-size: 19px; }
+    .instructor-info p, .instructor-info a { font-size: 15.5px; }
+    .instructor-price { padding: 14px 24px; }
+    .instructor-price-label { font-size: 11px; }
+    .instructor-price-value { font-size: 26px; }
+    .video-description { padding: 20px 0; }
+    .video-description h3 { font-size: 20px; margin-bottom: 12px; }
+    .video-description p { font-size: 16.5px; }
+    .video-tags { gap: 10px; }
+    .video-tags span { font-size: 14.5px; padding: 8px 17px; border-radius: 8px; }
+    .player-sidebar h3 { font-size: 22px; }
+    .related-info h4 { font-size: 16px; margin-bottom: 5px; }
+    .related-info .rel-instructor { font-size: 14px; }
+    .related-info .rel-meta { font-size: 13px; }
+    .related-thumb { width: 176px; min-width: 176px; }
+    .play-big-btn { width: 108px; height: 108px; font-size: 42px; }
+    .player-top-btn { width: 42px; height: 42px; font-size: 17px; }
+    .player-bottom-btn { width: 42px; height: 42px; font-size: 17px; }
+    .player-time { font-size: 14px; }
+
+    /* ---- books.html ---- */
+    .wrap { max-width: 1760px; }
+    .hero { padding-top: 96px; }
+    .hero h1 { font-size: 46px; }
+    .hero p { font-size: 17.5px; max-width: 800px; }
+    .hero .eyebrow { font-size: 14px; }
+    .books-grid { gap: 34px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+    .book-body { padding: 20px 21px; }
+    .book-body h3 { font-size: 20px; }
+    .book-author { font-size: 14.5px; }
+    .book-desc { font-size: 15px; }
+    .book-read { font-size: 14.5px; }
+}
+
+/* --------------------------------------------------------------------------
+   L3 — QHD TV (>=2560px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 2560px) {
+    :root { --content-max: 2360px; --gutter: 76px; }
+    body { font-size: 24px; }
+
+    /* Shell */
+    .wrap { max-width: 2360px; padding: 0 76px; }
+    .header { padding: 21px 76px; }
+    .header-left { gap: 68px; }
+    .logo { font-size: 30px; }
+    .logo .logo-img { width: 56px; height: 56px; border-radius: 18px; }
+    .logo i { font-size: 35px; }
+    .nav-links { gap: 8px; }
+    .nav-links a { font-size: 21px; padding: 13px 25px; border-radius: 13px; }
+    .lang-trigger { font-size: 18px; padding: 12px 22px; }
+    .lang-menu { min-width: 340px; border-radius: 18px; }
+    .lang-option { font-size: 20px; padding: 15px 18px; }
+    .lang-option .flag { font-size: 27px; }
+    .btn-admin { font-size: 19px; padding: 13px 26px; border-radius: 13px; }
+    .header::after { width: 380px; }
+
+    /* Splash */
+    .splash-emblem { width: 280px; height: 280px; }
+    .splash-halo { inset: -56px; }
+    .splash-logo { width: 206px; height: 206px; border-width: 4px; }
+    .splash-title { font-size: 82px; }
+    .splash-arabic { font-size: 41px; margin: 10px 0 34px; }
+    .splash-eyebrow { font-size: 17px; letter-spacing: 8px; }
+    .splash-status { gap: 13px; }
+    .splash-status-dot { width: 13px; height: 13px; }
+    .splash-msg { font-size: 22px; min-width: 330px; }
+    .splash-pct { font-size: 22px; }
+    .splash-bar { height: 8px; }
+    .splash-bar-wrap { width: min(530px, 74vw); gap: 13px; }
+    .splash-dots { gap: 13px; }
+    .splash-dots span { width: 13px; height: 13px; }
+    .splash-footer { font-size: 19px; letter-spacing: 5px; bottom: 52px; }
+
+    /* Featured hero */
+    .featured { min-height: 88vh; }
+    .featured-inner { max-width: 2360px; padding: 0 76px 116px; gap: 88px; }
+    .featured-info { max-width: 1180px; }
+    .f-arabic { font-size: 48px; }
+    .f-badge { font-size: 20px; padding: 12px 26px; }
+    .featured-info h1 { font-size: 90px; letter-spacing: -1.8px; }
+    .featured-info p { font-size: 24px; max-width: 940px; margin-bottom: 30px; }
+    .f-meta { font-size: 20px; gap: 28px; margin-bottom: 42px; }
+    .f-meta span { padding: 9px 19px; }
+    .f-meta i { font-size: 18px; }
+    .f-instructor { font-size: 21px; gap: 16px; margin-bottom: 26px; }
+    .f-instructor-avatar { width: 58px; height: 58px; font-size: 20px; }
+    .btn-gold, .btn-ghost { font-size: 22px; padding: 22px 44px; border-radius: 20px; }
+    .featured-poster { width: 428px; border-radius: 30px; }
+
+    /* Stats band */
+    .stats-band { margin-top: -52px; padding: 50px 64px; gap: 24px; border-radius: 34px; }
+    .stat { gap: 26px; }
+    .stat-icon { width: 92px; height: 92px; font-size: 36px; border-radius: 26px; }
+    .stat-num { font-size: 50px; }
+    .stat-lbl { font-size: 20px; }
+    .stat + .stat { padding-left: 38px; }
+    .empty-stats { font-size: 22px; gap: 18px; }
+    .empty-stats i { font-size: 42px; }
+
+    /* About band */
+    .about-band { padding: 62px 68px; border-radius: 34px; gap: 40px; }
+    .about-eyebrow { font-size: 17px; margin-bottom: 14px; }
+    .about-band h2 { font-size: 45px; margin-bottom: 14px; }
+    .about-band > div:first-child > p { font-size: 22px; max-width: 900px; }
+    .about-feats { gap: 18px; }
+    .about-feat { font-size: 21px; padding: 22px 24px; border-radius: 20px; gap: 18px; }
+    .about-feat i { font-size: 24px; width: 26px; }
+    .about-cta { margin-top: 36px; gap: 16px; }
+
+    /* Section rows */
+    .row-section { margin-top: 100px; }
+    .row-head { margin-bottom: 32px; }
+    .row-head h2 { font-size: 37px; }
+    .row-head h2::after { width: 72px; height: 5px; }
+    .view-more { font-size: 20px; gap: 9px; }
+    .row-total { font-size: 18px; padding: 9px 21px; }
+    .cat-count { font-size: 18px; padding: 9px 21px; }
+    .cat-count i { font-size: 15px; }
+    .cat-block-desc { font-size: 19px; max-width: 1320px; margin: -8px 0 6px; }
+    .cat-block-teachers { font-size: 19px; margin-bottom: 20px; }
+    .cat-block-teachers i { font-size: 17px; }
+
+    /* Poster cards */
+    .h-row { gap: 32px; }
+    .h-row .pcard { width: 350px; }
+    .cat-grid { gap: 42px 34px; grid-template-columns: repeat(auto-fill, minmax(368px, 1fr)); }
+    .pcard .poster { border-radius: 28px; }
+    .pcard h3 { font-size: 24px; margin-top: 20px; }
+    .pcard .pdesc { font-size: 19px; margin-top: 10px; }
+    .pcard .pmeta { font-size: 19px; margin-top: 8px; }
+    .pcard .pcredits { font-size: 18px; margin-top: 12px; gap: 13px; }
+    .pcard .pcredits i { font-size: 14px; }
+    .cat-badge { font-size: 16px; padding: 8px 15px; border-radius: 12px; }
+    .dur-badge { font-size: 16px; padding: 6px 14px; }
+    .free-badge, .paid-badge { font-size: 15.5px; padding: 7px 14px; }
+    .free-badge i, .paid-badge i { font-size: 13px; }
+    .vid-badge { width: 48px; height: 48px; font-size: 17px; }
+    .poster-hover i { width: 100px; height: 100px; font-size: 33px; }
+
+    /* Empty states */
+    .empty-lessons, .empty-instructors { padding: 110px 48px; border-radius: 36px; }
+    .empty-lessons h3, .empty-instructors h3 { font-size: 36px; }
+    .empty-lessons p, .empty-instructors p { font-size: 23px; max-width: 860px; }
+    .empty-lessons .empty-icon, .empty-instructors .empty-icon { width: 148px; height: 148px; font-size: 58px; border-radius: 42px; margin-bottom: 26px; }
+
+    /* Instructors */
+    .inst-grid { grid-template-columns: repeat(6, 1fr); gap: 32px; }
+    .inst-card { padding: 32px; border-radius: 28px; gap: 24px; }
+    .inst-avatar { width: 96px; height: 96px; font-size: 32px; border-width: 3px; }
+    .inst-info h4 { font-size: 24px; }
+    .inst-exp { font-size: 18px; }
+    .inst-bio { font-size: 18px; margin-bottom: 12px; }
+    .inst-count { font-size: 17px; padding: 6px 16px; }
+    .inst-count i { font-size: 14px; }
+
+    /* Category grid section (fallback) */
+    .category-grid-section { margin-top: 100px; }
+    .category-section { margin-bottom: 84px; }
+    .category-section-head h2 { font-size: 38px; }
+    .category-section-head .view-all { font-size: 21px; padding: 13px 26px; }
+    .category-lessons-grid { gap: 34px; grid-template-columns: repeat(auto-fill, minmax(368px, 1fr)); }
+    .lesson-grid-badge { font-size: 16px; padding: 7px 13px; }
+    .lesson-grid-duration { font-size: 17px; padding: 6px 13px; }
+
+    /* WhatsApp CTA */
+    .wa-bar { margin-top: 110px; padding: 44px 50px; border-radius: 34px; gap: 30px; }
+    .wa-icon { width: 88px; height: 88px; font-size: 38px; }
+    .wa-left h3 { font-size: 26px; }
+    .wa-left p { font-size: 20px; }
+    .btn-wa { font-size: 19px; padding: 20px 40px; border-radius: 18px; }
+
+    /* Footer */
+    .footer-inner { max-width: 2360px; padding: 92px 76px 0; }
+    .footer-grid { gap: 76px; }
+    .footer-brand h3 { font-size: 30px; }
+    .footer-brand p { font-size: 20px; max-width: 660px; margin-bottom: 26px; }
+    .footer-social { gap: 16px; }
+    .footer-social a { width: 62px; height: 62px; font-size: 22px; }
+    .footer-col h4 { font-size: 20px; margin-bottom: 24px; }
+    .footer-col h4::after { width: 36px; }
+    .footer-col a, .footer-col span { font-size: 20px; margin-bottom: 17px; }
+    .footer-bottom { font-size: 18px; margin-top: 64px; padding: 30px 0; }
+
+    .skyline { height: 430px; }
+
+    /* ---- video.html ---- */
+    .player-wrapper { max-width: 2560px; padding: 52px 76px; gap: 52px; grid-template-columns: 1fr 640px; }
+    .player-container { border-radius: 26px; }
+    .video-info-section { padding: 44px; border-radius: 28px; margin-top: 36px; }
+    .video-info-header .tag { font-size: 18px; }
+    .video-info-header h1 { font-size: 50px; margin-bottom: 16px; }
+    .video-stats-row { gap: 34px; }
+    .video-stats-row .stat { font-size: 21px; gap: 10px; }
+    .video-stats-row .stat i { font-size: 19px; }
+    .video-stats-row .price-badge-stat { font-size: 19px; padding: 7px 18px; }
+    .video-actions { gap: 16px; }
+    .btn-action { font-size: 21px; padding: 18px 36px; border-radius: 18px; }
+    .instructor-bar { padding: 26px 0; margin: 26px 0; gap: 24px; }
+    .instructor-avatar { width: 84px; height: 84px; border-radius: 20px; }
+    .instructor-info h4 { font-size: 25px; }
+    .instructor-info p, .instructor-info a { font-size: 20px; }
+    .instructor-price { padding: 18px 32px; border-radius: 16px; }
+    .instructor-price-label { font-size: 13px; }
+    .instructor-price-value { font-size: 34px; }
+    .video-description { padding: 26px 0; }
+    .video-description h3 { font-size: 26px; margin-bottom: 16px; }
+    .video-description p { font-size: 21px; }
+    .video-tags { gap: 13px; }
+    .video-tags span { font-size: 18.5px; padding: 10px 22px; border-radius: 10px; }
+    .player-sidebar h3 { font-size: 28px; }
+    .related-info h4 { font-size: 21px; margin-bottom: 7px; }
+    .related-info .rel-instructor { font-size: 18px; }
+    .related-info .rel-meta { font-size: 17px; }
+    .related-thumb { width: 220px; min-width: 220px; }
+    .play-big-btn { width: 140px; height: 140px; font-size: 54px; }
+    .player-top-btn { width: 54px; height: 54px; font-size: 22px; border-radius: 11px; }
+    .player-bottom-btn { width: 54px; height: 54px; font-size: 22px; border-radius: 11px; }
+    .player-time { font-size: 18px; }
+    .player-controls { padding: 28px; }
+
+    /* ---- books.html ---- */
+    .wrap { max-width: 2360px; }
+    .hero { padding-top: 120px; }
+    .hero h1 { font-size: 60px; }
+    .hero p { font-size: 23px; max-width: 1000px; }
+    .hero .eyebrow { font-size: 18px; }
+    .books-grid { gap: 44px; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
+    .book-body { padding: 26px 28px; }
+    .book-body h3 { font-size: 26px; }
+    .book-author { font-size: 19px; }
+    .book-desc { font-size: 20px; }
+    .book-read { font-size: 19px; }
+}
+
+/* --------------------------------------------------------------------------
+   L4 — 4K TV (>=3840px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 3840px) {
+    :root { --content-max: 3360px; --gutter: 110px; }
+    body { font-size: 34px; }
+
+    /* Shell */
+    .wrap { max-width: 3360px; padding: 0 110px; }
+    .header { padding: 30px 110px; }
+    .header-left { gap: 96px; }
+    .logo { font-size: 42px; }
+    .logo .logo-img { width: 78px; height: 78px; border-radius: 24px; }
+    .logo i { font-size: 48px; }
+    .nav-links { gap: 12px; }
+    .nav-links a { font-size: 29px; padding: 18px 34px; border-radius: 18px; }
+    .lang-trigger { font-size: 25px; padding: 17px 30px; border-radius: 16px; }
+    .lang-menu { min-width: 470px; border-radius: 24px; }
+    .lang-option { font-size: 28px; padding: 21px 24px; }
+    .lang-option .flag { font-size: 38px; }
+    .btn-admin { font-size: 27px; padding: 18px 36px; border-radius: 18px; }
+    .header::after { width: 540px; }
+
+    /* Splash */
+    .splash-emblem { width: 400px; height: 400px; }
+    .splash-halo { inset: -80px; }
+    .splash-logo { width: 292px; height: 292px; border-width: 6px; }
+    .splash-title { font-size: 118px; }
+    .splash-arabic { font-size: 58px; margin: 14px 0 48px; }
+    .splash-eyebrow { font-size: 24px; letter-spacing: 12px; }
+    .splash-status { gap: 18px; }
+    .splash-status-dot { width: 18px; height: 18px; }
+    .splash-msg { font-size: 32px; min-width: 470px; }
+    .splash-pct { font-size: 32px; }
+    .splash-bar { height: 11px; }
+    .splash-bar-wrap { width: min(760px, 74vw); gap: 18px; }
+    .splash-dots { gap: 18px; }
+    .splash-dots span { width: 18px; height: 18px; }
+    .splash-footer { font-size: 27px; letter-spacing: 7px; bottom: 74px; }
+
+    /* Featured hero */
+    .featured { min-height: 90vh; }
+    .featured-inner { max-width: 3360px; padding: 0 110px 160px; gap: 120px; }
+    .featured-info { max-width: 1660px; }
+    .f-arabic { font-size: 68px; }
+    .f-badge { font-size: 28px; padding: 17px 36px; }
+    .featured-info h1 { font-size: 128px; letter-spacing: -3px; }
+    .featured-info p { font-size: 34px; max-width: 1320px; margin-bottom: 42px; }
+    .f-meta { font-size: 28px; gap: 38px; margin-bottom: 58px; }
+    .f-meta span { padding: 12px 27px; }
+    .f-meta i { font-size: 25px; }
+    .f-instructor { font-size: 29px; gap: 22px; margin-bottom: 36px; }
+    .f-instructor-avatar { width: 82px; height: 82px; font-size: 28px; }
+    .btn-gold, .btn-ghost { font-size: 31px; padding: 30px 62px; border-radius: 28px; }
+    .featured-poster { width: 610px; border-radius: 42px; }
+
+    /* Stats band */
+    .stats-band { margin-top: -72px; padding: 72px 92px; gap: 34px; border-radius: 48px; }
+    .stat { gap: 36px; }
+    .stat-icon { width: 130px; height: 130px; font-size: 51px; border-radius: 36px; }
+    .stat-num { font-size: 71px; }
+    .stat-lbl { font-size: 28px; }
+    .stat + .stat { padding-left: 54px; }
+    .empty-stats { font-size: 31px; gap: 26px; }
+    .empty-stats i { font-size: 60px; }
+
+    /* About band */
+    .about-band { padding: 88px 96px; border-radius: 48px; gap: 56px; }
+    .about-eyebrow { font-size: 24px; margin-bottom: 20px; }
+    .about-band h2 { font-size: 63px; margin-bottom: 20px; }
+    .about-band > div:first-child > p { font-size: 31px; max-width: 1280px; }
+    .about-feats { gap: 26px; }
+    .about-feat { font-size: 29px; padding: 31px 34px; border-radius: 28px; gap: 26px; }
+    .about-feat i { font-size: 34px; width: 36px; }
+    .about-cta { margin-top: 50px; gap: 22px; }
+
+    /* Section rows */
+    .row-section { margin-top: 140px; }
+    .row-head { margin-bottom: 44px; }
+    .row-head h2 { font-size: 52px; }
+    .row-head h2::after { width: 100px; height: 7px; }
+    .view-more { font-size: 28px; gap: 12px; }
+    .row-total { font-size: 25px; padding: 12px 30px; }
+    .cat-count { font-size: 25px; padding: 12px 30px; }
+    .cat-count i { font-size: 21px; }
+    .cat-block-desc { font-size: 27px; max-width: 1880px; margin: -10px 0 8px; }
+    .cat-block-teachers { font-size: 27px; margin-bottom: 28px; }
+    .cat-block-teachers i { font-size: 24px; }
+
+    /* Poster cards */
+    .h-row { gap: 44px; }
+    .h-row .pcard { width: 500px; }
+    .cat-grid { gap: 60px 48px; grid-template-columns: repeat(auto-fill, minmax(524px, 1fr)); }
+    .pcard .poster { border-radius: 38px; }
+    .pcard h3 { font-size: 34px; margin-top: 28px; }
+    .pcard .pdesc { font-size: 27px; margin-top: 14px; }
+    .pcard .pmeta { font-size: 27px; margin-top: 11px; }
+    .pcard .pcredits { font-size: 25px; margin-top: 17px; gap: 18px; }
+    .pcard .pcredits i { font-size: 20px; }
+    .cat-badge { font-size: 23px; padding: 11px 21px; border-radius: 16px; }
+    .dur-badge { font-size: 23px; padding: 9px 20px; }
+    .free-badge, .paid-badge { font-size: 22px; padding: 10px 20px; }
+    .free-badge i, .paid-badge i { font-size: 18px; }
+    .vid-badge { width: 68px; height: 68px; font-size: 24px; }
+    .poster-hover i { width: 142px; height: 142px; font-size: 47px; }
+
+    /* Empty states */
+    .empty-lessons, .empty-instructors { padding: 155px 70px; border-radius: 50px; }
+    .empty-lessons h3, .empty-instructors h3 { font-size: 51px; }
+    .empty-lessons p, .empty-instructors p { font-size: 32px; max-width: 1220px; margin-bottom: 36px; }
+    .empty-lessons .empty-icon, .empty-instructors .empty-icon { width: 210px; height: 210px; font-size: 82px; border-radius: 60px; margin-bottom: 36px; }
+
+    /* Instructors */
+    .inst-grid { grid-template-columns: repeat(8, 1fr); gap: 44px; }
+    .inst-card { padding: 44px; border-radius: 38px; gap: 32px; }
+    .inst-avatar { width: 134px; height: 134px; font-size: 44px; border-width: 4px; }
+    .inst-info h4 { font-size: 33px; }
+    .inst-exp { font-size: 25px; }
+    .inst-bio { font-size: 25px; margin-bottom: 16px; }
+    .inst-count { font-size: 24px; padding: 9px 22px; }
+    .inst-count i { font-size: 20px; }
+
+    /* Category grid section (fallback) */
+    .category-grid-section { margin-top: 140px; }
+    .category-section { margin-bottom: 118px; }
+    .category-section-head h2 { font-size: 53px; }
+    .category-section-head .view-all { font-size: 29px; padding: 18px 36px; }
+    .category-lessons-grid { gap: 48px; grid-template-columns: repeat(auto-fill, minmax(524px, 1fr)); }
+    .lesson-grid-badge { font-size: 23px; padding: 10px 18px; }
+    .lesson-grid-duration { font-size: 24px; padding: 9px 18px; }
+
+    /* WhatsApp CTA */
+    .wa-bar { margin-top: 155px; padding: 62px 70px; border-radius: 48px; gap: 42px; }
+    .wa-icon { width: 124px; height: 124px; font-size: 53px; }
+    .wa-left h3 { font-size: 37px; }
+    .wa-left p { font-size: 28px; }
+    .btn-wa { font-size: 27px; padding: 28px 56px; border-radius: 24px; }
+
+    /* Footer */
+    .footer-inner { max-width: 3360px; padding: 130px 110px 0; }
+    .footer-grid { gap: 110px; }
+    .footer-brand h3 { font-size: 42px; }
+    .footer-brand p { font-size: 28px; max-width: 920px; margin-bottom: 36px; }
+    .footer-social { gap: 22px; }
+    .footer-social a { width: 88px; height: 88px; font-size: 31px; }
+    .footer-col h4 { font-size: 28px; margin-bottom: 34px; }
+    .footer-col h4::after { width: 50px; }
+    .footer-col a, .footer-col span { font-size: 28px; margin-bottom: 24px; }
+    .footer-bottom { font-size: 25px; margin-top: 90px; padding: 42px 0; }
+
+    .skyline { height: 640px; }
+
+    /* ---- video.html ---- */
+    .player-wrapper { max-width: 3400px; padding: 74px 110px; gap: 72px; grid-template-columns: 1fr 880px; }
+    .player-container { border-radius: 36px; }
+    .video-info-section { padding: 62px; border-radius: 40px; margin-top: 50px; }
+    .video-info-header .tag { font-size: 25px; }
+    .video-info-header h1 { font-size: 70px; margin-bottom: 22px; }
+    .video-stats-row { gap: 46px; }
+    .video-stats-row .stat { font-size: 29px; gap: 13px; }
+    .video-stats-row .stat i { font-size: 26px; }
+    .video-stats-row .price-badge-stat { font-size: 26px; padding: 10px 25px; }
+    .video-actions { gap: 22px; }
+    .btn-action { font-size: 29px; padding: 25px 50px; border-radius: 24px; }
+    .instructor-bar { padding: 36px 0; margin: 36px 0; gap: 34px; }
+    .instructor-avatar { width: 118px; height: 118px; border-radius: 28px; }
+    .instructor-info h4 { font-size: 35px; }
+    .instructor-info p, .instructor-info a { font-size: 28px; }
+    .instructor-price { padding: 25px 45px; border-radius: 22px; }
+    .instructor-price-label { font-size: 18px; }
+    .instructor-price-value { font-size: 47px; }
+    .video-description { padding: 36px 0; }
+    .video-description h3 { font-size: 36px; margin-bottom: 22px; }
+    .video-description p { font-size: 29px; }
+    .video-tags { gap: 18px; }
+    .video-tags span { font-size: 26px; padding: 14px 31px; border-radius: 13px; }
+    .player-sidebar h3 { font-size: 39px; }
+    .related-info h4 { font-size: 29px; margin-bottom: 10px; }
+    .related-info .rel-instructor { font-size: 25px; }
+    .related-info .rel-meta { font-size: 24px; }
+    .related-thumb { width: 300px; min-width: 300px; }
+    .play-big-btn { width: 192px; height: 192px; font-size: 74px; border-width: 5px; }
+    .player-top-btn { width: 74px; height: 74px; font-size: 30px; border-radius: 15px; }
+    .player-bottom-btn { width: 74px; height: 74px; font-size: 30px; border-radius: 15px; }
+    .player-time { font-size: 25px; }
+    .player-controls { padding: 40px; }
+
+    /* ---- books.html ---- */
+    .wrap { max-width: 3360px; }
+    .hero { padding-top: 170px; }
+    .hero h1 { font-size: 84px; }
+    .hero p { font-size: 32px; max-width: 1400px; }
+    .hero .eyebrow { font-size: 25px; }
+    .books-grid { gap: 62px; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); }
+    .book-body { padding: 36px 38px; }
+    .book-body h3 { font-size: 36px; }
+    .book-author { font-size: 27px; }
+    .book-desc { font-size: 28px; }
+    .book-read { font-size: 27px; }
+}
+
+/* --------------------------------------------------------------------------
+   Landscape-locked TVs: keep the featured hero from crowding the fold when the
+   browser chrome / overscan eats vertical space.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1920px) and (max-height: 940px) {
+    .featured { min-height: 74vh; }
+}
+@media (min-width: 2560px) and (max-height: 1200px) {
+    .featured { min-height: 78vh; }
+}

@@ -1,0 +1,242 @@
+/* ==========================================================================
+   Modern Skills — full responsive coverage
+   --------------------------------------------------------------------------
+   Works alongside each page's own breakpoints and tv.css (>=1600px).
+   This file fills the gaps so EVERY device gets a layout that fits:
+
+     1. Medium laptops (1025–1366px) — comfortable spacing, nothing overflows
+     2. Narrow-medium header (1025–1199px) — nav + auth buttons always fit
+     3. Short landscape screens — laptops with browser chrome, landscape tablets
+     4. Landscape phones (height <= 500px) — compact band layout
+     5. Very short landscape (height <= 400px)
+     6. Short portrait phones (height <= 620px)
+
+   Loaded after the page styles and tv.css, so these rules win ties.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Medium laptops (1025–1366px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1025px) and (max-width: 1366px) {
+    .wrap { padding: 0 26px; }
+    .featured-inner { padding: 0 26px 50px; gap: 40px; }
+    .footer-inner { padding: 46px 26px 0; }
+
+    .featured { min-height: 72vh; }
+    .featured-info { max-width: 640px; }
+    .featured-info h1 { font-size: 44px; }
+    .featured-poster { width: 212px; }
+
+    .stats-band { margin-top: -30px; padding: 24px 28px; gap: 12px; }
+    .stat-icon { width: 50px; height: 50px; font-size: 18px; border-radius: 15px; }
+    .stat-num { font-size: 25px; }
+
+    .about-band { padding: 28px 30px; gap: 24px; }
+    .about-band h2 { font-size: 24px; }
+    .row-section { margin-top: 48px; }
+    .inst-grid { gap: 14px; }
+    .footer-grid { gap: 32px; }
+
+    /* video page */
+    .player-wrapper { padding: 24px 26px; gap: 24px; grid-template-columns: 1fr 340px; }
+    .video-info-header h1 { font-size: 23px; }
+
+    /* books page */
+    .books-grid { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 22px 18px; }
+}
+
+/* --------------------------------------------------------------------------
+   2. Narrow-medium header (1025–1199px) — keep nav and buttons on one row
+   -------------------------------------------------------------------------- */
+@media (min-width: 1025px) and (max-width: 1199px) {
+    .header { padding: 12px 20px; }
+    .header-left { gap: 20px; }
+    .nav-links { gap: 2px; }
+    .nav-links a { font-size: 13px; padding: 8px 10px; }
+    .logo { font-size: 18px; }
+    .lang-trigger { font-size: 12px; padding: 7px 11px; }
+    .btn-admin { font-size: 12.5px; padding: 8px 12px; }
+    .btn-wa-link .btn-label { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   3. Short landscape screens (viewport height <= 780px, medium width)
+   Typical laptop with browser chrome — hero fills the first screen exactly.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1025px) and (max-width: 1599px) and (orientation: landscape) and (max-height: 780px) {
+    .featured { min-height: 0; height: calc(100vh - 64px); }
+    .featured-inner { padding-bottom: 34px; gap: 32px; }
+    .featured-info h1 { font-size: 38px; }
+    .featured-info p { font-size: 14px; margin-bottom: 14px; }
+    .f-arabic { font-size: 21px; margin-bottom: 8px; }
+    .f-badge { font-size: 11.5px; padding: 6px 13px; margin-bottom: 12px; }
+    .f-meta { margin-bottom: 18px; }
+    .f-instructor { margin-bottom: 14px; }
+    .btn-gold, .btn-ghost { padding: 11px 22px; font-size: 13px; }
+    .featured-poster { width: 188px; }
+    .stats-band { margin-top: -24px; }
+    .row-section { margin-top: 40px; }
+    .about-band { margin-top: 28px; }
+}
+
+/* --------------------------------------------------------------------------
+   4. Landscape phones (height <= 500px) — compact band layout
+   -------------------------------------------------------------------------- */
+@media (orientation: landscape) and (max-height: 500px) {
+    /* Header */
+    .header { padding: 7px 14px; }
+    .logo { font-size: 15px; gap: 7px; }
+    .logo .logo-img { width: 26px; height: 26px; border-radius: 8px; }
+    .btn-wa-link { display: none; }
+
+    /* Splash / intro */
+    .splash-inner { padding: 12px 16px 16px; }
+    .splash-emblem { width: 82px; height: 82px; margin-bottom: 10px; }
+    .splash-halo { inset: -16px; }
+    .splash-orbit { inset: -10px; }
+    .splash-orbit2 { inset: -16px; }
+    .splash-logo { width: 62px; height: 62px; border-width: 2px; }
+    .splash-title { font-size: 19px; }
+    .splash-arabic { font-size: 12.5px; margin: 4px 0 8px; }
+    .splash-eyebrow { font-size: 8.5px; margin-bottom: 5px; }
+    .splash-status { margin-bottom: 8px; }
+    .splash-msg { font-size: 10.5px; min-width: 130px; }
+    .splash-pct { font-size: 10.5px; }
+    .splash-bar-wrap { width: 190px; gap: 6px; }
+    .splash-bar { height: 4px; }
+    .splash-dots { margin-top: 10px; }
+    .splash-dots span { width: 5px; height: 5px; }
+    .splash-footer { display: none; }
+
+    /* Hero */
+    .featured { min-height: 0; }
+    .featured-inner { padding: 14px 16px 20px; gap: 20px; }
+    .featured-info { max-width: 100%; }
+    .featured-info h1 { font-size: 22px; margin-bottom: 6px; }
+    .f-arabic { font-size: 14px; margin-bottom: 6px; }
+    .f-badge { font-size: 9.5px; padding: 4px 10px; margin-bottom: 8px; }
+    .featured-info p { font-size: 12px; margin-bottom: 10px; }
+    .f-meta { font-size: 10.5px; gap: 8px; margin-bottom: 12px; }
+    .f-meta span { padding: 3px 8px; }
+    .f-instructor { font-size: 11px; gap: 8px; margin-bottom: 12px; }
+    .f-instructor-avatar { width: 24px; height: 24px; font-size: 9px; }
+    .f-btns .btn-gold, .f-btns .btn-ghost { padding: 8px 14px; font-size: 11.5px; }
+
+    /* Stats band — always three across */
+    .stats-band { margin-top: 12px; grid-template-columns: repeat(3, 1fr); padding: 12px 14px; gap: 10px; }
+    .stat-icon { width: 36px; height: 36px; font-size: 13px; border-radius: 11px; }
+    .stat-num { font-size: 16px; }
+    .stat-lbl { font-size: 10px; }
+    .stat + .stat { padding-left: 12px; }
+    .empty-stats { font-size: 11px; }
+    .empty-stats i { font-size: 18px; }
+
+    /* About band */
+    .about-band { margin-top: 24px; padding: 14px 16px; }
+    .about-band h2 { font-size: 17px; }
+    .about-band > div:first-child > p { font-size: 11.5px; }
+    .about-feat { padding: 8px 10px; font-size: 11px; gap: 8px; }
+    .about-cta .btn-gold, .about-cta .btn-ghost { padding: 8px 14px; font-size: 11px; }
+
+    /* Rows and cards */
+    .row-section { margin-top: 26px; }
+    .row-head { margin-bottom: 10px; }
+    .row-head h2 { font-size: 15px; }
+    .cat-block-desc { font-size: 10.5px; }
+    .cat-block-teachers { font-size: 10px; margin-bottom: 8px; }
+    .cat-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px 10px; }
+    .pcard h3 { font-size: 11px; margin-top: 8px; }
+    .pcard .pdesc { display: none; }
+    .pcard .pmeta { font-size: 9.5px; }
+    .pcard .pcredits { font-size: 9px; margin-top: 4px; }
+    .cat-badge, .dur-badge { font-size: 8px; padding: 2px 6px; }
+
+    /* Empty states */
+    .empty-lessons, .empty-instructors { padding: 24px 14px; }
+    .empty-lessons h3, .empty-instructors h3 { font-size: 15px; }
+    .empty-lessons p, .empty-instructors p { font-size: 11px; margin-bottom: 14px; }
+    .empty-lessons .empty-icon, .empty-instructors .empty-icon { width: 44px; height: 44px; font-size: 18px; margin-bottom: 10px; border-radius: 14px; }
+
+    /* Instructors */
+    .inst-grid { gap: 10px; }
+    .inst-card { padding: 10px; gap: 10px; }
+    .inst-avatar { width: 34px; height: 34px; font-size: 12px; }
+    .inst-bio { -webkit-line-clamp: 1; line-clamp: 1; }
+
+    /* WhatsApp bar */
+    .wa-bar { margin-top: 26px; padding: 12px 14px; gap: 12px; }
+    .wa-icon { width: 34px; height: 34px; font-size: 15px; }
+    .wa-left h3 { font-size: 12px; }
+    .wa-left p { font-size: 10px; }
+    .btn-wa { padding: 8px 13px; font-size: 11px; }
+
+    /* Footer — one compact band, four columns */
+    .footer { margin-top: 26px; }
+    .footer-inner { padding: 18px 16px 0; }
+    .footer-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .footer-brand p, .footer-social { display: none; }
+    .footer-col h4 { font-size: 10px; margin-bottom: 8px; }
+    .footer-col a, .footer-col span { font-size: 10.5px; margin-bottom: 5px; }
+    .footer-bottom { font-size: 9.5px; margin-top: 14px; padding: 10px 0; flex-direction: row; }
+
+    /* video page */
+    .player-wrapper { padding: 12px 14px; }
+    .video-info-section { padding: 14px; margin-top: 12px; }
+    .video-info-header h1 { font-size: 17px; }
+    .video-stats-row .stat { font-size: 11px; }
+    .btn-action { padding: 8px 14px; font-size: 11px; }
+    .video-description p { font-size: 12px; }
+    .related-thumb { width: 100px; min-width: 100px; }
+
+    /* books page */
+    .hero { padding: 40px 12px 4px; }
+    .hero h1 { font-size: 22px; }
+    .hero p { font-size: 11.5px; }
+    .books-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px 10px; }
+}
+
+/* Landscape phones wide enough for the two-column about band */
+@media (orientation: landscape) and (max-height: 500px) and (min-width: 640px) {
+    .about-band { grid-template-columns: 1.2fr 1fr; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Very short landscape phones (height <= 400px)
+   -------------------------------------------------------------------------- */
+@media (orientation: landscape) and (max-height: 400px) {
+    .featured-inner { padding: 10px 14px 14px; }
+    .featured-info h1 { font-size: 18px; }
+    .f-arabic { display: none; }
+    .featured-info p { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; line-clamp: 1; }
+    .f-btns .btn-gold, .f-btns .btn-ghost { padding: 7px 12px; font-size: 10.5px; }
+    .stats-band { padding: 8px 10px; gap: 8px; }
+    .stat-icon { width: 28px; height: 28px; font-size: 11px; }
+    .stat-num { font-size: 13px; }
+    .stat-lbl { font-size: 8.5px; }
+}
+
+/* --------------------------------------------------------------------------
+   6. Short portrait phones (height <= 620px)
+   -------------------------------------------------------------------------- */
+@media (orientation: portrait) and (max-height: 620px) {
+    .featured { min-height: 0; }
+    .featured-inner { padding: 14px 16px 22px; }
+    .featured-info h1 { font-size: 22px; }
+    .f-arabic { font-size: 15px; margin-bottom: 6px; }
+    .f-badge { font-size: 10px; padding: 4px 10px; margin-bottom: 8px; }
+    .featured-info p { font-size: 12px; margin-bottom: 10px; }
+    .f-meta { font-size: 10.5px; gap: 8px; margin-bottom: 12px; }
+    .f-btns { flex-direction: row; flex-wrap: wrap; }
+    .f-btns .btn-gold, .f-btns .btn-ghost { flex: 1; justify-content: center; padding: 9px 12px; font-size: 11.5px; }
+
+    .splash-inner { padding: 12px 16px 16px; }
+    .splash-emblem { width: 84px; height: 84px; margin-bottom: 10px; }
+    .splash-logo { width: 62px; height: 62px; }
+    .splash-title { font-size: 19px; }
+    .splash-arabic { font-size: 12.5px; margin: 4px 0 8px; }
+    .splash-footer { display: none; }
+
+    .stats-band { padding: 14px 16px; }
+    .stat-icon { width: 38px; height: 38px; font-size: 13px; }
+    .stat-num { font-size: 17px; }
+}
