@@ -101,17 +101,25 @@
         return data || {};
     }
 
-    async function fetchAudio(submissionId) {
+    async function fetchAudioBlob(path, fallbackMessage) {
         var t = token();
-        var res = await fetch(API + '/recitations/submissions/' + submissionId + '/audio', {
+        var res = await fetch(API + path, {
             headers: t ? { Authorization: 'Bearer ' + t } : {}
         });
         if (!res.ok) {
             if (res.status === 401) clearSession();
             var payload = await res.json().catch(function () { return {}; });
-            throw new Error(payload.error || 'Could not load the recording.');
+            throw new Error(payload.error || fallbackMessage || 'Could not load the recording.');
         }
-        return URL.createObjectURL(await res.blob());
+        return res.blob();
+    }
+
+    function fetchAudio(submissionId) {
+        return fetchAudioBlob('/recitations/submissions/' + submissionId + '/audio');
+    }
+
+    function fetchFeedbackAudio(submissionId) {
+        return fetchAudioBlob('/recitations/submissions/' + submissionId + '/feedback-audio', 'Could not load the voice feedback.');
     }
 
     function statusMeta(status) {
@@ -217,6 +225,7 @@
         guard: guard,
         api: api,
         fetchAudio: fetchAudio,
+        fetchFeedbackAudio: fetchFeedbackAudio,
         statusMeta: statusMeta,
         escapeHtml: escapeHtml,
         formatDate: formatDate,

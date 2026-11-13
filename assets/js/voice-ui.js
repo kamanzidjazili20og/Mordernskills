@@ -37,6 +37,14 @@
         if (activePlay) activePlay = null;
     }
 
+    function anyPlaying() {
+        var playing = false;
+        liveBubbles.forEach(function (b) {
+            if (!playing && typeof b.isPlaying === 'function' && b.isPlaying()) playing = true;
+        });
+        return playing;
+    }
+
     function acquireCtx() {
         if (sharedCtx) return sharedCtx;
         var Ctx = global.AudioContext || global.webkitAudioContext;
@@ -130,6 +138,11 @@
     function bubble(container, opts) {
         opts = opts || {};
         var id = opts.id != null ? String(opts.id) : String(Date.now());
+        Array.prototype.slice.call(container.children).forEach(function (child) {
+            if (child.__msVoice) {
+                try { child.__msVoice.destroy(); } catch (e) { }
+            }
+        });
         var el = document.createElement('div');
         el.className = 'vsu-bubble' + (opts.compact ? ' vsu-compact' : '');
         el.innerHTML = ''
@@ -156,6 +169,7 @@
         var bars = buildWaveform(waveEl, fallbackPeaks(id));
         var rafId = 0;
         var destroyed = false;
+        var isPlaying = false;
 
         loadPeaks(id, opts.loader).then(function (peaks) {
             if (destroyed) return;
@@ -214,6 +228,7 @@
         }
 
         function releaseAudio() {
+            isPlaying = false;
             if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
             if (audio) {
                 audio.pause();
@@ -237,10 +252,12 @@
                 audio.src = objectUrl;
 
                 audio.addEventListener('error', function () {
+                    isPlaying = false;
                     resetVisuals();
                     setIcon('play');
                 });
                 audio.addEventListener('ended', function () {
+                    isPlaying = false;
                     paint(1);
                     setTimeout(function () {
                         if (!destroyed) resetVisuals();
@@ -253,11 +270,13 @@
                 audio.currentTime = 0;
                 await audio.play();
                 if (destroyed) { releaseAudio(); return; }
+                isPlaying = true;
                 notifyPlayed();
                 setIcon('pause');
                 if (rafId) cancelAnimationFrame(rafId);
                 rafId = requestAnimationFrame(tick);
             } catch (err) {
+                isPlaying = false;
                 if (!destroyed) {
                     releaseAudio();
                     resetVisuals();
@@ -270,13 +289,14 @@
             claimPlay(self);
             if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
             if (audio && !audio.paused) {
+                isPlaying = false;
                 audio.pause();
                 setIcon('play');
                 paint(progress());
                 return;
             }
             if (audio && audio.paused) {
-                try { await audio.play(); notifyPlayed(); } catch (e) { }
+                try { await audio.play(); isPlaying = true; notifyPlayed(); } catch (e) { isPlaying = false; }
                 setIcon('pause');
                 rafId = requestAnimationFrame(tick);
                 return;
@@ -307,6 +327,7 @@
             el: el,
             play: toggle,
             stop: function () {
+                isPlaying = false;
                 if (audio && !audio.paused) {
                     audio.pause();
                     setIcon('play');
@@ -314,6 +335,7 @@
                 }
                 if (activePlay === self) activePlay = null;
             },
+            isPlaying: function () { return isPlaying; },
             reset: resetVisuals,
             destroy: function () {
                 destroyed = true;
@@ -323,6 +345,7 @@
                 if (el.parentNode) el.parentNode.removeChild(el);
             }
         };
+        el.__msVoice = self;
         liveBubbles.add(self);
         return self;
     }
@@ -421,6 +444,7 @@
         liveMeter: liveMeter,
         formatTime: formatTime,
         stopAll: stopAll,
+        isPlaying: anyPlaying,
         clearCache: function () { peaksCache.clear(); }
     };
 })(window);

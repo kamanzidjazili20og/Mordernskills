@@ -12,7 +12,10 @@ const BOOK_DIR = path.join(__dirname, '..', 'uploads', 'books');
 // express.static can never expose a recording without an auth check.
 const RECITATION_DIR = path.join(__dirname, '..', 'private', 'recitations');
 
-for (const dir of [VIDEO_DIR, THUMBNAIL_DIR, AVATAR_DIR, BOOK_DIR, RECITATION_DIR]) {
+// Comment voice notes are private too, for the same reason as recitations.
+const COMMENT_DIR = path.join(__dirname, '..', 'private', 'comments');
+
+for (const dir of [VIDEO_DIR, THUMBNAIL_DIR, AVATAR_DIR, BOOK_DIR, RECITATION_DIR, COMMENT_DIR]) {
     fs.mkdirSync(dir, { recursive: true });
 }
 
@@ -146,12 +149,21 @@ const uploadRecitation = multer({
     limits: { fileSize: MAX_RECITATION_SIZE }
 });
 
+// Comment voice notes use the same audio rules and size cap as recitations.
+const uploadComment = multer({
+    storage: multer.memoryStorage(),
+    fileFilter: recitationFilter,
+    limits: { fileSize: MAX_RECITATION_SIZE }
+});
+
 module.exports = {
     uploadVideo,
     uploadImage,
     uploadAvatar,
     uploadBook,
     uploadRecitation,
+    uploadComment,
     RECITATION_DIR,
+    COMMENT_DIR,
     MAX_RECITATION_SIZE
 };

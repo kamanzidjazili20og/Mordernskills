@@ -240,3 +240,266 @@
     .stat-icon { width: 38px; height: 38px; font-size: 13px; }
     .stat-num { font-size: 17px; }
 }
+
+/* ==========================================================================
+   ALL SCREENS — shared safety net
+   --------------------------------------------------------------------------
+   Loaded on every page (public, student studio, teacher + admin dashboards,
+   auth screens) so no page can create a horizontal scrollbar or a control
+   that runs off a small phone. Page-specific styles still win for look.
+   ========================================================================== */
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg,
+iframe {
+    max-width: 100%;
+}
+
+.rec-main,
+.rec-header-inner,
+.rec-footer,
+.content,
+.main,
+.login-box,
+.register-box,
+.modal-box {
+    min-width: 0;
+}
+
+.rec-card-title,
+.rec-card-sub,
+.sub-top h3,
+.rec-reply-body,
+.rec-study-feedback p,
+.review-box,
+.msr,
+.msh-title {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.table-wrapper,
+.table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+    .panel-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .panel-header > div {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .panel-header input[type="text"],
+    .panel-header select {
+        width: 100% !important;
+    }
+}
+
+/* Login overlays are often taller than short laptop/landscape screens. */
+.login-overlay,
+.modal-overlay {
+    max-width: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Share sheet never traps its actions off-screen. */
+@media (max-width: 520px), (max-height: 560px) {
+    #msShareMenu {
+        max-height: calc(100vh - 24px);
+        max-height: calc(100dvh - 24px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+}
+
+@media (max-width: 720px) {
+    .rec-header-inner,
+    .rec-main,
+    .content {
+        padding-inline: 14px;
+    }
+
+    .rec-footer {
+        margin-top: 32px;
+    }
+
+    .rec-study-feedback-actions {
+        align-items: stretch;
+    }
+
+    .rec-study-record,
+    .rec-study-feedback-actions span {
+        width: 100%;
+        max-width: none;
+    }
+
+    .rec-study-record {
+        justify-content: center;
+    }
+
+    .rec-toast-host {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        max-width: none;
+    }
+
+    .rec-send-row,
+    .review-send-row {
+        gap: 8px;
+    }
+
+    .rec-study-feedback,
+    .sub-card,
+    .review-box {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .rec-header-inner,
+    .rec-main,
+    .content,
+    .topbar,
+    .panel-body {
+        padding-inline: 12px;
+    }
+
+    .rec-brand span,
+    .rec-user-name {
+        display: none;
+    }
+
+    .rec-nav {
+        gap: 2px;
+    }
+
+    .rec-nav a {
+        padding: 7px 9px;
+        font-size: 11.5px;
+    }
+
+    .rec-card-head {
+        gap: 10px;
+    }
+
+    .rec-card-badges {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .rec-section {
+        padding: 12px;
+    }
+
+    .rec-step .rec-step-hint,
+    .review-step-sub {
+        width: 100%;
+        margin-inline-start: 32px;
+    }
+
+    .rec-reply-head {
+        flex-wrap: wrap;
+    }
+
+    .rec-study-feedback-head {
+        align-items: flex-start;
+    }
+
+    .sub-actions {
+        align-items: stretch;
+    }
+
+    .sub-voice {
+        flex-basis: 100%;
+    }
+
+    .msr-caption,
+    .msr-kb {
+        display: none;
+    }
+
+    .msr-head {
+        gap: 9px;
+    }
+
+    .msr-ready-actions {
+        gap: 8px;
+    }
+}
+
+@media (max-width: 380px) {
+    .rec-main,
+    .content {
+        padding-inline: 10px;
+    }
+
+    .rec-stats {
+        gap: 8px;
+    }
+
+    .rec-stat,
+    .stat-card {
+        padding: 12px;
+    }
+
+    .rec-card,
+    .sub-card,
+    .review-box,
+    .rec-study-feedback {
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .rec-card-title {
+        font-size: 13.5px;
+    }
+
+    .rec-badge {
+        font-size: 8.5px;
+        padding: 4px 7px;
+    }
+
+    .rec-send-btn,
+    .review-send-btn,
+    .rec-voice-box .msr-btn {
+        font-size: 11.5px;
+        padding-inline: 12px;
+    }
+
+    .msr-standing {
+        height: 82px;
+    }
+
+    .msr-staging {
+        gap: 18px;
+    }
+}
+
+/* Keyboard/touch comfort without changing the visual language. */
+@media (pointer: coarse) {
+    .rec-nav a,
+    .rec-user,
+    .lang-toggle,
+    .mobile-toggle,
+    .table-btn {
+        min-height: 40px;
+    }
+}

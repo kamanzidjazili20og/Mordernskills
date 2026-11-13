@@ -28,6 +28,7 @@ const STATUSES = ['pending', 'reviewed', 'needs_improvement'];
 const REVIEW_STATUSES = ['reviewed', 'needs_improvement'];
 const MAX_FEEDBACK = 2000;
 const MAX_INSTRUCTIONS = 2000;
+const MAX_FEEDBACK_AUDIO_SECONDS = 600;
 
 const SURAH_BY_NUMBER = new Map(SURAHS.map(s => [s.number, s]));
 
@@ -78,6 +79,42 @@ function recordingMime(file) {
   return AUDIO_MIME_BY_EXT[recordingExtension(file)] || 'audio/webm';
 }
 
+async function storeFeedbackAudio(file) {
+  if (storage.enabled) {
+    try {
+      const stored = await storage.uploadFeedbackAudioToSupabase(file);
+      if (stored) {
+        return { storage: 'supabase', path: stored.path, mime: recordingMime(file) };
+      }
+    } catch (err) {
+      console.error('Supabase feedback upload failed, using private local storage:', err.message);
+    }
+  }
+
+  fs.mkdirSync(RECITATION_DIR, { recursive: true });
+  const fileName = `fb_${uuidv4()}${recordingExtension(file)}`;
+  fs.writeFileSync(path.join(RECITATION_DIR, fileName), file.buffer);
+  return { storage: 'local', path: fileName, mime: recordingMime(file) };
+}
+
+async function removeFeedbackAudio(storageType, audioPath) {
+  if (!audioPath) return;
+  if (storageType === 'supabase') {
+    await storage.deletePrivateAudioFromSupabase(audioPath);
+    return;
+  }
+  try {
+    fs.unlinkSync(path.join(RECITATION_DIR, path.basename(audioPath)));
+  } catch (err) {
+    // The replacement already succeeded; a missing old file is harmless.
+  }
+}
+
+function feedbackAudioUrl(row) {
+  if (!row || !row.feedback_audio_path) return null;
+  return `/api/recitations/submissions/${row.id}/feedback-audio`;
+}
+
 /** Build the assignment scope a caller is allowed to see. */
 async function visibleAssignmentIds(user) {
   if (user.role !== 'teacher') return null; // student/admin use other filters
@@ -125,12 +162,12 @@ async function decorateSubmissions(rows) {
   const list = Array.isArray(rows) ? rows : [];
   if (!list.length) return list;
 
-  const studentIds = [...new Set(list.map(r => r.student_id).filter(Boolean))];
+  const userIds = [...new Set(list.flatMap(r => [r.student_id, r.reviewed_by]).filter(Boolean))];
   const assignmentIds = [...new Set(list.map(r => r.assignment_id).filter(Boolean))];
 
   const [usersResult, assignmentsResult] = await Promise.all([
-    studentIds.length
-      ? supabase.from('users').select('id,username,full_name,email,avatar_url').in('id', studentIds)
+    userIds.length
+      ? supabase.from('users').select('id,username,full_name,email,avatar_url').in('id', userIds)
       : Promise.resolve({ data: [], error: null }),
     assignmentIds.length
       ? supabase.from('surah_assignments').select('id,teacher_id,instructions,due_date,is_active').in('id', assignmentIds)
@@ -158,6 +195,7 @@ async function decorateSubmissions(rows) {
 
   return list.map(row => {
     const student = users.get(row.student_id) || {};
+    const reviewer = users.get(row.reviewed_by) || {};
     const assignment = assignments.get(row.assignment_id) || {};
     const lesson = lessons.get(row.lesson_id || assignment.lesson_id) || {};
     return {
@@ -176,7 +214,11 @@ async function decorateSubmissions(rows) {
       mime_type: row.mime_type,
       status: row.status,
       feedback: row.feedback,
+      feedback_audio_url: feedbackAudioUrl(row),
+      feedback_audio_mime: row.feedback_audio_mime || null,
+      feedback_audio_duration_seconds: row.feedback_audio_duration_seconds || null,
       reviewed_by: row.reviewed_by,
+      reviewer_name: reviewer.full_name || reviewer.username || null,
       reviewed_at: row.reviewed_at,
       created_at: row.created_at,
       updated_at: row.updated_at,
@@ -573,6 +615,42 @@ router.get('/submissions/:id/audio', authenticate, async (req, res) => {
   }
 });
 
+router.get('/submissions/:id/feedback-audio', authenticate, async (req, res) => {
+  try {
+    const id = asInt(req.params.id);
+    if (!id) return res.status(400).json({ error: 'Invalid recording id.' });
+
+    const submission = await getSubmission(id);
+    if (!submission) return res.status(404).json({ error: 'Recording not found.' });
+    if (!(await canAccessSubmission(req.user, submission))) {
+      return res.status(403).json({ error: 'You do not have access to this review.' });
+    }
+    if (!submission.feedback_audio_path) {
+      return res.status(404).json({ error: 'No voice feedback is available for this recording.' });
+    }
+
+    res.setHeader('Cache-Control', 'private, no-store');
+    res.setHeader('Content-Type', submission.feedback_audio_mime || 'audio/webm');
+
+    if (submission.feedback_audio_storage === 'supabase') {
+      const file = await storage.downloadFeedbackAudioFromSupabase(submission.feedback_audio_path);
+      res.setHeader('Content-Type', file.contentType || submission.feedback_audio_mime || 'audio/webm');
+      res.setHeader('Content-Length', String(file.buffer.length));
+      return res.send(file.buffer);
+    }
+
+    const filePath = path.join(RECITATION_DIR, path.basename(submission.feedback_audio_path));
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ error: 'The voice feedback file is missing from storage.' });
+    }
+    res.setHeader('Content-Length', String(fs.statSync(filePath).size));
+    return res.sendFile(filePath);
+  } catch (err) {
+    console.error('Stream feedback audio error:', err.message || err);
+    return fail(res, err, 'Could not load the voice feedback');
+  }
+});
+
 router.get('/submissions/:id', authenticate, async (req, res) => {
   try {
     const id = asInt(req.params.id);
@@ -706,45 +784,102 @@ router.post('/submissions', authenticate, requireStudent, (req, res) => {
   });
 });
 
-router.patch('/submissions/:id/review', authenticate, requireTeacher, async (req, res) => {
-  try {
-    const id = asInt(req.params.id);
-    if (!id) return res.status(400).json({ error: 'Invalid recording id.' });
-
-    const status = String(req.body.status || '');
-    if (!REVIEW_STATUSES.includes(status)) {
-      return res.status(400).json({ error: 'Review status must be reviewed or needs_improvement.' });
-    }
-    const feedback = asText(req.body.feedback, MAX_FEEDBACK);
-    if (status === 'needs_improvement' && !feedback) {
-      return res.status(400).json({ error: 'Write feedback explaining what the student should improve.' });
+router.patch('/submissions/:id/review', authenticate, requireTeacher, (req, res) => {
+  uploadRecitation.single('audio')(req, res, async (uploadError) => {
+    if (uploadError) {
+      if (uploadError.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({
+          error: `Voice feedback exceeds the maximum size of ${process.env.MAX_RECITATION_SIZE_MB || 25} MB.`
+        });
+      }
+      return res.status(400).json({ error: uploadError.message });
     }
 
-    const submission = await getSubmission(id);
-    if (!submission) return res.status(404).json({ error: 'Recording not found.' });
-    if (!(await canAccessSubmission(req.user, submission))) {
-      return res.status(403).json({ error: 'You can only review your own students’ recordings.' });
-    }
+    let uploaded = null;
+    try {
+      const id = asInt(req.params.id);
+      if (!id) return res.status(400).json({ error: 'Invalid recording id.' });
 
-    const { data: updated, error } = await supabase
-      .from('recitation_submissions')
-      .update({
+      const status = String(req.body.status || '');
+      if (!REVIEW_STATUSES.includes(status)) {
+        return res.status(400).json({ error: 'Review status must be reviewed or needs_improvement.' });
+      }
+
+      const hasFeedbackField = Object.prototype.hasOwnProperty.call(req.body || {}, 'feedback');
+      const feedback = asText(req.body.feedback, MAX_FEEDBACK);
+      const clearFeedback = String(req.body.clearFeedback || '') === '1';
+      const durationSeconds = asInt(req.body.durationSeconds);
+      if (durationSeconds !== null && (durationSeconds < 0 || durationSeconds > MAX_FEEDBACK_AUDIO_SECONDS)) {
+        return res.status(400).json({ error: 'Voice feedback length is out of range.' });
+      }
+      if (status === 'needs_improvement' && !feedback && !req.file) {
+        return res.status(400).json({ error: 'Record a voice note or write feedback explaining what the student should improve.' });
+      }
+
+      const submission = await getSubmission(id);
+      if (!submission) return res.status(404).json({ error: 'Recording not found.' });
+      if (!(await canAccessSubmission(req.user, submission))) {
+        return res.status(403).json({ error: 'You can only review your own students’ recordings.' });
+      }
+
+      if (req.file) {
+        uploaded = await storeFeedbackAudio(req.file);
+      }
+
+      const update = {
         status,
-        feedback,
         reviewed_by: req.user.id,
         reviewed_at: new Date().toISOString()
-      })
-      .eq('id', id)
-      .select('*')
-      .single();
-    if (error) throw error;
+      };
+      let replaceOldAudio = false;
 
-    const [decorated] = await decorateSubmissions([updated]);
-    res.json({ message: 'Review saved.', submission: decorated });
-  } catch (err) {
-    console.error('Review submission error:', err.message || err);
-    return fail(res, err, 'Could not save the review');
-  }
+      if (uploaded) {
+        update.feedback = feedback;
+        update.feedback_audio_storage = uploaded.storage;
+        update.feedback_audio_path = uploaded.path;
+        update.feedback_audio_mime = uploaded.mime;
+        update.feedback_audio_duration_seconds = durationSeconds;
+        replaceOldAudio = Boolean(submission.feedback_audio_path);
+      } else if (clearFeedback) {
+        update.feedback = feedback;
+        update.feedback_audio_storage = null;
+        update.feedback_audio_path = null;
+        update.feedback_audio_mime = null;
+        update.feedback_audio_duration_seconds = null;
+        replaceOldAudio = Boolean(submission.feedback_audio_path);
+      } else if (hasFeedbackField) {
+        update.feedback = feedback;
+        // A written review replaces an older voice note so students never see
+        // feedback that belongs to a previous review round.
+        if (submission.feedback_audio_path) {
+          update.feedback_audio_storage = null;
+          update.feedback_audio_path = null;
+          update.feedback_audio_mime = null;
+          update.feedback_audio_duration_seconds = null;
+          replaceOldAudio = true;
+        }
+      }
+
+      const { data: updated, error } = await supabase
+        .from('recitation_submissions')
+        .update(update)
+        .eq('id', id)
+        .select('*')
+        .single();
+      if (error) throw error;
+
+      if (replaceOldAudio) {
+        await removeFeedbackAudio(submission.feedback_audio_storage, submission.feedback_audio_path);
+      }
+
+      const [decorated] = await decorateSubmissions([updated]);
+      res.json({ message: 'Review saved.', submission: decorated });
+    } catch (err) {
+      if (uploaded) await removeFeedbackAudio(uploaded.storage, uploaded.path);
+      console.error('Review submission error:', err.message || err);
+      return fail(res, err, 'Could not save the review');
+    }
+  });
 });
 
 // ------------------------------------------------------------

@@ -485,6 +485,12 @@ a { color: inherit; }
     line-height: 1.6;
 }
 .sub-feedback strong { display: block; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
+.sub-feedback .vsu-bubble { margin-top: 7px; max-width: 100%; }
+.sub-feedback-text { margin-top: 7px; }
+.sub-card.is-new { border-color: rgba(52,211,153,0.45); box-shadow: 0 0 0 1px rgba(52,211,153,0.16), 0 12px 34px -20px rgba(52,211,153,0.55); }
+.sub-feedback.is-new { border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.09); animation: recFeedbackGlow 1.6s ease 2; }
+.sub-feedback-new { display: inline-flex; align-items: center; margin-left: 6px; padding: 2px 7px; border-radius: 999px; background: rgba(52,211,153,0.18); border: 1px solid rgba(52,211,153,0.4); color: #6ee7b7; font-size: 8.5px; letter-spacing: 0.08em; vertical-align: middle; }
+@keyframes recFeedbackGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); } 50% { box-shadow: 0 0 0 4px rgba(52,211,153,0.08); } }
 .sub-actions { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 .sub-voice { flex: 0 1 320px; min-width: min(240px, 100%); display: flex; align-items: center; }
 .sub-date { font-size: 11px; color: var(--text-muted); }
@@ -716,9 +722,42 @@ a { color: inherit; }
     gap: 6px 14px;
 }
 .rec-study-feedback-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.rec-study-feedback-actions {
+    margin-top: 13px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(212,168,83,0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.rec-study-record {
+    border: 1px solid rgba(212,168,83,0.42);
+    background: linear-gradient(135deg, #f4d27a, #c99a3b);
+    color: #16100a;
+    border-radius: 999px;
+    padding: 9px 15px;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .04em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 10px 26px -14px rgba(212,168,83,0.7);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+.rec-study-record:hover { transform: translateY(-2px); box-shadow: 0 13px 32px -13px rgba(212,168,83,0.8); }
+.rec-study-record:focus-visible { outline: 2px solid #f4d27a; outline-offset: 3px; }
+.rec-study-feedback-actions span { font-size: 10.5px; line-height: 1.5; color: var(--text-muted); max-width: 290px; }
+.rec-study-feedback-voice { margin-top: 10px; }
+.rec-study-feedback-voice .vsu-bubble { max-width: 100%; }
 .rec-study-feedback.good { border-color: rgba(52,211,153,0.32); background: rgba(52,211,153,0.06); }
 .rec-study-feedback.improve { border-color: rgba(248,113,113,0.32); background: rgba(248,113,113,0.06); }
 .rec-study-feedback.pending { border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.05); }
+.rec-study-feedback.is-new { border-color: rgba(52,211,153,0.55); box-shadow: 0 0 0 1px rgba(52,211,153,0.18), 0 16px 42px -24px rgba(52,211,153,0.65); animation: recFeedbackGlow 1.6s ease 2; }
+.rec-study-feedback.is-new .rec-study-feedback-title::after { content: 'New'; margin-left: 6px; padding: 2px 7px; border-radius: 999px; background: rgba(52,211,153,0.18); border: 1px solid rgba(52,211,153,0.4); color: #6ee7b7; font-size: 8.5px; letter-spacing: 0.08em; }
 
 /* My lessons */
 .rec-lessons { display: grid; gap: 10px; }
@@ -798,6 +837,7 @@ a { color: inherit; }
     .rec-lesson-thumb { flex-basis: 82px; width: 82px; }
 }
 </style>
+<link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 <body class="rec-page">
 <a class="skip-link" href="#studyPanel">Skip to the studio</a>
@@ -927,11 +967,16 @@ a { color: inherit; }
 
             <div class="rec-study-feedback rec-hidden" id="studyFeedback" aria-live="polite">
                 <div class="rec-study-feedback-head">
-                    <span class="rec-study-feedback-title"><i class="fas fa-comment-dots"></i> Review for this lesson</span>
+                    <span class="rec-study-feedback-title"><i class="fas fa-microphone-lines"></i> Review for this lesson</span>
                     <span class="rec-badge none" id="studyFeedbackBadge"></span>
                 </div>
+                <div class="rec-study-feedback-voice rec-hidden" id="studyFeedbackVoice"></div>
                 <p id="studyFeedbackText"></p>
                 <div class="rec-study-feedback-meta" id="studyFeedbackMeta"></div>
+                <div class="rec-study-feedback-actions">
+                    <button type="button" class="rec-study-record" id="studyRecordAgain"><i class="fas fa-microphone"></i> Record a new take</button>
+                    <span>Your next recording stays attached to this lesson and goes straight to the admin.</span>
+                </div>
             </div>
 
             <section class="rec-section" id="recordings" aria-labelledby="recordingsTitle">
@@ -1022,6 +1067,13 @@ a { color: inherit; }
     var recordedBytes = 0;
     var sizeStopTriggered = false;
     var draftBubble = null;
+    var studyFeedbackBubble = null;
+    var reviewSnapshot = null;
+    var freshFeedback = {};
+    var submissionsSignature = null;
+    var lessonReviewSignature = null;
+    var reviewPollId = null;
+    var reviewPollBusy = false;
     var meter = null;
     var startingCapture = false;
     var captureSeq = 0;
@@ -1054,7 +1106,9 @@ a { color: inherit; }
         studyFeedback: document.getElementById('studyFeedback'),
         studyFeedbackBadge: document.getElementById('studyFeedbackBadge'),
         studyFeedbackText: document.getElementById('studyFeedbackText'),
+        studyFeedbackVoice: document.getElementById('studyFeedbackVoice'),
         studyFeedbackMeta: document.getElementById('studyFeedbackMeta'),
+        studyRecordAgain: document.getElementById('studyRecordAgain'),
         stepWatch: document.getElementById('stepWatch'),
         stepRecord: document.getElementById('stepRecord'),
         stepReview: document.getElementById('stepReview'),
@@ -1139,6 +1193,84 @@ a { color: inherit; }
         }).join('');
     }
 
+    /* ---------------- New-feedback detection + live refresh ---------------- */
+
+    function reviewKey(s) {
+        return [s.status || '', s.reviewed_at || '', s.feedback_audio_url || '', s.feedback_audio_duration_seconds || 0, s.feedback || '', s.reviewer_name || ''].join('|');
+    }
+
+    function reviewListSignature(list) {
+        return (list || []).map(function (s) {
+            return [s.id, reviewKey(s)].join('~');
+        }).join('|');
+    }
+
+    function noteReviewChanges(list) {
+        var next = {};
+        var changed = [];
+        (list || []).forEach(function (s) {
+            var key = reviewKey(s);
+            next[s.id] = key;
+            if (reviewSnapshot && reviewSnapshot[s.id] !== undefined && reviewSnapshot[s.id] !== key
+                && (s.status === 'reviewed' || s.status === 'needs_improvement') && s.reviewed_at) {
+                freshFeedback[s.id] = true;
+                changed.push(s);
+            }
+        });
+        reviewSnapshot = next;
+        if (!changed.length) return;
+        var latest = changed[0];
+        var who = latest.reviewer_name ? ' from ' + latest.reviewer_name : '';
+        R.toast('New review' + who + ' is ready. Press play to hear the feedback.', 'success');
+        if (currentLesson && changed.some(function (s) { return Number(s.lesson_id) === Number(currentLesson.id); })) {
+            try { els.studyFeedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) {}
+        }
+    }
+
+    function markFeedbackSeen(id) {
+        delete freshFeedback[id];
+        var block = document.querySelector('[data-feedback-block="' + id + '"]');
+        if (block) {
+            block.classList.remove('is-new');
+            var flag = block.querySelector('.sub-feedback-new');
+            if (flag) flag.remove();
+            var card = block.closest('[data-sub-card]');
+            if (card) card.classList.remove('is-new');
+        }
+        if (currentLesson && lessonSubs[0] && Number(lessonSubs[0].id) === Number(id)) {
+            els.studyFeedback.classList.remove('is-new');
+        }
+    }
+
+    async function pollForReviews() {
+        if (!user || reviewPollBusy || document.visibilityState !== 'visible') return;
+        if (['hold', 'locked', 'paused', 'stopping', 'ready', 'sending'].indexOf(recState) !== -1) return;
+        if (window.MSVoice && typeof MSVoice.isPlaying === 'function' && MSVoice.isPlaying()) return;
+        reviewPollBusy = true;
+        try {
+            await loadSubmissions();
+            if (currentLesson) await refreshLessonReview();
+        } catch (e) {
+            /* polling is silent: the manual Refresh button still reports errors */
+        } finally {
+            reviewPollBusy = false;
+        }
+    }
+
+    function startReviewPolling() {
+        if (reviewPollId) clearInterval(reviewPollId);
+        reviewPollId = setInterval(pollForReviews, 30000);
+    }
+
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') pollForReviews();
+    });
+
+    function feedbackLabel(s) {
+        var who = s.reviewer_name ? 'Feedback from ' + R.escapeHtml(s.reviewer_name) : (s.status === 'needs_improvement' ? 'What to improve' : 'Teacher feedback');
+        return who + (freshFeedback[s.id] ? ' <span class="sub-feedback-new">New</span>' : '');
+    }
+
     function renderSubmissions() {
         if (!submitted.length) {
             els.submissionList.innerHTML = '<div class="rec-empty"><i class="fas fa-wave-square"></i>No recordings yet. Your first submission will appear here.</div>';
@@ -1147,8 +1279,15 @@ a { color: inherit; }
 
         els.submissionList.innerHTML = submitted.map(function (s) {
             var meta = R.statusMeta(s.status);
-            var feedback = s.feedback
-                ? '<div class="sub-feedback"><strong>' + (s.status === 'needs_improvement' ? 'What to improve' : 'Teacher feedback') + '</strong>' + R.escapeHtml(s.feedback) + '</div>'
+            var feedbackBits = '';
+            if (s.feedback_audio_url) {
+                feedbackBits += '<div data-feedback-voice="' + s.id + '" data-feedback-duration="' + (s.feedback_audio_duration_seconds || 0) + '"></div>';
+            }
+            if (s.feedback) {
+                feedbackBits += '<div class="sub-feedback-text">' + R.escapeHtml(s.feedback) + '</div>';
+            }
+            var feedback = feedbackBits
+                ? '<div class="sub-feedback' + (freshFeedback[s.id] ? ' is-new' : '') + '" data-feedback-block="' + s.id + '"><strong>' + feedbackLabel(s) + '</strong>' + feedbackBits + '</div>'
                 : '';
             var reviewDate = s.reviewed_at
                 ? '<span class="sub-date">Reviewed ' + R.escapeHtml(R.formatDateTime(s.reviewed_at)) + '</span>'
@@ -1157,7 +1296,7 @@ a { color: inherit; }
                 ? R.escapeHtml(s.surah_name) + ' <span style="color:var(--text-muted);font-weight:500">' + R.escapeHtml(R.ayahLabel(s.ayah_start, s.ayah_end)) + '</span>'
                 : (s.lesson_title ? '<span style="color:var(--gold)"><i class="fas fa-video"></i> ' + R.escapeHtml(s.lesson_title) + '</span> <span style="color:var(--text-muted);font-weight:500">lesson practice</span>' : 'Recording');
             return ''
-                + '<article class="sub-card">'
+                + '<article class="sub-card' + (freshFeedback[s.id] ? ' is-new' : '') + '" data-sub-card="' + s.id + '">'
                 + '  <div class="sub-top">'
                 + '      <div>'
                 + '          <h3>' + titleHtml + '</h3>'
@@ -1185,6 +1324,17 @@ a { color: inherit; }
                 id: id,
                 duration: duration,
                 loader: function () { return R.fetchAudio(id); }
+            });
+        });
+        var feedbackHosts = root.querySelectorAll('[data-feedback-voice]');
+        Array.prototype.forEach.call(feedbackHosts, function (host) {
+            var id = Number(host.getAttribute('data-feedback-voice'));
+            var duration = Number(host.getAttribute('data-feedback-duration')) || 0;
+            MSVoice.bubble(host, {
+                id: 'feedback-' + id,
+                duration: duration,
+                loader: function () { return R.fetchFeedbackAudio(id); },
+                onPlayed: function () { markFeedbackSeen(id); }
             });
         });
     }
@@ -1407,12 +1557,19 @@ a { color: inherit; }
         } catch (e) {
             lessonSubs = [];
         }
+        lessonReviewSignature = reviewListSignature(lessonSubs);
         renderLessonReview();
         renderMyLessons();
     }
 
     function renderLessonReview() {
         updateStudySteps();
+        if (studyFeedbackBubble) {
+            try { studyFeedbackBubble.destroy(); } catch (e) {}
+            studyFeedbackBubble = null;
+        }
+        els.studyFeedbackVoice.innerHTML = '';
+        els.studyFeedbackVoice.classList.add('rec-hidden');
         var latest = lessonSubs[0] || null;
         if (!currentLesson || !latest) {
             els.studyFeedback.classList.add('rec-hidden');
@@ -1424,20 +1581,35 @@ a { color: inherit; }
         els.studyStatusPill.className = 'rec-badge ' + meta.cls;
         els.studyStatusPill.innerHTML = '<i class="fas ' + meta.icon + '"></i>' + meta.label;
         els.studyFeedback.className = 'rec-study-feedback ' + (meta.cls === 'reviewed' ? 'good' : meta.cls === 'improve' ? 'improve' : 'pending');
+        els.studyFeedback.classList.toggle('is-new', Boolean(freshFeedback[latest.id]));
         els.studyFeedbackBadge.className = 'rec-badge ' + meta.cls;
         els.studyFeedbackBadge.innerHTML = '<i class="fas ' + meta.icon + '"></i>' + meta.label;
+
+        if (latest.feedback_audio_url) {
+            els.studyFeedbackVoice.classList.remove('rec-hidden');
+            studyFeedbackBubble = MSVoice.bubble(els.studyFeedbackVoice, {
+                id: 'study-feedback-' + latest.id,
+                duration: latest.feedback_audio_duration_seconds || 0,
+                loader: function () { return R.fetchFeedbackAudio(latest.id); },
+                onPlayed: function () { markFeedbackSeen(latest.id); }
+            });
+        }
 
         var text = latest.feedback;
         if (!text) {
             text = latest.status === 'pending'
-                ? 'Your recording is with the review team. When the admin finishes the review, the comment will appear right here — for this lesson.'
+                ? 'Your recording is with the review team. When the admin finishes the review, the feedback will appear right here — for this lesson.'
                 : latest.status === 'needs_improvement'
-                    ? 'The reviewer asked for another take. Listen to your recording below, then record again.'
-                    : 'Reviewed — well done.';
+                    ? (latest.feedback_audio_url
+                        ? 'Listen to the reviewer’s voice note above, then record a new take below.'
+                        : 'The reviewer asked for another take. Listen to your recording below, then record again.')
+                    : (latest.feedback_audio_url ? 'The reviewer sent you a voice note above. Well done.' : 'Reviewed — well done.');
         }
         els.studyFeedbackText.textContent = text;
 
         var bits = [];
+        if (latest.reviewer_name) bits.push('<span><i class="fas fa-user-check"></i>' + R.escapeHtml(latest.reviewer_name) + '</span>');
+        if (latest.feedback_audio_url) bits.push('<span><i class="fas fa-microphone-lines"></i>Voice note</span>');
         if (latest.lesson_title) bits.push('<span><i class="fas fa-video"></i>' + R.escapeHtml(latest.lesson_title) + '</span>');
         if (latest.created_at) bits.push('<span><i class="fas fa-clock"></i>Sent ' + R.escapeHtml(R.formatDateTime(latest.created_at)) + '</span>');
         if (latest.reviewed_at) bits.push('<span><i class="fas fa-circle-check"></i>Reviewed ' + R.escapeHtml(R.formatDateTime(latest.reviewed_at)) + '</span>');
@@ -1459,6 +1631,9 @@ a { color: inherit; }
             var data = await R.api('/lesson/' + id);
             if (!currentLesson || Number(currentLesson.id) !== id) return;
             lessonSubs = data.submissions || [];
+            var signature = reviewListSignature(lessonSubs);
+            if (signature === lessonReviewSignature) return;
+            lessonReviewSignature = signature;
             renderLessonReview();
             renderMyLessons();
         } catch (e) { /* feedback refresh is best-effort */ }
@@ -1480,6 +1655,10 @@ a { color: inherit; }
     async function loadSubmissions() {
         var data = await R.api('/submissions?limit=60');
         submitted = data.submissions || [];
+        noteReviewChanges(submitted);
+        var signature = reviewListSignature(submitted);
+        if (signature === submissionsSignature) return;
+        submissionsSignature = signature;
         renderSubmissions();
     }
 
@@ -2068,6 +2247,15 @@ a { color: inherit; }
     }
 
     // ---------------- Events ----------------
+    if (els.studyRecordAgain) {
+        els.studyRecordAgain.addEventListener('click', function () {
+            var recorder = document.getElementById('recorderPanel');
+            if (recorder) recorder.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            var mic = document.getElementById('micBtn');
+            if (mic) setTimeout(function () { mic.focus({ preventScroll: true }); }, 350);
+        });
+    }
+
     els.logout.addEventListener('click', R.logout);
     els.refresh.addEventListener('click', refreshAll);
 
@@ -2231,6 +2419,7 @@ a { color: inherit; }
         }
         renderUser();
         await refreshAll();
+        startReviewPolling();
         try {
             var params = new URLSearchParams(window.location.search);
             var preferred = params.get('assignment') || params.get('assignmentId');

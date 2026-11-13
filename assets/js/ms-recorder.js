@@ -163,6 +163,11 @@
         var maxBytes = opts.maxBytes || MAX_BYTES;
         var title = opts.title || 'Lesson recitation';
         var note = opts.note || 'Tap the mic and recite — your take is sent for review.';
+        var sentTitle = opts.sentTitle || 'Sent for review';
+        var sentToast = opts.sentToast || 'Recording sent for review.';
+        var manualSend = Boolean(opts.manualSend);
+        var onStateChange = typeof opts.onStateChange === 'function' ? opts.onStateChange : null;
+        var keyboardEnabled = opts.keyboard !== false;
 
         var ui = document.createElement('div');
         ui.className = 'msr open';
@@ -248,6 +253,13 @@
 
         ui.querySelector('.msr-title').textContent = title;
         ui.querySelector('.msr-sub').textContent = note;
+        var sentStrong = ui.querySelector('.msr-sent strong');
+        if (sentStrong) sentStrong.textContent = sentTitle;
+        if (manualSend) els.submit.classList.add('msr-hidden');
+        if (!keyboardEnabled) {
+            var kbHint = ui.querySelector('.msr-kb');
+            if (kbHint) kbHint.classList.add('msr-hidden');
+        }
 
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) {
             var warn = ui.querySelector('.msr-warn') || els.idle.appendChild(document.createElement('p'));
@@ -282,6 +294,7 @@
         var lastPointerAt = 0;
         var drag = { active: false, x0: 0, y0: 0, cancel: false, locked: false };
         var lastStopAt = 0;
+        var teardown = [];
 
         function setHead(liveLabel, mode) {
             if (liveLabel) els.liveLbl.textContent = liveLabel;
@@ -336,9 +349,11 @@
             } catch (e) {}
         }
 
-        document.addEventListener('visibilitychange', function () {
+        function onVisibilityChange() {
             if (document.visibilityState === 'visible' && (state === 'hold' || state === 'locked') && !wakeLock) requestWakeLock();
-        });
+        }
+        document.addEventListener('visibilitychange', onVisibilityChange);
+        teardown.push(function () { document.removeEventListener('visibilitychange', onVisibilityChange); });
 
         function pauseStudyVideos() {
             try { document.querySelectorAll('video').forEach(function (v) { try { v.pause(); } catch (e) {} }); } catch (e) {}
@@ -401,6 +416,9 @@
             else if (state === 'stopping') { setHead('Finishing', 'idle'); }
             else { setHead('Standby', 'idle'); }
             renderTimer();
+            if (onStateChange) {
+                try { onStateChange(state, getRecording(), pausedFlag); } catch (e) { }
+            }
         }
 
         function beginCapture() {
@@ -619,8 +637,22 @@
             var tooBig = recordedBlob.size > maxBytes;
             els.readyStatus.textContent = tooBig
                 ? 'This take is over the ' + Math.round(maxBytes / (1024 * 1024)) + ' MB limit. Discard it and record a shorter passage.'
-                : 'Listen back — send it to the review queue when it sounds right.';
+                : manualSend
+                    ? 'Listen back — then choose Approve or Needs improvement below.'
+                    : 'Listen back — send it to the review queue when it sounds right.';
             els.submit.disabled = Boolean(tooBig);
+            if (!tooBig && typeof opts.onReady === 'function') {
+                try { opts.onReady(getRecording()); } catch (e) {}
+            }
+        }
+
+        function getRecording() {
+            if (!recordedBlob) return null;
+            return {
+                blob: recordedBlob,
+                duration: Math.max(1, Math.round(totalRecordedMs() / 1000)),
+                mime: recordedBlob.type || 'audio/webm'
+            };
         }
 
         function discardDraft() {
@@ -717,8 +749,13 @@
             node.addEventListener('contextmenu', function (e) { e.preventDefault(); });
         }
 
-        document.addEventListener('pointerup', function () { if (pointerHeld) finishHold(); });
-        document.addEventListener('pointercancel', function () { if (pointerHeld) finishHold(); });
+        function onDocumentPointerEnd() { if (pointerHeld) finishHold(); }
+        document.addEventListener('pointerup', onDocumentPointerEnd);
+        document.addEventListener('pointercancel', onDocumentPointerEnd);
+        teardown.push(function () {
+            document.removeEventListener('pointerup', onDocumentPointerEnd);
+            document.removeEventListener('pointercancel', onDocumentPointerEnd);
+        });
 
         bindHold(els.idleMic);
         bindHold(els.micBtn);
@@ -734,36 +771,44 @@
         els.idleMic.addEventListener('click', toggleViaClick);
         els.micBtn.addEventListener('click', toggleViaClick);
 
-        document.addEventListener('keydown', function (event) {
-            if (!ui.classList.contains('open')) return;
-            var tag = ((event.target && event.target.tagName) || '').toLowerCase();
-            if (tag === 'input' || tag === 'textarea' || tag === 'select' || (event.target && event.target.isContentEditable)) return;
-            var key = event.key || '';
-            var code = event.code || '';
-            if (key === 'Escape') {
-                if (state === 'hold' || state === 'locked') {
-                    event.preventDefault();
-                    cancel(false);
+        if (keyboardEnabled) {
+            var onKeyDown = function (event) {
+                if (!ui.classList.contains('open')) return;
+                var tag = ((event.target && event.target.tagName) || '').toLowerCase();
+                if (tag === 'input' || tag === 'textarea' || tag === 'select' || (event.target && event.target.isContentEditable)) return;
+                var key = event.key || '';
+                var code = event.code || '';
+                if (key === 'Escape') {
+                    if (state === 'hold' || state === 'locked') {
+                        event.preventDefault();
+                        cancel(false);
+                    }
+                    return;
                 }
-                return;
-            }
-            if (key !== ' ' && code !== 'Space' && key !== 'Spacebar') return;
-            if (event.repeat || kbHeld) return;
-            event.preventDefault();
-            if (state === 'locked') { finish(''); return; }
-            if (state !== 'idle' && state !== 'ready') return;
-            pressStart({ type: 'keydown', clientX: 0, clientY: 0, preventDefault: function () {} });
-        });
-        document.addEventListener('keyup', function (event) {
-            if (!kbHeld) return;
-            var key = event.key || '';
-            var code = event.code || '';
-            if (key !== ' ' && code !== 'Space' && key !== 'Spacebar') return;
-            kbHeld = false;
-            lastInteractionAt = Date.now();
-            drag.cancel = false;
-            updateUI();
-        });
+                if (key !== ' ' && code !== 'Space' && key !== 'Spacebar') return;
+                if (event.repeat || kbHeld) return;
+                event.preventDefault();
+                if (state === 'locked') { finish(''); return; }
+                if (state !== 'idle' && state !== 'ready') return;
+                pressStart({ type: 'keydown', clientX: 0, clientY: 0, preventDefault: function () {} });
+            };
+            var onKeyUp = function (event) {
+                if (!kbHeld) return;
+                var key = event.key || '';
+                var code = event.code || '';
+                if (key !== ' ' && code !== 'Space' && key !== 'Spacebar') return;
+                kbHeld = false;
+                lastInteractionAt = Date.now();
+                drag.cancel = false;
+                updateUI();
+            };
+            document.addEventListener('keydown', onKeyDown);
+            document.addEventListener('keyup', onKeyUp);
+            teardown.push(function () {
+                document.removeEventListener('keydown', onKeyDown);
+                document.removeEventListener('keyup', onKeyUp);
+            });
+        }
 
         els.cancelBtn.addEventListener('click', function () {
             if (state === 'hold' || state === 'locked') cancel(false);
@@ -803,7 +848,7 @@
                     clearDraft();
                     updateUI();
                     setHead('Sent', 'idle');
-                    toast('Recording sent for review.', 'success');
+                    toast(sentToast, 'success');
                     if (typeof opts.onSent === 'function') {
                         try { opts.onSent(); } catch (e) {}
                     }
@@ -830,6 +875,7 @@
 
         return {
             elem: ui,
+            getRecording: getRecording,
             open: function () {
                 ui.classList.add('open');
                 try { ui.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
@@ -844,6 +890,10 @@
             reset: reset,
             destroy: function () {
                 reset();
+                for (var i = 0; i < teardown.length; i++) {
+                    try { teardown[i](); } catch (e) {}
+                }
+                teardown = [];
                 if (ui.parentNode) ui.parentNode.removeChild(ui);
             }
         };
@@ -862,6 +912,12 @@
             for (var i = 0; i < instances.length; i++) {
                 try { instances[i].inst.reset(); } catch (e) {}
             }
+        },
+        destroyAll: function () {
+            for (var i = 0; i < instances.length; i++) {
+                try { instances[i].inst.destroy(); } catch (e) {}
+            }
+            instances = [];
         }
     };
 

@@ -97,6 +97,76 @@ async function downloadRecitationFromSupabase(objectPath) {
   };
 }
 
+// Private comment voice notes. They live in the same private "recitations"
+// bucket under a comments/ prefix so no extra bucket has to be provisioned.
+async function uploadCommentAudioToSupabase(file) {
+  if (!enabled || !file) return null;
+  const ext = recordingExtension(file);
+  const objectPath = `comments/${uuidv4()}${ext}`;
+  const declared = String(file.mimetype || '').split(';')[0].trim().toLowerCase();
+  const inferred = { '.ogg': 'audio/ogg', '.oga': 'audio/ogg', '.mp3': 'audio/mpeg', '.m4a': 'audio/mp4', '.mp4': 'audio/mp4', '.wav': 'audio/wav', '.aac': 'audio/aac' }[ext] || 'audio/webm';
+  const contentType = declared.startsWith('audio/') || declared === 'video/webm' ? declared : inferred;
+  const { error } = await supabase.storage.from(recitationBucket).upload(objectPath, file.buffer, {
+    contentType,
+    upsert: false,
+    cacheControl: '3600',
+  });
+  if (error) throw error;
+  return { bucket: recitationBucket, path: objectPath };
+}
+
+// Private teacher voice feedback. Same private bucket, feedback/ prefix.
+async function uploadFeedbackAudioToSupabase(file) {
+  if (!enabled || !file) return null;
+  const ext = recordingExtension(file);
+  const objectPath = `feedback/${uuidv4()}${ext}`;
+  const declared = String(file.mimetype || '').split(';')[0].trim().toLowerCase();
+  const inferred = { '.ogg': 'audio/ogg', '.oga': 'audio/ogg', '.mp3': 'audio/mpeg', '.m4a': 'audio/mp4', '.mp4': 'audio/mp4', '.wav': 'audio/wav', '.aac': 'audio/aac' }[ext] || 'audio/webm';
+  const contentType = declared.startsWith('audio/') || declared === 'video/webm' ? declared : inferred;
+  const { error } = await supabase.storage.from(recitationBucket).upload(objectPath, file.buffer, {
+    contentType,
+    upsert: false,
+    cacheControl: '3600',
+  });
+  if (error) throw error;
+  return { bucket: recitationBucket, path: objectPath };
+}
+
+async function downloadFeedbackAudioFromSupabase(objectPath) {
+  if (!enabled) throw new Error('Supabase Storage is not configured');
+  const { data, error } = await supabase.storage.from(recitationBucket).download(objectPath);
+  if (error) throw error;
+  if (!data) throw new Error('Voice feedback not found in storage');
+  const arrayBuffer = await data.arrayBuffer();
+  return {
+    buffer: Buffer.from(arrayBuffer),
+    contentType: data.type || 'application/octet-stream'
+  };
+}
+
+// Best-effort cleanup for replaced or cleared private audio.
+async function deletePrivateAudioFromSupabase(objectPath) {
+  if (!enabled || !objectPath) return false;
+  try {
+    const { error } = await supabase.storage.from(recitationBucket).remove([objectPath]);
+    return !error;
+  } catch (err) {
+    return false;
+  }
+}
+
+async function downloadCommentAudioFromSupabase(objectPath) {
+  if (!enabled) throw new Error('Supabase Storage is not configured');
+  const { data, error } = await supabase.storage.from(recitationBucket).download(objectPath);
+  if (error) throw error;
+  if (!data) throw new Error('Voice note not found in storage');
+  const arrayBuffer = await data.arrayBuffer();
+  return {
+    buffer: Buffer.from(arrayBuffer),
+    contentType: data.type || 'application/octet-stream'
+  };
+}
+
 async function uploadAvatarToSupabase(file) {
   if (!enabled || !file) return null;
   const ext = (file.originalname.match(/\.[^.]+$/) || ['.jpg'])[0].toLowerCase();
@@ -147,5 +217,10 @@ module.exports = {
   uploadThumbnailToSupabase,
   uploadBookFileToSupabase,
   uploadRecitationToSupabase,
-  downloadRecitationFromSupabase
+  downloadRecitationFromSupabase,
+  uploadFeedbackAudioToSupabase,
+  downloadFeedbackAudioFromSupabase,
+  deletePrivateAudioFromSupabase,
+  uploadCommentAudioToSupabase,
+  downloadCommentAudioFromSupabase
 };

@@ -308,7 +308,8 @@ create table if not exists public.surah_assignments (
 --  object path (storage = 'supabase') or a filename inside
 --  backend/private/recitations (storage = 'local'). Audio is NEVER served
 --  from a public URL: GET /api/recitations/submissions/:id/audio verifies the
---  caller before streaming it.
+--  caller before streaming it. Teacher voice feedback uses the same private
+--  storage rule and is served by .../feedback-audio after access checks.
 --  assignment_id/surah/ayah are NULL for lesson-only practice recordings made
 --  straight from a lesson page ("Record & Submit") without a teacher
 --  pre-order; those rows carry lesson_id instead.
@@ -329,6 +330,10 @@ create table if not exists public.recitation_submissions (
   status           text not null default 'pending'
                    check (status in ('pending','reviewed','needs_improvement')),
   feedback         text,
+  feedback_audio_storage  text check (feedback_audio_storage in ('supabase','local')),
+  feedback_audio_path     text,
+  feedback_audio_mime     text,
+  feedback_audio_duration_seconds int,
   reviewed_by      int references public.users(id) on delete set null,
   reviewed_at      timestamptz,
   created_at       timestamptz not null default now(),
@@ -909,8 +914,56 @@ create trigger trg_submissions_updated before update on public.recitation_submis
 
 
 -- ############################################################################
+--  SECTION 8b - LESSON COMMENTS AND LIKES
+-- ############################################################################
+-- A comment is text, a voice recording, or both. Audio is private and served
+-- only through GET /api/comments/:id/audio after the API checks the caller.
+-- Replies reference a parent comment on the same lesson. Likes are one row
+-- per (lesson, user) and are toggled by the API.
+
+create table if not exists public.lesson_comments (
+  id               serial primary key,
+  lesson_id        int not null references public.lessons(id) on delete cascade,
+  user_id          int not null references public.users(id) on delete cascade,
+  parent_id        int references public.lesson_comments(id) on delete cascade,
+  body             text,
+  audio_storage    text check (audio_storage in ('supabase', 'local')),
+  audio_path       text,
+  mime_type        text,
+  duration_seconds int,
+  file_size        bigint,
+  created_at       timestamptz not null default now(),
+  updated_at       timestamptz not null default now(),
+  check (body is not null or audio_path is not null)
+);
+
+create table if not exists public.lesson_likes (
+  id         serial primary key,
+  lesson_id  int not null references public.lessons(id) on delete cascade,
+  user_id    int not null references public.users(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  unique (lesson_id, user_id)
+);
+
+create index if not exists idx_comments_lesson  on public.lesson_comments(lesson_id);
+create index if not exists idx_comments_parent  on public.lesson_comments(parent_id);
+create index if not exists idx_comments_user    on public.lesson_comments(user_id);
+create index if not exists idx_comments_created on public.lesson_comments(created_at);
+
+create index if not exists idx_likes_lesson on public.lesson_likes(lesson_id);
+create index if not exists idx_likes_user   on public.lesson_likes(user_id);
+
+alter table public.lesson_comments enable row level security;
+alter table public.lesson_likes    enable row level security;
+
+drop trigger if exists trg_comments_updated on public.lesson_comments;
+create trigger trg_comments_updated before update on public.lesson_comments
+  for each row execute function public.set_updated_at();
+
+
+-- ############################################################################
 --  SECTION 9 — VERIFICATION
---  Expected: 17 tables, 8 views, 5 buckets.
+--  Expected: 19 tables, 8 views, 5 buckets.
 --  If v_category_stats is missing `sort_order`, or categories is missing
 --  `updated_at`, an older version of this file was deployed — re-run it.
 -- ############################################################################

@@ -194,6 +194,7 @@ app.use('/api/preferences', require('./routes/preferences'));
 app.use('/api/plans', require('./routes/plans'));
 app.use('/api/payments', require('./routes/payments'));
 app.use('/api/recitations', require('./routes/recitations'));
+app.use('/api/comments', require('./routes/comments'));
 
 app.use('/api', notFound('api'));
 

@@ -1274,6 +1274,8 @@ body::before {
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/voice-ui.js"></script>
 <script src="assets/js/ms-recorder.js"></script>
+<script src="assets/js/comments.js"></script>
+<script src="assets/js/share.js"></script>
 </head>
 <body>
 
@@ -1501,6 +1503,7 @@ body::before {
                 <div class="video-actions">
                     <button class="btn-action primary" id="watchNowBtn"><i class="fas fa-play"></i> <span data-lang="en">Watch Now</span><span data-lang="rw">Reba Ubu</span><span data-lang="fr">Regarder</span><span data-lang="sw">Tazama Sasa</span><span data-lang="ar">Ø´Ø§Ù‡Ø¯ Ø§Ù„Ø¢Ù†</span></button>
                     <button class="btn-action secondary" id="saveLessonBtn"><i class="fas fa-bookmark"></i> <span data-lang="en">Save</span><span data-lang="rw">Bika</span><span data-lang="fr">Enregistrer</span><span data-lang="sw">Hifadhi</span><span data-lang="ar">Ø­ÙØ¸</span></button>
+                    <button class="btn-action secondary like-btn" id="likeLessonBtn" type="button" aria-pressed="false" title="Like this lesson"><i class="fas fa-heart"></i> <span id="likeCount">0</span></button>
                     <button class="btn-action secondary" id="shareLessonBtn"><i class="fas fa-share"></i></button>
                 </div>
             </div>
@@ -1597,6 +1600,9 @@ body::before {
             </div>
 
             <div id="accessStatus" class="access-status" style="display:none;"></div>
+
+            <section class="lesson-comments" data-lesson-comments></section>
+
 
         <div style="margin-top:20px;padding:20px;border-radius:12px;background:linear-gradient(145deg,rgba(212,168,83,0.06),rgba(212,168,83,0.02));border:1px solid rgba(212,168,83,0.1);">
                 <p style="font-size:13px;color:var(--text-muted);text-align:center;">
@@ -3136,24 +3142,6 @@ function wireActionButtons() {
         });
     }
 
-    var shareBtn = document.getElementById('shareLessonBtn');
-    if (shareBtn) {
-        shareBtn.addEventListener('click', function () {
-            var url = window.location.href;
-            var title = (lessonData && lessonData.title) || document.title;
-            if (navigator.share) {
-                navigator.share({ title: title, url: url }).catch(function () {});
-                return;
-            }
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(url).then(function () {
-                    toast(vT(VIDEO_L10N.linkCopied));
-                }).catch(function () {
-                    toast(vT(VIDEO_L10N.linkCopied));
-                });
-            }
-        });
-    }
 }
 wireActionButtons();
 loadPlans();

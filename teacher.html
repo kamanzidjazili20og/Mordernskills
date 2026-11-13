@@ -172,6 +172,33 @@ select.form-control { cursor: pointer; }
 .review-feedback-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 10.5px; color: var(--text-muted); }
 .review-feedback-error { color: #fca5a5; font-weight: 700; display: none; align-items: center; gap: 5px; }
 .review-feedback-error.show { display: inline-flex; }
+
+.review-voice-box { min-width: 0; }
+.review-voice-box .msr { border-radius: 14px; box-shadow: none; background: rgba(6,19,14,0.55); }
+.review-voice-box .msr-head { padding: 11px 14px; }
+.review-voice-box .msr-mark { width: 32px; height: 32px; border-radius: 10px; font-size: 13px; }
+.review-voice-box .msr-title { font-size: 12.5px; }
+.review-voice-box .msr-sub { font-size: 10.5px; }
+.review-voice-box .msr-live { font-size: 9px; }
+.review-voice-box .msr-body { padding: 14px; }
+.review-voice-box .msr-mic { width: 60px; height: 60px; font-size: 21px; }
+.review-voice-box .msr-standing { height: 96px; }
+.review-voice-box .msr-timer { font-size: 26px; }
+.review-voice-box .msr-wave { height: 46px; }
+.review-voice-box .msr-ready-title { font-size: 13.5px; }
+.review-voice-box .msr-btn { padding: 9px 18px; font-size: 12px; }
+.review-voice-box .msr-preview .vsu-bubble { max-width: 100%; }
+.sub-feedback .vsu-bubble { margin-top: 7px; max-width: 100%; }
+.sub-feedback-text { margin-top: 7px; }
+
+@media (max-width: 720px) {
+    .review-voice-box .msr-head { padding: 10px 12px; }
+    .review-voice-box .msr-live { display: none; }
+    .review-voice-box .msr-body { padding: 12px; }
+    .review-voice-box .msr-mic { width: 54px; height: 54px; font-size: 19px; }
+    .review-voice-box .msr-staging { gap: 24px; }
+    .review-send-btn { flex: 1 1 100%; }
+}
 .review-send-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .review-send-btn { flex: 1 1 200px; justify-content: center; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 12px; font-size: 13px; font-weight: 800; font-family: inherit; cursor: pointer; border: 1px solid transparent; transition: transform .2s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease; }
 .review-send-btn:focus-visible { outline: 2px solid rgba(212,168,83,0.65); outline-offset: 2px; }
@@ -335,6 +362,7 @@ select.form-control { cursor: pointer; }
     .filter-select { margin-inline-start: 0; width: 100%; }
 }
 </style>
+<link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 <body class="rec-page">
 <div class="login-overlay" id="teacherLoginOverlay">
@@ -580,6 +608,7 @@ select.form-control { cursor: pointer; }
 <script src="config.js"></script>
 <script src="assets/js/recitation-common.js"></script>
 <script src="assets/js/voice-ui.js"></script>
+<script src="assets/js/ms-recorder.js"></script>
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/translations.js"></script>
 <script>
@@ -800,9 +829,9 @@ select.form-control { cursor: pointer; }
     }
 
     /* Tracks which recordings this reviewer has played. Send stays locked
-       for pending cards until the audio was heard (Listen → Comment → Send),
-       exactly like the admin panel; decided cards skip the gate so an
-       existing comment can be edited without re-listening. */
+       for pending cards until the audio was heard (Listen → Record → Send),
+       exactly like the admin panel; decided cards skip the gate so feedback
+       can be replaced without re-listening. */
     var recListened = window.__recListened || (window.__recListened = new Set());
 
     function reviewSyncGate(card) {
@@ -820,7 +849,7 @@ select.form-control { cursor: pointer; }
         var hint = card.querySelector('[data-rec-send-hint]');
         if (hint) {
             hint.innerHTML = listened
-                ? '<i class="fas fa-comment-dots"></i> Ready — the student will see your comment right after you send.'
+                ? '<i class="fas fa-microphone-lines"></i> Ready — the student will hear your voice feedback right after you send.'
                 : '<i class="fas fa-headphones"></i> Press play and listen before sending your review.';
         }
         card.querySelectorAll('[data-approve-review], [data-improve-review]').forEach(function (btn) {
@@ -830,8 +859,15 @@ select.form-control { cursor: pointer; }
 
     function renderSubmissionCard(s, compact) {
         var meta = R.statusMeta(s.status);
-        var feedback = s.feedback
-            ? '<div class="sub-feedback"><strong>Student sees this comment</strong>' + R.escapeHtml(s.feedback) + '</div>'
+        var feedbackBits = '';
+        if (s.feedback_audio_url) {
+            feedbackBits += '<div data-feedback-voice="' + s.id + '" data-feedback-duration="' + (s.feedback_audio_duration_seconds || 0) + '"></div>';
+        }
+        if (s.feedback) {
+            feedbackBits += '<div class="sub-feedback-text">' + R.escapeHtml(s.feedback) + '</div>';
+        }
+        var feedback = feedbackBits
+            ? '<div class="sub-feedback"><strong>Student hears this feedback</strong>' + feedbackBits + '</div>'
             : '';
         var reviewed = s.reviewed_at
             ? 'Last reviewed ' + R.escapeHtml(R.formatDateTime(s.reviewed_at))
@@ -842,9 +878,9 @@ select.form-control { cursor: pointer; }
             + '<div class="review-box">'
             + '  <div class="review-step"><span class="review-step-num">1</span> Listen <span class="review-listened-badge" data-rec-listened></span><span class="review-step-sub">' + reviewed + '</span></div>'
             + '  <div class="sub-actions" style="margin-top:0;"><div class="sub-voice" data-voice="' + s.id + '" data-duration="' + (s.duration_seconds || 0) + '"></div></div>'
-            + '  <div class="review-step"><span class="review-step-num">2</span> Your comment <span class="review-step-sub">The student will see exactly this</span></div>'
-            + '  <textarea class="form-control" data-feedback maxlength="2000" placeholder="Write a kind, specific comment — what went well, or what to improve next…">' + R.escapeHtml(s.feedback || '') + '</textarea>'
-            + '  <div class="review-feedback-foot"><span data-rec-count>0 / 2000</span><span class="review-feedback-error" data-rec-error><i class="fas fa-triangle-exclamation"></i><span>Write feedback explaining what the student should improve.</span></span></div>'
+            + '  <div class="review-step"><span class="review-step-num">2</span> Your voice feedback <span class="review-step-sub">The student will hear exactly this</span></div>'
+            + '  <div class="review-voice-box" data-rec-recorder="' + s.id + '"></div>'
+            + '  <div class="review-feedback-foot"><span class="review-feedback-error" data-rec-error><i class="fas fa-triangle-exclamation"></i><span>Record a voice note explaining what the student should improve.</span></span></div>'
             + '  <div class="review-send-row">'
             + '      <button type="button" class="review-send-btn approve" data-approve-review="' + s.id + '"><i class="fas fa-check"></i> Approve &amp; Send</button>'
             + '      <button type="button" class="review-send-btn improve" data-improve-review="' + s.id + '"><i class="fas fa-rotate-left"></i> Needs improvement &amp; Send</button>'
@@ -885,24 +921,38 @@ select.form-control { cursor: pointer; }
                 }
             });
         });
+        var feedbackHosts = root.querySelectorAll('[data-feedback-voice]');
+        Array.prototype.forEach.call(feedbackHosts, function (host) {
+            var id = Number(host.getAttribute('data-feedback-voice'));
+            var duration = Number(host.getAttribute('data-feedback-duration')) || 0;
+            MSVoice.bubble(host, {
+                id: 'feedback-' + id,
+                duration: duration,
+                loader: function () { return R.fetchFeedbackAudio(id); }
+            });
+        });
         root.querySelectorAll('[data-submission]').forEach(function (card) {
             reviewSyncGate(card);
-            var box = card.querySelector('[data-feedback]');
-            var count = card.querySelector('[data-rec-count]');
-            var syncCount = function () { if (count) count.textContent = (box ? box.value.length : 0) + ' / 2000'; };
-            if (box) {
-                box.addEventListener('input', function () {
-                    box.classList.remove('has-error');
-                    var err = card.querySelector('[data-rec-error]');
-                    if (err) err.classList.remove('show');
-                    syncCount();
+            var recHost = card.querySelector('[data-rec-recorder]');
+            if (recHost && window.MSRecorder) {
+                card.__recorder = MSRecorder.mount(recHost, {
+                    manualSend: true,
+                    keyboard: false,
+                    maxMs: 600000,
+                    toast: R.toast,
+                    title: 'Voice feedback',
+                    note: 'Tap the mic, speak your feedback, then listen back before sending.',
+                    onReady: function () {
+                        var err = card.querySelector('[data-rec-error]');
+                        if (err) err.classList.remove('show');
+                    }
                 });
-                syncCount();
             }
         });
     }
 
     function renderSubmissions() {
+        if (window.MSRecorder && MSRecorder.destroyAll) MSRecorder.destroyAll();
         var list = submissions.filter(function (s) {
             if (statusFilter && s.status !== statusFilter) return false;
             if (assignmentFilter && s.assignment_id !== assignmentFilter) return false;
@@ -1139,10 +1189,18 @@ select.form-control { cursor: pointer; }
        and needs-improvement. Approve keeps whatever comment was typed
        (comment is optional for approve, required for improvement), and a
        pending card cannot be sent before its audio was played. */
+    function feedbackExtension(mime) {
+        mime = String(mime || '').toLowerCase();
+        if (mime.indexOf('ogg') !== -1) return '.ogg';
+        if (mime.indexOf('mp4') !== -1 || mime.indexOf('m4a') !== -1) return '.m4a';
+        if (mime.indexOf('mpeg') !== -1) return '.mp3';
+        if (mime.indexOf('wav') !== -1) return '.wav';
+        if (mime.indexOf('aac') !== -1) return '.aac';
+        return '.webm';
+    }
+
     async function sendReview(id, status, card, button) {
         if (!card) return;
-        var textarea = card.querySelector('[data-feedback]');
-        var feedback = textarea ? textarea.value.trim() : '';
         var locked = card.getAttribute('data-rec-locked') === '1';
         if (locked && !recListened.has(id)) {
             R.toast('Please press play and listen to the recording first.', 'error');
@@ -1150,13 +1208,16 @@ select.form-control { cursor: pointer; }
             if (playBtn) playBtn.focus();
             return;
         }
-        if (status === 'needs_improvement' && !feedback) {
-            R.toast('Write feedback explaining what the student should improve.', 'error');
-            if (textarea) { textarea.classList.add('has-error'); textarea.focus(); }
-            var err = card.querySelector('[data-rec-error]');
+        var recorder = card.__recorder;
+        var recording = recorder && recorder.getRecording ? recorder.getRecording() : null;
+        var err = card.querySelector('[data-rec-error]');
+        if (status === 'needs_improvement' && !recording) {
+            R.toast('Record a voice note explaining what the student should improve.', 'error');
             if (err) err.classList.add('show');
+            if (recorder && recorder.open) recorder.open();
             return;
         }
+        if (err) err.classList.remove('show');
         var buttons = card.querySelectorAll('[data-approve-review], [data-improve-review]');
         var originals = new Map();
         buttons.forEach(function (b) {
@@ -1166,9 +1227,15 @@ select.form-control { cursor: pointer; }
         });
         if (button) button.innerHTML = '<span class="spinner"></span> Sending&hellip;';
         try {
+            var form = new FormData();
+            form.append('status', status);
+            if (recording) {
+                form.append('durationSeconds', String(recording.duration));
+                form.append('audio', recording.blob, 'feedback' + feedbackExtension(recording.mime));
+            }
             await R.api('/submissions/' + id + '/review', {
                 method: 'PATCH',
-                body: { status: status, feedback: feedback }
+                body: form
             });
             recListened.add(id);
             R.toast('Review sent to the student.', 'success');

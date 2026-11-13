@@ -1824,6 +1824,7 @@ body.loading { overflow: hidden; }
 <script src="assets/js/media.js"></script>
 <script src="assets/js/translations.js"></script>
 <script src="assets/js/i18n.js"></script>
+<script src="assets/js/search.js"></script>
 </head>
 <body class="loading">
 <a class="skip-link" href="#featured">Skip to content</a>
@@ -1894,6 +1895,7 @@ body.loading { overflow: hidden; }
         </nav>
     </div>
     <div class="header-right">
+        <div data-nav-search data-placeholder="Search lessons"></div>
         <div class="lang-select" id="langToggle" title="Switch language">
             <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-label="Choose language">
                 <i class="fas fa-globe-africa globe-icon"></i>
@@ -2315,8 +2317,6 @@ function renderFeatured(lessons) {
             <div class="featured-shade"></div>
             <div class="featured-inner">
                 <div class="featured-info">
-                    <div class="f-arabic">Ø¨ÙØ³Ù’Ù…Ù Ø§Ù„Ù„Ù‡Ù Ø§Ù„Ø±ÙŽÙ‘Ø­Ù’Ù…Ù°Ù†Ù Ø§Ù„Ø±ÙŽÙ‘Ø­ÙÙŠÙ’Ù…Ù</div>
-                    <div class="f-badge"><i class="fas fa-book-quran"></i> <span data-lang="en">Modern Skills Academy</span><span data-lang="rw">Modern Skills Academy</span><span data-lang="fr">Modern Skills Academy</span><span data-lang="sw">Modern Skills Academy</span><span data-lang="ar">Ø£ÙƒØ§Ø¯ÙŠÙ…ÙŠØ© Ø§Ù„Ù…Ù‡Ø§Ø±Ø§Øª Ø§Ù„Ø­Ø¯ÙŠØ«Ø©</span></div>
                     <h1><span data-lang="en">Learn the Qur'an Online</span><span data-lang="rw">Wige Qur'an Kuri Interineti</span><span data-lang="fr">Apprenez le Coran en ligne</span><span data-lang="sw">Jifunze Qur'an Mtandaoni</span><span data-lang="ar">ØªØ¹Ù„Ù‘Ù… Ø§Ù„Ù‚Ø±Ø¢Ù† Ø£ÙˆÙ†Ù„Ø§ÙŠÙ†</span></h1>
                     <p><span data-lang="en">Expert instructors are preparing structured Tajweed, Tafsir, Hifz and Arabic lessons for you. New lessons will appear here very soon.</span><span data-lang="rw">Abigisha babahanga barimo bitegura amasomo atunganyijwe ya Tajweed, Tafsir, Hifz n'Icyarabu kugira ngo uwige. Amasomo mashya azagaragara hano vuba.</span><span data-lang="fr">Des instructeurs experts prÃ©parent des leÃ§ons structurÃ©es de Tajwid, Tafsir, Hifz et d'arabe pour vous. De nouvelles leÃ§ons apparaÃ®tront ici trÃ¨s bientÃ´t.</span><span data-lang="sw">Walimu wataalamu wanatayarisha masomo yaliyopangwa ya Tajweed, Tafsir, Hifz na Kiarabu kwa ajili yako. Masomo mapya yataonekana hapa hivi karibuni.</span><span data-lang="ar">ÙŠØ¹Ù…Ù„ Ù…Ø¹Ù„Ù…ÙˆÙ† Ø®Ø¨Ø±Ø§Ø¡ Ø¹Ù„Ù‰ Ø¥Ø¹Ø¯Ø§Ø¯ Ø¯Ø±ÙˆØ³ Ù…Ù†Ø¸Ù…Ø© ÙÙŠ Ø§Ù„ØªØ¬ÙˆÙŠØ¯ ÙˆØ§Ù„ØªÙØ³ÙŠØ± ÙˆØ§Ù„Ø­ÙØ¸ ÙˆØ§Ù„Ø¹Ø±Ø¨ÙŠØ© Ù„Ùƒ. Ø³ØªØ¸Ù‡Ø± Ø¯Ø±ÙˆØ³ Ø¬Ø¯ÙŠØ¯Ø© Ù‡Ù†Ø§ Ù‚Ø±ÙŠØ¨Ù‹Ø§ Ø¬Ø¯Ù‹Ø§.</span></p>
                     <div class="f-meta">
@@ -2344,8 +2344,6 @@ function renderFeatured(lessons) {
             <div class="featured-shade"></div>
             <div class="featured-inner">
                 <div class="featured-info">
-                    <div class="f-arabic">Ø¨ÙØ³Ù’Ù…Ù Ø§Ù„Ù„Ù‡Ù Ø§Ù„Ø±ÙŽÙ‘Ø­Ù’Ù…Ù°Ù†Ù Ø§Ù„Ø±ÙŽÙ‘Ø­ÙÙŠÙ’Ù…Ù</div>
-                    <div class="f-badge"><span data-lang="en">Featured</span><span data-lang="rw">Bishyizwe Imbere</span><span data-lang="fr">En vedette</span><span data-lang="sw">Yaliyoangaziwa</span><span data-lang="ar">Ù…Ù…ÙŠØ²</span><span class="sep">â€¢</span>${esc(l.category_name)}</div>
                     <h1>${esc(l.title)}</h1>
                     <p>${l.description ? esc(l.description) : '<span data-lang="en">Learn with clear, step-by-step guidance from our certified teachers.</span><span data-lang="rw">Iga ukurikije amabwiriza asobanutse kuva ku bigisha bacu bemejwe.</span><span data-lang="fr">Apprenez avec des conseils clairs, Ã©tape par Ã©tape, de nos professeurs certifiÃ©s.</span><span data-lang="sw">Jifunze kwa mwongozo ulio wazi, hatua kwa hatua kutoka kwa walimu wetu waliothibitishwa.</span><span data-lang="ar">ØªØ¹Ù„Ù‘Ù… Ø¨Ø¥Ø±Ø´Ø§Ø¯Ø§Øª ÙˆØ§Ø¶Ø­Ø© Ø®Ø·ÙˆØ© Ø¨Ø®Ø·ÙˆØ© Ù…Ù† Ù…Ø¹Ù„Ù…ÙŠÙ†Ø§ Ø§Ù„Ù…Ø¹ØªÙ…Ø¯ÙŠÙ†.</span>'}</p>
                     ${l.instructor_name ? `<div class="f-instructor"><span class="f-instructor-avatar">${esc(initials(l.instructor_name))}</span><span><em data-lang="en">Taught by</em><em data-lang="rw">Bigishawe na</em><em data-lang="fr">EnseignÃ© par</em><em data-lang="sw">Inafundishwa na</em><em data-lang="ar">ÙŠÙ‚Ø¯Ù‘Ù…Ù‡</em> <strong>${esc(l.instructor_name)}</strong></span></div>` : ''}

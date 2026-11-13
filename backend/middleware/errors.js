@@ -52,7 +52,7 @@ function fail(res, err, fallbackMessage) {
         // A column the code expects is absent — almost always schema drift.
         console.error('[schema] undefined column:', message);
         return res.status(500).json({
-            error: 'Database schema is out of date. Run supabase/Schrema.sql in the Supabase SQL Editor to update it.',
+            error: 'Database schema is out of date. Run supabase/recitation_voice_feedback.sql (or the full supabase/Schrema.sql) in the Supabase SQL Editor, then try again.',
             code
         });
     }

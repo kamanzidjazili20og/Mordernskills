@@ -320,6 +320,69 @@ router.get('/admin', authenticate, requireAdmin, async (req, res) => {
     }
 });
 
+// ------------------------------------------------------------
+// Likes
+// ------------------------------------------------------------
+// The public detail route reports the total so guests see a count; the
+// toggle endpoints require a signed-in user and report the caller's state.
+router.get('/:id/like', authenticate, async (req, res) => {
+    try {
+        const id = parseInt(req.params.id, 10);
+        if (!Number.isInteger(id)) return res.status(400).json({ error: 'Invalid lesson id.' });
+
+        const likes = await countRows('lesson_likes', 'lesson_id', id);
+        const { data, error } = await supabase
+            .from('lesson_likes')
+            .select('id')
+            .eq('lesson_id', id)
+            .eq('user_id', req.user.id)
+            .maybeSingle();
+        if (error) throw error;
+
+        res.setHeader('Cache-Control', 'private, no-store');
+        res.json({ liked: Boolean(data), likes });
+    } catch (err) {
+        console.error('Get like error:', err.message || err);
+        return fail(res, err, 'Could not load likes');
+    }
+});
+
+router.post('/:id/like', authenticate, async (req, res) => {
+    try {
+        const id = parseInt(req.params.id, 10);
+        if (!Number.isInteger(id)) return res.status(400).json({ error: 'Invalid lesson id.' });
+
+        const { data: existing, error: findError } = await supabase
+            .from('lesson_likes')
+            .select('id')
+            .eq('lesson_id', id)
+            .eq('user_id', req.user.id)
+            .maybeSingle();
+        if (findError) throw findError;
+
+        let liked;
+        if (existing) {
+            const { error } = await supabase.from('lesson_likes').delete().eq('id', existing.id);
+            if (error) throw error;
+            liked = false;
+        } else {
+            const { error } = await supabase
+                .from('lesson_likes')
+                .insert({ lesson_id: id, user_id: req.user.id });
+            // A double-tap can race the unique (lesson_id, user_id) constraint;
+            // treat "already liked" as success rather than an error.
+            if (error && error.code !== '23505') throw error;
+            liked = true;
+        }
+
+        const likes = await countRows('lesson_likes', 'lesson_id', id);
+        res.json({ liked, likes });
+    } catch (err) {
+        console.error('Toggle like error:', err.message || err);
+        return fail(res, err, 'Could not update the like');
+    }
+});
+
 router.get('/:slug', async (req, res) => {
     try {
         const key = req.params.slug;
@@ -351,6 +414,15 @@ router.get('/:slug', async (req, res) => {
         }
 
         const lesson = await attachVideoInfo([rows]).then(list => list[0]);
+
+        // Likes are decoration on the page: if the migration has not run yet
+        // (missing table) fall back to 0 rather than failing the whole lesson.
+        try {
+            lesson.likes = await countRows('lesson_likes', 'lesson_id', rows.id);
+        } catch (likeErr) {
+            lesson.likes = 0;
+        }
+
         res.setHeader('Cache-Control', 'public, max-age=30, stale-while-revalidate=120');
         res.json({ lesson, tags });
     } catch (err) {
