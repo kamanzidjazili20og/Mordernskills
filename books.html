@@ -409,6 +409,7 @@ img { display: block; }
 </style>
 <link rel="stylesheet" href="assets/css/tv.css">
  <link rel="stylesheet" href="assets/css/responsive.css">
+ <link rel="stylesheet" href="assets/css/polish.css">
 <script src="config.js"></script>
 <script src="assets/js/media.js"></script>
 <script src="assets/js/translations.js"></script>
@@ -504,12 +505,6 @@ function setLang(lang) {
     });
     var langCurrent = document.getElementById('langCurrent');
     if (langCurrent) langCurrent.textContent = (currentLang || 'en').toUpperCase();
-    var langSelect = document.getElementById('langSelect');
-    if (langSelect) {
-        langSelect.classList.remove('open');
-        var lt = document.getElementById('langTrigger');
-        if (lt) lt.setAttribute('aria-expanded', 'false');
-    }
     localStorage.setItem(MS_I18N.STORAGE_KEY, currentLang);
     localStorage.removeItem('noorAdminLang');
     localStorage.removeItem('noorLang');
@@ -521,13 +516,19 @@ function setLang(lang) {
     paintCovers();
     paintLangs();
 }
+function closeLangMenu() {
+    var langSelect = document.getElementById('langSelect');
+    var lt = document.getElementById('langTrigger');
+    if (langSelect) langSelect.classList.remove('open');
+    if (lt) lt.setAttribute('aria-expanded', 'false');
+}
 document.querySelectorAll('.lang-option[data-lang-code]').forEach(function (opt) {
-    opt.addEventListener('click', function () { setLang(opt.dataset.langCode); });
-    opt.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(opt.dataset.langCode); } });
+    opt.addEventListener('click', function () { setLang(opt.dataset.langCode); closeLangMenu(); });
+    opt.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(opt.dataset.langCode); closeLangMenu(); } });
 });
 document.addEventListener('ms:langchange', function (e) {
     var lang = e.detail && e.detail.lang;
-    if (lang && lang !== currentLang) setLang(lang);
+    if (lang && lang !== currentLang) { setLang(lang); closeLangMenu(); }
 });
 
 // ===== LANGUAGE DROPDOWN (globe, shown on small screens) =====
@@ -539,12 +540,21 @@ document.addEventListener('ms:langchange', function (e) {
         e.stopPropagation();
         var open = sel.classList.toggle('open');
         trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) {
+            var nav = document.querySelector('.nav-links');
+            var navToggle = document.getElementById('menuToggle');
+            if (nav) nav.classList.remove('open');
+            if (navToggle) {
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.setAttribute('aria-label', 'Menu');
+            }
+        }
     });
     document.addEventListener('click', function (e) {
-        if (!sel.contains(e.target)) { sel.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
+        if (!sel.contains(e.target)) closeLangMenu();
     });
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') { sel.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
+        if (e.key === 'Escape') closeLangMenu();
     });
 })();
 
@@ -553,15 +563,31 @@ document.addEventListener('ms:langchange', function (e) {
     var toggle = document.getElementById('menuToggle');
     var nav = document.querySelector('.nav-links');
     if (!toggle || !nav) return;
-    toggle.addEventListener('click', function () {
-        var open = nav.classList.toggle('open');
+    function setMenu(open) {
+        nav.classList.toggle('open', open);
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+        if (open) {
+            var langSelect = document.querySelector('.lang-select');
+            if (langSelect) {
+                langSelect.classList.remove('open');
+                var langTriggerEl = langSelect.querySelector('.lang-trigger');
+                if (langTriggerEl) langTriggerEl.setAttribute('aria-expanded', 'false');
+            }
+        }
+    }
+    toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setMenu(!nav.classList.contains('open'));
     });
     nav.querySelectorAll('a').forEach(function (a) {
-        a.addEventListener('click', function () {
-            nav.classList.remove('open');
-            toggle.setAttribute('aria-expanded', 'false');
-        });
+        a.addEventListener('click', function () { setMenu(false); });
+    });
+    document.addEventListener('click', function (e) {
+        if (!nav.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setMenu(false);
     });
 })();
 

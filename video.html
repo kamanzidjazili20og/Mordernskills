@@ -1268,6 +1268,7 @@ body::before {
 </style>
 <link rel="stylesheet" href="assets/css/tv.css">
  <link rel="stylesheet" href="assets/css/responsive.css">
+ <link rel="stylesheet" href="assets/css/polish.css">
 <script src="config.js"></script>
 <script src="assets/js/media.js"></script>
 <script src="assets/js/translations.js"></script>
@@ -1941,10 +1942,6 @@ document.body.classList.add('lang-' + currentLang);
     });
     var langCurrentEl = document.getElementById('langCurrent');
     if (langCurrentEl) langCurrentEl.textContent = (currentLang || 'en').toUpperCase();
-    var langSelectEl = document.getElementById('langSelect');
-    if (langSelectEl) langSelectEl.classList.remove('open');
-    var langTriggerEl = document.getElementById('langTrigger');
-    if (langTriggerEl) langTriggerEl.setAttribute('aria-expanded', 'false');
     // Shared public-site key so every public page stays in sync (the admin
     // panel uses its own separate key and is never affected by this).
     localStorage.setItem(MS_I18N.STORAGE_KEY, currentLang);
@@ -1969,10 +1966,16 @@ document.body.classList.add('lang-' + currentLang);
     if (typeof localizeLogoutBtn === 'function') localizeLogoutBtn();
 }
 function applyLang() { setLang(currentLang); }
+function closeLangMenu() {
+    var langSelectEl = document.getElementById('langSelect');
+    var langTriggerEl = document.getElementById('langTrigger');
+    if (langSelectEl) langSelectEl.classList.remove('open');
+    if (langTriggerEl) langTriggerEl.setAttribute('aria-expanded', 'false');
+}
 document.querySelectorAll('.lang-option[data-lang-code]').forEach(function(opt) {
-    opt.addEventListener('click', function() { setLang(opt.dataset.langCode); });
+    opt.addEventListener('click', function() { setLang(opt.dataset.langCode); closeLangMenu(); });
     opt.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(opt.dataset.langCode); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(opt.dataset.langCode); closeLangMenu(); }
     });
 });
 applyLang();
@@ -1981,7 +1984,7 @@ applyLang();
 // `storage` listener and re-broadcasts it as ms:langchange).
 document.addEventListener('ms:langchange', function (e) {
     var lang = e.detail && e.detail.lang;
-    if (lang && lang !== currentLang) setLang(lang);
+    if (lang && lang !== currentLang) { setLang(lang); closeLangMenu(); }
 });
 
 /* Mobile language dropdown â€” mirrors the homepage behaviour: toggle on the
@@ -1994,18 +1997,21 @@ document.addEventListener('ms:langchange', function (e) {
         e.stopPropagation();
         var open = select.classList.toggle('open');
         trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) {
+            var nav = document.querySelector('.nav-links');
+            var navToggle = document.getElementById('menuToggle');
+            if (nav) nav.classList.remove('open');
+            if (navToggle) {
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.setAttribute('aria-label', 'Menu');
+            }
+        }
     });
     document.addEventListener('click', function (e) {
-        if (!select.contains(e.target)) {
-            select.classList.remove('open');
-            trigger.setAttribute('aria-expanded', 'false');
-        }
+        if (!select.contains(e.target)) closeLangMenu();
     });
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-            select.classList.remove('open');
-            trigger.setAttribute('aria-expanded', 'false');
-        }
+        if (e.key === 'Escape') closeLangMenu();
     });
 })();
 
@@ -2014,22 +2020,31 @@ document.addEventListener('ms:langchange', function (e) {
     var toggle = document.getElementById('menuToggle');
     var nav = document.querySelector('.nav-links');
     if (!toggle || !nav) return;
+    function setMenu(open) {
+        nav.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+        if (open) {
+            var langSelect = document.querySelector('.lang-select');
+            if (langSelect) {
+                langSelect.classList.remove('open');
+                var langTriggerEl = langSelect.querySelector('.lang-trigger');
+                if (langTriggerEl) langTriggerEl.setAttribute('aria-expanded', 'false');
+            }
+        }
+    }
     toggle.addEventListener('click', function (e) {
         e.stopPropagation();
-        var open = nav.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setMenu(!nav.classList.contains('open'));
     });
     nav.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function () {
-            nav.classList.remove('open');
-            toggle.setAttribute('aria-expanded', 'false');
-        });
+        link.addEventListener('click', function () { setMenu(false); });
     });
     document.addEventListener('click', function (e) {
-        if (!nav.contains(e.target) && !toggle.contains(e.target)) {
-            nav.classList.remove('open');
-            toggle.setAttribute('aria-expanded', 'false');
-        }
+        if (!nav.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setMenu(false);
     });
 })();
 

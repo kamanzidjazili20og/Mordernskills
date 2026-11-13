@@ -1820,6 +1820,7 @@ body.loading { overflow: hidden; }
 </style>
 <link rel="stylesheet" href="assets/css/tv.css">
  <link rel="stylesheet" href="assets/css/responsive.css">
+ <link rel="stylesheet" href="assets/css/polish.css">
 <script src="config.js"></script>
 <script src="assets/js/media.js"></script>
 <script src="assets/js/translations.js"></script>
@@ -2886,29 +2887,32 @@ function setLang(lang) {
     document.querySelectorAll('[data-lang]').forEach(el => {
         el.style.display = el.dataset.lang === currentLang ? '' : 'none';
     });
-    langToggle.classList.remove('open');
+}
+function closeLangMenu() {
+    if (langToggle) langToggle.classList.remove('open');
     if (langTrigger) langTrigger.setAttribute('aria-expanded', 'false');
 }
 // Follow the language chosen on any other page or tab. assets/js/i18n.js owns the
 // `storage` listener and re-broadcasts it as ms:langchange, so pages stay in step.
 document.addEventListener('ms:langchange', function (e) {
     var lang = e.detail && e.detail.lang;
-    if (lang && lang !== currentLang) setLang(lang);
+    if (lang && lang !== currentLang) { setLang(lang); closeLangMenu(); }
 });
-langOptions.forEach(opt => opt.addEventListener('click', () => setLang(opt.dataset.langCode)));
-langOptions.forEach(opt => opt.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(opt.dataset.langCode); } }));
+langOptions.forEach(opt => opt.addEventListener('click', () => { setLang(opt.dataset.langCode); closeLangMenu(); }));
+langOptions.forEach(opt => opt.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(opt.dataset.langCode); closeLangMenu(); } }));
 if (langTrigger) {
     langTrigger.addEventListener('click', (e) => {
         e.stopPropagation();
         const open = langToggle.classList.toggle('open');
         langTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) setMobileMenu(false);
     });
 }
 document.addEventListener('click', (e) => {
-    if (langToggle && !langToggle.contains(e.target)) { langToggle.classList.remove('open'); if (langTrigger) langTrigger.setAttribute('aria-expanded', 'false'); }
+    if (langToggle && !langToggle.contains(e.target)) closeLangMenu();
 });
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && langToggle) { langToggle.classList.remove('open'); if (langTrigger) langTrigger.setAttribute('aria-expanded', 'false'); }
+    if (e.key === 'Escape' && langToggle) closeLangMenu();
 });
 setLang(currentLang);
 
@@ -2931,16 +2935,33 @@ verifyAuthSession();
 
 // ===== MOBILE MENU =====
 const menuToggle = document.getElementById('menuToggle');
-if (menuToggle) {
-    menuToggle.addEventListener('click', () => {
-        const nav = document.querySelector('.nav-links');
-        const open = nav.classList.toggle('open');
-        menuToggle.setAttribute('aria-expanded', open);
+const mobileNav = document.querySelector('.nav-links');
+function setMobileMenu(open) {
+    if (!menuToggle || !mobileNav) return;
+    mobileNav.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+    if (open) {
+        const langSelect = document.querySelector('.lang-select');
+        if (langSelect) {
+            langSelect.classList.remove('open');
+            const langTriggerEl = langSelect.querySelector('.lang-trigger');
+            if (langTriggerEl) langTriggerEl.setAttribute('aria-expanded', 'false');
+        }
+    }
+}
+if (menuToggle && mobileNav) {
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setMobileMenu(!mobileNav.classList.contains('open'));
     });
-    document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => {
-        document.querySelector('.nav-links').classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-    }));
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMobileMenu(false)));
+    document.addEventListener('click', (e) => {
+        if (!mobileNav.contains(e.target) && !menuToggle.contains(e.target)) setMobileMenu(false);
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setMobileMenu(false);
+    });
 }
 </script>
 </body>
