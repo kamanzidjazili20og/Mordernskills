@@ -503,3 +503,582 @@ iframe {
         min-height: 40px;
     }
 }
+
+/* ==========================================================================
+   Navbar + header polish (all pages / all screen sizes)
+   ========================================================================== */
+.header,
+.rec-header-inner,
+.topbar {
+    gap: 12px;
+}
+.header-left,
+.header-right,
+.rec-user,
+.topbar-left,
+.topbar-right {
+    min-width: 0;
+}
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.header-right {
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.header-right #authButtons {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    flex: 0 0 auto;
+}
+.logo,
+.rec-brand {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    white-space: nowrap;
+}
+.logo span,
+.logo .logo-text,
+.rec-brand span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.1;
+}
+.logo .logo-img,
+.rec-brand img {
+    flex: 0 0 auto;
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    min-width: 0;
+}
+.nav-links a {
+    white-space: nowrap;
+}
+.nav-search {
+    flex: 0 1 300px;
+    width: min(300px, 28vw);
+    min-width: 150px;
+    max-width: 340px;
+}
+.lang-select,
+.menu-toggle,
+.btn-admin,
+.btn-auth {
+    flex: 0 0 auto;
+}
+
+/* Large/medium desktops: keep header in one clean row */
+@media (max-width: 1280px) {
+    .header-left { gap: 14px; }
+    .nav-search { width: min(240px, 24vw); min-width: 140px; }
+}
+@media (max-width: 1100px) {
+    .header {
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    .header-left {
+        flex: 1 1 100%;
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+    }
+    .header-right {
+        flex: 1 1 100%;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+    .header-right .nav-search {
+        flex: 1 1 260px;
+        width: auto;
+        max-width: 520px;
+        min-width: 180px;
+        order: 0;
+    }
+}
+@media (max-width: 768px) {
+    .header {
+        padding: 10px 14px;
+        gap: 10px;
+    }
+    .header-left {
+        flex: 1 1 auto;
+        width: auto;
+        gap: 10px;
+    }
+    .logo {
+        font-size: 16px;
+        gap: 8px;
+    }
+    .logo .logo-img,
+    .logo i {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+    }
+    .header-right {
+        justify-content: flex-end;
+        gap: 8px;
+    }
+    .header-right .nav-search {
+        flex: 1 1 100%;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        order: 10;
+        margin-top: 2px;
+    }
+    .header-right .nav-search .nav-search-input {
+        height: 38px;
+    }
+    .header-right #authButtons {
+        margin-left: auto;
+        gap: 6px;
+    }
+    .header-right .btn-admin,
+    .header-right .btn-auth {
+        font-size: 12px;
+        padding: 7px 10px;
+    }
+    .nav-links {
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+@media (max-width: 480px) {
+    .header {
+        padding: 9px 12px;
+        gap: 8px;
+    }
+    .logo {
+        font-size: 15px;
+        gap: 7px;
+        max-width: 58vw;
+    }
+    .logo .logo-img {
+        width: 28px;
+        height: 28px;
+        border-radius: 9px;
+    }
+    .logo span,
+    .logo .logo-text {
+        max-width: 40vw;
+    }
+    .header-right {
+        gap: 6px;
+    }
+    .header-right #authButtons {
+        gap: 5px;
+    }
+    .header-right .btn-admin,
+    .header-right .btn-auth {
+        padding: 7px 9px;
+    }
+    .lang-trigger {
+        padding: 6px 9px;
+    }
+}
+@media (max-width: 360px) {
+    .logo {
+        font-size: 14px;
+        gap: 6px;
+        max-width: 52vw;
+    }
+    .logo .logo-img {
+        width: 25px;
+        height: 25px;
+    }
+    .logo span,
+    .logo .logo-text {
+        max-width: 34vw;
+    }
+    .menu-toggle {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* Recitation / teacher compact header */
+@media (max-width: 900px) {
+    .rec-header-inner {
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    .rec-brand {
+        flex: 1 1 auto;
+    }
+    .rec-user {
+        margin-inline-start: auto;
+    }
+    .rec-nav {
+        order: 3;
+        flex: 1 1 100%;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 2px;
+        scrollbar-width: none;
+    }
+    .rec-nav::-webkit-scrollbar { display: none; }
+    .rec-nav a {
+        flex: 0 0 auto;
+    }
+}
+@media (max-width: 480px) {
+    .rec-header-inner {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+    .rec-nav a {
+        padding: 7px 10px;
+        font-size: 11.5px;
+    }
+}
+
+/* ==========================================================================
+   Video page
+   ========================================================================== */
+@media (max-width: 900px) {
+    .player-wrapper {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 18px;
+    }
+    .player-sidebar {
+        position: static;
+        max-height: none;
+    }
+    .video-info-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .video-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .instructor-bar {
+        flex-wrap: wrap;
+    }
+    .instructor-price {
+        margin-inline-start: auto;
+    }
+}
+@media (max-width: 640px) {
+    .player-wrapper {
+        padding: 12px;
+    }
+    .video-info-section {
+        padding: 16px;
+    }
+    .video-stats-row {
+        flex-wrap: wrap;
+        gap: 10px 14px;
+    }
+    .btn-action {
+        flex: 1 1 140px;
+        justify-content: center;
+    }
+    .related-card {
+        gap: 10px;
+    }
+    .related-thumb {
+        width: 120px;
+        min-width: 120px;
+    }
+}
+@media (max-width: 420px) {
+    .related-card {
+        flex-direction: column;
+    }
+    .related-thumb {
+        width: 100%;
+        min-width: 0;
+    }
+    .player-center span#playerHint {
+        font-size: 12px;
+        text-align: center;
+        padding: 0 10px;
+    }
+}
+
+/* ==========================================================================
+   Books page
+   ========================================================================== */
+@media (max-width: 900px) {
+    .hero {
+        padding: 72px 16px 8px;
+    }
+    .hero h1 {
+        font-size: 34px;
+    }
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 18px 14px;
+    }
+}
+@media (max-width: 560px) {
+    .hero h1 {
+        font-size: 28px;
+    }
+    .hero p {
+        font-size: 14px;
+    }
+    .books-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 10px;
+    }
+    .book-body h3 {
+        font-size: 14px;
+    }
+    .book-desc {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+    .reader-overlay {
+        padding: 12px;
+    }
+    .reader-head {
+        padding: 14px 16px;
+    }
+    .reader-head h2 {
+        font-size: 18px;
+    }
+    .reader-content {
+        padding: 20px 16px 36px;
+        font-size: 16px;
+    }
+    .reader-content.rtl {
+        font-size: 17px;
+    }
+}
+@media (max-width: 360px) {
+    .books-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   Recitation studio + teacher dashboard content
+   ========================================================================== */
+@media (max-width: 900px) {
+    .rec-hero {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .rec-layout {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+    .rec-side-col {
+        position: static;
+        top: auto;
+    }
+    .rec-study-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .rec-study-tools {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+}
+@media (max-width: 640px) {
+    .rec-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .rec-stat strong {
+        font-size: 22px;
+    }
+    .rec-section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .rec-lesson-card {
+        flex-wrap: wrap;
+    }
+    .rec-lesson-thumb {
+        width: 96px;
+        flex-basis: 96px;
+    }
+    .rec-lesson-card .rec-badge {
+        margin-inline-start: auto;
+    }
+    .rec-steps {
+        flex-wrap: wrap;
+    }
+    .teacher-grid,
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .sub-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    .sub-meta {
+        flex-wrap: wrap;
+    }
+}
+@media (max-width: 420px) {
+    .rec-lesson-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .rec-lesson-thumb {
+        width: 100%;
+        flex-basis: auto;
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+    .rec-timer {
+        font-size: 30px;
+    }
+}
+
+/* ==========================================================================
+   Auth pages (login / register)
+   ========================================================================== */
+@media (max-width: 980px) {
+    .auth-shell {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+    }
+    .auth-hero {
+        display: none;
+    }
+    .auth-main {
+        padding: 36px 28px 32px;
+    }
+}
+@media (max-width: 640px) {
+    body {
+        padding: 76px 14px 40px;
+    }
+    .auth-main {
+        padding: 28px 20px 24px;
+        border-radius: 22px;
+    }
+    .auth-top h1 {
+        font-size: 28px;
+    }
+    .reg-grid {
+        grid-template-columns: 1fr;
+    }
+    .reg-grid .span-2 {
+        grid-column: span 1;
+    }
+    .country-phone {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .country-select {
+        width: 100%;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+        padding: 12px 14px;
+    }
+    .auth-divider {
+        margin: 18px 0 14px;
+    }
+}
+@media (max-width: 420px) {
+    .back-home,
+    .auth-lang-toggle {
+        position: static;
+        margin: 0 auto 10px;
+        width: fit-content;
+    }
+    body {
+        padding-top: 20px;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+    }
+    .auth-shell {
+        margin-top: 4px;
+    }
+    .auth-main {
+        padding: 22px 16px 20px;
+    }
+    .submit-btn {
+        width: 100%;
+    }
+}
+
+/* ==========================================================================
+   Admin / dashboard panels
+   ========================================================================== */
+@media (max-width: 900px) {
+    .topbar {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .topbar-left {
+        flex: 1 1 auto;
+    }
+    .topbar-right {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+    .page-title {
+        font-size: 17px;
+    }
+}
+@media (max-width: 640px) {
+    .content {
+        padding: 14px;
+    }
+    .stats-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    .panel {
+        border-radius: 14px;
+    }
+    .table-btn {
+        min-width: 34px;
+    }
+}
+@media (max-width: 420px) {
+    .stats-row {
+        grid-template-columns: 1fr;
+    }
+    .topbar-right .admin-profile span {
+        display: none;
+    }
+}
+
+/* Ensure TV large-screen rules (tv.css) can still override when applicable */
+@media (min-width: 1600px) {
+    .nav-search {
+        width: min(360px, 22vw);
+    }
+}
