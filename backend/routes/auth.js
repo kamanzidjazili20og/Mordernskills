@@ -20,7 +20,13 @@ router.post('/register', authRateLimit, uploadAvatar.single('avatar'), [
     body('email').isEmail().normalizeEmail().withMessage('Valid email required'),
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
     body('fullName').trim().notEmpty().withMessage('Full name is required'),
-    body('phone').optional({ checkFalsy: true }).trim().isLength({ min: 5 }).withMessage('Enter a valid phone number')
+    body('phone')
+        .trim()
+        // The client sends country code + national number (e.g. +250788123456).
+        // Strip spaces, dashes, dots and brackets so pasted numbers still pass.
+        .customSanitizer((value) => String(value || '').replace(/[\s\-.()]/g, ''))
+        .notEmpty().withMessage('Enter your phone number')
+        .matches(/^\+?[0-9]{7,15}$/).withMessage('Enter a valid phone number')
 ], async (req, res) => {
     try {
         const errors = validationResult(req);

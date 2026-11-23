@@ -1,14 +1,14 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#06130e">
-<meta name="description" content="Modern Skills â€” Quran and Islamic books written for our students. Read online.">
-<title>Books â€” Modern Skills</title>
+<meta name="description" content="Modern Skills — Quran and Islamic books written for our students. Read online.">
+<title>Books — Modern Skills</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Modern Skills">
-<meta property="og:title" content="Books â€” Modern Skills">
+<meta property="og:title" content="Books — Modern Skills">
 <meta property="og:description" content="Read Quran and Islamic books selected by our instructors.">
 <meta property="og:image" content="Images/mordern-skills-logo.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -150,11 +150,20 @@ img { display: block; }
 .menu-toggle:hover { color: var(--text); background: rgba(255,255,255,0.08); }
 
 /* ===== HERO ===== */
-.hero { position: relative; text-align: center; padding: 84px 16px 8px; z-index: 1; }
+.hero { position: relative; text-align: center; padding: 96px 16px 18px; z-index: 1; isolation: isolate; }
 .hero::before {
     content: ''; position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
     width: min(760px, 92vw); height: 340px; pointer-events: none;
     background: radial-gradient(ellipse at center, rgba(212,168,83,0.12) 0%, transparent 65%);
+}
+.hero::after {
+    content: ''; position: absolute; inset: -70px -20px 0; z-index: -1; pointer-events: none;
+    background:
+        linear-gradient(180deg, rgba(3,14,10,0.16) 0%, rgba(3,14,10,0.76) 72%, rgba(3,14,10,0.96) 100%),
+        url("Images/backgrounds/hero-poster.jpg") center 32% / cover no-repeat;
+    opacity: 0.46;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
 }
 .hero .eyebrow {
     position: relative; display: inline-flex; align-items: center; gap: 8px;
@@ -177,10 +186,22 @@ img { display: block; }
 .hero p { position: relative; font-size: 14.5px; color: var(--text-sec); max-width: 640px; margin: 0 auto; line-height: 1.75; }
 
 /* ===== BOOK GRID ===== */
-.books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(225px, 1fr)); gap: 26px 22px; margin: 40px 0 80px; }
+.books-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(225px, 1fr)); gap: 26px 22px;
+    margin: 40px 0 80px; position: relative; isolation: isolate;
+}
+.books-grid::before {
+    content: ''; position: absolute; inset: -34px -28px 28px; z-index: -1; pointer-events: none;
+    border-radius: 28px;
+    border: 1px solid rgba(212,168,83,0.12);
+    background:
+        linear-gradient(120deg, rgba(4,18,13,0.82) 0%, rgba(4,18,13,0.58) 55%, rgba(4,18,13,0.3) 100%),
+        url("Images/backgrounds/section-about.webp") center 32% / cover no-repeat;
+    opacity: 0.28;
+}
 .book-card {
     cursor: pointer; display: flex; flex-direction: column; position: relative;
-    border-radius: 18px; overflow: hidden;
+    border-radius: 18px; overflow: hidden; isolation: isolate;
     background:
         linear-gradient(165deg, rgba(12,30,22,0.85), rgba(5,17,12,0.92)) padding-box,
         linear-gradient(160deg, rgba(212,168,83,0.24), rgba(212,168,83,0.05) 45%, rgba(52,211,153,0.14) 100%) border-box;
@@ -201,11 +222,27 @@ img { display: block; }
 .book-card:hover { transform: translateY(-7px); box-shadow: 0 28px 56px -22px rgba(0,0,0,0.75), 0 0 44px -22px rgba(212,168,83,0.7); }
 .book-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 @keyframes cardIn { from { opacity: 0; transform: translateY(22px) scale(.97); } to { opacity: 1; transform: none; } }
-.book-cover { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: linear-gradient(150deg, #0a2c1e, #061a12); display: flex; align-items: center; justify-content: center; }
+.book-card::before {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: linear-gradient(115deg, rgba(212,168,83,0.08) 0%, transparent 42%, rgba(52,211,153,0.06) 100%);
+}
+.book-card > * { position: relative; z-index: 1; }
+.book-cover {
+    position: relative; aspect-ratio: 3 / 4; overflow: hidden;
+    background-color: #061a12;
+    background-image:
+        linear-gradient(180deg, rgba(4,18,13,0.08) 0%, rgba(4,18,13,0.28) 55%, rgba(4,18,13,0.62) 100%),
+        var(--cover-bg, linear-gradient(150deg, #0a2c1e, #061a12));
+    background-position: center, center 32%;
+    background-size: cover, cover;
+    background-repeat: no-repeat;
+    display: flex; align-items: center; justify-content: center;
+}
 .book-cover::before {
     content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: linear-gradient(180deg, transparent 55%, rgba(3,12,8,0.55) 100%);
-    opacity: 0; transition: opacity .3s;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 34%, transparent 58%, rgba(3,12,8,0.62) 100%);
+    opacity: 0.65; transition: opacity .3s;
 }
 .book-card:hover .book-cover::before { opacity: 1; }
 .book-cover::after {
@@ -319,7 +356,7 @@ img { display: block; }
 .reader-content.rtl ul, .reader-content.rtl ol { margin: 0 1.5em 1.3em 0; }
 .reader-content.rtl > p:first-of-type::first-letter { float: right; padding: 6px 0 0 10px; }
 .reader-loading { padding: 60px; text-align: center; color: var(--text-muted); }
-/* A PDF book is embedded as a full-height viewer inside the reader panel â€”
+/* A PDF book is embedded as a full-height viewer inside the reader panel —
    it opens right here on the Books page, never as a separate browser tab. */
 .reader-content.pdf-mode { padding: 0; }
 .reader-content.pdf-mode .book-pdf {
@@ -335,9 +372,11 @@ img { display: block; }
 .footer {
     position: relative; z-index: 1; margin-top: 20px; padding: 26px 36px;
     text-align: center; color: var(--text-muted); font-size: 12.5px;
-    background: linear-gradient(rgba(4,15,11,0.5), rgba(4,15,11,0.5)) padding-box,
-        linear-gradient(90deg, transparent, rgba(212,168,83,0.35), transparent) border-box;
-    border-top: 1px solid transparent;
+    background:
+        linear-gradient(180deg, rgba(3,14,10,0.92) 0%, rgba(2,9,7,0.97) 100%),
+        url("Images/backgrounds/section-cities.webp") center 30% / cover no-repeat;
+    border-top: 1px solid rgba(212,168,83,0.2);
+    overflow: hidden;
     backdrop-filter: blur(12px);
 }
 .footer .logo-accent { font-weight: 700; }
@@ -415,8 +454,10 @@ img { display: block; }
 <script src="assets/js/translations.js"></script>
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/search.js"></script>
+<link rel="stylesheet" href="assets/css/page-backdrop.css">
 </head>
 <body>
+<div class="site-backdrop backdrop-books" aria-hidden="true"></div>
 
 <div class="pattern-bg"></div>
 
@@ -424,10 +465,10 @@ img { display: block; }
     <div class="header-left">
         <a href="index.html" class="logo"><img src="Images/mordern-skills-logo.png" alt="Modern Skills logo" class="logo-img"> <span class="logo-text">Modern <span class="logo-accent">Skills</span></span></a>
         <nav class="nav-links">
-            <a href="index.html"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©</span></a>
-            <a href="index.html#categoryRows"><span data-lang="en">Lessons</span><span data-lang="rw">Amasomo</span><span data-lang="fr">LeÃ§ons</span><span data-lang="sw">Masomo</span><span data-lang="ar">Ø§Ù„Ø¯Ø±ÙˆØ³</span></a>
-            <a href="books.html" class="active"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">Ø§Ù„ÙƒØªØ¨</span></a>
-            <a href="recite.html"><span data-lang="en">Recitations</span><span data-lang="rw">Gusoma</span><span data-lang="fr">RÃ©citations</span><span data-lang="sw">Usomaji</span><span data-lang="ar">Ø§Ù„ØªÙ„Ø§ÙˆØ§Øª</span></a>
+            <a href="index.html"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">الرئيسية</span></a>
+            <a href="index.html#categoryRows"><span data-lang="en">Lessons</span><span data-lang="rw">Amasomo</span><span data-lang="fr">Leçons</span><span data-lang="sw">Masomo</span><span data-lang="ar">الدروس</span></a>
+            <a href="books.html" class="active"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">الكتب</span></a>
+            <a href="recite.html"><span data-lang="en">Recitations</span><span data-lang="rw">Gusoma</span><span data-lang="fr">Récitations</span><span data-lang="sw">Usomaji</span><span data-lang="ar">التلاوات</span></a>
         </nav>
     </div>
     <div class="header-right">
@@ -439,11 +480,11 @@ img { display: block; }
                 <i class="fas fa-chevron-down lang-caret"></i>
             </button>
             <div class="lang-menu" id="langMenu" role="listbox">
-                <span class="lang-option active" data-lang-code="en" role="option" tabindex="0"><span class="flag">ðŸ‡¬ðŸ‡§</span><span class="lname">English</span><span class="lnative">English</span></span>
-                <span class="lang-option" data-lang-code="rw" role="option" tabindex="0"><span class="flag">ðŸ‡·ðŸ‡¼</span><span class="lname">Kinyarwanda</span><span class="lnative">Ikinyarwanda</span></span>
-                <span class="lang-option" data-lang-code="fr" role="option" tabindex="0"><span class="flag">ðŸ‡«ðŸ‡·</span><span class="lname">French</span><span class="lnative">FranÃ§ais</span></span>
-                <span class="lang-option" data-lang-code="sw" role="option" tabindex="0"><span class="flag">ðŸ‡°ðŸ‡ª</span><span class="lname">Swahili</span><span class="lnative">Kiswahili</span></span>
-                <span class="lang-option" data-lang-code="ar" role="option" tabindex="0"><span class="flag">ðŸ‡¸ðŸ‡¦</span><span class="lname">Arabic</span><span class="lnative">Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</span></span>
+                <span class="lang-option active" data-lang-code="en" role="option" tabindex="0"><span class="flag">🇬🇧</span><span class="lname">English</span><span class="lnative">English</span></span>
+                <span class="lang-option" data-lang-code="rw" role="option" tabindex="0"><span class="flag">🇷🇼</span><span class="lname">Kinyarwanda</span><span class="lnative">Ikinyarwanda</span></span>
+                <span class="lang-option" data-lang-code="fr" role="option" tabindex="0"><span class="flag">🇫🇷</span><span class="lname">French</span><span class="lnative">Français</span></span>
+                <span class="lang-option" data-lang-code="sw" role="option" tabindex="0"><span class="flag">🇰🇪</span><span class="lname">Swahili</span><span class="lnative">Kiswahili</span></span>
+                <span class="lang-option" data-lang-code="ar" role="option" tabindex="0"><span class="flag">🇸🇦</span><span class="lname">Arabic</span><span class="lnative">العربية</span></span>
             </div>
         </div>
         <div class="lang-toggle" id="langToggle" title="Switch language">
@@ -454,18 +495,18 @@ img { display: block; }
             <span class="lang-option" data-lang-code="ar">AR</span>
         </div>
         <div id="authButtons">
-            <a href="login.html" class="btn-auth btn-auth-ghost"><i class="fas fa-arrow-right-to-bracket"></i> <span class="btn-label"><span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Connexion</span><span data-lang="sw">Ingia</span><span data-lang="ar">ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„</span></span></a>
-            <a href="register.html" class="btn-auth btn-auth-gold"><i class="fas fa-user-plus"></i> <span class="btn-label"><span data-lang="en">Register</span><span data-lang="rw">Iyandikishe</span><span data-lang="fr">S'inscrire</span><span data-lang="sw">Jisajili</span><span data-lang="ar">Ø§Ù„ØªØ³Ø¬ÙŠÙ„</span></span></a>
+            <a href="login.html" class="btn-auth btn-auth-ghost"><i class="fas fa-arrow-right-to-bracket"></i> <span class="btn-label"><span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Connexion</span><span data-lang="sw">Ingia</span><span data-lang="ar">تسجيل الدخول</span></span></a>
+            <a href="register.html" class="btn-auth btn-auth-gold"><i class="fas fa-user-plus"></i> <span class="btn-label"><span data-lang="en">Register</span><span data-lang="rw">Iyandikishe</span><span data-lang="fr">S'inscrire</span><span data-lang="sw">Jisajili</span><span data-lang="ar">التسجيل</span></span></a>
         </div>
         <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
     </div>
 </header>
 
 <section class="hero">
-    <div class="eyebrow"><i class="fas fa-book-open"></i>&nbsp;<span data-lang="en">Library</span><span data-lang="rw">Isomero</span><span data-lang="fr">BibliothÃ¨que</span><span data-lang="sw">Maktaba</span><span data-lang="ar">Ø§Ù„Ù…ÙƒØªØ¨Ø©</span></div>
-    <h1><span data-lang="en">Read &amp; Grow</span><span data-lang="rw">Soma &amp; Kura</span><span data-lang="fr">Lisez &amp; Progressez</span><span data-lang="sw">Soma &amp; Kua</span><span data-lang="ar">Ø§Ù‚Ø±Ø£ ÙˆØ§Ù†Ù…Ù</span></h1>
+    <div class="eyebrow"><i class="fas fa-book-open"></i>&nbsp;<span data-lang="en">Library</span><span data-lang="rw">Isomero</span><span data-lang="fr">Bibliothèque</span><span data-lang="sw">Maktaba</span><span data-lang="ar">المكتبة</span></div>
+    <h1><span data-lang="en">Read &amp; Grow</span><span data-lang="rw">Soma &amp; Kura</span><span data-lang="fr">Lisez &amp; Progressez</span><span data-lang="sw">Soma &amp; Kua</span><span data-lang="ar">اقرأ وانمُ</span></h1>
     <div class="hero-rule"><i class="fas fa-diamond"></i></div>
-    <p><span data-lang="en">Books and learning material selected by our instructors â€” read them right here, in your own language.</span><span data-lang="rw">Ibitabo n'ibikoresho byo kwiga byatoranyijwe n'abigisha bacu â€” bibasomera hano, mu rurimi rwawe.</span><span data-lang="fr">Livres et supports pÃ©dagogiques choisis par nos instructeurs â€” Ã  lire ici, dans votre langue.</span><span data-lang="sw">Vitabu na nyenzo za kujifunza zilizochaguliwa na walimu wetu â€” soma hapa, kwa lugha yako.</span><span data-lang="ar">ÙƒØªØ¨ ÙˆÙ…ÙˆØ§Ø¯ ØªØ¹Ù„ÙŠÙ…ÙŠØ© Ù…Ø®ØªØ§Ø±Ø© Ù…Ù† Ù…Ø¹Ù„Ù…ÙŠÙ†Ø§ â€” Ø§Ù‚Ø±Ø£Ù‡Ø§ Ù‡Ù†Ø§ Ø¨Ù„ØºØªÙƒ.</span></p>
+    <p><span data-lang="en">Books and learning material selected by our instructors — read them right here, in your own language.</span><span data-lang="rw">Ibitabo n'ibikoresho byo kwiga byatoranyijwe n'abigisha bacu — bibasomera hano, mu rurimi rwawe.</span><span data-lang="fr">Livres et supports pédagogiques choisis par nos instructeurs — à lire ici, dans votre langue.</span><span data-lang="sw">Vitabu na nyenzo za kujifunza zilizochaguliwa na walimu wetu — soma hapa, kwa lugha yako.</span><span data-lang="ar">كتب ومواد تعليمية مختارة من معلمينا — اقرأها هنا بلغتك.</span></p>
 </section>
 
 <div class="wrap">
@@ -475,14 +516,14 @@ img { display: block; }
 </div>
 
 <footer class="footer">
-    <span>&copy; 2026 Modern Skills. <span data-lang="en">All rights reserved.</span><span data-lang="rw">Uburenganzira bwose buranazwe.</span><span data-lang="fr">Tous droits rÃ©servÃ©s.</span><span data-lang="sw">Haki zote zimehifadhiwa.</span><span data-lang="ar">Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ù‚ÙˆÙ‚ Ù…Ø­ÙÙˆØ¸Ø©.</span></span>
+    <span>&copy; 2026 Modern Skills. <span data-lang="en">All rights reserved.</span><span data-lang="rw">Uburenganzira bwose buranazwe.</span><span data-lang="fr">Tous droits réservés.</span><span data-lang="sw">Haki zote zimehifadhiwa.</span><span data-lang="ar">جميع الحقوق محفوظة.</span></span>
 </footer>
 
 <div class="reader-overlay" id="readerOverlay">
     <div class="reader-panel">
         <div class="reader-head">
             <div>
-                <h2 id="readerTitle">â€”</h2>
+                <h2 id="readerTitle">—</h2>
                 <div class="meta" id="readerMeta"></div>
             </div>
             <button class="reader-close" id="readerClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
@@ -494,6 +535,7 @@ img { display: block; }
 <script>
 // ===== LANGUAGE =====
 var currentLang = MS_I18N.readStored();
+var BOOK_FALLBACK_COVER = 'Images/backgrounds/section-culture.webp';
 function setLang(lang) {
     currentLang = MS_I18N.normalise(lang);
     document.body.className = document.body.className.replace(/\blang-\w+/g, '').trim();
@@ -609,11 +651,11 @@ function mediaUrl(u) {
 }
 
 var LANG_NAMES = {
-    en: { en: 'English', rw: 'Icyongereza', fr: 'Anglais', sw: 'Kiingereza', ar: 'Ø§Ù„Ø¥Ù†Ø¬Ù„ÙŠØ²ÙŠØ©' },
-    rw: { en: 'Kinyarwanda', rw: 'Ikinyarwanda', fr: 'Kinyarwanda', sw: 'Kinyarwanda', ar: 'Ø§Ù„ÙƒÙŠÙ†ÙŠØ§Ø±ÙˆØ§Ù†Ø¯ÙŠØ©' },
-    fr: { en: 'French', rw: 'Igifaransa', fr: 'FranÃ§ais', sw: 'Kifaransa', ar: 'Ø§Ù„ÙØ±Ù†Ø³ÙŠØ©' },
-    sw: { en: 'Swahili', rw: 'Igiswahili', fr: 'Swahili', sw: 'Kiswahili', ar: 'Ø§Ù„Ø³ÙˆØ§Ø­ÙŠÙ„ÙŠØ©' },
-    ar: { en: 'Arabic', rw: 'Icyarabu', fr: 'Arabe', sw: 'Kiarabu', ar: 'Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©' }
+    en: { en: 'English', rw: 'Icyongereza', fr: 'Anglais', sw: 'Kiingereza', ar: 'الإنجليزية' },
+    rw: { en: 'Kinyarwanda', rw: 'Ikinyarwanda', fr: 'Kinyarwanda', sw: 'Kinyarwanda', ar: 'الكينيارواندية' },
+    fr: { en: 'French', rw: 'Igifaransa', fr: 'Français', sw: 'Kifaransa', ar: 'الفرنسية' },
+    sw: { en: 'Swahili', rw: 'Igiswahili', fr: 'Swahili', sw: 'Kiswahili', ar: 'السواحيلية' },
+    ar: { en: 'Arabic', rw: 'Icyarabu', fr: 'Arabe', sw: 'Kiarabu', ar: 'العربية' }
 };
 function langName(code) {
     if (!code) return '';
@@ -648,17 +690,17 @@ function renderGrid() {
     if (!books.length) {
         grid.innerHTML = '<div class="empty" style="grid-column:1/-1;">' +
             '<i class="fas fa-book-open"></i>' +
-            '<h3><span data-lang="en">No books yet</span><span data-lang="rw">Nta bitabo birahari</span><span data-lang="fr">Aucun livre pour le moment</span><span data-lang="sw">Hakuna vitabu bado</span><span data-lang="ar">Ù„Ø§ ØªÙˆØ¬Ø¯ ÙƒØªØ¨ Ø¨Ø¹Ø¯</span></h3>' +
-            '<p><span data-lang="en">Please check back soon.</span><span data-lang="rw">Uzagaruke vuba.</span><span data-lang="fr">Revenez bientÃ´t.</span><span data-lang="sw">Tafadhali rudi hivi karibuni.</span><span data-lang="ar">ÙŠØ±Ø¬Ù‰ Ø§Ù„Ø¹ÙˆØ¯Ø© Ù‚Ø±ÙŠØ¨Ù‹Ø§.</span></p></div>';
+            '<h3><span data-lang="en">No books yet</span><span data-lang="rw">Nta bitabo birahari</span><span data-lang="fr">Aucun livre pour le moment</span><span data-lang="sw">Hakuna vitabu bado</span><span data-lang="ar">لا توجد كتب بعد</span></h3>' +
+            '<p><span data-lang="en">Please check back soon.</span><span data-lang="rw">Uzagaruke vuba.</span><span data-lang="fr">Revenez bientôt.</span><span data-lang="sw">Tafadhali rudi hivi karibuni.</span><span data-lang="ar">يرجى العودة قريبًا.</span></p></div>';
         setLang(currentLang);
         return;
     }
     grid.innerHTML = books.map(function (b) {
-        var cover = b.cover_url
-            ? '<img src="' + esc(mediaUrl(b.cover_url)) + '" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'"><span class="cover-fallback" style="display:none;"><i class="fas fa-book"></i></span>'
-            : '<span class="cover-fallback"><i class="fas fa-book"></i></span>';
+        var coverUrl = b.cover_url ? mediaUrl(b.cover_url) : BOOK_FALLBACK_COVER;
+        var coverBg = encodeURI(coverUrl).replace(/'/g, '%27');
+        var cover = '<img src="' + esc(coverUrl) + '" alt="" loading="lazy" decoding="async" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'"><span class="cover-fallback" style="display:none;"><i class="fas fa-book"></i></span>';
         return '<article class="book-card" data-id="' + b.id + '" tabindex="0" role="button">' +
-            '<div class="book-cover">' + cover +
+            '<div class="book-cover" style="--cover-bg:url(\'' + coverBg + '\')">' + cover +
                 '<span class="book-lang">' + esc(langName(b.language)) + '</span>' +
             '</div>' +
             '<div class="book-body">' +
@@ -666,7 +708,7 @@ function renderGrid() {
                 (b.author ? '<div class="book-author"><i class="fas fa-pen-nib"></i> ' + esc(b.author) + '</div>' : '') +
                 (b.description ? '<p class="book-desc">' + esc(b.description) + '</p>' : '') +
                 '<div class="book-foot">' +
-                    '<span class="book-read"><i class="fas fa-book-open-reader"></i> <span data-lang="en">Read</span><span data-lang="rw">Soma</span><span data-lang="fr">Lire</span><span data-lang="sw">Soma</span><span data-lang="ar">Ø§Ù‚Ø±Ø£</span></span>' +
+                    '<span class="book-read"><i class="fas fa-book-open-reader"></i> <span data-lang="en">Read</span><span data-lang="rw">Soma</span><span data-lang="fr">Lire</span><span data-lang="sw">Soma</span><span data-lang="ar">اقرأ</span></span>' +
                     '<span class="book-arrow"><i class="fas fa-arrow-right"></i></span>' +
                 '</div>' +
             '</div>' +
@@ -694,7 +736,7 @@ function renderBookMeta(b) {
     if (b.author) parts.push(b.author);
     var ln = langName(b.language);
     if (ln) parts.push(ln);
-    readerMeta.textContent = parts.join(' Â· ');
+    readerMeta.textContent = parts.join(' · ');
 }
 
 function closeReader() {
@@ -780,7 +822,7 @@ async function openReader(id) {
     if (!id) return;
     readerOverlay.classList.add('show');
     document.body.style.overflow = 'hidden';
-    readerTitle.textContent = 'â€¦';
+    readerTitle.textContent = '…';
     readerMeta.textContent = '';
     readerContent.innerHTML = '<div class="reader-loading"><i class="fas fa-spinner fa-spin"></i></div>';
     readerContent.classList.remove('rtl');
@@ -795,7 +837,7 @@ async function openReader(id) {
         renderBookMeta(b);
         var raw = b.content || '';
         if (raw.indexOf(BOOK_PDF_PREFIX) === 0) {
-            // PDF book â€” embed it inline in the reader (never a new tab).
+            // PDF book — embed it inline in the reader (never a new tab).
             var pdfUrl = raw.slice(BOOK_PDF_PREFIX.length).trim();
             readerContent.classList.remove('rtl');
             readerContent.classList.add('pdf-mode');
@@ -814,7 +856,7 @@ async function openReader(id) {
             '<div data-lang="rw">Ntibishoboka kubona iki gitabo.</div>' +
             '<div data-lang="fr">Impossible de charger ce livre.</div>' +
             '<div data-lang="sw">Imeshindwa kupakia kitabu hiki.</div>' +
-            '<div data-lang="ar">ØªØ¹Ø°Ù‘Ø± ØªØ­Ù…ÙŠÙ„ Ù‡Ø°Ø§ Ø§Ù„ÙƒØªØ§Ø¨.</div></div>';
+            '<div data-lang="ar">تعذّر تحميل هذا الكتاب.</div></div>';
         setLang(currentLang);
     }
 }

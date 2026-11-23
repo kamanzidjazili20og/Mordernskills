@@ -1,19 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#06130e">
-<meta name="description" content="Modern Skills â€” Learn the Quran online with expert instructors. Tajweed, Tafsir, Hifz and Arabic courses.">
-<title>Modern Skills â€” Wige Qur'an kuri Interineti</title>
+<meta name="description" content="Modern Skills — Learn the Quran online with expert instructors. Tajweed, Tafsir, Hifz and Arabic courses.">
+<title>Modern Skills — Wige Qur'an kuri Interineti</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Modern Skills">
-<meta property="og:title" content="Modern Skills â€” Learn the Quran Online">
+<meta property="og:title" content="Modern Skills — Learn the Quran Online">
 <meta property="og:description" content="Learn the Quran online with expert instructors. Tajweed, Tafsir, Hifz and Arabic courses for Rwanda and East Africa.">
 <meta property="og:image" content="Images/mordern-skills-logo.png">
 <meta property="og:url" content="/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Modern Skills â€” Learn the Quran Online">
+<meta name="twitter:title" content="Modern Skills — Learn the Quran Online">
 <meta name="twitter:description" content="Tajweed, Tafsir, Hifz and Arabic courses with expert instructors.">
 <meta name="twitter:image" content="Images/mordern-skills-logo.png">
 <link rel="icon" type="image/png" href="Images/mordern-skills-logo.png">
@@ -271,17 +271,49 @@ body.lang-rw [data-lang="en"] { display: none !important; }
         radial-gradient(ellipse 50% 30% at 50% 0%, rgba(212,168,83,0.1) 0%, transparent 60%),
         radial-gradient(ellipse 40% 40% at 85% 40%, rgba(14,122,90,0.22) 0%, transparent 60%);
 }
-.featured-bg { position: absolute; inset: 0; }
-.featured-bg img {
+.featured-bg { position: absolute; inset: 0; overflow: hidden; }
+.featured-bg img,
+.featured-bg video {
+    position: absolute; inset: 0;
     width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
-    animation: slowZoom 26s ease-in-out infinite alternate;
+    transition: opacity .9s ease;
 }
+.featured-bg img { animation: slowZoom 26s ease-in-out infinite alternate; }
+.featured-bg video {
+    opacity: 0;
+    animation: slowZoom 30s ease-in-out infinite alternate;
+}
+.featured-bg.video-ready video { opacity: 1; }
+.featured-bg.video-ready img { opacity: 0; }
 @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+.featured-info > * { animation: heroRise .72s cubic-bezier(.2,.75,.25,1) both; }
+.featured-info > :nth-child(2) { animation-delay: .08s; }
+.featured-info > :nth-child(3) { animation-delay: .16s; }
+.featured-info > :nth-child(4) { animation-delay: .24s; }
+.featured-info > :nth-child(5) { animation-delay: .32s; }
+@keyframes heroRise {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: none; }
+}
 .featured-shade {
     position: absolute; inset: 0;
     background:
         linear-gradient(90deg, rgba(3,16,12,0.97) 0%, rgba(3,16,12,0.82) 46%, rgba(3,16,12,0.35) 100%),
         linear-gradient(0deg, var(--bg) 2%, transparent 46%);
+}
+.featured-shade::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 54%; height: 100%;
+    pointer-events: none;
+    background:
+        linear-gradient(115deg, transparent 10%, rgba(212,168,83,0.1) 55%, rgba(52,211,153,0.08) 100%),
+        url("Images/backgrounds/section-culture.webp") center 34% / cover no-repeat;
+    opacity: 0.24;
+    mix-blend-mode: screen;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 58%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 58%);
 }
 .featured-inner {
     max-width: 1320px; margin: 0 auto; padding: 0 36px 66px;
@@ -387,7 +419,9 @@ body.lang-rw [data-lang="en"] { display: none !important; }
     margin-top: -34px;
     position: relative; z-index: 4;
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
-    background: linear-gradient(160deg, rgba(13,42,31,0.92), rgba(8,30,22,0.94));
+    background:
+        linear-gradient(110deg, rgba(4,18,13,0.9) 0%, rgba(4,18,13,0.58) 48%, rgba(4,18,13,0.3) 100%),
+        url("Images/backgrounds/section-cities.webp") center 32% / cover no-repeat;
     border: 1px solid rgba(212,168,83,0.22);
     border-radius: 20px;
     padding: 28px 34px;
@@ -404,6 +438,16 @@ body.lang-rw [data-lang="en"] { display: none !important; }
         radial-gradient(ellipse 40% 60% at 88% 50%, rgba(52,211,153,0.06) 0%, transparent 60%);
     pointer-events: none;
 }
+.stats-band::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    pointer-events: none;
+    background: linear-gradient(120deg, transparent 24%, rgba(212,168,83,0.14) 50%, transparent 74%);
+    z-index: 0;
+}
+.stats-band > * { position: relative; z-index: 1; }
 .empty-stats {
     grid-column: 1 / -1;
     position: relative;
@@ -440,7 +484,9 @@ body.lang-rw [data-lang="en"] { display: none !important; }
 .about-band {
     margin-top: 40px; position: relative; z-index: 1;
     display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: center;
-    background: linear-gradient(160deg, rgba(13,42,31,0.92), rgba(8,30,22,0.94));
+    background:
+        linear-gradient(100deg, rgba(4,18,13,0.95) 0%, rgba(4,18,13,0.78) 48%, rgba(4,18,13,0.52) 100%),
+        url("Images/backgrounds/section-about.webp") center 42% / cover no-repeat;
     border: 1px solid rgba(212,168,83,0.22); border-radius: 20px;
     padding: 34px 36px; box-shadow: var(--shadow), 0 0 40px -18px rgba(212,168,83,0.4);
     scroll-margin-top: 90px; overflow: hidden;
@@ -449,6 +495,11 @@ body.lang-rw [data-lang="en"] { display: none !important; }
     content: ''; position: absolute; inset: 0; pointer-events: none;
     background: radial-gradient(ellipse 45% 70% at 10% 50%, rgba(212,168,83,0.09) 0%, transparent 60%);
 }
+.about-band::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background: linear-gradient(115deg, transparent 18%, rgba(232,200,122,0.16) 48%, transparent 76%);
+}
+.about-band > * { position: relative; z-index: 1; }
 .about-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
 .about-band h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 10px; }
 .about-band h2 em { font-style: normal; color: var(--gold-light); }
@@ -535,7 +586,13 @@ body.lang-rw [data-lang="en"] { display: none !important; }
 .pcard { flex: 0 0 auto; width: 196px; scroll-snap-align: start; }
 .pcard .poster {
     position: relative; aspect-ratio: 2/3; border-radius: 16px; overflow: hidden;
-    background: linear-gradient(180deg, #123528, #0a1f16);
+    background-color: #0a1f16;
+    background-image:
+        linear-gradient(180deg, rgba(4,18,13,0.06) 0%, rgba(4,18,13,0.2) 58%, rgba(4,18,13,0.72) 100%),
+        var(--poster-bg, linear-gradient(180deg, #123528, #0a1f16));
+    background-position: center, center 35%;
+    background-size: cover, cover;
+    background-repeat: no-repeat;
     border: 1px solid rgba(212,168,83,0.16);
     box-shadow: 0 12px 28px rgba(0,0,0,0.5);
     transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
@@ -547,8 +604,12 @@ body.lang-rw [data-lang="en"] { display: none !important; }
 }
 .pcard .poster img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
 .pcard:hover .poster img { transform: scale(1.07); }
+.pcard .poster::before {
+    content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 38%);
+}
 .pcard .poster::after {
-    content: ''; position: absolute; inset: 0;
+    content: ''; position: absolute; inset: 0; z-index: 1;
     background: linear-gradient(180deg, transparent 55%, rgba(5,16,11,0.62) 100%);
     pointer-events: none;
 }
@@ -639,7 +700,28 @@ body.lang-rw [data-lang="en"] { display: none !important; }
     padding-left: 2px;
 }
 /* oshakurfilms-style category blocks on the homepage */
-.cat-block { scroll-margin-top: 90px; }
+.cat-block {
+    scroll-margin-top: 90px;
+    position: relative;
+    margin-top: 30px;
+    padding: 26px 26px 22px;
+    border-radius: 24px;
+    border: 1px solid rgba(212,168,83,0.16);
+    overflow: hidden;
+    background:
+        linear-gradient(115deg, rgba(4,18,13,0.94) 0%, rgba(4,18,13,0.7) 52%, rgba(4,18,13,0.36) 100%),
+        var(--cat-bg, url("Images/backgrounds/section-culture.webp")) center 32% / cover no-repeat;
+    box-shadow: 0 24px 70px -34px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.035);
+}
+.cat-block::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 42% 58% at 88% 6%, rgba(212,168,83,0.14) 0%, transparent 62%);
+}
+.cat-block::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background: linear-gradient(120deg, transparent 22%, rgba(255,255,255,0.07) 48%, transparent 74%);
+}
+.cat-block > * { position: relative; z-index: 1; }
 .row-total {
     font-size: 12px; font-weight: 700; color: var(--text-muted);
     padding: 5px 12px; border-radius: 100px;
@@ -668,6 +750,22 @@ body.lang-rw [data-lang="en"] { display: none !important; }
 }
 
 /* ===== INSTRUCTORS (personas) ===== */
+#instructorsSection {
+    position: relative;
+    margin-top: 36px;
+    padding: 28px;
+    border-radius: 24px;
+    border: 1px solid rgba(212,168,83,0.16);
+    overflow: hidden;
+    background:
+        linear-gradient(110deg, rgba(4,18,13,0.94) 0%, rgba(4,18,13,0.7) 55%, rgba(4,18,13,0.36) 100%),
+        url("Images/backgrounds/section-experiences.webp") center 36% / cover no-repeat;
+}
+#instructorsSection::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(120deg, transparent 20%, rgba(212,168,83,0.13) 50%, transparent 76%);
+}
+#instructorsSection > * { position: relative; z-index: 1; }
 .inst-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -764,7 +862,15 @@ body.lang-rw [data-lang="en"] { display: none !important; }
 .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(37,211,102,0.5); }
 
 /* ===== FOOTER ===== */
-.footer { margin-top: 64px; border-top: 1px solid rgba(212,168,83,0.14); background: #030e0a; position: relative; z-index: 1; }
+.footer {
+    margin-top: 64px;
+    border-top: 1px solid rgba(212,168,83,0.14);
+    background:
+        linear-gradient(180deg, rgba(3,14,10,0.92) 0%, rgba(2,9,7,0.97) 100%),
+        url("Images/backgrounds/section-cities.webp") center 30% / cover no-repeat;
+    position: relative; z-index: 1;
+    overflow: hidden;
+}
 .footer::before {
     content: '';
     position: absolute;
@@ -773,7 +879,14 @@ body.lang-rw [data-lang="en"] { display: none !important; }
     width: 400px; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(212,168,83,0.5), transparent);
 }
-.footer-inner { max-width: 1320px; margin: 0 auto; padding: 52px 36px 0; }
+.footer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 26%, rgba(212,168,83,0.1) 50%, transparent 74%);
+}
+.footer-inner { max-width: 1320px; margin: 0 auto; padding: 52px 36px 0; position: relative; z-index: 1; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr; gap: 40px; }
 .footer-brand h3 { font-size: 18px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
 .footer-brand h3 i { color: var(--gold); filter: drop-shadow(0 0 10px rgba(212,168,83,0.4)); }
@@ -808,8 +921,14 @@ body.lang-rw [data-lang="en"] { display: none !important; }
 .footer-bottom i { color: #ef4444; }
 
 /* ===== REVEAL ON SCROLL ===== */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.75,.25,1); transition-delay: var(--rd, 0s); }
 .reveal.revealed { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+    .featured-bg img, .featured-bg video, .featured-info > *, .btn-gold::after { animation: none !important; }
+    .featured-bg.video-ready video { opacity: 0; }
+    .featured-bg.video-ready img { opacity: 1; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+}
 
 @media (max-width: 1024px) {
     .header { padding: 12px 22px; }
@@ -982,7 +1101,20 @@ body.lang-rw [data-lang="en"] { display: none !important; }
 /* ===== CATEGORY GRID SECTION (oshakurfilms style) ===== */
 .category-grid-section {
     margin-top: 56px;
+    position: relative;
+    padding: 28px;
+    border-radius: 24px;
+    border: 1px solid rgba(212,168,83,0.16);
+    overflow: hidden;
+    background:
+        linear-gradient(110deg, rgba(4,18,13,0.94) 0%, rgba(4,18,13,0.68) 55%, rgba(4,18,13,0.34) 100%),
+        url("Images/backgrounds/section-cities.webp") center 32% / cover no-repeat;
 }
+.category-grid-section::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(120deg, transparent 20%, rgba(212,168,83,0.13) 50%, transparent 76%);
+}
+.category-grid-section > * { position: relative; z-index: 1; }
 .category-section {
     margin-bottom: 48px;
 }
@@ -1193,7 +1325,7 @@ body.lang-rw [data-lang="en"] { display: none !important; }
     margin-top: 30px;
 }
 
-/* Individual category card â€” each has its own color theme */
+/* Individual category card — each has its own color theme */
 .cat-grid-card {
     position: relative;
     border-radius: 20px;
@@ -1867,7 +1999,7 @@ body.loading { overflow: hidden; }
         </div>
         <div class="splash-eyebrow">Modern Skills Academy</div>
         <div class="splash-title">Modern <span>Skills</span></div>
-        <div class="splash-arabic">Ø¨ÙØ³Ù’Ù…Ù Ø§Ù„Ù„Ù‡Ù Ø§Ù„Ø±ÙŽÙ‘Ø­Ù’Ù…Ù°Ù†Ù Ø§Ù„Ø±ÙŽÙ‘Ø­ÙÙŠÙ’Ù…Ù</div>
+        <div class="splash-arabic">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
         <div class="splash-status">
             <span class="splash-status-dot"></span>
             <span class="splash-msg" id="splashMsg">Preparing your lessons...</span>
@@ -1888,11 +2020,11 @@ body.loading { overflow: hidden; }
     <div class="header-left">
         <a href="index.html" class="logo"><img src="Images/mordern-skills-logo.png" alt="Modern Skills logo" class="logo-img"> Modern Skills</a>
         <nav class="nav-links">
-            <a href="#featured" class="active"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©</span></a>
-            <a href="#categoryRows"><span data-lang="en">Lessons</span><span data-lang="rw">Amasomo</span><span data-lang="fr">LeÃ§ons</span><span data-lang="sw">Masomo</span><span data-lang="ar">Ø§Ù„Ø¯Ø±ÙˆØ³</span></a>
-            <a href="#about"><span data-lang="en">About us</span><span data-lang="rw">Turi Bande</span><span data-lang="fr">Ã€ propos</span><span data-lang="sw">Kuhusu Sisi</span><span data-lang="ar">Ù…Ù† Ù†Ø­Ù†</span></a>
-            <a href="books.html"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">Ø§Ù„ÙƒØªØ¨</span></a>
-            <a href="recite.html"><span data-lang="en">Recitations</span><span data-lang="rw">Gusoma</span><span data-lang="fr">RÃ©citations</span><span data-lang="sw">Usomaji</span><span data-lang="ar">Ø§Ù„ØªÙ„Ø§ÙˆØ§Øª</span></a>
+            <a href="#featured" class="active"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">الرئيسية</span></a>
+            <a href="#categoryRows"><span data-lang="en">Lessons</span><span data-lang="rw">Amasomo</span><span data-lang="fr">Leçons</span><span data-lang="sw">Masomo</span><span data-lang="ar">الدروس</span></a>
+            <a href="#about"><span data-lang="en">About us</span><span data-lang="rw">Turi Bande</span><span data-lang="fr">À propos</span><span data-lang="sw">Kuhusu Sisi</span><span data-lang="ar">من نحن</span></a>
+            <a href="books.html"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">الكتب</span></a>
+            <a href="recite.html"><span data-lang="en">Recitations</span><span data-lang="rw">Gusoma</span><span data-lang="fr">Récitations</span><span data-lang="sw">Usomaji</span><span data-lang="ar">التلاوات</span></a>
         </nav>
     </div>
     <div class="header-right">
@@ -1904,16 +2036,16 @@ body.loading { overflow: hidden; }
                 <i class="fas fa-chevron-down lang-caret"></i>
             </button>
             <div class="lang-menu" id="langMenu" role="listbox">
-<span class="lang-option active" data-lang-code="en" role="option" tabindex="0"><span class="flag">ðŸ‡¬ðŸ‡§</span><span class="lname">English</span><span class="lnative">English</span></span>
-                <span class="lang-option" data-lang-code="rw" role="option" tabindex="0"><span class="flag">ðŸ‡·ðŸ‡¼</span><span class="lname">Kinyarwanda</span><span class="lnative">Ikinyarwanda</span></span>
-                <span class="lang-option" data-lang-code="fr" role="option" tabindex="0"><span class="flag">ðŸ‡«ðŸ‡·</span><span class="lname">French</span><span class="lnative">FranÃ§ais</span></span>
-                <span class="lang-option" data-lang-code="sw" role="option" tabindex="0"><span class="flag">ðŸ‡°ðŸ‡ª</span><span class="lname">Swahili</span><span class="lnative">Kiswahili</span></span>
-                <span class="lang-option" data-lang-code="ar" role="option" tabindex="0"><span class="flag">ðŸ‡¸ðŸ‡¦</span><span class="lname">Arabic</span><span class="lnative">Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</span></span>
+<span class="lang-option active" data-lang-code="en" role="option" tabindex="0"><span class="flag">🇬🇧</span><span class="lname">English</span><span class="lnative">English</span></span>
+                <span class="lang-option" data-lang-code="rw" role="option" tabindex="0"><span class="flag">🇷🇼</span><span class="lname">Kinyarwanda</span><span class="lnative">Ikinyarwanda</span></span>
+                <span class="lang-option" data-lang-code="fr" role="option" tabindex="0"><span class="flag">🇫🇷</span><span class="lname">French</span><span class="lnative">Français</span></span>
+                <span class="lang-option" data-lang-code="sw" role="option" tabindex="0"><span class="flag">🇰🇪</span><span class="lname">Swahili</span><span class="lnative">Kiswahili</span></span>
+                <span class="lang-option" data-lang-code="ar" role="option" tabindex="0"><span class="flag">🇸🇦</span><span class="lname">Arabic</span><span class="lnative">العربية</span></span>
             </div>
         </div>
         <div id="authButtons">
-            <a href="login.html" class="btn-admin" style="font-size:12px;"><i class="fas fa-arrow-right-to-bracket"></i> <span class="btn-label"><span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Connexion</span><span data-lang="sw">Ingia</span><span data-lang="ar">ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„</span></span></a>
-            <a href="register.html" class="btn-admin" style="background:rgba(212,168,83,0.1);"><i class="fas fa-user-plus"></i> <span class="btn-label"><span data-lang="en">Register</span><span data-lang="rw">Iyandikishe</span><span data-lang="fr">S'inscrire</span><span data-lang="sw">Jisajili</span><span data-lang="ar">Ø§Ù„ØªØ³Ø¬ÙŠÙ„</span></span></a>
+            <a href="login.html" class="btn-admin" style="font-size:12px;"><i class="fas fa-arrow-right-to-bracket"></i> <span class="btn-label"><span data-lang="en">Sign In</span><span data-lang="rw">Injira</span><span data-lang="fr">Connexion</span><span data-lang="sw">Ingia</span><span data-lang="ar">تسجيل الدخول</span></span></a>
+            <a href="register.html" class="btn-admin" style="background:rgba(212,168,83,0.1);"><i class="fas fa-user-plus"></i> <span class="btn-label"><span data-lang="en">Register</span><span data-lang="rw">Iyandikishe</span><span data-lang="fr">S'inscrire</span><span data-lang="sw">Jisajili</span><span data-lang="ar">التسجيل</span></span></a>
         </div>
         <a href="https://wa.me/250783198148" target="_blank" class="btn-admin btn-wa-link"><i class="fab fa-whatsapp"></i> <span class="btn-label">WhatsApp</span></a>
         <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
@@ -1931,18 +2063,18 @@ body.loading { overflow: hidden; }
     <!-- ===== ABOUT US ===== -->
     <section class="about-band reveal" id="about">
         <div>
-            <div class="about-eyebrow"><span data-lang="en">About Us</span><span data-lang="rw">Turi Bande</span><span data-lang="fr">Ã€ propos de nous</span><span data-lang="sw">Kuhusu Sisi</span><span data-lang="ar">Ù…Ù† Ù†Ø­Ù†</span></div>
-            <h2><span data-lang="en">Learn the <em>Qur'an</em> the Right Way</span><span data-lang="rw">Wige <em>Qur'an</em> mu Buryo Bunoze</span><span data-lang="fr">Apprenez le <em>Coran</em> de la bonne maniÃ¨re</span><span data-lang="sw">Jifunze <em>Qur'an</em> kwa Njia Sahihi</span><span data-lang="ar">ØªØ¹Ù„Ù‘Ù… <em>Ø§Ù„Ù‚Ø±Ø¢Ù†</em> Ø¨Ø§Ù„Ø·Ø±ÙŠÙ‚Ø© Ø§Ù„ØµØ­ÙŠØ­Ø©</span></h2>
-            <p><span data-lang="en">Modern Skills is an online academy for Qur'an learning â€” Tajweed, Tafsir, Hifz and Arabic, taught step by step by certified instructors, in your language.</span><span data-lang="rw">Modern Skills ni ishuri ryo kuri interineti ryo kwiga Qur'an â€” Tajweed, Tafsir, Hifz n'Icyarabu, byigishwa buhoro buhoro n'abigisha bemewe, mu rurimi rwawe.</span><span data-lang="fr">Modern Skills est une acadÃ©mie en ligne pour apprendre le Coran â€” Tajwid, Tafsir, Hifz et arabe, enseignÃ©s pas Ã  pas par des instructeurs certifiÃ©s, dans votre langue.</span><span data-lang="sw">Modern Skills ni chuo cha mtandaoni cha kujifunza Qur'an â€” Tajweed, Tafsir, Hifz na Kiarabu, kikifundishwa hatua kwa hatua na walimu waliothibitishwa, kwa lugha yako.</span><span data-lang="ar">Modern Skills Ø£ÙƒØ§Ø¯ÙŠÙ…ÙŠØ© Ø¹Ø¨Ø± Ø§Ù„Ø¥Ù†ØªØ±Ù†Øª Ù„ØªØ¹Ù„Ù‘Ù… Ø§Ù„Ù‚Ø±Ø¢Ù† â€” Ø§Ù„ØªØ¬ÙˆÙŠØ¯ ÙˆØ§Ù„ØªÙØ³ÙŠØ± ÙˆØ§Ù„Ø­ÙØ¸ ÙˆØ§Ù„Ø¹Ø±Ø¨ÙŠØ©ØŒ ØªÙØ¯Ø±ÙŽÙ‘Ø³ Ø®Ø·ÙˆØ© Ø¨Ø®Ø·ÙˆØ© Ø¹Ù„Ù‰ ÙŠØ¯ Ù…Ø¹Ù„Ù…ÙŠÙ† Ù…Ø¹ØªÙ…Ø¯ÙŠÙ†ØŒ Ø¨Ù„ØºØªÙƒ.</span></p>
+            <div class="about-eyebrow"><span data-lang="en">About Us</span><span data-lang="rw">Turi Bande</span><span data-lang="fr">À propos de nous</span><span data-lang="sw">Kuhusu Sisi</span><span data-lang="ar">من نحن</span></div>
+            <h2><span data-lang="en">Learn the <em>Qur'an</em> the Right Way</span><span data-lang="rw">Wige <em>Qur'an</em> mu Buryo Bunoze</span><span data-lang="fr">Apprenez le <em>Coran</em> de la bonne manière</span><span data-lang="sw">Jifunze <em>Qur'an</em> kwa Njia Sahihi</span><span data-lang="ar">تعلّم <em>القرآن</em> بالطريقة الصحيحة</span></h2>
+            <p><span data-lang="en">Modern Skills is an online academy for Qur'an learning — Tajweed, Tafsir, Hifz and Arabic, taught step by step by certified instructors, in your language.</span><span data-lang="rw">Modern Skills ni ishuri ryo kuri interineti ryo kwiga Qur'an — Tajweed, Tafsir, Hifz n'Icyarabu, byigishwa buhoro buhoro n'abigisha bemewe, mu rurimi rwawe.</span><span data-lang="fr">Modern Skills est une académie en ligne pour apprendre le Coran — Tajwid, Tafsir, Hifz et arabe, enseignés pas à pas par des instructeurs certifiés, dans votre langue.</span><span data-lang="sw">Modern Skills ni chuo cha mtandaoni cha kujifunza Qur'an — Tajweed, Tafsir, Hifz na Kiarabu, kikifundishwa hatua kwa hatua na walimu waliothibitishwa, kwa lugha yako.</span><span data-lang="ar">Modern Skills أكاديمية عبر الإنترنت لتعلّم القرآن — التجويد والتفسير والحفظ والعربية، تُدرَّس خطوة بخطوة على يد معلمين معتمدين، بلغتك.</span></p>
             <div class="about-cta">
-                <a href="books.html" class="btn-gold"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Books</span><span data-lang="rw">Soma Ibitabo</span><span data-lang="fr">Voir les livres</span><span data-lang="sw">Vinjari Vitabu</span><span data-lang="ar">ØªØµÙØ­ Ø§Ù„ÙƒØªØ¨</span></a>
-                <a href="https://wa.me/250783198148" target="_blank" class="btn-ghost"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">Ø§ØªØµÙ„ Ø¨Ù†Ø§</span></a>
+                <a href="books.html" class="btn-gold"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Books</span><span data-lang="rw">Soma Ibitabo</span><span data-lang="fr">Voir les livres</span><span data-lang="sw">Vinjari Vitabu</span><span data-lang="ar">تصفح الكتب</span></a>
+                <a href="https://wa.me/250783198148" target="_blank" class="btn-ghost"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
             </div>
         </div>
         <div class="about-feats">
-            <div class="about-feat"><i class="fas fa-chalkboard-user"></i> <span data-lang="en">Certified expert teachers</span><span data-lang="rw">Abigisha babahanga bemewe</span><span data-lang="fr">Professeurs experts certifiÃ©s</span><span data-lang="sw">Walimu wataalamu waliothibitishwa</span><span data-lang="ar">Ù…Ø¹Ù„Ù…ÙˆÙ† Ø®Ø¨Ø±Ø§Ø¡ Ù…Ø¹ØªÙ…Ø¯ÙˆÙ†</span></div>
-            <div class="about-feat"><i class="fas fa-layer-group"></i> <span data-lang="en">Step-by-step structured lessons</span><span data-lang="rw">Amasomo yigishwa buhoro buhoro</span><span data-lang="fr">LeÃ§ons structurÃ©es pas Ã  pas</span><span data-lang="sw">Masomo yaliyopangwa hatua kwa hatua</span><span data-lang="ar">Ø¯Ø±ÙˆØ³ Ù…Ù†Ø¸Ù…Ø© Ø®Ø·ÙˆØ© Ø¨Ø®Ø·ÙˆØ©</span></div>
-            <div class="about-feat"><i class="fas fa-video"></i> <span data-lang="en">Watch lessons anywhere</span><span data-lang="rw">Reba amasomo ahantu hose</span><span data-lang="fr">Regardez les leÃ§ons partout</span><span data-lang="sw">Tazama masomo popote</span><span data-lang="ar">Ø´Ø§Ù‡Ø¯ Ø§Ù„Ø¯Ø±ÙˆØ³ ÙÙŠ Ø£ÙŠ Ù…ÙƒØ§Ù†</span></div>
+            <div class="about-feat"><i class="fas fa-chalkboard-user"></i> <span data-lang="en">Certified expert teachers</span><span data-lang="rw">Abigisha babahanga bemewe</span><span data-lang="fr">Professeurs experts certifiés</span><span data-lang="sw">Walimu wataalamu waliothibitishwa</span><span data-lang="ar">معلمون خبراء معتمدون</span></div>
+            <div class="about-feat"><i class="fas fa-layer-group"></i> <span data-lang="en">Step-by-step structured lessons</span><span data-lang="rw">Amasomo yigishwa buhoro buhoro</span><span data-lang="fr">Leçons structurées pas à pas</span><span data-lang="sw">Masomo yaliyopangwa hatua kwa hatua</span><span data-lang="ar">دروس منظمة خطوة بخطوة</span></div>
+            <div class="about-feat"><i class="fas fa-video"></i> <span data-lang="en">Watch lessons anywhere</span><span data-lang="rw">Reba amasomo ahantu hose</span><span data-lang="fr">Regardez les leçons partout</span><span data-lang="sw">Tazama masomo popote</span><span data-lang="ar">شاهد الدروس في أي مكان</span></div>
         </div>
     </section>
 
@@ -1952,12 +2084,12 @@ body.loading { overflow: hidden; }
     <!-- ===== INSTRUCTORS / PERSONAS ===== -->
     <section class="row-section" id="instructorsSection" style="display:none;">
         <div class="row-head reveal">
-            <h2><em><span data-lang="en">Our Instructors</span><span data-lang="rw">Abigisha Bacu</span><span data-lang="fr">Nos Instructeurs</span><span data-lang="sw">Walimu Wetu</span><span data-lang="ar">Ù…Ø¹Ù„Ù…ÙˆÙ†Ø§</span></em></h2>
+            <h2><em><span data-lang="en">Our Instructors</span><span data-lang="rw">Abigisha Bacu</span><span data-lang="fr">Nos Instructeurs</span><span data-lang="sw">Walimu Wetu</span><span data-lang="ar">معلمونا</span></em></h2>
         </div>
         <div class="inst-grid" id="instructorsList"></div>
     </section>
 
-<!-- ===== CATEGORY GRID SECTION (fallback only â€” hidden whenever lessons exist;
+<!-- ===== CATEGORY GRID SECTION (fallback only — hidden whenever lessons exist;
           the #categoryRows movie-style rows above are the main listing) ===== -->
      <section class="row-section category-grid-section" id="categoryGridSection" style="display:none;">
          <div id="categoryGridContainer">
@@ -1970,11 +2102,11 @@ body.loading { overflow: hidden; }
         <div class="wa-left">
             <div class="wa-icon"><i class="fab fa-whatsapp"></i></div>
             <div>
-                <h3><span data-lang="en">Join our WhatsApp community</span><span data-lang="rw">Injira mu muryango wacu wa WhatsApp</span><span data-lang="fr">Rejoignez notre communautÃ© WhatsApp</span><span data-lang="sw">Jiunge na jumuiya yetu ya WhatsApp</span><span data-lang="ar">Ø§Ù†Ø¶Ù… Ø¥Ù„Ù‰ Ù…Ø¬ØªÙ…Ø¹Ù†Ø§ Ø¹Ù„Ù‰ ÙˆØ§ØªØ³Ø§Ø¨</span></h3>
-                <p><span data-lang="en">Get lesson updates, reminders and support directly from our teachers.</span><span data-lang="rw">Bona amakuru y'amasomo, urwibutso n'inkunga ivuye ku bigisha bacu.</span><span data-lang="fr">Recevez les mises Ã  jour des leÃ§ons, rappels et soutien directement de nos professeurs.</span><span data-lang="sw">Pata masasisho ya masomo, vikumbusho na msaada moja kwa moja kutoka kwa walimu wetu.</span><span data-lang="ar">Ø§Ø­ØµÙ„ Ø¹Ù„Ù‰ ØªØ­Ø¯ÙŠØ«Ø§Øª Ø§Ù„Ø¯Ø±ÙˆØ³ ÙˆØ§Ù„ØªØ°ÙƒÙŠØ±Ø§Øª ÙˆØ§Ù„Ø¯Ø¹Ù… Ù…Ø¨Ø§Ø´Ø±Ø© Ù…Ù† Ù…Ø¹Ù„Ù…ÙŠÙ†Ø§.</span></p>
+                <h3><span data-lang="en">Join our WhatsApp community</span><span data-lang="rw">Injira mu muryango wacu wa WhatsApp</span><span data-lang="fr">Rejoignez notre communauté WhatsApp</span><span data-lang="sw">Jiunge na jumuiya yetu ya WhatsApp</span><span data-lang="ar">انضم إلى مجتمعنا على واتساب</span></h3>
+                <p><span data-lang="en">Get lesson updates, reminders and support directly from our teachers.</span><span data-lang="rw">Bona amakuru y'amasomo, urwibutso n'inkunga ivuye ku bigisha bacu.</span><span data-lang="fr">Recevez les mises à jour des leçons, rappels et soutien directement de nos professeurs.</span><span data-lang="sw">Pata masasisho ya masomo, vikumbusho na msaada moja kwa moja kutoka kwa walimu wetu.</span><span data-lang="ar">احصل على تحديثات الدروس والتذكيرات والدعم مباشرة من معلمينا.</span></p>
             </div>
         </div>
-        <a href="https://wa.me/250783198148" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i> <span data-lang="en">Join Now</span><span data-lang="rw">Injira</span><span data-lang="fr">Rejoindre maintenant</span><span data-lang="sw">Jiunge Sasa</span><span data-lang="ar">Ø§Ù†Ø¶Ù… Ø§Ù„Ø¢Ù†</span></a>
+        <a href="https://wa.me/250783198148" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i> <span data-lang="en">Join Now</span><span data-lang="rw">Injira</span><span data-lang="fr">Rejoindre maintenant</span><span data-lang="sw">Jiunge Sasa</span><span data-lang="ar">انضم الآن</span></a>
     </div>
 
 </div>
@@ -1984,7 +2116,7 @@ body.loading { overflow: hidden; }
         <div class="footer-grid">
             <div class="footer-brand">
                 <h3><i class="fas fa-book-quran"></i> Modern Skills</h3>
-                <p><span data-lang="en">Your trusted platform for learning the Quran online. Expert instructors, structured lessons, and a supportive community to guide you every step of the way.</span><span data-lang="rw">Uruhando rwawe rwizerwa rwo kwiga Qur'an kuri interineti. Abigisha babahanga, amasomo atunganyijwe, n'umuryango utera inkunga kugira ngo uyoborwe buri cyiciro.</span><span data-lang="fr">Votre plateforme de confiance pour apprendre le Coran en ligne. Instructeurs experts, leÃ§ons structurÃ©es, et une communautÃ© bienveillante pour vous guider Ã  chaque Ã©tape.</span><span data-lang="sw">Jukwaa lako la kuaminika la kujifunza Qur'an mtandaoni. Walimu wataalamu, masomo yaliyopangwa, na jumuiya inayokusaidia kila hatua.</span><span data-lang="ar">Ù…Ù†ØµØªÙƒ Ø§Ù„Ù…ÙˆØ«ÙˆÙ‚Ø© Ù„ØªØ¹Ù„Ù… Ø§Ù„Ù‚Ø±Ø¢Ù† Ø¹Ø¨Ø± Ø§Ù„Ø¥Ù†ØªØ±Ù†Øª. Ù…Ø¹Ù„Ù…ÙˆÙ† Ø®Ø¨Ø±Ø§Ø¡ØŒ Ø¯Ø±ÙˆØ³ Ù…Ù†Ø¸Ù…Ø©ØŒ ÙˆÙ…Ø¬ØªÙ…Ø¹ Ø¯Ø§Ø¹Ù… ÙŠØ±Ø´Ø¯Ùƒ ÙÙŠ ÙƒÙ„ Ø®Ø·ÙˆØ©.</span></p>
+                <p><span data-lang="en">Your trusted platform for learning the Quran online. Expert instructors, structured lessons, and a supportive community to guide you every step of the way.</span><span data-lang="rw">Uruhando rwawe rwizerwa rwo kwiga Qur'an kuri interineti. Abigisha babahanga, amasomo atunganyijwe, n'umuryango utera inkunga kugira ngo uyoborwe buri cyiciro.</span><span data-lang="fr">Votre plateforme de confiance pour apprendre le Coran en ligne. Instructeurs experts, leçons structurées, et une communauté bienveillante pour vous guider à chaque étape.</span><span data-lang="sw">Jukwaa lako la kuaminika la kujifunza Qur'an mtandaoni. Walimu wataalamu, masomo yaliyopangwa, na jumuiya inayokusaidia kila hatua.</span><span data-lang="ar">منصتك الموثوقة لتعلم القرآن عبر الإنترنت. معلمون خبراء، دروس منظمة، ومجتمع داعم يرشدك في كل خطوة.</span></p>
                 <div class="footer-social">
                     <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
                     <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
@@ -1994,14 +2126,14 @@ body.loading { overflow: hidden; }
                 </div>
             </div>
             <div class="footer-col">
-                <h4><span data-lang="en">Quick Links</span><span data-lang="rw">Ihuza Ryihuta</span><span data-lang="fr">Liens rapides</span><span data-lang="sw">Viungo vya Haraka</span><span data-lang="ar">Ø±ÙˆØ§Ø¨Ø· Ø³Ø±ÙŠØ¹Ø©</span></h4>
-                <a href="#featured"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©</span></a>
-                <a href="#about"><span data-lang="en">About us</span><span data-lang="rw">Turi Bande</span><span data-lang="fr">Ã€ propos</span><span data-lang="sw">Kuhusu Sisi</span><span data-lang="ar">Ù…Ù† Ù†Ø­Ù†</span></a>
-<a href="books.html"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">Ø§Ù„ÙƒØªØ¨</span></a>
+                <h4><span data-lang="en">Quick Links</span><span data-lang="rw">Ihuza Ryihuta</span><span data-lang="fr">Liens rapides</span><span data-lang="sw">Viungo vya Haraka</span><span data-lang="ar">روابط سريعة</span></h4>
+                <a href="#featured"><span data-lang="en">Home</span><span data-lang="rw">Ahabanza</span><span data-lang="fr">Accueil</span><span data-lang="sw">Nyumbani</span><span data-lang="ar">الرئيسية</span></a>
+                <a href="#about"><span data-lang="en">About us</span><span data-lang="rw">Turi Bande</span><span data-lang="fr">À propos</span><span data-lang="sw">Kuhusu Sisi</span><span data-lang="ar">من نحن</span></a>
+<a href="books.html"><span data-lang="en">Books</span><span data-lang="rw">Ibitabo</span><span data-lang="fr">Livres</span><span data-lang="sw">Vitabu</span><span data-lang="ar">الكتب</span></a>
             </div>
             <div class="footer-col">
-                <h4><span data-lang="en">Programs</span><span data-lang="rw">Gahunda</span><span data-lang="fr">Programmes</span><span data-lang="sw">Programu</span><span data-lang="ar">Ø§Ù„Ø¨Ø±Ø§Ù…Ø¬</span></h4>
-                <a href="#quran"><span data-lang="en">Qur'an Courses</span><span data-lang="rw">Amasomo ya Qur'an</span><span data-lang="fr">Cours de Coran</span><span data-lang="sw">Kurso za Qur'an</span><span data-lang="ar">Ø¯ÙˆØ±Ø§Øª Ø§Ù„Ù‚Ø±Ø¢Ù†</span></a>
+                <h4><span data-lang="en">Programs</span><span data-lang="rw">Gahunda</span><span data-lang="fr">Programmes</span><span data-lang="sw">Programu</span><span data-lang="ar">البرامج</span></h4>
+                <a href="#quran"><span data-lang="en">Qur'an Courses</span><span data-lang="rw">Amasomo ya Qur'an</span><span data-lang="fr">Cours de Coran</span><span data-lang="sw">Kurso za Qur'an</span><span data-lang="ar">دورات القرآن</span></a>
                 <a href="#tajweed">Tajweed</a>
                 <a href="#tafsir">Tafsir</a>
                 <a href="#hifz">Hifz</a>
@@ -2009,15 +2141,15 @@ body.loading { overflow: hidden; }
                 <a href="#video-course">Video Course</a>
             </div>
             <div class="footer-col">
-                <h4><span data-lang="en">Contact</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contact</span><span data-lang="sw">Wasiliana</span><span data-lang="ar">Ø§ØªØµÙ„ Ø¨Ù†Ø§</span></h4>
+                <h4><span data-lang="en">Contact</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contact</span><span data-lang="sw">Wasiliana</span><span data-lang="ar">اتصل بنا</span></h4>
                 <a href="tel:+250783198148" class="contact-row"><i class="fas fa-phone"></i> +250 783 198 148</a>
-                <a href="https://wa.me/250783198148" target="_blank" rel="noopener" class="contact-row"><i class="fab fa-whatsapp"></i> <span data-lang="en">WhatsApp â€” same number</span><span data-lang="rw">WhatsApp â€” iyi nomero</span><span data-lang="fr">WhatsApp â€” mÃªme numÃ©ro</span><span data-lang="sw">WhatsApp â€” nambari ile ile</span><span data-lang="ar">ÙˆØ§ØªØ³Ø§Ø¨ â€” Ù†ÙØ³ Ø§Ù„Ø±Ù‚Ù…</span></a>
+                <a href="https://wa.me/250783198148" target="_blank" rel="noopener" class="contact-row"><i class="fab fa-whatsapp"></i> <span data-lang="en">WhatsApp — same number</span><span data-lang="rw">WhatsApp — iyi nomero</span><span data-lang="fr">WhatsApp — même numéro</span><span data-lang="sw">WhatsApp — nambari ile ile</span><span data-lang="ar">واتساب — نفس الرقم</span></a>
                 <a href="mailto:misigaroissa2@gmail.com" class="contact-row"><i class="fas fa-envelope"></i> misigaroissa2@gmail.com</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <span>&copy; 2026 Modern Skills. <span data-lang="en">All rights reserved.</span><span data-lang="rw">Uburenganzira bwose buranazwe.</span><span data-lang="fr">Tous droits rÃ©servÃ©s.</span><span data-lang="sw">Haki zote zimehifadhiwa.</span><span data-lang="ar">Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ù‚ÙˆÙ‚ Ù…Ø­ÙÙˆØ¸Ø©.</span></span>
-            <span><span data-lang="en">Made with</span><span data-lang="rw">Bikozwe n'</span><span data-lang="fr">Fait avec</span><span data-lang="sw">Imetengenezwa kwa</span><span data-lang="ar">ØµÙÙ†Ø¹ Ø¨Ù€</span> <i class="fas fa-heart"></i> <span data-lang="en">for the Quran</span><span data-lang="rw">kubwa Qur'an</span><span data-lang="fr">pour le Coran</span><span data-lang="sw">kwa ajili ya Qur'an</span><span data-lang="ar">Ù…Ù† Ø£Ø¬Ù„ Ø§Ù„Ù‚Ø±Ø¢Ù†</span></span>
+            <span>&copy; 2026 Modern Skills. <span data-lang="en">All rights reserved.</span><span data-lang="rw">Uburenganzira bwose buranazwe.</span><span data-lang="fr">Tous droits réservés.</span><span data-lang="sw">Haki zote zimehifadhiwa.</span><span data-lang="ar">جميع الحقوق محفوظة.</span></span>
+            <span><span data-lang="en">Made with</span><span data-lang="rw">Bikozwe n'</span><span data-lang="fr">Fait avec</span><span data-lang="sw">Imetengenezwa kwa</span><span data-lang="ar">صُنع بـ</span> <i class="fas fa-heart"></i> <span data-lang="en">for the Quran</span><span data-lang="rw">kubwa Qur'an</span><span data-lang="fr">pour le Coran</span><span data-lang="sw">kwa ajili ya Qur'an</span><span data-lang="ar">من أجل القرآن</span></span>
         </div>
     </div>
 </footer>
@@ -2033,14 +2165,15 @@ let currentLang = MS_I18N.readStored();
 
 // ===== SPLASH / LOADING SCREEN =====
 (function () {
-    const SPLASH_MS = 10000;
+    const SPLASH_MS = 2600;
+    const SPLASH_FAILSAFE_MS = 12000;
     const SHOWN_KEY = 'noorSplashShown';
     const SPLASH_MSGS = {
         en: ['Loading your lessons...', 'Finding nice reading sounds...', 'Sharpening your memory...', 'Almost there...'],
         rw: ['Igirwa amasomo yawe...', 'Kurura inshuro nziza zo gusoma...', 'Noza amabazo yawe...', 'Bisigaye gato...'],
-        fr: ['Chargement de vos leÃ§ons...', 'Recherche de belles sonoritÃ©s...', 'Fortification de votre mÃ©moire...', 'Presque terminÃ©...'],
+        fr: ['Chargement de vos leçons...', 'Recherche de belles sonorités...', 'Fortification de votre mémoire...', 'Presque terminé...'],
         sw: ['Inapakia somo lako...', 'Inatafuta sauti nzuri za kusoma...', 'Inafanya ubongo wako kuwa mkali...', 'Karibu kumaliza...'],
-        ar: ['Ø¬Ø§Ø±Ù ØªØ­Ù…ÙŠÙ„ Ø¯Ø±ÙˆØ³Ùƒ...', 'Ø¬Ø§Ø±Ù Ø§Ù„Ø¨Ø­Ø« Ø¹Ù† Ù†ØºÙ…Ø§Øª Ø¬Ù…ÙŠÙ„Ø© Ù„Ù„Ù‚Ø±Ø§Ø¡Ø©...', 'ØªÙ‚ÙˆÙŠØ© Ø°Ø§ÙƒØ±ØªÙƒ...', 'Ø´Ø¨Ù‡ Ø§Ù„Ø§Ù†ØªÙ‡Ø§Ø¡...']
+        ar: ['جارٍ تحميل دروسك...', 'جارٍ البحث عن نغمات جميلة للقراءة...', 'تقوية ذاكرتك...', 'شبه الانتهاء...']
     };
     const msgs = SPLASH_MSGS[currentLang] || SPLASH_MSGS.en;
     const el = document.getElementById('splash');
@@ -2083,17 +2216,25 @@ let currentLang = MS_I18N.readStored();
                 msgEl.style.opacity = 1;
             }, 300);
         }
-    }, 2600);
+    }, 900);
+    let finished = false;
+    let failsafe = 0;
     function finish() {
+        if (finished) return;
+        finished = true;
         // The message rotator used to outlive the splash screen, so a
         // `setInterval` kept firing against a detached node for the rest of
         // the page's life.
         clearInterval(msgTimer);
+        if (failsafe) clearTimeout(failsafe);
         try { sessionStorage.setItem(SHOWN_KEY, '1'); } catch (e) {}
         document.body.classList.remove('loading');
         el.classList.add('hide');
         setTimeout(function () { el.remove(); }, 220);
     }
+    // A throttled or paused animation frame must never trap the visitor
+    // behind the splash, so a plain timer is the last line of defence.
+    failsafe = setTimeout(finish, SPLASH_FAILSAFE_MS);
     function tick() {
         const p = Math.min((performance.now() - t0) / SPLASH_MS, 1);
         const eased = 1 - Math.pow(1 - p, 3);
@@ -2119,7 +2260,7 @@ function renderAuthState(user) {
     if (!authDefaultHTML) authDefaultHTML = authEl.innerHTML;
     if (!user) {
         authEl.innerHTML = authDefaultHTML;
-        // NOTE: do not call setLang() here â€” it is defined later in this
+        // NOTE: do not call setLang() here — it is defined later in this
         // script and would throw a TDZ error. Filter just these buttons
         // to the active language instead (currentLang is declared at the
         // top of this script, so it is always safe to read here).
@@ -2224,17 +2365,24 @@ function resolveMediaUrl(u) {
 }
 
 const CATEGORY_IMAGES = {
-    quran: 'Images/thumbnails/thumb_seed_11.jpg',
-    tajweed: 'Images/thumbnails/thumb_seed_11.jpg',
-    tafsir: 'Images/thumbnails/thumb_seed_5.jpg',
-    hifz: 'Images/thumbnails/thumb_seed_9.jpg',
-    arabic: 'Images/thumbnails/thumb_seed_3.jpg',
-    english: 'Images/thumbnails/thumb_seed_1.jpg',
-    'video-course': 'Images/thumbnails/thumb_seed_1.jpg'
+    quran: 'Images/backgrounds/section-culture.webp',
+    tajweed: 'Images/backgrounds/section-culture.webp',
+    tafsir: 'Images/backgrounds/section-about.webp',
+    hifz: 'Images/backgrounds/section-nature.webp',
+    arabic: 'Images/backgrounds/section-cities.webp',
+    books: 'Images/backgrounds/section-culture.webp',
+    recitation: 'Images/backgrounds/section-nature.webp',
+    recite: 'Images/backgrounds/section-nature.webp',
+    english: 'Images/backgrounds/section-experiences.webp',
+    'video-course': 'Images/backgrounds/section-experiences.webp'
 };
 const CATEGORY_COLORS = {
     gold: '#d4a853', green: '#34d399', blue: '#60a5fa', purple: '#a78bfa', rose: '#fb7185'
 };
+const HERO_POSTER = 'Images/backgrounds/hero-poster.jpg';
+const HERO_VIDEO_DESKTOP = 'Images/backgrounds/hero-desktop.webm';
+const HERO_VIDEO_MOBILE = 'Images/backgrounds/hero-mobile.webm';
+const HERO_VIDEO_AUDIO = 'Images/backgrounds/hero-audio.mp4';
 const FEATURED_BG = 'Images/thumbnails/thumb_seed_11.jpg';
 
 // Last-resort artwork, so a lesson with no thumbnail and an unknown category
@@ -2243,7 +2391,7 @@ const FALLBACK_THUMB = (window.MS_MEDIA && MS_MEDIA.PLACEHOLDER) || FEATURED_BG;
 
 // ===== HTML ESCAPING =====
 // Lesson/category/instructor text comes from the database, so it must never be
-// interpolated raw into an innerHTML template â€” a title containing `<` or a
+// interpolated raw into an innerHTML template — a title containing `<` or a
 // quote would otherwise break the markup (or inject a script tag).
 function esc(v) {
     if (window.MS_MEDIA && typeof MS_MEDIA.escapeHtml === 'function') return MS_MEDIA.escapeHtml(v);
@@ -2273,7 +2421,7 @@ const DEMO_LESSONS = [
     { id: 2, title: 'Tafsir: Surah Al-Fatiha', description: 'Ibisobanuro byoroshye, ibihe ku bihe, by\'isura isomwa cyane muri Qur\'an, hamwe n\'ibyo isobanura n\'inyigisho za buri munsi.', category_name: 'Tafsir', category_slug: 'tafsir', category_color: '#34d399', instructor_name: 'Ustadh Hamza Noor', duration_minutes: 31, rating: 4.9, student_count: 264, difficulty: 'Beginner', thumbnail_url: CATEGORY_IMAGES.tafsir },
     { id: 3, title: 'Hifz: Uburyo bwo Kwibuka Bufatika', description: 'Uburyo bworoshye bwo kwibuka bukoreshwa na huffaz ku isi yose. Iga kwibuka impapuro ndende utizigamye.', category_name: 'Hifz', category_slug: 'hifz', category_color: '#60a5fa', instructor_name: 'Sheikh Bilal Hassan', duration_minutes: 27, rating: 4.8, student_count: 190, difficulty: 'Intermediate', thumbnail_url: CATEGORY_IMAGES.hifz },
     { id: 4, title: 'Icyarabu: Inyuguti n\'Amajwi ya Mbere', description: 'Tangira gusoma Icyarabu uhereye ku ntangiriro. Menya inyuguti 28, imiterere yazo n\'amajwi yazo, hamwe n\'ingero z\'ijwi zisobanutse.', category_name: 'Arabic', category_slug: 'arabic', category_color: '#a78bfa', instructor_name: 'Ustadha Mariam Yusuf', duration_minutes: 22, rating: 4.7, student_count: 142, difficulty: 'Beginner', thumbnail_url: CATEGORY_IMAGES.arabic },
-    { id: 5, title: 'Tajweed: Amategeko ya Noon & Meem', description: 'Menya amategeko shingiro ya Tajweed ya noon na meem â€” idgham, iqlab, ikhfa n\'andi â€” hamwe n\'ingero z\'ijwi zisobanutse.', category_name: 'Tajweed', category_slug: 'tajweed', category_color: '#d4a853', instructor_name: 'Misigiso Issa', duration_minutes: 35, rating: 4.9, student_count: 215, difficulty: 'Intermediate', thumbnail_url: CATEGORY_IMAGES.tajweed },
+    { id: 5, title: 'Tajweed: Amategeko ya Noon & Meem', description: 'Menya amategeko shingiro ya Tajweed ya noon na meem — idgham, iqlab, ikhfa n\'andi — hamwe n\'ingero z\'ijwi zisobanutse.', category_name: 'Tajweed', category_slug: 'tajweed', category_color: '#d4a853', instructor_name: 'Misigiso Issa', duration_minutes: 35, rating: 4.9, student_count: 215, difficulty: 'Intermediate', thumbnail_url: CATEGORY_IMAGES.tajweed },
     { id: 6, title: 'Tafsir: Ayat Al-Kursi Yimbitse', description: 'Uyu ni umwe mu mirongo ikomeye ya Qur\'an, asobanuwe mu buryo bworoshye kugira ngo usobanukirwe kandi uhuze n\'ubutumwa bwayo bukomeye.', category_name: 'Tafsir', category_slug: 'tafsir', category_color: '#34d399', instructor_name: 'Ustadh Hamza Noor', duration_minutes: 29, rating: 5, student_count: 173, difficulty: 'Intermediate', thumbnail_url: CATEGORY_IMAGES.tafsir }
 ];
 
@@ -2286,10 +2434,10 @@ function formatCount(n) {
 // translated Kinyarwanda, so the featured hero showed "Umutangira" to a visitor
 // who had picked English or Arabic.
 const DIFFICULTY_L10N = {
-    Beginner: { en: 'Beginner', rw: 'Umutangira', fr: 'DÃ©butant', sw: 'Mwanzo', ar: 'Ù…Ø¨ØªØ¯Ø¦' },
-    Intermediate: { en: 'Intermediate', rw: 'Urwego rwo Hagati', fr: 'IntermÃ©diaire', sw: 'Wastani', ar: 'Ù…ØªÙˆØ³Ø·' },
-    Advanced: { en: 'Advanced', rw: 'Abahinze', fr: 'AvancÃ©', sw: 'Juu', ar: 'Ù…ØªÙ‚Ø¯Ù…' },
-    'All Levels': { en: 'All Levels', rw: 'Ibice Byose', fr: 'Tous niveaux', sw: 'Kila ngazi', ar: 'Ø¬Ù…ÙŠØ¹ Ø§Ù„Ù…Ø³ØªÙˆÙŠØ§Øª' }
+    Beginner: { en: 'Beginner', rw: 'Umutangira', fr: 'Débutant', sw: 'Mwanzo', ar: 'مبتدئ' },
+    Intermediate: { en: 'Intermediate', rw: 'Urwego rwo Hagati', fr: 'Intermédiaire', sw: 'Wastani', ar: 'متوسط' },
+    Advanced: { en: 'Advanced', rw: 'Abahinze', fr: 'Avancé', sw: 'Juu', ar: 'متقدم' },
+    'All Levels': { en: 'All Levels', rw: 'Ibice Byose', fr: 'Tous niveaux', sw: 'Kila ngazi', ar: 'جميع المستويات' }
 };
 function difficultyLabel(d) {
     const entry = DIFFICULTY_L10N[d];
@@ -2309,29 +2457,130 @@ function thumbFor(lesson) {
         || FALLBACK_THUMB;
 }
 
+function categoryBackdrop(slug) {
+    return CATEGORY_IMAGES[slug] || 'Images/backgrounds/section-culture.webp';
+}
+
+function heroWebmSrc() {
+    return window.matchMedia('(max-width: 760px)').matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP;
+}
+
+function heroSilentSrc(video) {
+    return video.dataset.webm === '1' ? heroWebmSrc() : HERO_VIDEO_AUDIO;
+}
+
+function unlockHeroAudio(video) {
+    if (video.dataset.audioUnlocked === '1') return;
+    const events = ['pointerdown', 'keydown', 'touchstart', 'click'];
+    const unlock = function () {
+        if (video.dataset.audioUnlocked === '1') return;
+        video.dataset.audioUnlocked = '1';
+        const time = isFinite(video.currentTime) ? video.currentTime : 0;
+        if (video.dataset.src !== HERO_VIDEO_AUDIO) {
+            video.pause();
+            video.dataset.src = HERO_VIDEO_AUDIO;
+            video.src = HERO_VIDEO_AUDIO;
+            video.addEventListener('loadedmetadata', function () {
+                try { if (time > 0 && isFinite(video.duration) && time < video.duration) video.currentTime = time; } catch (e) {}
+            }, { once: true });
+            video.load();
+        }
+        video.muted = false;
+        video.volume = 0.65;
+        const play = video.play();
+        if (play && typeof play.catch === 'function') play.catch(function () {});
+        events.forEach(function (name) { document.removeEventListener(name, unlock, true); });
+    };
+    events.forEach(function (name) { document.addEventListener(name, unlock, true); });
+}
+
+function heroBackdropMarkup() {
+    return `<div class="featured-bg">
+        <img src="${HERO_POSTER}" alt="">
+        <video class="featured-video" muted loop playsinline preload="none" poster="${HERO_POSTER}" aria-hidden="true"></video>
+    </div>`;
+}
+
+function startHeroVideo() {
+    const bg = document.querySelector('#featured .featured-bg');
+    if (!bg) return;
+    const video = bg.querySelector('video');
+    if (!video) return;
+    const canWebm = video.canPlayType && video.canPlayType('video/webm');
+    const canMp4 = video.canPlayType && video.canPlayType('video/mp4');
+    if (!canWebm && !canMp4) return;
+    video.dataset.webm = canWebm ? '1' : '0';
+    if (video.dataset.ready === '1') return;
+    video.dataset.ready = '1';
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+        video.muted = true;
+        video.volume = 0;
+        return;
+    }
+    const ready = function () { bg.classList.add('video-ready'); };
+    video.addEventListener('loadeddata', ready, { once: true });
+    video.addEventListener('playing', ready, { once: true });
+    if (!canMp4) {
+        const silent = heroSilentSrc(video);
+        video.dataset.src = silent;
+        video.src = silent;
+        video.muted = true;
+        video.volume = 0;
+        const play = video.play();
+        if (play && typeof play.catch === 'function') play.catch(function () {});
+        return;
+    }
+    video.dataset.src = HERO_VIDEO_AUDIO;
+    video.src = HERO_VIDEO_AUDIO;
+    video.muted = false;
+    video.volume = 0.65;
+    const play = video.play();
+    if (play && typeof play.catch === 'function') {
+        play.catch(function () {
+            const silent = heroSilentSrc(video);
+            if (video.dataset.src !== silent) {
+                const time = isFinite(video.currentTime) ? video.currentTime : 0;
+                video.dataset.src = silent;
+                video.src = silent;
+                video.addEventListener('loadedmetadata', function () {
+                    try { if (time > 0 && isFinite(video.duration) && time < video.duration) video.currentTime = time; } catch (e) {}
+                }, { once: true });
+                video.load();
+            }
+            video.muted = true;
+            video.volume = 0;
+            const retry = video.play();
+            if (retry && typeof retry.catch === 'function') retry.catch(function () {});
+            unlockHeroAudio(video);
+        });
+    }
+}
+
 // ===== RENDER: FEATURED =====
 function renderFeatured(lessons) {
     const el = document.getElementById('featured');
     if (!lessons || !lessons.length) {
         el.innerHTML = `
-            <div class="featured-bg"><img src="${FEATURED_BG}" alt=""></div>
+            ${heroBackdropMarkup()}
             <div class="featured-shade"></div>
             <div class="featured-inner">
                 <div class="featured-info">
-                    <h1><span data-lang="en">Learn the Qur'an Online</span><span data-lang="rw">Wige Qur'an Kuri Interineti</span><span data-lang="fr">Apprenez le Coran en ligne</span><span data-lang="sw">Jifunze Qur'an Mtandaoni</span><span data-lang="ar">ØªØ¹Ù„Ù‘Ù… Ø§Ù„Ù‚Ø±Ø¢Ù† Ø£ÙˆÙ†Ù„Ø§ÙŠÙ†</span></h1>
-                    <p><span data-lang="en">Expert instructors are preparing structured Tajweed, Tafsir, Hifz and Arabic lessons for you. New lessons will appear here very soon.</span><span data-lang="rw">Abigisha babahanga barimo bitegura amasomo atunganyijwe ya Tajweed, Tafsir, Hifz n'Icyarabu kugira ngo uwige. Amasomo mashya azagaragara hano vuba.</span><span data-lang="fr">Des instructeurs experts prÃ©parent des leÃ§ons structurÃ©es de Tajwid, Tafsir, Hifz et d'arabe pour vous. De nouvelles leÃ§ons apparaÃ®tront ici trÃ¨s bientÃ´t.</span><span data-lang="sw">Walimu wataalamu wanatayarisha masomo yaliyopangwa ya Tajweed, Tafsir, Hifz na Kiarabu kwa ajili yako. Masomo mapya yataonekana hapa hivi karibuni.</span><span data-lang="ar">ÙŠØ¹Ù…Ù„ Ù…Ø¹Ù„Ù…ÙˆÙ† Ø®Ø¨Ø±Ø§Ø¡ Ø¹Ù„Ù‰ Ø¥Ø¹Ø¯Ø§Ø¯ Ø¯Ø±ÙˆØ³ Ù…Ù†Ø¸Ù…Ø© ÙÙŠ Ø§Ù„ØªØ¬ÙˆÙŠØ¯ ÙˆØ§Ù„ØªÙØ³ÙŠØ± ÙˆØ§Ù„Ø­ÙØ¸ ÙˆØ§Ù„Ø¹Ø±Ø¨ÙŠØ© Ù„Ùƒ. Ø³ØªØ¸Ù‡Ø± Ø¯Ø±ÙˆØ³ Ø¬Ø¯ÙŠØ¯Ø© Ù‡Ù†Ø§ Ù‚Ø±ÙŠØ¨Ù‹Ø§ Ø¬Ø¯Ù‹Ø§.</span></p>
+                    <h1><span data-lang="en">Learn the Qur'an Online</span><span data-lang="rw">Wige Qur'an Kuri Interineti</span><span data-lang="fr">Apprenez le Coran en ligne</span><span data-lang="sw">Jifunze Qur'an Mtandaoni</span><span data-lang="ar">تعلّم القرآن أونلاين</span></h1>
+                    <p><span data-lang="en">Expert instructors are preparing structured Tajweed, Tafsir, Hifz and Arabic lessons for you. New lessons will appear here very soon.</span><span data-lang="rw">Abigisha babahanga barimo bitegura amasomo atunganyijwe ya Tajweed, Tafsir, Hifz n'Icyarabu kugira ngo uwige. Amasomo mashya azagaragara hano vuba.</span><span data-lang="fr">Des instructeurs experts préparent des leçons structurées de Tajwid, Tafsir, Hifz et d'arabe pour vous. De nouvelles leçons apparaîtront ici très bientôt.</span><span data-lang="sw">Walimu wataalamu wanatayarisha masomo yaliyopangwa ya Tajweed, Tafsir, Hifz na Kiarabu kwa ajili yako. Masomo mapya yataonekana hapa hivi karibuni.</span><span data-lang="ar">يعمل معلمون خبراء على إعداد دروس منظمة في التجويد والتفسير والحفظ والعربية لك. ستظهر دروس جديدة هنا قريبًا جدًا.</span></p>
                     <div class="f-meta">
-                        <span><i class="fas fa-chalkboard-user"></i> <span data-lang="en">Certified teachers</span><span data-lang="rw">Abigisha bemejwe</span><span data-lang="fr">Professeurs certifiÃ©s</span><span data-lang="sw">Walimu waliothibitishwa</span><span data-lang="ar">Ù…Ø¹Ù„Ù…ÙˆÙ† Ù…Ø¹ØªÙ…Ø¯ÙˆÙ†</span></span>
-                        <span><i class="fas fa-globe"></i> <span data-lang="en">5 languages</span><span data-lang="rw">Indimi 5</span><span data-lang="fr">5 langues</span><span data-lang="sw">Lugha 5</span><span data-lang="ar">5 Ù„ØºØ§Øª</span></span>
+                        <span><i class="fas fa-chalkboard-user"></i> <span data-lang="en">Certified teachers</span><span data-lang="rw">Abigisha bemejwe</span><span data-lang="fr">Professeurs certifiés</span><span data-lang="sw">Walimu waliothibitishwa</span><span data-lang="ar">معلمون معتمدون</span></span>
+                        <span><i class="fas fa-globe"></i> <span data-lang="en">5 languages</span><span data-lang="rw">Indimi 5</span><span data-lang="fr">5 langues</span><span data-lang="sw">Lugha 5</span><span data-lang="ar">5 لغات</span></span>
                     </div>
                     <div class="f-btns">
-                        <a href="https://wa.me/250783198148" target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">Ø§ØªØµÙ„ Ø¨Ù†Ø§</span></a>
-                        <a href="#categoryRows" class="btn-ghost"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Lessons</span><span data-lang="rw">Sindagura Amasomo</span><span data-lang="fr">Parcourir les leÃ§ons</span><span data-lang="sw">Vinjari Masomo</span><span data-lang="ar">ØªØµÙØ­ Ø§Ù„Ø¯Ø±ÙˆØ³</span></a>
+                        <a href="https://wa.me/250783198148" target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
+                        <a href="#categoryRows" class="btn-ghost"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Lessons</span><span data-lang="rw">Sindagura Amasomo</span><span data-lang="fr">Parcourir les leçons</span><span data-lang="sw">Vinjari Masomo</span><span data-lang="ar">تصفح الدروس</span></a>
                     </div>
                 </div>
                 <div class="featured-poster"><img src="${FEATURED_BG}" alt=""></div>
             </div>`;
         setLang(currentLang);
+        startHeroVideo();
         return;
     }
     const sorted = [...lessons].sort((a, b) => (Number(b.rating) - Number(a.rating)) || (b.student_count - a.student_count));
@@ -2341,27 +2590,28 @@ function renderFeatured(lessons) {
         const dur = l.duration_minutes != null ? l.duration_minutes + ' min' : '-- min';
         const art = thumbFor(l);
         el.innerHTML = `
-            <div class="featured-bg"><img src="${art}" alt=""></div>
+            ${heroBackdropMarkup()}
             <div class="featured-shade"></div>
             <div class="featured-inner">
                 <div class="featured-info">
                     <h1>${esc(l.title)}</h1>
-                    <p>${l.description ? esc(l.description) : '<span data-lang="en">Learn with clear, step-by-step guidance from our certified teachers.</span><span data-lang="rw">Iga ukurikije amabwiriza asobanutse kuva ku bigisha bacu bemejwe.</span><span data-lang="fr">Apprenez avec des conseils clairs, Ã©tape par Ã©tape, de nos professeurs certifiÃ©s.</span><span data-lang="sw">Jifunze kwa mwongozo ulio wazi, hatua kwa hatua kutoka kwa walimu wetu waliothibitishwa.</span><span data-lang="ar">ØªØ¹Ù„Ù‘Ù… Ø¨Ø¥Ø±Ø´Ø§Ø¯Ø§Øª ÙˆØ§Ø¶Ø­Ø© Ø®Ø·ÙˆØ© Ø¨Ø®Ø·ÙˆØ© Ù…Ù† Ù…Ø¹Ù„Ù…ÙŠÙ†Ø§ Ø§Ù„Ù…Ø¹ØªÙ…Ø¯ÙŠÙ†.</span>'}</p>
-                    ${l.instructor_name ? `<div class="f-instructor"><span class="f-instructor-avatar">${esc(initials(l.instructor_name))}</span><span><em data-lang="en">Taught by</em><em data-lang="rw">Bigishawe na</em><em data-lang="fr">EnseignÃ© par</em><em data-lang="sw">Inafundishwa na</em><em data-lang="ar">ÙŠÙ‚Ø¯Ù‘Ù…Ù‡</em> <strong>${esc(l.instructor_name)}</strong></span></div>` : ''}
+                    <p>${l.description ? esc(l.description) : '<span data-lang="en">Learn with clear, step-by-step guidance from our certified teachers.</span><span data-lang="rw">Iga ukurikije amabwiriza asobanutse kuva ku bigisha bacu bemejwe.</span><span data-lang="fr">Apprenez avec des conseils clairs, étape par étape, de nos professeurs certifiés.</span><span data-lang="sw">Jifunze kwa mwongozo ulio wazi, hatua kwa hatua kutoka kwa walimu wetu waliothibitishwa.</span><span data-lang="ar">تعلّم بإرشادات واضحة خطوة بخطوة من معلمينا المعتمدين.</span>'}</p>
+                    ${l.instructor_name ? `<div class="f-instructor"><span class="f-instructor-avatar">${esc(initials(l.instructor_name))}</span><span><em data-lang="en">Taught by</em><em data-lang="rw">Bigishawe na</em><em data-lang="fr">Enseigné par</em><em data-lang="sw">Inafundishwa na</em><em data-lang="ar">يقدّمه</em> <strong>${esc(l.instructor_name)}</strong></span></div>` : ''}
                     <div class="f-meta">
                         <span><i class="fas fa-star"></i> ${rating}</span>
-                        <span><i class="fas fa-users"></i> ${formatCount(l.student_count)} <span data-lang="en">students</span><span data-lang="rw">Abanyeshuri</span><span data-lang="fr">Ã©tudiants</span><span data-lang="sw">wanafunzi</span><span data-lang="ar">Ø·Ù„Ø§Ø¨</span></span>
+                        <span><i class="fas fa-users"></i> ${formatCount(l.student_count)} <span data-lang="en">students</span><span data-lang="rw">Abanyeshuri</span><span data-lang="fr">étudiants</span><span data-lang="sw">wanafunzi</span><span data-lang="ar">طلاب</span></span>
                         <span><i class="fas fa-clock"></i> ${dur}</span>
                         <span><i class="fas fa-signal"></i> ${esc(difficultyLabel(l.difficulty))}</span>
                     </div>
                     <div class="f-btns">
-                        <a href="video.html?id=${l.id}" class="btn-gold"><i class="fas fa-play"></i> <span data-lang="en">Watch Now</span><span data-lang="rw">Reba Ubu</span><span data-lang="fr">Regarder maintenant</span><span data-lang="sw">Tazama Sasa</span><span data-lang="ar">Ø´Ø§Ù‡Ø¯ Ø§Ù„Ø¢Ù†</span></a>
-                        ${l.category_slug ? `<a href="#${encodeURIComponent(l.category_slug)}" class="btn-ghost"><i class="fas fa-layer-group"></i> <span data-lang="en">More in this category</span><span data-lang="rw">Izindi muri iyi gicegu</span><span data-lang="fr">Plus dans cette catÃ©gorie</span><span data-lang="sw">Zaidi katika kategoria hii</span><span data-lang="ar">Ø§Ù„Ù…Ø²ÙŠØ¯ ÙÙŠ Ù‡Ø°Ù‡ Ø§Ù„ÙØ¦Ø©</span></a>` : `<a href="#categoryRows" class="btn-ghost"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Lessons</span><span data-lang="rw">Sindagura Amasomo</span><span data-lang="fr">Parcourir les leÃ§ons</span><span data-lang="sw">Vinjari Masomo</span><span data-lang="ar">ØªØµÙØ­ Ø§Ù„Ø¯Ø±ÙˆØ³</span></a>`}
+                        <a href="video.html?id=${l.id}" class="btn-gold"><i class="fas fa-play"></i> <span data-lang="en">Watch Now</span><span data-lang="rw">Reba Ubu</span><span data-lang="fr">Regarder maintenant</span><span data-lang="sw">Tazama Sasa</span><span data-lang="ar">شاهد الآن</span></a>
+                        ${l.category_slug ? `<a href="#${encodeURIComponent(l.category_slug)}" class="btn-ghost"><i class="fas fa-layer-group"></i> <span data-lang="en">More in this category</span><span data-lang="rw">Izindi muri iyi gicegu</span><span data-lang="fr">Plus dans cette catégorie</span><span data-lang="sw">Zaidi katika kategoria hii</span><span data-lang="ar">المزيد في هذه الفئة</span></a>` : `<a href="#categoryRows" class="btn-ghost"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Lessons</span><span data-lang="rw">Sindagura Amasomo</span><span data-lang="fr">Parcourir les leçons</span><span data-lang="sw">Vinjari Masomo</span><span data-lang="ar">تصفح الدروس</span></a>`}
                     </div>
                 </div>
                 <div class="featured-poster"><img src="${art}" alt=""></div>
             </div>`;
         setLang(currentLang);
+        startHeroVideo();
     };
     paint();
     fetch(API + '/lessons/' + l.id).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
@@ -2415,19 +2665,21 @@ function posterCard(l) {
     const free = l.is_free === 1 || l.is_free === true;
     const hasVideo = l.has_video || l.video_url || l.video_file_path || l.video_preview_url;
     const desc = (l.description || '').trim();
+    const imageUrl = thumbFor(l);
+    const posterBg = encodeURI(imageUrl).replace(/'/g, '%27');
     return `
-        <a class="pcard" href="video.html?id=${encodeURIComponent(l.id)}" title="${esc(l.title)}">
-            <div class="poster">
-                <img src="${thumbFor(l)}" alt="${esc(l.title)}" loading="lazy">
+        <a class="pcard reveal" href="video.html?id=${encodeURIComponent(l.id)}" title="${esc(l.title)}">
+            <div class="poster" style="--poster-bg:url('${posterBg}')">
+                <img src="${imageUrl}" alt="${esc(l.title)}" loading="lazy" onerror="this.style.display='none'">
                 <span class="cat-badge" style="border-color:${color};color:${color};">${esc(l.category_name || 'Lesson')}</span>
-                ${free ? '<span class="free-badge"><i class="fas fa-unlock-keyhole"></i> <span data-lang="en">Free</span><span data-lang="rw">Bira</span><span data-lang="fr">Gratuit</span><span data-lang="sw">Bure</span><span data-lang="ar">Ù…Ø¬Ø§Ù†ÙŠ</span></span>'
-                       : '<span class="paid-badge"><i class="fas fa-lock"></i> <span data-lang="en">Paid</span><span data-lang="rw">Iishyurwa</span><span data-lang="fr">Payant</span><span data-lang="sw">Inalipwa</span><span data-lang="ar">Ù…Ø¯ÙÙˆØ¹</span></span>'}
+                ${free ? '<span class="free-badge"><i class="fas fa-unlock-keyhole"></i> <span data-lang="en">Free</span><span data-lang="rw">Bira</span><span data-lang="fr">Gratuit</span><span data-lang="sw">Bure</span><span data-lang="ar">مجاني</span></span>'
+                       : '<span class="paid-badge"><i class="fas fa-lock"></i> <span data-lang="en">Paid</span><span data-lang="rw">Iishyurwa</span><span data-lang="fr">Payant</span><span data-lang="sw">Inalipwa</span><span data-lang="ar">مدفوع</span></span>'}
                 <span class="dur-badge">${dur}</span>
                 ${hasVideo ? '<span class="vid-badge"><i class="fas fa-play"></i></span>' : ''}
                 <div class="poster-hover"><i class="fas fa-play"></i></div>
             </div>
             <h3>${esc(l.title)}</h3>
-            ${desc ? `<p class="pdesc">${esc(desc.length > 110 ? desc.slice(0, 110).trimEnd() + 'â€¦' : desc)}</p>` : ''}
+            ${desc ? `<p class="pdesc">${esc(desc.length > 110 ? desc.slice(0, 110).trimEnd() + '…' : desc)}</p>` : ''}
             <div class="pmeta"><i class="fas fa-chalkboard-user"></i> ${esc(l.instructor_name || 'Modern Skills')}</div>
             <div class="pcredits">
                 <span class="rate"><i class="fas fa-star"></i> ${rating || '--'}</span>
@@ -2450,11 +2702,11 @@ function renderInstructors(instructors, lessons) {
         list.innerHTML = `
             <div class="empty-instructors">
                 <div class="empty-icon"><i class="fas fa-chalkboard-user"></i></div>
-                <h3><span data-lang="en">No teachers available yet</span><span data-lang="rw">Nta mwarimu ugihari</span><span data-lang="fr">Aucun professeur disponible pour l'instant</span><span data-lang="sw">Hakuna walimu waliopo sasa</span><span data-lang="ar">Ù„Ø§ ÙŠÙˆØ¬Ø¯ Ù…Ø¯Ø±Ù‘Ø³ÙˆÙ† Ù…ØªØ§Ø­ÙˆÙ† Ø¨Ø¹Ø¯</span></h3>
-                <p><span data-lang="en">Our teachers are getting ready. New lessons and teachers will appear here very soon.</span><span data-lang="rw">Abigisha bacu barimo bitegura. Amasomo mashya n'abigisha bizagaragara hano vuba.</span><span data-lang="fr">Nos professeurs se prÃ©parent. De nouvelles leÃ§ons et de nouveaux professeurs apparaÃ®tront ici trÃ¨s bientÃ´t.</span><span data-lang="sw">Walimu wetu wanatayarisha. Masomo mapya na walimu wapya yatatolewa hapa hivi karibuni.</span><span data-lang="ar">Ù…Ø¹Ù„Ù…ÙˆÙ†Ø§ ÙŠØ³ØªØ¹Ø¯ÙˆÙ†. Ø³ØªØ¸Ù‡Ø± Ø¯Ø±ÙˆØ³ ÙˆÙ…Ø¹Ù„Ù…ÙˆÙ† Ø¬Ø¯Ø¯ Ù‡Ù†Ø§ Ù‚Ø±ÙŠØ¨Ù‹Ø§ Ø¬Ø¯Ù‹Ø§.</span></p>
+                <h3><span data-lang="en">No teachers available yet</span><span data-lang="rw">Nta mwarimu ugihari</span><span data-lang="fr">Aucun professeur disponible pour l'instant</span><span data-lang="sw">Hakuna walimu waliopo sasa</span><span data-lang="ar">لا يوجد مدرّسون متاحون بعد</span></h3>
+                <p><span data-lang="en">Our teachers are getting ready. New lessons and teachers will appear here very soon.</span><span data-lang="rw">Abigisha bacu barimo bitegura. Amasomo mashya n'abigisha bizagaragara hano vuba.</span><span data-lang="fr">Nos professeurs se préparent. De nouvelles leçons et de nouveaux professeurs apparaîtront ici très bientôt.</span><span data-lang="sw">Walimu wetu wanatayarisha. Masomo mapya na walimu wapya yatatolewa hapa hivi karibuni.</span><span data-lang="ar">معلمونا يستعدون. ستظهر دروس ومعلمون جدد هنا قريبًا جدًا.</span></p>
                 <div class="empty-actions">
-                    <a href="https://wa.me/250783198148" target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">Ø§ØªØµÙ„ Ø¨Ù†Ø§</span></a>
-                    <a href="#featured" class="btn-ghost"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Lessons</span><span data-lang="rw">Sindagura Amasomo</span><span data-lang="fr">Parcourir les leÃ§ons</span><span data-lang="sw">Vinjari Masomo</span><span data-lang="ar">ØªØµÙØ­ Ø§Ù„Ø¯Ø±ÙˆØ³</span></a>
+                    <a href="https://wa.me/250783198148" target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
+                    <a href="#featured" class="btn-ghost"><i class="fas fa-book-open"></i> <span data-lang="en">Browse Lessons</span><span data-lang="rw">Sindagura Amasomo</span><span data-lang="fr">Parcourir les leçons</span><span data-lang="sw">Vinjari Masomo</span><span data-lang="ar">تصفح الدروس</span></a>
                 </div>
             </div>`;
         setLang(currentLang);
@@ -2476,7 +2728,7 @@ function renderInstructors(instructors, lessons) {
                     <h4>${esc(i.name)}</h4>
                     <p class="inst-exp">${esc(i.expertise || '')}</p>
                     <p class="inst-bio">${esc(i.bio || '')}</p>
-                    <span class="inst-count"><i class="fas fa-video"></i> <b>${count}</b> <span data-lang="en">lesson${count === 1 ? '' : 's'}</span><span data-lang="rw">isomo</span><span data-lang="fr">leÃ§on${count === 1 ? '' : 's'}</span><span data-lang="sw">somo</span><span data-lang="ar">Ø¯Ø±Ø³</span></span>
+                    <span class="inst-count"><i class="fas fa-video"></i> <b>${count}</b> <span data-lang="en">lesson${count === 1 ? '' : 's'}</span><span data-lang="rw">isomo</span><span data-lang="fr">leçon${count === 1 ? '' : 's'}</span><span data-lang="sw">somo</span><span data-lang="ar">درس</span></span>
                 </div>
             </div>`;
     }).join('');
@@ -2489,8 +2741,8 @@ function renderCategoryRows(lessons, categories) {
     const order = categories && categories.length ? categories : [];
     if (!lessons || !lessons.length) {
         container.innerHTML = `
-        <div class="row-head">
-            <h2><span data-lang="en">All Lessons</span><span data-lang="rw">Amasomo Yose</span><span data-lang="fr">Toutes les leÃ§ons</span><span data-lang="sw">Masomo Yote</span><span data-lang="ar">Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø¯Ø±ÙˆØ³</span></h2>
+        <div class="row-head reveal">
+            <h2><span data-lang="en">All Lessons</span><span data-lang="rw">Amasomo Yose</span><span data-lang="fr">Toutes les leçons</span><span data-lang="sw">Masomo Yote</span><span data-lang="ar">جميع الدروس</span></h2>
         </div>
         <div class="lessons-loading-section">
             <div class="lessons-loading-card">
@@ -2498,11 +2750,12 @@ function renderCategoryRows(lessons, categories) {
                 <div class="lessons-loading-bar-wrap">
                     <div class="lessons-loading-bar"></div>
                 </div>
-                <h3><span data-lang="en">Loading please wait...</span><span data-lang="rw">Gusoma oya...</span><span data-lang="fr">Chargement en cours...</span><span data-lang="sw">Inapakia...</span><span data-lang="ar">Ø¬Ø§Ø±Ù Ø§Ù„ØªØ­Ù…ÙŠÙ„...</span></h3>
-                <p><span data-lang="en">Please wait while we load your lessons.</span><span data-lang="rw">Menya oya dusuze.</span><span data-lang="fr">Veuillez patienter pendant le chargement.</span><span data-lang="sw">Tafadhali subiri.</span><span data-lang="ar">ÙŠØ±Ø¬Ù‰ Ø§Ù„Ø§Ù†ØªØ¸Ø§Ø± Ø£Ø«Ù†Ø§Ø¡ Ø§Ù„ØªØ­Ù…ÙŠÙ„.</span></p>
+                <h3><span data-lang="en">Loading please wait...</span><span data-lang="rw">Gusoma oya...</span><span data-lang="fr">Chargement en cours...</span><span data-lang="sw">Inapakia...</span><span data-lang="ar">جارٍ التحميل...</span></h3>
+                <p><span data-lang="en">Please wait while we load your lessons.</span><span data-lang="rw">Menya oya dusuze.</span><span data-lang="fr">Veuillez patienter pendant le chargement.</span><span data-lang="sw">Tafadhali subiri.</span><span data-lang="ar">يرجى الانتظار أثناء التحميل.</span></p>
             </div>
         </div>`;
         setLang(currentLang);
+        observeReveals(container);
         return;
     }
     const orderMap = {};
@@ -2524,11 +2777,11 @@ function renderCategoryRows(lessons, categories) {
     const slugs = Object.keys(byCat).sort((a, b) => (orderMap[a] ?? 999) - (orderMap[b] ?? 999));
     const catMeta = {};
     order.forEach(c => { catMeta[c.slug] = c; });
-    const generalTitle = '<span data-lang="en">General</span><span data-lang="rw">Rusange</span><span data-lang="fr">GÃ©nÃ©ral</span><span data-lang="sw">Kawaida</span><span data-lang="ar">Ø¹Ø§Ù…</span>';
+    const generalTitle = '<span data-lang="en">General</span><span data-lang="rw">Rusange</span><span data-lang="fr">Général</span><span data-lang="sw">Kawaida</span><span data-lang="ar">عام</span>';
     container.innerHTML = `
-        <div class="row-head">
-            <h2><span data-lang="en">All Lessons</span><span data-lang="rw">Amasomo Yose</span><span data-lang="fr">Toutes les leÃ§ons</span><span data-lang="sw">Masomo Yote</span><span data-lang="ar">Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø¯Ø±ÙˆØ³</span></h2>
-            <span class="row-total">${lessons.length} <span data-lang="en">lessons</span><span data-lang="rw">amasomo</span><span data-lang="fr">leÃ§ons</span><span data-lang="sw">masomo</span><span data-lang="ar">Ø¯Ø±Ø³</span></span>
+        <div class="row-head reveal">
+            <h2><span data-lang="en">All Lessons</span><span data-lang="rw">Amasomo Yose</span><span data-lang="fr">Toutes les leçons</span><span data-lang="sw">Masomo Yote</span><span data-lang="ar">جميع الدروس</span></h2>
+            <span class="row-total">${lessons.length} <span data-lang="en">lessons</span><span data-lang="rw">amasomo</span><span data-lang="fr">leçons</span><span data-lang="sw">masomo</span><span data-lang="ar">درس</span></span>
         </div>` + slugs.map(slug => {
         const cat = byCat[slug];
         const meta = catMeta[slug] || {};
@@ -2537,8 +2790,8 @@ function renderCategoryRows(lessons, categories) {
         const color = cat.color || meta.color || '#d4a853';
         const titleHtml = (slug === 'general' && !(cat.name || meta.name)) ? generalTitle : esc(cat.name || meta.name || slug);
         return `
-            <section class="row-section cat-block" id="${esc(slug)}">
-                <div class="row-head cat-block-head">
+            <section class="row-section cat-block" id="${esc(slug)}" style="--cat:${color};--cat-bg:url('${categoryBackdrop(slug)}');">
+                <div class="row-head cat-block-head reveal">
                     <h2><em>${titleHtml}</em></h2>
                     <span class="cat-count"><i class="fas fa-video"></i> ${n}</span>
                 </div>
@@ -2548,6 +2801,7 @@ function renderCategoryRows(lessons, categories) {
             </section>`;
     }).join('');
     setLang(currentLang);
+    observeReveals(container);
 }
 
 // ===== RENDER: CATEGORY GRID (oshakurfilms style) =====
@@ -2609,9 +2863,9 @@ function renderCategoryGrid(lessons, categories) {
         container.innerHTML = `
             <div class="cat-grid-empty">
                 <div class="empty-icon"><i class="fas fa-book-open"></i></div>
-                <h3><span data-lang="en">No lessons available yet</span><span data-lang="rw">Nta masomo ugihari</span><span data-lang="fr">Aucune leÃ§on disponible</span><span data-lang="sw">Masomo hayapo</span><span data-lang="ar">Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¯Ø±ÙˆØ³ Ù…ØªØ§Ø­Ø©</span></h3>
-                <p><span data-lang="en">Lessons will appear here once they are added by our admin.</span><span data-lang="rw">Amasomo azagaragara hano ryashyizwe n'abagize.</span><span data-lang="fr">Les leÃ§ons apparaÃ®tront ici une fois ajoutÃ©es.</span><span data-lang="sw">Masomo yatatolewa hapa wakati wa kuongezwa.</span><span data-lang="ar">Ø³ØªØ¸Ù‡Ø± Ø§Ù„Ø¯Ø±ÙˆØ³ Ù‡Ù†Ø§ Ø¨Ø¹Ø¯ Ø¥Ø¶Ø§ÙØªÙ‡Ø§.</span></p>
-                <a href="https://wa.me/250783198148" target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">Ø§ØªØµÙ„ Ø¨Ù†Ø§</span></a>
+                <h3><span data-lang="en">No lessons available yet</span><span data-lang="rw">Nta masomo ugihari</span><span data-lang="fr">Aucune leçon disponible</span><span data-lang="sw">Masomo hayapo</span><span data-lang="ar">لا توجد دروس متاحة</span></h3>
+                <p><span data-lang="en">Lessons will appear here once they are added by our admin.</span><span data-lang="rw">Amasomo azagaragara hano ryashyizwe n'abagize.</span><span data-lang="fr">Les leçons apparaîtront ici une fois ajoutées.</span><span data-lang="sw">Masomo yatatolewa hapa wakati wa kuongezwa.</span><span data-lang="ar">ستظهر الدروس هنا بعد إضافتها.</span></p>
+                <a href="https://wa.me/250783198148" target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> <span data-lang="en">Contact Us</span><span data-lang="rw">Twandikire</span><span data-lang="fr">Contactez-nous</span><span data-lang="sw">Wasiliana Nasi</span><span data-lang="ar">اتصل بنا</span></a>
             </div>`;
         setLang(currentLang);
         return;
@@ -2659,9 +2913,9 @@ function renderCategoryGrid(lessons, categories) {
                     <div class="cat-card-body">
                         <div class="cat-icon-circle"><i class="fas ${icon}"></i></div>
                         <div class="cat-card-title">${esc(cat.name || slug)}</div>
-                        <div class="cat-card-desc">${esc(catInfo.description || cat.description) || '<span data-lang="en">Explore our structured lessons in this category.</span><span data-lang="rw">Reka twige amasomo atunganyijwe mu byiciro bikiri imbere.</span><span data-lang="fr">Explorez nos leÃ§ons structurÃ©es dans cette catÃ©gorie.</span><span data-lang="sw">Chunguza masomo yaliyopangwa katika hii kategorya.</span><span data-lang="ar">Ø§Ø³ØªÙƒØ´Ù Ø¯Ø±ÙˆØ³Ù†Ø§ Ø§Ù„Ù…Ù†Ø¸Ù…Ø© ÙÙŠ Ù‡Ø°Ù‡ Ø§Ù„ÙØ¦Ø©.</span>'}</div>
+                        <div class="cat-card-desc">${esc(catInfo.description || cat.description) || '<span data-lang="en">Explore our structured lessons in this category.</span><span data-lang="rw">Reka twige amasomo atunganyijwe mu byiciro bikiri imbere.</span><span data-lang="fr">Explorez nos leçons structurées dans cette catégorie.</span><span data-lang="sw">Chunguza masomo yaliyopangwa katika hii kategorya.</span><span data-lang="ar">استكشف دروسنا المنظمة في هذه الفئة.</span>'}</div>
                         ${leadTeacher ? `<div class="cat-card-teacher"><span class="cat-teacher-avatar">${esc(initials(leadTeacher.instructor_name))}</span><span>${esc(leadTeacher.instructor_name)}</span></div>` : ''}
-                        <div class="cat-lesson-count"><i class="fas fa-video"></i> <b>${n}</b> <span data-lang="en">lesson${n === 1 ? '' : 's'}</span><span data-lang="rw">isomo</span><span data-lang="fr">leÃ§on${n === 1 ? '' : 's'}</span><span data-lang="sw">somo</span><span data-lang="ar">Ø¯Ø±Ø³</span></div>
+                        <div class="cat-lesson-count"><i class="fas fa-video"></i> <b>${n}</b> <span data-lang="en">lesson${n === 1 ? '' : 's'}</span><span data-lang="rw">isomo</span><span data-lang="fr">leçon${n === 1 ? '' : 's'}</span><span data-lang="sw">somo</span><span data-lang="ar">درس</span></div>
                         <div class="cat-lesson-strip">
                             ${topLessons.map(l => {
             const dur = l.duration_minutes != null ? l.duration_minutes + 'm' : '--';
@@ -2670,15 +2924,15 @@ function renderCategoryGrid(lessons, categories) {
             return `<div class="strip-thumb"><img src="${art}" alt="${esc(l.title)}" loading="lazy"><span class="strip-dur">${dur}</span>${hasVideo ? '<span class="strip-video-badge"><i class="fas fa-play"></i></span>' : ''}</div>`;
         }).join('')}
                         </div>
-                        <div class="cat-view-all"><span data-lang="en">View All Lessons</span><span data-lang="rw">Reba Amasomo Yose</span><span data-lang="fr">Voir toutes les leÃ§ons</span><span data-lang="sw">Ona Masomo Yote</span><span data-lang="ar">Ø¹Ø±Ø¶ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø¯Ø±ÙˆØ³</span> <i class="fas fa-arrow-right"></i></div>
+                        <div class="cat-view-all"><span data-lang="en">View All Lessons</span><span data-lang="rw">Reba Amasomo Yose</span><span data-lang="fr">Voir toutes les leçons</span><span data-lang="sw">Ona Masomo Yote</span><span data-lang="ar">عرض جميع الدروس</span> <i class="fas fa-arrow-right"></i></div>
                     </div>
                 </a>`;
     }).join('')}
             ${slugs.length === 0 ? `
             <div class="cat-grid-empty">
                 <div class="empty-icon"><i class="fas fa-book-open"></i></div>
-                <h3><span data-lang="en">No categories found</span><span data-lang="rw">Nta gicegu gihari</span><span data-lang="fr">Aucune catÃ©gorie trouvÃ©e</span><span data-lang="sw">Hakuna kategoria</span><span data-lang="ar">Ù„Ù… ÙŠØªÙ… Ø§Ù„Ø¹Ø«ÙˆØ± Ø¹Ù„Ù‰ ÙØ¦Ø§Øª</span></h3>
-                <p><span data-lang="en">Categories will appear here once lessons are added.</span><span data-lang="rw">Ibyiciro bizagaragara hano ryashyizwe amasomo.</span><span data-lang="fr">Les catÃ©gories apparaÃ®tront ici une fois les leÃ§ons ajoutÃ©es.</span><span data-lang="sw">Kategoria zitaonekana hapa masomo yakiongezwa.</span><span data-lang="ar">Ø³ØªØ¸Ù‡Ø± Ø§Ù„ÙØ¦Ø§Øª Ù‡Ù†Ø§ Ø¨Ø¹Ø¯ Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ø¯Ø±ÙˆØ³.</span></p>
+                <h3><span data-lang="en">No categories found</span><span data-lang="rw">Nta gicegu gihari</span><span data-lang="fr">Aucune catégorie trouvée</span><span data-lang="sw">Hakuna kategoria</span><span data-lang="ar">لم يتم العثور على فئات</span></h3>
+                <p><span data-lang="en">Categories will appear here once lessons are added.</span><span data-lang="rw">Ibyiciro bizagaragara hano ryashyizwe amasomo.</span><span data-lang="fr">Les catégories apparaîtront ici une fois les leçons ajoutées.</span><span data-lang="sw">Kategoria zitaonekana hapa masomo yakiongezwa.</span><span data-lang="ar">ستظهر الفئات هنا بعد إضافة الدروس.</span></p>
             </div>` : ''}
         </div>`;
     setLang(currentLang);
@@ -2710,7 +2964,7 @@ function renderStats(lessons, hasLessons) {
         el.innerHTML = `
             <div class="empty-stats">
                 <i class="fas fa-chart-simple"></i>
-                <span><span data-lang="en">Statistics appear here once lessons are added.</span><span data-lang="rw">Ibibazo bigaragara hano ama soma yaba yashyizwe.</span><span data-lang="fr">Les statistiques apparaÃ®tront ici une fois les leÃ§ons ajoutÃ©es.</span><span data-lang="sw">Takwimu zitaonekana hapa masomo yakiongezwa.</span><span data-lang="ar">Ø³ØªØ¸Ù‡Ø± Ø§Ù„Ø¥Ø­ØµØ§Ø¦ÙŠØ§Øª Ù‡Ù†Ø§ Ø¨Ø¹Ø¯ Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ø¯Ø±ÙˆØ³.</span></span>
+                <span><span data-lang="en">Statistics appear here once lessons are added.</span><span data-lang="rw">Ibibazo bigaragara hano ama soma yaba yashyizwe.</span><span data-lang="fr">Les statistiques apparaîtront ici une fois les leçons ajoutées.</span><span data-lang="sw">Takwimu zitaonekana hapa masomo yakiongezwa.</span><span data-lang="ar">ستظهر الإحصائيات هنا بعد إضافة الدروس.</span></span>
             </div>`;
         setLang(currentLang);
         return;
@@ -2718,9 +2972,9 @@ function renderStats(lessons, hasLessons) {
     const totalStudents = lessons.reduce((s, l) => s + (Number(l.student_count) || 0), 0);
     const avg = lessons.length ? lessons.reduce((s, l) => s + (Number(l.rating) || 0), 0) / lessons.length : 0;
     const stats = [
-        { icon: 'fa-book-quran', num: lessons.length, suffix: '+', dec: 0, label: ['Structured Lessons', 'Amasomo Atunganyijwe', 'LeÃ§ons StructurÃ©es', 'Masomo Yaliyopangwa', 'Ø¯Ø±ÙˆØ³ Ù…Ù†Ø¸Ù…Ø©'] },
-        { icon: 'fa-user-graduate', num: totalStudents, suffix: '+', dec: 0, label: ['Students Learning', 'Abanyeshuri Bari Kwiga', 'Ã‰tudiants Actifs', 'Wanafunzi Wanaojifunza', 'Ø·Ù„Ø§Ø¨ ÙŠØªØ¹Ù„Ù…ÙˆÙ†'] },
-        { icon: 'fa-star', num: avg, suffix: '/5', dec: 1, label: ['Average Rating', 'Igipimo Gisanzwe', 'Note Moyenne', 'Wastani wa Ukadiriaji', 'Ù…ØªÙˆØ³Ø· Ø§Ù„ØªÙ‚ÙŠÙŠÙ…'] }
+        { icon: 'fa-book-quran', num: lessons.length, suffix: '+', dec: 0, label: ['Structured Lessons', 'Amasomo Atunganyijwe', 'Leçons Structurées', 'Masomo Yaliyopangwa', 'دروس منظمة'] },
+        { icon: 'fa-user-graduate', num: totalStudents, suffix: '+', dec: 0, label: ['Students Learning', 'Abanyeshuri Bari Kwiga', 'Étudiants Actifs', 'Wanafunzi Wanaojifunza', 'طلاب يتعلمون'] },
+        { icon: 'fa-star', num: avg, suffix: '/5', dec: 1, label: ['Average Rating', 'Igipimo Gisanzwe', 'Note Moyenne', 'Wastani wa Ukadiriaji', 'متوسط التقييم'] }
     ];
     el.innerHTML = stats.map(s => `
         <div class="stat">
@@ -2736,7 +2990,7 @@ function renderStats(lessons, hasLessons) {
 
 // ===== DATA LOADING =====
 function renderLoading(container) {
-    if (container) container.innerHTML = '<div class="lessons-loading-card" style="grid-column:1/-1;"><div class="lessons-loading-icon"><i class="fas fa-book-open"></i></div><div class="lessons-loading-bar-wrap"><div class="lessons-loading-bar"></div></div><h3><span data-lang="en">Loading please wait...</span><span data-lang="rw">Gusoma oya...</span><span data-lang="fr">Chargement en cours...</span><span data-lang="sw">Inapakia...</span><span data-lang="ar">Ø¬Ø§Ø±Ù Ø§Ù„ØªØ­Ù…ÙŠÙ„...</span></h3><p><span data-lang="en">Please wait while we load your lessons.</span><span data-lang="rw">Menya oya dusuze.</span><span data-lang="fr">Veuillez patienter pendant le chargement.</span><span data-lang="sw">Tafadhali subiri.</span><span data-lang="ar">ÙŠØ±Ø¬Ù‰ Ø§Ù„Ø§Ù†ØªØ¸Ø§Ø± Ø£Ø«Ù†Ø§Ø¡ Ø§Ù„ØªØ­Ù…ÙŠÙ„.</span></p></div>';
+    if (container) container.innerHTML = '<div class="lessons-loading-card" style="grid-column:1/-1;"><div class="lessons-loading-icon"><i class="fas fa-book-open"></i></div><div class="lessons-loading-bar-wrap"><div class="lessons-loading-bar"></div></div><h3><span data-lang="en">Loading please wait...</span><span data-lang="rw">Gusoma oya...</span><span data-lang="fr">Chargement en cours...</span><span data-lang="sw">Inapakia...</span><span data-lang="ar">جارٍ التحميل...</span></h3><p><span data-lang="en">Please wait while we load your lessons.</span><span data-lang="rw">Menya oya dusuze.</span><span data-lang="fr">Veuillez patienter pendant le chargement.</span><span data-lang="sw">Tafadhali subiri.</span><span data-lang="ar">يرجى الانتظار أثناء التحميل.</span></p></div>';
 }
 function cacheSet(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
 function cacheGet(key) { try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) { return null; } }
@@ -2748,7 +3002,7 @@ async function loadHome() {
     homeInstructors = [];
     paintHome();
 
-    // Refresh from the backend â€” each endpoint independently settled, so one
+    // Refresh from the backend — each endpoint independently settled, so one
     // slow or failing table can never hide the admin's uploaded lessons.
     // #categoryRows groups from the lesson rows themselves, so lessons paint
     // even if /categories or /instructors are down.
@@ -2781,7 +3035,7 @@ function paintHome() {
     renderCategoryRows(lessons, categories);
     renderCategoryGrid(lessons, categories);
     // When the database has lessons, the #categoryRows movie-style rows
-    // are the main listing (like oshakurfilms) â€” the "Explore by
+    // are the main listing (like oshakurfilms) — the "Explore by
     // Category" cards would just duplicate them, so hide that section.
     // With no data, the grid section stays visible with its empty state.
     const gridSection = document.getElementById('categoryGridSection');
@@ -2802,7 +3056,7 @@ async function fetchHomeData(signal) {
     if (lessonRes.status === 'fulfilled' && lessonRes.value && lessonRes.value.ok) {
         try {
             const lessonData = await lessonRes.value.json();
-            // Only replace when the API actually returns rows â€” an empty
+            // Only replace when the API actually returns rows — an empty
             // response must never wipe uploaded lessons off the page.
             if (lessonData.lessons && lessonData.lessons.length) {
                 homeLessons = lessonData.lessons;
@@ -2853,10 +3107,10 @@ window.addEventListener('storage', function (e) {
 });
 
 // ===== LANGUAGE SELECTOR (globe dropdown) =====
-// NOTE: this block must run â€” and `setLang` must exist as more than just a
-// hoisted function shell â€” before loadHome() is called below. loadHome()
+// NOTE: this block must run — and `setLang` must exist as more than just a
+// hoisted function shell — before loadHome() is called below. loadHome()
 // calls renderFeatured() synchronously (before its first `await`), which
-// calls setLang(currentLang), which reads `langOptions` â€” a `const`. A
+// calls setLang(currentLang), which reads `langOptions` — a `const`. A
 // `const`/`let` is hoisted but stays in the temporal dead zone until its own
 // declaration line actually runs, so calling setLang() here while
 // `langOptions` hadn't been declared yet used to throw "Cannot access
@@ -2917,14 +3171,26 @@ document.addEventListener('keydown', (e) => {
 setLang(currentLang);
 
 // ===== REVEAL ON SCROLL =====
-(function () {
-    const els = document.querySelectorAll('.reveal');
+var revealObserver = null;
+function observeReveals(root) {
+    const els = (root || document).querySelectorAll('.reveal:not(.revealed)');
     if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('revealed')); return; }
-    const io = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    els.forEach(el => io.observe(el));
-})();
+    if (!revealObserver) {
+        revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('revealed');
+                    revealObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }
+    els.forEach((el, i) => {
+        el.style.setProperty('--rd', ((i % 5) * 70) + 'ms');
+        revealObserver.observe(el);
+    });
+}
+observeReveals(document);
 
 // loadHome() calls renderFeatured() synchronously, which calls setLang(), so
 // it must run after the language-selector setup above (see the NOTE there).

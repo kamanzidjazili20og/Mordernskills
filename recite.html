@@ -839,8 +839,10 @@ a { color: inherit; }
 </style>
 <link rel="stylesheet" href="assets/css/responsive.css">
 <link rel="stylesheet" href="assets/css/polish.css">
+<link rel="stylesheet" href="assets/css/page-backdrop.css">
 </head>
 <body class="rec-page">
+<div class="site-backdrop backdrop-recite" aria-hidden="true"></div>
 <a class="skip-link" href="#studyPanel">Skip to the studio</a>
 
 <header class="rec-header">
@@ -962,7 +964,7 @@ a { color: inherit; }
                     <div class="rec-ready-status rec-status" id="readyStatus" aria-live="polite"></div>
                 </div>
 
-                <div class="rec-hint">Ayah recitation only &middot; maximum 25 MB &middot; use a quiet room</div>
+                <div class="rec-hint">Lesson audio stays on &middot; lowered while you record &middot; maximum 25 MB</div>
             </div>
             </aside>
 
@@ -1056,6 +1058,11 @@ a { color: inherit; }
 
     var mediaRecorder = null;
     var stream = null;
+    var recorderStream = null;
+    var audioGraph = null;
+    var duckedMedia = [];
+    var DUCK_VOLUME = 0.16;
+    var MIC_GAIN = 1.7;
     var wakeLock = null;
     var chunks = [];
     var recordedBlob = null;
@@ -1704,11 +1711,31 @@ a { color: inherit; }
 
     function pickMime() {
         if (!window.MediaRecorder || typeof MediaRecorder.isTypeSupported !== 'function') return '';
-        var options = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+        // Telegram voice notes are Opus. Firefox can write OGG/Opus directly,
+        // Chrome and Edge use the same Opus codec inside WebM, and Safari falls
+        // back to MP4/AAC. Trying Opus first keeps the recitation crisp at a
+        // small file size; the plain container names cover older browsers.
+        var options = [
+            'audio/ogg;codecs=opus',
+            'audio/webm;codecs=opus',
+            'audio/webm',
+            'audio/mp4;codecs=mp4a.40.2',
+            'audio/mp4',
+            'audio/ogg'
+        ];
         for (var i = 0; i < options.length; i++) {
             if (MediaRecorder.isTypeSupported(options[i])) return options[i];
         }
         return '';
+    }
+
+    /* 64 kbps mono Opus is the sweet spot for recitation: clear voice, small
+       uploads, and it matches the Telegram-style voice notes used elsewhere. */
+    function recorderOptions() {
+        var options = { audioBitsPerSecond: 64000 };
+        var mime = pickMime();
+        if (mime) options.mimeType = mime;
+        return options;
     }
 
     function elapsedMs() {
@@ -1742,10 +1769,22 @@ a { color: inherit; }
     }
 
     function stopStream() {
+        if (recorderStream && recorderStream !== stream) {
+            try { recorderStream.getTracks().forEach(function (track) { try { track.stop(); } catch (e) {} }); } catch (e) {}
+        }
+        recorderStream = null;
         if (stream) {
             stream.getTracks().forEach(function (track) { try { track.stop(); } catch (e) {} });
             stream = null;
         }
+        if (audioGraph) {
+            try {
+                audioGraph.nodes.forEach(function (node) { try { node.disconnect(); } catch (e) {} });
+                if (audioGraph.ctx.state !== 'closed') audioGraph.ctx.close().catch(function () {});
+            } catch (e) {}
+            audioGraph = null;
+        }
+        restorePlaybackDuck();
         if (wakeLock) {
             try { wakeLock.release(); } catch (e) {}
             wakeLock = null;
@@ -1767,11 +1806,58 @@ a { color: inherit; }
         if (document.visibilityState === 'visible' && (recState === 'hold' || recState === 'locked') && !wakeLock) requestWakeLock();
     });
 
-    /* Silence any native lesson video so it does not play into the mic. */
-    function pauseStudyVideos() {
+    function duckPlayback() {
+        if (duckedMedia.length) return;
         try {
-            document.querySelectorAll('video').forEach(function (v) { try { v.pause(); } catch (e) {} });
+            document.querySelectorAll('video, audio').forEach(function (el) {
+                duckedMedia.push({ el: el, volume: el.volume });
+                el.volume = Math.min(Number(el.volume) || 0, DUCK_VOLUME);
+            });
         } catch (e) {}
+        if (window.MSVoice && typeof MSVoice.setDuck === 'function') MSVoice.setDuck(DUCK_VOLUME);
+    }
+
+    function restorePlaybackDuck() {
+        if (duckedMedia.length) {
+            duckedMedia.forEach(function (item) {
+                if (item.el && item.el.isConnected) item.el.volume = item.volume;
+            });
+            duckedMedia = [];
+        }
+        if (window.MSVoice && typeof MSVoice.setDuck === 'function') MSVoice.setDuck(1);
+    }
+
+    function buildProcessedStream(cstream) {
+        var Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx || !Ctx.prototype || typeof Ctx.prototype.createMediaStreamDestination !== 'function') return cstream;
+        var ctx = null;
+        try {
+            ctx = new Ctx();
+            var source = ctx.createMediaStreamSource(cstream);
+            var highpass = ctx.createBiquadFilter();
+            highpass.type = 'highpass';
+            highpass.frequency.value = 85;
+            highpass.Q.value = 0.7;
+            var compressor = ctx.createDynamicsCompressor();
+            compressor.threshold.value = -20;
+            compressor.knee.value = 18;
+            compressor.ratio.value = 5;
+            compressor.attack.value = 0.003;
+            compressor.release.value = 0.25;
+            var gain = ctx.createGain();
+            gain.gain.value = MIC_GAIN;
+            var dest = ctx.createMediaStreamDestination();
+            source.connect(highpass);
+            highpass.connect(gain);
+            gain.connect(compressor);
+            compressor.connect(dest);
+            if (ctx.state === 'suspended') ctx.resume().catch(function () {});
+            audioGraph = { ctx: ctx, nodes: [source, highpass, compressor, gain, dest] };
+            return dest.stream;
+        } catch (e) {
+            try { if (ctx && ctx.state !== 'closed') ctx.close().catch(function () {}); } catch (e2) {}
+            return cstream;
+        }
     }
 
     function micErrorMessage(err) {
@@ -1784,7 +1870,16 @@ a { color: inherit; }
     }
 
     async function acquireMic() {
-        var constraints = { audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } };
+        var constraints = {
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: true,
+                channelCount: 1,
+                sampleRate: 48000,
+                sampleSize: 16
+            }
+        };
         try {
             return await navigator.mediaDevices.getUserMedia(constraints);
         } catch (err) {
@@ -1981,21 +2076,21 @@ a { color: inherit; }
             }
             return false;
         }
-        pauseStudyVideos();
-        requestWakeLock();
-
         if (captureId !== captureSeq) {
             try { stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) {}
             stream = null;
             return false;
         }
 
-        var mime = pickMime();
+        recorderStream = buildProcessedStream(stream);
+        duckPlayback();
+        requestWakeLock();
+
         try {
-            mediaRecorder = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
+            mediaRecorder = new MediaRecorder(recorderStream, recorderOptions());
         } catch (err) {
             try {
-                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder = new MediaRecorder(recorderStream);
             } catch (err2) {
                 startingCapture = false;
                 stopStream();
@@ -2030,11 +2125,11 @@ a { color: inherit; }
             cancelCapture(true);
         };
 
-        mediaRecorder.start(250);
+        mediaRecorder.start(1000);
         startingCapture = false;
         startedAt = Date.now();
         recState = 'hold';
-        if (meter) meter.start(stream);
+        if (meter) meter.start(recorderStream);
         startTimer();
         updateRecorderUI();
         // Click / tap / key press starts a hands-free take straight away.

@@ -137,11 +137,29 @@
 
     function pickMime() {
         if (!window.MediaRecorder || typeof MediaRecorder.isTypeSupported !== 'function') return '';
-        var options = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+        // Telegram voice notes are Opus. Firefox writes OGG/Opus directly,
+        // Chrome/Edge use the same Opus codec in WebM, and Safari falls back to
+        // MP4/AAC. Trying Opus first keeps voices crisp at a small size.
+        var options = [
+            'audio/ogg;codecs=opus',
+            'audio/webm;codecs=opus',
+            'audio/webm',
+            'audio/mp4;codecs=mp4a.40.2',
+            'audio/mp4',
+            'audio/ogg'
+        ];
         for (var i = 0; i < options.length; i++) {
             if (MediaRecorder.isTypeSupported(options[i])) return options[i];
         }
         return '';
+    }
+
+    /* 64 kbps mono Opus: clear recitation and small uploads. */
+    function recorderOptions() {
+        var options = { audioBitsPerSecond: 64000 };
+        var mime = pickMime();
+        if (mime) options.mimeType = mime;
+        return options;
     }
 
     function fmtTime(sec) {
@@ -274,6 +292,11 @@
         var state = 'idle';            // idle | hold | locked | stopping | ready | sending | sent
         var mediaRecorder = null;
         var stream = null;
+        var recorderStream = null;
+        var audioGraph = null;
+        var duckedMedia = [];
+        var DUCK_VOLUME = 0.16;
+        var MIC_GAIN = 1.7;
         var wakeLock = null;
         var chunks = [];
         var recordedBlob = null;
@@ -329,10 +352,22 @@
         }
 
         function stopStream() {
+            if (recorderStream && recorderStream !== stream) {
+                try { recorderStream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) {}
+            }
+            recorderStream = null;
             if (stream) {
                 try { stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) {}
                 stream = null;
             }
+            if (audioGraph) {
+                try {
+                    audioGraph.nodes.forEach(function (node) { try { node.disconnect(); } catch (e) {} });
+                    if (audioGraph.ctx.state !== 'closed') audioGraph.ctx.close().catch(function () {});
+                } catch (e) {}
+                audioGraph = null;
+            }
+            restorePlaybackDuck();
             if (wakeLock) {
                 try { wakeLock.release(); } catch (e) {}
                 wakeLock = null;
@@ -355,8 +390,58 @@
         document.addEventListener('visibilitychange', onVisibilityChange);
         teardown.push(function () { document.removeEventListener('visibilitychange', onVisibilityChange); });
 
-        function pauseStudyVideos() {
-            try { document.querySelectorAll('video').forEach(function (v) { try { v.pause(); } catch (e) {} }); } catch (e) {}
+        function duckPlayback() {
+            if (duckedMedia.length) return;
+            try {
+                document.querySelectorAll('video, audio').forEach(function (el) {
+                    duckedMedia.push({ el: el, volume: el.volume });
+                    el.volume = Math.min(Number(el.volume) || 0, DUCK_VOLUME);
+                });
+            } catch (e) {}
+            if (window.MSVoice && typeof MSVoice.setDuck === 'function') MSVoice.setDuck(DUCK_VOLUME);
+        }
+
+        function restorePlaybackDuck() {
+            if (duckedMedia.length) {
+                duckedMedia.forEach(function (item) {
+                    if (item.el && item.el.isConnected) item.el.volume = item.volume;
+                });
+                duckedMedia = [];
+            }
+            if (window.MSVoice && typeof MSVoice.setDuck === 'function') MSVoice.setDuck(1);
+        }
+
+        function buildProcessedStream(cstream) {
+            var Ctx = window.AudioContext || window.webkitAudioContext;
+            if (!Ctx || !Ctx.prototype || typeof Ctx.prototype.createMediaStreamDestination !== 'function') return cstream;
+            var ctx = null;
+            try {
+                ctx = new Ctx();
+                var source = ctx.createMediaStreamSource(cstream);
+                var highpass = ctx.createBiquadFilter();
+                highpass.type = 'highpass';
+                highpass.frequency.value = 85;
+                highpass.Q.value = 0.7;
+                var compressor = ctx.createDynamicsCompressor();
+                compressor.threshold.value = -20;
+                compressor.knee.value = 18;
+                compressor.ratio.value = 5;
+                compressor.attack.value = 0.003;
+                compressor.release.value = 0.25;
+                var gain = ctx.createGain();
+                gain.gain.value = MIC_GAIN;
+                var dest = ctx.createMediaStreamDestination();
+                source.connect(highpass);
+                highpass.connect(gain);
+                gain.connect(compressor);
+                compressor.connect(dest);
+                if (ctx.state === 'suspended') ctx.resume().catch(function () {});
+                audioGraph = { ctx: ctx, nodes: [source, highpass, compressor, gain, dest] };
+                return dest.stream;
+            } catch (e) {
+                try { if (ctx && ctx.state !== 'closed') ctx.close().catch(function () {}); } catch (e2) {}
+                return cstream;
+            }
         }
 
         function micErrorMessage(err) {
@@ -369,7 +454,16 @@
         }
 
         function acquireMic() {
-            var constraints = { audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } };
+            var constraints = {
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                    channelCount: 1,
+                    sampleRate: 48000,
+                    sampleSize: 16
+                }
+            };
             return navigator.mediaDevices.getUserMedia(constraints).catch(function (err) {
                 if (err && (err.name === 'OverconstrainedError' || err.name === 'NotFoundError')) {
                     return navigator.mediaDevices.getUserMedia({ audio: true });
@@ -449,13 +543,13 @@
                 }
                 if (replacesPreview) clearDraft();
                 stream = cstream;
-                pauseStudyVideos();
+                recorderStream = buildProcessedStream(stream);
+                duckPlayback();
                 requestWakeLock();
-                var mime = pickMime();
                 try {
-                    mediaRecorder = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
+                    mediaRecorder = new MediaRecorder(recorderStream, recorderOptions());
                 } catch (err) {
-                    try { mediaRecorder = new MediaRecorder(stream); }
+                    try { mediaRecorder = new MediaRecorder(recorderStream); }
                     catch (err2) {
                         starting = false;
                         stopStream();
@@ -492,11 +586,11 @@
                     cancel(true);
                 };
 
-                mediaRecorder.start(250);
+                mediaRecorder.start(1000);
                 starting = false;
                 startedAt = Date.now();
                 state = 'hold';
-                if (meter) meter.start(stream);
+                if (meter) meter.start(recorderStream);
                 updateUI();
                 // One tap starts a hands-free take; the stop control finishes it.
                 enterLocked();

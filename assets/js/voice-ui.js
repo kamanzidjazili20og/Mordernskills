@@ -22,6 +22,7 @@
     var sharedCtx = null;
     var liveBubbles = new Set();
     var activePlay = null;
+    var duckVolume = 1;
 
     function claimPlay(self) {
         if (activePlay && activePlay !== self) {
@@ -43,6 +44,13 @@
             if (!playing && typeof b.isPlaying === 'function' && b.isPlaying()) playing = true;
         });
         return playing;
+    }
+
+    function setDuckVolume(factor) {
+        duckVolume = Math.max(0, Math.min(1, Number(factor) || 0));
+        liveBubbles.forEach(function (b) {
+            if (typeof b.setVolume === 'function') b.setVolume(duckVolume);
+        });
     }
 
     function acquireCtx() {
@@ -249,6 +257,7 @@
                 objectUrl = URL.createObjectURL(blob);
                 audio = new Audio();
                 audio.preload = 'auto';
+                audio.volume = duckVolume;
                 audio.src = objectUrl;
 
                 audio.addEventListener('error', function () {
@@ -296,6 +305,7 @@
                 return;
             }
             if (audio && audio.paused) {
+                audio.volume = duckVolume;
                 try { await audio.play(); isPlaying = true; notifyPlayed(); } catch (e) { isPlaying = false; }
                 setIcon('pause');
                 rafId = requestAnimationFrame(tick);
@@ -336,6 +346,9 @@
                 if (activePlay === self) activePlay = null;
             },
             isPlaying: function () { return isPlaying; },
+            setVolume: function (value) {
+                if (audio) audio.volume = Math.max(0, Math.min(1, Number(value) || 0));
+            },
             reset: resetVisuals,
             destroy: function () {
                 destroyed = true;
@@ -445,6 +458,7 @@
         formatTime: formatTime,
         stopAll: stopAll,
         isPlaying: anyPlaying,
+        setDuck: setDuckVolume,
         clearCache: function () { peaksCache.clear(); }
     };
 })(window);

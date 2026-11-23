@@ -431,6 +431,12 @@ body::after {
     box-shadow: 0 0 0 4px rgba(212,168,83,0.1), 0 0 30px -14px rgba(212,168,83,0.8);
 }
 .input-row.has-error { border-color: var(--error); box-shadow: 0 0 0 4px rgba(248,113,113,0.1); }
+.phone-hint {
+    margin-top: 6px;
+    font-size: 10.5px;
+    line-height: 1.45;
+    color: var(--text-muted);
+}
 .country-select {
     padding: 13px 26px 13px 12px;
     background: rgba(4,15,11,0.9);
@@ -724,14 +730,17 @@ body::after {
 <script src="assets/js/i18n.js"></script>
 <link rel="stylesheet" href="assets/css/responsive.css">
 <link rel="stylesheet" href="assets/css/polish.css">
+<link rel="stylesheet" href="assets/css/page-backdrop.css">
+<link rel="stylesheet" href="assets/css/auth-design.css">
 </head>
 <body>
+<div class="site-backdrop backdrop-auth" aria-hidden="true"></div>
 <a class="skip-link" href="#registerForm">Skip to content</a>
-<div class="lang-mini" id="globalLang" aria-label="Language"><button data-code="en" class="active">EN</button><button data-code="rw">RW</button><button data-code="fr">FR</button><button data-code="sw">SW</button><button data-code="ar">AR</button></div>
+<div class="lang-mini" id="globalLang" aria-label="Language" title="Switch language"><button data-code="en" class="active">EN</button><button data-code="rw">RW</button><button data-code="fr">FR</button><button data-code="sw">SW</button><button data-code="ar">AR</button></div>
 
 <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> <span data-lang="en">Back Home</span><span data-lang="rw">Subira mu Rugo</span><span data-lang="fr">Retour à l'accueil</span><span data-lang="sw">Rudi Nyumbani</span><span data-lang="ar">العودة للرئيسية</span></a>
 
-<div class="auth-shell">
+<div class="auth-shell register-shell">
     <aside class="auth-hero">
         <span class="hero-orn"></span>
         <div class="hero-top">
@@ -791,8 +800,8 @@ body::after {
             </div>
             <div class="form-group">
                 <label class="form-label"><span data-lang="en">Phone Number</span><span data-lang="rw">Numero ya telefone</span><span data-lang="fr">Numéro de téléphone</span><span data-lang="sw">Nambari ya Simu</span><span data-lang="ar">رقم الهاتف</span> <span class="required">*</span></label>
-                <div class="input-row">
-                    <select class="country-select" id="countryCode" required>
+                <div class="input-row" id="phoneRow">
+                    <select class="country-select" id="countryCode" required aria-label="Country code">
                         <option value="+250" data-flag="🇷🇼">🇷🇼 +250</option>
                         <option value="+234" data-flag="🇳🇬">🇳🇬 +234</option>
                         <option value="+254" data-flag="🇰🇪">🇰🇪 +254</option>
@@ -830,8 +839,9 @@ body::after {
                         <option value="+81" data-flag="🇯🇵">🇯🇵 +81</option>
                         <option value="+82" data-flag="🇰🇷">🇰🇷 +82</option>
                     </select>
-                    <input type="tel" class="form-input" id="phone" placeholder="781 234 567" required>
+                    <input type="tel" class="form-input" id="phone" placeholder="788 123 456" inputmode="tel" autocomplete="tel-national" maxlength="16" pattern="[0-9 ]*" aria-describedby="phoneHint" required>
                 </div>
+                <div class="phone-hint" id="phoneHint"><span data-lang="en">Type your number without the country code.</span><span data-lang="rw">Andika numero yawe utashyizemo kode y'igihugu.</span><span data-lang="fr">Saisissez votre numéro sans l'indicatif du pays.</span><span data-lang="sw">Weka nambari yako bila msimbo wa nchi.</span><span data-lang="ar">اكتب رقمك بدون رمز الدولة.</span></div>
             </div>
 
             <div class="form-group">
@@ -915,18 +925,99 @@ const submitBtn = document.getElementById('submitBtn');
 const toastEl = document.getElementById('toastMsg');
 const toastText = document.getElementById('toastText');
 
-function showError(msg) {
+const phoneInput = document.getElementById('phone');
+const countrySelect = document.getElementById('countryCode');
+const phoneRow = document.getElementById('phoneRow');
+
+// National-number length ranges for the countries offered above. Users often
+// type a leading trunk zero, so the ranges allow for it instead of rejecting a
+// perfectly valid number. Anything missing falls back to a safe 6–14 digits.
+const PHONE_LENGTHS = {
+    '+250': [9, 10], '+234': [7, 10], '+254': [9, 10], '+256': [9, 10],
+    '+255': [9, 10], '+243': [9, 10], '+20': [9, 11], '+212': [9, 10],
+    '+27': [9, 10], '+233': [9, 10], '+225': [8, 11], '+221': [9, 10],
+    '+216': [8, 9], '+213': [9, 10], '+218': [9, 11], '+966': [9, 10],
+    '+971': [9, 10], '+964': [9, 11], '+92': [10, 11], '+91': [10, 11],
+    '+880': [10, 11], '+60': [9, 11], '+62': [9, 13], '+63': [10, 11],
+    '+90': [10, 11], '+44': [10, 11], '+1': [10, 11], '+33': [9, 10],
+    '+49': [10, 12], '+39': [9, 11], '+34': [9, 10], '+55': [10, 12],
+    '+52': [10, 11], '+86': [11, 12], '+81': [10, 11], '+82': [9, 11]
+};
+const PHONE_SAMPLES = {
+    '+250': '788 123 456', '+234': '802 123 4567', '+254': '712 345 678',
+    '+256': '772 123 456', '+255': '712 345 678', '+243': '812 345 678',
+    '+20': '100 123 4567', '+212': '612 345 678', '+27': '71 234 5678',
+    '+233': '24 123 4567', '+225': '01 23 45 6789', '+221': '77 123 45 67',
+    '+216': '20 123 456', '+213': '551 23 45 67', '+218': '91 234 5678',
+    '+966': '55 123 4567', '+971': '50 123 4567', '+964': '770 123 4567',
+    '+92': '300 1234567', '+91': '98765 43210', '+880': '1712 345678',
+    '+60': '12 345 6789', '+62': '812 3456 789', '+63': '917 123 4567',
+    '+90': '532 123 4567', '+44': '7400 123456', '+1': '202 555 0123',
+    '+33': '6 12 34 56 78', '+49': '1512 3456789', '+39': '312 345 6789',
+    '+34': '612 345 678', '+55': '11 91234 5678', '+52': '55 1234 5678',
+    '+86': '138 1234 5678', '+81': '90 1234 5678', '+82': '10 1234 5678'
+};
+
+function markFieldError(target) {
+    if (!target) return;
+    if (Array.isArray(target)) { target.forEach(markFieldError); return; }
+    target.classList.add('has-error');
+    target.setAttribute('aria-invalid', 'true');
+}
+
+function clearFieldErrors() {
+    form.querySelectorAll('.has-error').forEach(el => {
+        el.classList.remove('has-error');
+        el.removeAttribute('aria-invalid');
+    });
+}
+
+function showError(msg, target) {
+    clearFieldErrors();
     errorText.textContent = msg;
     errorEl.classList.add('show');
-    // Add error class to relevant input group
-    const inputs = form.querySelectorAll('.form-input-full, .country-select');
-    inputs.forEach(input => input.classList.add('has-error'));
+    markFieldError(target);
+    let focusEl = target;
+    if (focusEl && !/^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(focusEl.tagName)) {
+        focusEl = focusEl.querySelector('input, select, textarea') || focusEl;
+    }
+    if (focusEl && typeof focusEl.focus === 'function' && !focusEl.disabled) {
+        try { focusEl.focus({ preventScroll: true }); } catch (e) { focusEl.focus(); }
+        try { focusEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+    }
 }
-function hideError() { 
-    errorEl.classList.remove('show'); 
-    // Remove error class from input groups
-    const inputs = form.querySelectorAll('.form-input-full, .country-select');
-    inputs.forEach(input => input.classList.remove('has-error'));
+function hideError() {
+    errorEl.classList.remove('show');
+    clearFieldErrors();
+}
+
+// Only digits belong in the national part; the country code is a separate
+// select. Pasting "+250 788..." still works because the `+` and dial code are
+// removed here and the picker stays in charge of the prefix.
+function digitsOnly(value) {
+    return String(value || '').replace(/[^\d]/g, '');
+}
+
+function syncPhonePlaceholder() {
+    const sample = PHONE_SAMPLES[countrySelect.value] || '123 456 789';
+    phoneInput.placeholder = sample;
+}
+
+function validatePhone() {
+    const national = digitsOnly(phoneInput.value);
+    const dial = digitsOnly(countrySelect.value);
+    const range = PHONE_LENGTHS[countrySelect.value] || [6, 14];
+    if (!national) return { ok: false, reason: 'required' };
+    if (national.length < range[0] || national.length > range[1]) return { ok: false, reason: 'length' };
+    if (dial.length + national.length > 15) return { ok: false, reason: 'length' };
+    // Drop the national trunk zero for E.164 storage. Italy keeps its leading
+    // zero because it is part of the real number there.
+    const nationalE164 = countryCodeIsItaly() ? national : national.replace(/^0+(?=\d)/, '');
+    return { ok: true, national: national, e164: '+' + dial + nationalE164 };
+}
+
+function countryCodeIsItaly() {
+    return countrySelect.value === '+39';
 }
 
 function showToast(msg) {
@@ -977,28 +1068,54 @@ passwordInput.addEventListener('input', () => {
     strengthText.style.color = score <= 1 ? 'var(--error)' : score === 2 ? 'var(--gold)' : 'var(--success)';
 });
 
+// Phone entry: keep the national part clean (digits only), refresh the example
+// when the country changes, and clear any error styling as soon as the user
+// starts fixing the field.
+phoneInput.addEventListener('input', () => {
+    const cleaned = digitsOnly(phoneInput.value).slice(0, 15);
+    if (cleaned !== phoneInput.value) phoneInput.value = cleaned;
+    phoneRow.classList.remove('has-error');
+    phoneRow.removeAttribute('aria-invalid');
+});
+countrySelect.addEventListener('change', () => {
+    syncPhonePlaceholder();
+    phoneRow.classList.remove('has-error');
+    phoneRow.removeAttribute('aria-invalid');
+});
+form.querySelectorAll('.form-input-full').forEach(input => {
+    input.addEventListener('input', () => {
+        input.classList.remove('has-error');
+        input.removeAttribute('aria-invalid');
+    });
+});
+syncPhonePlaceholder();
+
 // Form submit
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     hideError();
 
-    const countryCode = document.getElementById('countryCode').value;
-    const phone = document.getElementById('phone').value.replace(/\s/g, '');
-    const username = document.getElementById('username').value.trim();
-    const fullName = document.getElementById('fullName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+    const fullNameInput = document.getElementById('fullName');
+    const emailInput = document.getElementById('email');
+    const usernameInput = document.getElementById('username');
+    const confirmInput = document.getElementById('confirmPassword');
+    const username = usernameInput.value.trim();
+    const fullName = fullNameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+    const confirmPassword = confirmInput.value;
 
-    if (!fullName || fullName.length < 3) return showError(window.rt('fullName'));
-    if (!email) return showError(window.rt('emailRequired'));
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError(window.rt('emailInvalid'));
-    if (!phone) return showError(window.rt('phoneRequired'));
-    if (phone.length < 5) return showError(window.rt('phoneInvalid'));
-    if (!username || username.length < 3) return showError(window.rt('usernameLength'));
-    if (!/^[a-zA-Z0-9_]+$/.test(username)) return showError(window.rt('usernameChars'));
-    if (password.length < 6) return showError(window.rt('passwordLength'));
-    if (password !== confirmPassword) return showError(window.rt('passwordMismatch'));
+    if (!fullName || fullName.length < 3) return showError(window.rt('fullName'), fullNameInput);
+    if (!email) return showError(window.rt('emailRequired'), emailInput);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError(window.rt('emailInvalid'), emailInput);
+    const phoneCheck = validatePhone();
+    if (!phoneCheck.ok) {
+        return showError(window.rt(phoneCheck.reason === 'required' ? 'phoneRequired' : 'phoneInvalid'), phoneRow);
+    }
+    if (!username || username.length < 3) return showError(window.rt('usernameLength'), usernameInput);
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) return showError(window.rt('usernameChars'), usernameInput);
+    if (password.length < 6) return showError(window.rt('passwordLength'), passwordInput);
+    if (password !== confirmPassword) return showError(window.rt('passwordMismatch'), confirmInput);
 
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
@@ -1009,7 +1126,7 @@ form.addEventListener('submit', async (e) => {
         formData.append('email', email);
         formData.append('password', password);
         formData.append('fullName', fullName);
-        formData.append('phone', countryCode + phone);
+        formData.append('phone', phoneCheck.e164);
         const avatarFile = document.getElementById('avatar').files[0];
         if (avatarFile) formData.append('avatar', avatarFile);
 

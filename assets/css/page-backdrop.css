@@ -1,0 +1,50 @@
+html { background: #04120d; }
+body { background: transparent !important; }
+
+.site-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+    background:
+        linear-gradient(180deg, rgba(3,15,11,0.58) 0%, rgba(3,14,10,0.78) 42%, rgba(2,9,7,0.94) 100%),
+        url("../Images/backgrounds/hero-poster.jpg") center 28% / cover no-repeat;
+    background-color: #04120d;
+    animation: bdFade .8s ease both;
+}
+.site-backdrop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92' viewBox='0 0 92 92'%3E%3Cg fill='none' stroke='%23d4a853' stroke-opacity='0.055' stroke-width='1'%3E%3Cpath d='M46 8 L84 46 L46 84 L8 46 Z'/%3E%3Ccircle cx='46' cy='46' r='16'/%3E%3Ccircle cx='46' cy='46' r='24'/%3E%3Cpath d='M46 22 L70 46 L46 70 L22 46 Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 92px 92px;
+    opacity: .8;
+}
+.site-backdrop::after {
+    content: '';
+    position: absolute;
+    top: -28vw;
+    left: -16vw;
+    width: 68vw;
+    height: 68vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--bd-glow, rgba(212,168,83,0.18)) 0%, transparent 62%);
+    box-shadow: 58vw 52vw 0 -12vw rgba(52,211,153,0.09);
+    filter: blur(70px);
+    animation: bdFloat 19s ease-in-out infinite alternate;
+}
+.backdrop-auth { --bd-glow: rgba(212,168,83,0.2); }
+.backdrop-video { --bd-glow: rgba(96,165,250,0.14); }
+.backdrop-books { --bd-glow: rgba(167,139,250,0.15); }
+.backdrop-recite { --bd-glow: rgba(52,211,153,0.16); }
+.backdrop-teacher { --bd-glow: rgba(244,114,182,0.12); }
+.backdrop-admin { --bd-glow: rgba(248,113,113,0.1); }
+@keyframes bdFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bdFloat {
+    0% { transform: translate3d(0, 0, 0) scale(1); opacity: .75; }
+    100% { transform: translate3d(10vw, 6vh, 0) scale(1.14); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .site-backdrop, .site-backdrop::after { animation: none; }
+}

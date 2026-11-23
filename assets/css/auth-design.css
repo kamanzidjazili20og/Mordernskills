@@ -1,0 +1,155 @@
+.auth-shell {
+    max-width: 1080px;
+    grid-template-columns: 44% 56%;
+    border-radius: 30px;
+}
+
+.login-shell {
+    --auth-image: url("Images/backgrounds/section-culture.webp");
+    --auth-accent: #d4a853;
+    --auth-accent-soft: rgba(212, 168, 83, 0.26);
+    --auth-btn: linear-gradient(135deg, #f5d18a, #c9932f);
+    --auth-shadow: rgba(212, 168, 83, 0.5);
+}
+
+.register-shell {
+    --auth-image: url("Images/backgrounds/section-nature.webp");
+    --auth-accent: #34d399;
+    --auth-accent-soft: rgba(52, 211, 153, 0.26);
+    --auth-btn: linear-gradient(135deg, #6ee7b7, #10b981);
+    --auth-shadow: rgba(52, 211, 153, 0.5);
+}
+
+.auth-shell::before {
+    background: linear-gradient(90deg, transparent, var(--auth-accent, var(--gold)), transparent);
+}
+
+.auth-hero {
+    background:
+        linear-gradient(180deg, rgba(3, 14, 10, 0.5) 0%, rgba(3, 14, 10, 0.72) 50%, rgba(2, 9, 7, 0.9) 100%),
+        var(--auth-image, url("Images/backgrounds/section-culture.webp")) center 38% / cover no-repeat;
+    background-color: #04120d;
+    isolation: isolate;
+}
+
+.auth-hero::before { opacity: 0.85; }
+
+.auth-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 62% 42% at 78% 16%, rgba(255, 255, 255, 0.14) 0%, transparent 62%),
+        linear-gradient(115deg, transparent 24%, var(--auth-accent-soft) 50%, transparent 74%);
+    mix-blend-mode: screen;
+}
+
+.auth-hero > * { position: relative; z-index: 2; }
+.hero-orn { z-index: 1; opacity: 0.85; border-color: var(--auth-accent-soft); }
+.hero-verse {
+    background: rgba(3, 14, 10, 0.62);
+    border-color: var(--auth-accent-soft);
+    backdrop-filter: blur(8px);
+}
+.hero-feat {
+    background: rgba(3, 14, 10, 0.62);
+    border-color: var(--auth-accent-soft);
+}
+.hero-feat i {
+    color: var(--auth-accent);
+    background: var(--auth-accent-soft);
+    border-color: var(--auth-accent-soft);
+}
+
+.auth-main {
+    background:
+        radial-gradient(ellipse 70% 42% at 100% 0%, var(--auth-accent-soft) 0%, transparent 62%),
+        rgba(6, 19, 14, 0.96);
+    backdrop-filter: blur(10px);
+}
+
+.auth-eyebrow {
+    color: var(--auth-accent, var(--gold-light));
+    background: var(--auth-accent-soft);
+    border-color: var(--auth-accent-soft);
+}
+.auth-eyebrow i { color: var(--auth-accent, var(--gold)); }
+.auth-top h1 em {
+    background: var(--auth-btn, var(--grad-gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.form-input-full:focus {
+    border-color: var(--auth-accent, var(--gold));
+    box-shadow:
+        0 0 0 4px var(--auth-accent-soft),
+        0 0 30px -14px var(--auth-accent, var(--gold));
+}
+
+.btn-login,
+.btn-register {
+    background: var(--auth-btn, var(--grad-gold));
+    box-shadow: 0 12px 34px -8px var(--auth-shadow, var(--glow-gold)), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+.btn-login:hover,
+.btn-register:hover {
+    box-shadow: 0 18px 46px -8px var(--auth-shadow, var(--glow-gold)), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.auth-footer { background: var(--auth-accent-soft); }
+.auth-footer a { color: var(--auth-accent, var(--gold)); }
+
+.lang-mini {
+    align-items: center;
+    border-color: var(--border);
+    background: rgba(6, 19, 14, 0.66);
+    backdrop-filter: blur(12px);
+}
+.lang-mini button {
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.lang-mini button:hover { color: var(--gold-light); }
+.lang-mini button.active {
+    background: rgba(212, 168, 83, 0.2);
+    color: var(--gold-light);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 780px) {
+    .auth-shell { grid-template-columns: 1fr; max-width: 470px; }
+    .auth-hero {
+        display: flex;
+        min-height: 190px;
+        padding: 28px;
+        gap: 14px;
+    }
+    .auth-hero .hero-verse,
+    .auth-hero .hero-feats { display: none; }
+    .auth-hero .hero-top { text-align: left; }
+    .auth-logo { width: 54px; height: 54px; margin: 0 0 12px; border-radius: 16px; }
+    .hero-brand { font-size: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-shell,
+    .hero-orn,
+    .auth-logo,
+    .btn-login::after,
+    .btn-register::after {
+        animation: none !important;
+    }
+}
