@@ -18,6 +18,8 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body.rec-page {
+    --rec-page-image: url("Images/backgrounds/section-culture.webp");
+    --rec-hero-image: url("Images/backgrounds/hero-poster.jpg");
     min-height: 100vh;
     color: var(--text);
     background:
@@ -26,6 +28,22 @@ body.rec-page {
         linear-gradient(165deg, #04120d 0%, #061a12 46%, #030b08 100%);
     padding-bottom: 60px;
 }
+body.rec-page .site-backdrop {
+    background:
+        radial-gradient(ellipse 62% 46% at 10% -4%, rgba(212,168,83,0.22) 0%, transparent 62%),
+        radial-gradient(ellipse 48% 40% at 92% 8%, rgba(52,211,153,0.17) 0%, transparent 64%),
+        linear-gradient(180deg, rgba(3,15,11,0.58) 0%, rgba(3,14,10,0.84) 48%, rgba(2,8,6,0.97) 100%),
+        var(--rec-page-image) center 28% / cover no-repeat;
+    background-color: #04120d;
+}
+body.rec-page .site-backdrop::before {
+    opacity: 0.58;
+    background-size: 92px 92px;
+}
+body.rec-page .site-backdrop::after {
+    background: radial-gradient(circle, rgba(212,168,83,0.2) 0%, transparent 60%);
+    box-shadow: 56vw 50vw 0 -14vw rgba(52,211,153,0.1);
+}
 a { color: inherit; }
 
 /* Header */
@@ -33,17 +51,19 @@ a { color: inherit; }
     position: sticky;
     top: 0;
     z-index: 40;
-    border-bottom: 1px solid var(--border);
-    background: rgba(4, 18, 13, 0.86);
-    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(212,168,83,0.2);
+    background: linear-gradient(180deg, rgba(4,18,13,0.96) 0%, rgba(4,16,12,0.82) 100%);
+    box-shadow: 0 18px 42px -30px rgba(0,0,0,0.95);
+    backdrop-filter: blur(20px) saturate(140%);
 }
 .rec-header-inner {
     max-width: var(--content-max);
     margin: 0 auto;
-    padding: 14px var(--gutter);
-    display: flex;
+    padding: 12px var(--gutter);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    gap: 24px;
+    gap: 16px 24px;
 }
 .rec-brand {
     display: inline-flex;
@@ -53,41 +73,78 @@ a { color: inherit; }
     letter-spacing: -0.02em;
     text-decoration: none;
     white-space: nowrap;
+    min-width: 0;
 }
 .rec-brand img {
-    width: 36px;
-    height: 36px;
-    border-radius: 11px;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
     border: 1px solid rgba(212,168,83,0.45);
     object-fit: cover;
+    box-shadow: 0 10px 24px -12px rgba(212,168,83,0.55);
 }
-.rec-nav { display: flex; align-items: center; gap: 4px; margin-inline-start: auto; }
-.rec-nav a {
-    padding: 8px 13px;
+.rec-brand span { font-size: 15px; color: var(--text); }
+.rec-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 0;
+    padding: 4px;
     border-radius: 999px;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text-sec);
-    text-decoration: none;
-    transition: all .2s var(--ease);
+    border: 1px solid rgba(212,168,83,0.14);
+    background: rgba(255,255,255,0.03);
+    justify-self: center;
 }
-.rec-nav a:hover { color: var(--gold-light); background: rgba(212,168,83,0.08); }
-.rec-nav a.active { color: #14100a; background: var(--grad-gold); }
-.rec-user { display: flex; align-items: center; gap: 10px; }
-.rec-user-name { font-size: 12px; font-weight: 600; color: var(--text-sec); }
-.rec-logout {
-    width: 34px;
-    height: 34px;
+.rec-nav a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
-    border: 1px solid var(--border);
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-sec);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all .2s var(--ease);
+}
+.rec-nav a:hover { color: var(--gold-light); background: rgba(212,168,83,0.1); }
+.rec-nav a.active {
+    color: #14100a;
+    background: var(--grad-gold);
+    box-shadow: 0 8px 20px -12px rgba(212,168,83,0.75);
+}
+.rec-user {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    min-width: 0;
+}
+.rec-user-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-sec);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.rec-logout {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    border: 1px solid rgba(212,168,83,0.2);
     background: rgba(255,255,255,0.03);
     color: var(--text-muted);
     transition: all .2s;
 }
-.rec-logout:hover { color: var(--gold-light); border-color: var(--border-strong); }
+.rec-logout:hover { color: #fca5a5; border-color: rgba(248,113,113,0.45); background: rgba(248,113,113,0.08); }
 
 /* Layout */
 .rec-main { max-width: var(--content-max); margin: 0 auto; padding: 38px var(--gutter) 0; }
@@ -95,44 +152,86 @@ a { color: inherit; }
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 13px;
-    border: 1px solid rgba(212,168,83,0.3);
+    padding: 7px 14px;
+    border: 1px solid rgba(212,168,83,0.38);
     border-radius: 999px;
-    background: rgba(212,168,83,0.08);
+    background: linear-gradient(120deg, rgba(212,168,83,0.16), rgba(52,211,153,0.08));
     color: var(--gold-light);
     font-size: 10.5px;
     font-weight: 800;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .rec-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
     gap: 32px;
-    align-items: end;
-    margin-bottom: 34px;
+    align-items: center;
+    margin-bottom: 18px;
+    padding: 38px 40px;
+    border-radius: 28px;
+    border: 1px solid rgba(212,168,83,0.28);
+    background:
+        linear-gradient(105deg, rgba(4,18,13,0.95) 0%, rgba(4,18,13,0.8) 48%, rgba(3,14,10,0.52) 100%),
+        var(--rec-hero-image) center 32% / cover no-repeat;
+    box-shadow:
+        0 42px 100px -50px rgba(0,0,0,0.95),
+        0 0 60px -34px rgba(212,168,83,0.72),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
 }
+.rec-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.6;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23d4a853' stroke-opacity='0.08' stroke-width='1'%3E%3Cpath d='M50 6 L94 50 L50 94 L6 50 Z'/%3E%3Ccircle cx='50' cy='50' r='16'/%3E%3Ccircle cx='50' cy='50' r='25'/%3E%3Cpath d='M50 24 L76 50 L50 76 L24 50 Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 100px 100px;
+}
+.rec-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 52% 78% at 88% 18%, rgba(212,168,83,0.22) 0%, transparent 64%),
+        linear-gradient(115deg, transparent 22%, rgba(255,255,255,0.07) 50%, transparent 76%);
+    mix-blend-mode: screen;
+}
+.rec-hero > * { position: relative; z-index: 1; }
 .rec-hero h1 {
-    font-size: clamp(32px, 4.4vw, 52px);
-    letter-spacing: -0.035em;
-    margin: 14px 0 10px;
+    max-width: 680px;
+    font-size: clamp(34px, 4.6vw, 58px);
+    letter-spacing: -0.04em;
+    line-height: 1.08;
+    margin: 16px 0 12px;
+    text-shadow: 0 12px 36px rgba(0,0,0,0.55);
 }
 .rec-hero h1 em { font-family: var(--font-display); color: var(--gold-light); font-style: italic; }
-.rec-hero p { max-width: 600px; color: var(--text-sec); font-size: 14.5px; margin: 0; }
+.rec-hero p { max-width: 680px; color: #c6d8ce; font-size: 14.5px; line-height: 1.75; margin: 0; }
 
 .rec-stats {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
 }
-.rec-stat {
-    padding: 15px 16px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: linear-gradient(150deg, rgba(15,40,29,0.9), rgba(7,22,16,0.85));
+body.rec-page .rec-stat {
+    padding: 16px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(212,168,83,0.2);
+    background: linear-gradient(160deg, rgba(13,38,28,0.9), rgba(4,17,12,0.92));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 16px 36px -28px rgba(0,0,0,0.9);
+    backdrop-filter: blur(10px);
 }
 .rec-stat span { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
-.rec-stat strong { display: block; font-size: 26px; line-height: 1.15; margin-top: 4px; color: var(--text); }
+.rec-stat strong { display: block; font-size: 30px; line-height: 1.15; margin-top: 4px; color: var(--text); }
 .rec-stat.pending strong { color: var(--warning); }
 .rec-stat.reviewed strong { color: var(--success); }
 .rec-stat.improve strong { color: #fca5a5; }
@@ -151,6 +250,16 @@ a { color: inherit; }
     margin-bottom: 16px;
 }
 .rec-section-head h2 { font-size: 21px; margin: 0 0 3px; letter-spacing: -0.02em; }
+.rec-section-head h2::after {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 2px;
+    margin-top: 7px;
+    border-radius: 999px;
+    background: var(--grad-gold);
+    box-shadow: 0 0 12px rgba(212,168,83,0.45);
+}
 .rec-section-head p { margin: 0; font-size: 12.5px; color: var(--text-muted); }
 .rec-icon-btn {
     width: 36px;
@@ -182,12 +291,15 @@ a { color: inherit; }
 /* Assignment cards */
 .assignment-card {
     padding: 17px 18px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: linear-gradient(150deg, rgba(13,36,26,0.86), rgba(6,20,14,0.8));
+    border-radius: 16px;
+    border: 1px solid rgba(212,168,83,0.18);
+    background:
+        radial-gradient(ellipse 70% 60% at 100% 0%, rgba(212,168,83,0.09), transparent 62%),
+        linear-gradient(150deg, rgba(13,36,26,0.9), rgba(6,20,14,0.86));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 18px 38px -32px rgba(0,0,0,0.85);
     transition: border-color .2s, transform .2s, box-shadow .2s;
 }
-.assignment-card:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+.assignment-card:hover { border-color: rgba(212,168,83,0.42); transform: translateY(-2px); box-shadow: 0 22px 48px -30px rgba(0,0,0,0.9), 0 0 30px -22px rgba(212,168,83,0.5); }
 .assignment-card.selected {
     border-color: rgba(212,168,83,0.65);
     box-shadow: 0 0 0 1px rgba(212,168,83,0.18), var(--glow-gold);
@@ -254,13 +366,16 @@ a { color: inherit; }
 
 /* Recorder */
 .rec-recorder {
-    padding: 20px;
+    position: relative;
+    padding: 22px;
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(212,168,83,0.24);
+    border: 1px solid rgba(52,211,153,0.26);
     background:
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212,168,83,0.12), transparent 60%),
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(52,211,153,0.16), transparent 60%),
+        radial-gradient(ellipse 70% 46% at 8% 100%, rgba(212,168,83,0.1), transparent 62%),
         linear-gradient(160deg, rgba(12,34,24,0.96), rgba(5,17,12,0.97));
-    box-shadow: var(--shadow);
+    box-shadow: 0 30px 72px -40px rgba(0,0,0,0.95), 0 0 52px -32px rgba(52,211,153,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+    backdrop-filter: blur(14px);
 }
 .rec-recorder-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 .rec-recorder-head h2 { font-size: 15px; margin: 0; display: inline-flex; align-items: center; gap: 8px; }
@@ -293,10 +408,10 @@ a { color: inherit; }
 .recorder-empty { padding: 38px 18px; text-align: center; color: var(--text-muted); font-size: 13px; }
 .recorder-empty i { font-size: 30px; color: rgba(212,168,83,0.5); display: block; margin-bottom: 12px; }
 .recording-target {
-    padding: 13px 15px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,0.025);
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(52,211,153,0.2);
+    background: linear-gradient(120deg, rgba(52,211,153,0.08), rgba(212,168,83,0.05));
     margin-bottom: 16px;
 }
 .recording-target h3 { font-size: 15px; margin: 0 0 3px; }
@@ -346,8 +461,9 @@ a { color: inherit; }
     gap: 12px;
     padding: 9px 12px;
     border-radius: 999px;
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,168,83,0.24);
+    background: linear-gradient(120deg, rgba(255,255,255,0.045), rgba(52,211,153,0.05));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
     transition: border-color .2s, background .2s;
 }
 .rec-capture:active { border-color: rgba(248,113,113,0.35); }
@@ -386,18 +502,18 @@ a { color: inherit; }
 .rec-hold-hint.danger { color: #f87171; font-weight: 800; }
 .rec-capture-dock { position: relative; flex: 0 0 auto; margin-inline-start: auto; }
 .rec-mic {
-    width: 52px;
-    height: 52px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    border: none;
+    border: 1px solid rgba(255,255,255,0.35);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 17px;
-    background: linear-gradient(120deg, #e8c877, #c79a45);
+    font-size: 18px;
+    background: var(--grad-gold);
     color: #14100a;
-    box-shadow: 0 10px 26px -8px rgba(212,168,83,0.6);
+    box-shadow: 0 14px 34px -10px rgba(212,168,83,0.75), inset 0 1px 0 rgba(255,255,255,0.45);
     touch-action: none;
     user-select: none;
     -webkit-user-select: none;
@@ -459,16 +575,26 @@ a { color: inherit; }
     border-color: transparent !important;
 }
 .btn-send:hover { box-shadow: 0 10px 24px -10px rgba(52,211,153,0.6); }
+.btn-share-wa {
+    border-color: rgba(37,211,102,0.42) !important;
+    background: linear-gradient(120deg, rgba(37,211,102,0.18), rgba(52,211,153,0.09)) !important;
+    color: #a7f3cf !important;
+}
+.btn-share-wa:hover { background: linear-gradient(120deg, rgba(37,211,102,0.28), rgba(52,211,153,0.14)) !important; }
+.btn-share-wa:disabled { opacity: .5; cursor: default; }
 .rec-hint { margin-top: 10px; font-size: 10.5px; color: var(--text-muted); text-align: center; }
 .rec-hidden { display: none !important; }
 
 /* Recordings list */
 .rec-section { margin-top: 36px; }
-.sub-card {
+body.rec-page .sub-card {
     padding: 16px 18px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: rgba(9,28,20,0.72);
+    border-radius: 16px;
+    border: 1px solid rgba(212,168,83,0.18);
+    background:
+        radial-gradient(ellipse 70% 60% at 0% 0%, rgba(52,211,153,0.07), transparent 62%),
+        rgba(9,28,20,0.82);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 16px 34px -30px rgba(0,0,0,0.9);
 }
 .sub-top { display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
 .sub-top > div:first-child { flex: 1; min-width: 170px; }
@@ -493,6 +619,22 @@ a { color: inherit; }
 @keyframes recFeedbackGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); } 50% { box-shadow: 0 0 0 4px rgba(52,211,153,0.08); } }
 .sub-actions { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 .sub-voice { flex: 0 1 320px; min-width: min(240px, 100%); display: flex; align-items: center; }
+.sub-share {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid rgba(37,211,102,0.35);
+    background: rgba(37,211,102,0.1);
+    color: #4ade80;
+    font-size: 13px;
+    transition: all .2s var(--ease);
+}
+.sub-share:hover { background: rgba(37,211,102,0.2); color: #bbf7d0; border-color: rgba(37,211,102,0.6); transform: translateY(-1px); }
+.sub-share:disabled { opacity: .5; cursor: default; transform: none; }
 .sub-date { font-size: 11px; color: var(--text-muted); }
 
 /* Toasts / avatars */
@@ -532,7 +674,7 @@ a { color: inherit; }
 }
 .rec-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-.rec-footer { max-width: var(--content-max); margin: 46px auto 0; padding: 0 var(--gutter); color: var(--text-muted); font-size: 11px; text-align: center; }
+.rec-footer { max-width: var(--content-max); margin: 46px auto 0; padding: 22px var(--gutter) 0; border-top: 1px solid rgba(212,168,83,0.14); color: var(--text-muted); font-size: 11px; text-align: center; }
 
 /* ===== Studio: lesson video on top, recorder right under it ===== */
 .rec-steps {
@@ -540,7 +682,15 @@ a { color: inherit; }
     align-items: center;
     flex-wrap: wrap;
     gap: 8px 10px;
+    width: max-content;
+    max-width: 100%;
     margin: -4px 0 28px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,168,83,0.18);
+    background: linear-gradient(120deg, rgba(12,34,25,0.86), rgba(4,17,12,0.9));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 18px 38px -32px rgba(0,0,0,0.9);
+    backdrop-filter: blur(10px);
     color: var(--text-muted);
     font-size: 11.5px;
 }
@@ -550,8 +700,8 @@ a { color: inherit; }
     gap: 7px;
     padding: 7px 13px;
     border-radius: 999px;
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(212,168,83,0.16);
+    background: rgba(255,255,255,0.035);
     font-weight: 600;
 }
 .rec-step i { color: rgba(212,168,83,0.75); font-size: 11px; }
@@ -562,14 +712,15 @@ a { color: inherit; }
 .rec-side-col { display: grid; gap: 30px; position: sticky; top: 86px; }
 .rec-main-col .rec-section { margin-top: 0; }
 
-.rec-study {
+body.rec-page .rec-study {
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(212,168,83,0.24);
+    border: 1px solid rgba(212,168,83,0.28);
     overflow: hidden;
     background:
-        radial-gradient(ellipse 70% 40% at 50% -10%, rgba(212,168,83,0.12), transparent 60%),
+        radial-gradient(ellipse 70% 40% at 50% -10%, rgba(212,168,83,0.15), transparent 60%),
         linear-gradient(160deg, rgba(12,34,24,0.96), rgba(5,17,12,0.97));
-    box-shadow: var(--shadow);
+    box-shadow: 0 32px 78px -42px rgba(0,0,0,0.95), 0 0 54px -34px rgba(212,168,83,0.58), inset 0 1px 0 rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
 }
 .rec-study-head {
     display: flex;
@@ -578,6 +729,8 @@ a { color: inherit; }
     justify-content: space-between;
     gap: 14px;
     padding: 20px 22px 16px;
+    border-bottom: 1px solid rgba(212,168,83,0.12);
+    background: radial-gradient(ellipse 60% 100% at 0% 0%, rgba(212,168,83,0.08), transparent 62%);
 }
 .rec-study-eyebrow {
     display: inline-flex;
@@ -642,14 +795,27 @@ a { color: inherit; }
     text-align: center;
     padding: 26px;
     background:
-        radial-gradient(ellipse 60% 60% at 50% 45%, rgba(212,168,83,0.08), transparent 70%),
-        linear-gradient(160deg, rgba(9,30,21,0.92), rgba(4,14,10,0.96));
-    color: var(--text-muted);
+        linear-gradient(180deg, rgba(3,14,10,0.62) 0%, rgba(3,14,10,0.82) 52%, rgba(2,9,6,0.94) 100%),
+        url("Images/backgrounds/section-culture.webp") center 40% / cover no-repeat;
+    color: #c0d3c8;
     font-size: 12.5px;
     line-height: 1.55;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.65);
 }
-.rec-player-empty i { font-size: 30px; color: rgba(212,168,83,0.5); }
-.rec-player-empty strong { color: var(--text); display: block; margin-bottom: 3px; font-size: 13.5px; }
+.rec-player-empty i {
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    border: 1px solid rgba(212,168,83,0.35);
+    background: rgba(4,18,13,0.7);
+    color: var(--gold-light);
+    font-size: 26px;
+    box-shadow: 0 18px 44px -18px rgba(212,168,83,0.5);
+}
+.rec-player-empty strong { color: var(--text); display: block; margin-bottom: 3px; font-size: 14px; }
 .rec-player-poster { position: absolute; inset: 0; cursor: pointer; }
 .rec-player-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .rec-player-poster::after {
@@ -767,16 +933,19 @@ a { color: inherit; }
     gap: 12px;
     width: 100%;
     padding: 10px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: linear-gradient(150deg, rgba(13,36,26,0.86), rgba(6,20,14,0.8));
+    border-radius: 14px;
+    border: 1px solid rgba(212,168,83,0.18);
+    background:
+        radial-gradient(ellipse 70% 70% at 0% 0%, rgba(212,168,83,0.07), transparent 62%),
+        linear-gradient(150deg, rgba(13,36,26,0.9), rgba(6,20,14,0.86));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 14px 30px -28px rgba(0,0,0,0.9);
     cursor: pointer;
     text-align: start;
     font: inherit;
     color: inherit;
     transition: border-color .2s, transform .2s, box-shadow .2s;
 }
-.rec-lesson-card:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+.rec-lesson-card:hover { border-color: rgba(212,168,83,0.45); transform: translateY(-2px); box-shadow: 0 20px 44px -30px rgba(0,0,0,0.9), 0 0 26px -20px rgba(212,168,83,0.55); }
 .rec-lesson-card.selected {
     border-color: rgba(212,168,83,0.65);
     box-shadow: 0 0 0 1px rgba(212,168,83,0.18), var(--glow-gold);
@@ -820,21 +989,73 @@ a { color: inherit; }
 
 @media (max-width: 980px) {
     .rec-hero, .rec-layout { grid-template-columns: 1fr; }
+    .rec-hero { padding: 32px 30px; }
     .rec-side-col { position: static; }
     .rec-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .rec-header-inner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+            "brand user"
+            "nav nav";
+        gap: 12px;
+        padding: 12px 20px;
+        align-items: center;
+    }
+    .rec-brand { grid-area: brand; min-width: 0; }
+    .rec-user { grid-area: user; justify-self: end; }
+    .rec-nav {
+        grid-area: nav;
+        width: 100%;
+        justify-content: stretch;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow: visible;
+        padding: 4px;
+        gap: 4px;
+    }
+    .rec-nav a { width: 100%; min-width: 0; padding: 10px 10px; }
 }
 @media (max-width: 720px) {
-    .rec-header-inner { gap: 12px; flex-wrap: wrap; }
-    .rec-nav { order: 3; width: 100%; overflow-x: auto; }
-    .rec-user { margin-inline-start: auto; }
+    .rec-header-inner { padding: 10px 14px; gap: 10px; }
+    .rec-brand img { width: 34px; height: 34px; border-radius: 10px; }
+    .rec-brand span { font-size: 14px; max-width: 42vw; overflow: hidden; text-overflow: ellipsis; }
     .rec-user-name { display: none; }
+    .rec-nav { padding: 3px; gap: 4px; border-radius: 14px; }
+    .rec-nav a { padding: 8px 6px; font-size: 11px; }
+    .rec-logout { width: 34px; height: 34px; border-radius: 10px; }
     .rec-main { padding-top: 26px; }
+    .rec-hero {
+        padding: 28px 20px;
+        border-radius: 22px;
+        background:
+            linear-gradient(180deg, rgba(4,18,13,0.94) 0%, rgba(4,18,13,0.78) 62%, rgba(3,14,10,0.62) 100%),
+            var(--rec-hero-image) center 24% / cover no-repeat;
+    }
+    .rec-hero h1 { font-size: clamp(30px, 9vw, 42px); }
+    .rec-hero p { font-size: 13.5px; }
     .rec-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .rec-stat { padding: 14px; }
+    .rec-steps { width: 100%; border-radius: 18px; }
     .rec-timer { font-size: 34px; }
     .rec-section-head { align-items: center; }
     .rec-study-head { padding: 16px; }
     .rec-player-empty { font-size: 11.5px; padding: 18px; }
+    .rec-player-empty i { width: 50px; height: 50px; border-radius: 16px; font-size: 21px; }
     .rec-lesson-thumb { flex-basis: 82px; width: 82px; }
+}
+@media (max-width: 480px) {
+    .rec-header-inner { padding: 10px 12px; gap: 8px 10px; }
+    .rec-brand { gap: 8px; min-width: 0; }
+    .rec-brand img { width: 32px; height: 32px; }
+    .rec-brand span { font-size: 13px; max-width: 34vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rec-nav { width: 100%; }
+    .rec-nav a { padding: 7px 4px; font-size: 10.5px; letter-spacing: 0; }
+    .rec-user { gap: 6px; }
+    .rec-user .rec-avatar, .rec-user img { width: 32px; height: 32px; }
+    .rec-logout { width: 32px; height: 32px; }
+    .rec-hero { padding: 24px 16px; }
+    .rec-stats { gap: 8px; }
+    .rec-stat strong { font-size: 24px; }
 }
 </style>
 <link rel="stylesheet" href="assets/css/responsive.css">
@@ -869,9 +1090,9 @@ a { color: inherit; }
 <main class="rec-main">
     <section class="rec-hero">
         <div>
-            <span class="rec-eyebrow"><i class="fas fa-microphone-lines"></i> Qur'an Recitation</span>
-            <h1>Your recitation <em>studio</em></h1>
-            <p>Watch the lesson you are studying, then record your recitation right under the video. When the admin finishes the review, the comment comes back to this page &mdash; for that exact lesson.</p>
+            <span class="rec-eyebrow"><i class="fas fa-microphone-lines"></i> Qur'an Recitation Studio</span>
+            <h1>Recite with <em>confidence</em></h1>
+            <p>Watch the lesson, record your recitation, and receive focused teacher feedback on the exact lesson you are studying. Every take stays connected to your learning journey.</p>
         </div>
         <div class="rec-stats" aria-label="Recitation progress">
             <div class="rec-stat pending"><span>Pending</span><strong id="statPending">0</strong></div>
@@ -957,6 +1178,7 @@ a { color: inherit; }
                     <div class="rec-ready-bubble" id="readyBubble"></div>
                     <div class="rec-ready-actions">
                         <button type="button" class="btn btn-secondary btn-ghost-red" id="discardBtn"><i class="fas fa-trash"></i> Redo</button>
+                        <button type="button" class="btn btn-secondary btn-share-wa" id="shareAudioBtn" aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
                         <button type="button" class="btn btn-primary btn-send" id="submitBtn">
                             <i class="fas fa-paper-plane"></i> Send for review
                         </button>
@@ -1140,6 +1362,7 @@ a { color: inherit; }
         readyBubble: document.getElementById('readyBubble'),
         readyStatus: document.getElementById('readyStatus'),
         discard: document.getElementById('discardBtn'),
+        share: document.getElementById('shareAudioBtn'),
         submit: document.getElementById('submitBtn')
     };
 
@@ -1279,6 +1502,16 @@ a { color: inherit; }
         return who + (freshFeedback[s.id] ? ' <span class="sub-feedback-new">New</span>' : '');
     }
 
+    function submissionShareTitle(s) {
+        s = s || {};
+        if (s.surah_name) {
+            var ayah = R.ayahLabel(s.ayah_start, s.ayah_end);
+            return s.surah_name + (ayah ? ' - ' + ayah : '') + ' recitation';
+        }
+        if (s.lesson_title) return s.lesson_title + ' recitation';
+        return 'Qur\'an recitation';
+    }
+
     function renderSubmissions() {
         if (!submitted.length) {
             els.submissionList.innerHTML = '<div class="rec-empty"><i class="fas fa-wave-square"></i>No recordings yet. Your first submission will appear here.</div>';
@@ -1314,6 +1547,7 @@ a { color: inherit; }
                 + '  </div>'
                 + '  <div class="sub-actions">'
                 + '      <div class="sub-voice" data-voice="' + s.id + '" data-duration="' + (s.duration_seconds || 0) + '"></div>'
+                + '      <button type="button" class="sub-share" data-share-audio="' + Number(s.id) + '" data-share-title="' + R.escapeHtml(submissionShareTitle(s)) + '" title="Share this recording to WhatsApp" aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i></button>'
                 + reviewDate
                 + '  </div>'
                 + feedback
@@ -1711,16 +1945,14 @@ a { color: inherit; }
 
     function pickMime() {
         if (!window.MediaRecorder || typeof MediaRecorder.isTypeSupported !== 'function') return '';
-        // Telegram voice notes are Opus. Firefox can write OGG/Opus directly,
-        // Chrome and Edge use the same Opus codec inside WebM, and Safari falls
-        // back to MP4/AAC. Trying Opus first keeps the recitation crisp at a
-        // small file size; the plain container names cover older browsers.
+        // MP4/AAC first because WhatsApp opens it as a normal voice note.
+        // OGG/WebM stay as fallbacks for browsers that cannot record MP4.
         var options = [
+            'audio/mp4;codecs=mp4a.40.2',
+            'audio/mp4',
             'audio/ogg;codecs=opus',
             'audio/webm;codecs=opus',
             'audio/webm',
-            'audio/mp4;codecs=mp4a.40.2',
-            'audio/mp4',
             'audio/ogg'
         ];
         for (var i = 0; i < options.length; i++) {
@@ -1729,8 +1961,7 @@ a { color: inherit; }
         return '';
     }
 
-    /* 64 kbps mono Opus is the sweet spot for recitation: clear voice, small
-       uploads, and it matches the Telegram-style voice notes used elsewhere. */
+    /* 64 kbps mono audio keeps recitations clear and small for upload/share. */
     function recorderOptions() {
         var options = { audioBitsPerSecond: 64000 };
         var mime = pickMime();
@@ -2032,6 +2263,7 @@ a { color: inherit; }
         }
 
         els.liveDot.classList.toggle('show', recordingWave || recPaused);
+        if (els.share) els.share.disabled = s !== 'ready' || !recordedBlob;
         updateStudySteps();
         renderTimer();
     }
@@ -2250,6 +2482,32 @@ a { color: inherit; }
             ? 'This take is over the 25 MB limit. Discard it and record a shorter passage.'
             : 'Listen back, then send it to your teacher for review.';
         els.submit.disabled = Boolean(tooBig);
+        if (els.share) els.share.disabled = Boolean(tooBig);
+    }
+
+    function draftShareTitle() {
+        var target = resolveTarget();
+        if (!target) return 'Qur\'an recitation';
+        if (target.kind === 'assignment' && target.assignment) {
+            var a = target.assignment;
+            var ayah = R.ayahLabel(a.ayah_start, a.ayah_end);
+            return (a.surah_name || ('Surah ' + a.surah_number)) + (ayah ? ' - ' + ayah : '') + ' recitation';
+        }
+        return (target.title || 'Lesson recitation') + ' recitation';
+    }
+
+    function shareDraft() {
+        if (!recordedBlob || recState !== 'ready') return;
+        if (recordedBlob.size > MAX_BYTES) return R.toast('This take is over 25 MB. Record a shorter passage before sharing.', 'error');
+        if (!window.MSVoice || !MSVoice.shareAudio) return R.toast('Audio sharing is not available in this browser.', 'error');
+        els.share.disabled = true;
+        MSVoice.shareAudio({
+            blob: recordedBlob,
+            title: draftShareTitle(),
+            toast: R.toast
+        }).then(function () {
+            if (els.share) els.share.disabled = false;
+        });
     }
 
     function discardDraft() {
@@ -2308,6 +2566,7 @@ a { color: inherit; }
 
         recState = 'sending';
         els.submit.disabled = true;
+        if (els.share) els.share.disabled = true;
         els.submit.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending&hellip;';
 
         try {
@@ -2336,6 +2595,7 @@ a { color: inherit; }
         } catch (err) {
             recState = 'ready';
             els.submit.disabled = false;
+            if (els.share) els.share.disabled = false;
             els.submit.innerHTML = '<i class="fas fa-paper-plane"></i> Send for review';
             updateRecorderUI();
             R.toast(err.message || 'Could not send the recording.', 'error');
@@ -2372,6 +2632,29 @@ a { color: inherit; }
         });
         if (assigned) selectAssignment(assigned.id);
         else enterLessonMode(lessonId);
+    });
+
+    els.submissionList.addEventListener('click', async function (event) {
+        var button = event.target.closest('[data-share-audio]');
+        if (!button || button.disabled) return;
+        var id = Number(button.getAttribute('data-share-audio'));
+        if (!id) return;
+        var original = button.innerHTML;
+        button.disabled = true;
+        button.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+        try {
+            var blob = await R.fetchAudio(id);
+            await MSVoice.shareAudio({
+                blob: blob,
+                title: button.getAttribute('data-share-title') || 'Qur\'an recitation',
+                toast: R.toast
+            });
+        } catch (err) {
+            R.toast(err.message || 'Could not load the recording for sharing.', 'error');
+        } finally {
+            button.disabled = false;
+            button.innerHTML = original;
+        }
     });
 
     function guardMicDown() {
@@ -2493,6 +2776,7 @@ a { color: inherit; }
         discardDraft();
     });
 
+    if (els.share) els.share.addEventListener('click', shareDraft);
     els.submit.addEventListener('click', sendRecording);
 
     window.addEventListener('beforeunload', function () {

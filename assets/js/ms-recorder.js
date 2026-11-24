@@ -108,6 +108,8 @@
         '.msr-btn:disabled{opacity:.5;cursor:default;transform:none;}',
         '.msr-btn.gold{background:linear-gradient(135deg,#e9c876,#c99b3a);color:#14100a;box-shadow:0 16px 36px -16px rgba(212,168,83,0.9);}',
         '.msr-btn.red{background:rgba(248,113,113,0.12);color:#fca5a5;border:1px solid rgba(248,113,113,0.4);}',
+        '.msr-btn.whatsapp{background:rgba(37,211,102,0.14);color:#86efac;border:1px solid rgba(37,211,102,0.42);}',
+        '.msr-btn.whatsapp:hover{background:rgba(37,211,102,0.24);}',
         '.msr-sent{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;padding:14px 0 8px;text-align:center;}',
         '.msr-sent .ok{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;',
         'background:rgba(52,211,153,0.16);border:1px solid rgba(52,211,153,0.45);color:#34d399;font-size:20px;}',
@@ -137,15 +139,14 @@
 
     function pickMime() {
         if (!window.MediaRecorder || typeof MediaRecorder.isTypeSupported !== 'function') return '';
-        // Telegram voice notes are Opus. Firefox writes OGG/Opus directly,
-        // Chrome/Edge use the same Opus codec in WebM, and Safari falls back to
-        // MP4/AAC. Trying Opus first keeps voices crisp at a small size.
+        // MP4/AAC first because WhatsApp opens it as a normal voice note.
+        // OGG/WebM stay as fallbacks for browsers that cannot record MP4.
         var options = [
+            'audio/mp4;codecs=mp4a.40.2',
+            'audio/mp4',
             'audio/ogg;codecs=opus',
             'audio/webm;codecs=opus',
             'audio/webm',
-            'audio/mp4;codecs=mp4a.40.2',
-            'audio/mp4',
             'audio/ogg'
         ];
         for (var i = 0; i < options.length; i++) {
@@ -154,7 +155,7 @@
         return '';
     }
 
-    /* 64 kbps mono Opus: clear recitation and small uploads. */
+    /* 64 kbps mono audio: clear recitation and small uploads. */
     function recorderOptions() {
         var options = { audioBitsPerSecond: 64000 };
         var mime = pickMime();
@@ -226,6 +227,7 @@
             '    <p class="msr-ready-status"></p>',
             '    <div class="msr-ready-actions">',
             '      <button type="button" class="msr-btn red" data-discard><i class="fas fa-rotate-left"></i> Discard</button>',
+            '      <button type="button" class="msr-btn whatsapp" data-share-audio aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</button>',
             '      <button type="button" class="msr-btn gold" data-send><i class="fas fa-paper-plane"></i> Send</button>',
             '    </div>',
             '  </div>',
@@ -265,6 +267,7 @@
             preview: q('.msr-preview'),
             readyStatus: q('.msr-ready-status'),
             discard: q('[data-discard]'),
+            share: q('[data-share-audio]'),
             submit: q('[data-send]'),
             sent: q('.msr-sent')
         };
@@ -510,6 +513,7 @@
             else if (state === 'stopping') { setHead('Finishing', 'idle'); }
             else { setHead('Standby', 'idle'); }
             renderTimer();
+            if (els.share) els.share.disabled = state !== 'ready' || !recordedBlob;
             if (onStateChange) {
                 try { onStateChange(state, getRecording(), pausedFlag); } catch (e) { }
             }
@@ -735,6 +739,7 @@
                     ? 'Listen back — then choose Approve or Needs improvement below.'
                     : 'Listen back — send it to the review queue when it sounds right.';
             els.submit.disabled = Boolean(tooBig);
+            if (els.share) els.share.disabled = Boolean(tooBig);
             if (!tooBig && typeof opts.onReady === 'function') {
                 try { opts.onReady(getRecording()); } catch (e) {}
             }
@@ -747,6 +752,22 @@
                 duration: Math.max(1, Math.round(totalRecordedMs() / 1000)),
                 mime: recordedBlob.type || 'audio/webm'
             };
+        }
+
+        function shareDraft() {
+            if (!recordedBlob || state !== 'ready') return;
+            if (!window.MSVoice || !MSVoice.shareAudio) {
+                toast('Audio sharing is not available in this browser.', 'error');
+                return;
+            }
+            els.share.disabled = true;
+            MSVoice.shareAudio({
+                blob: recordedBlob,
+                title: opts.shareTitle || title,
+                toast: toast
+            }).then(function () {
+                if (els.share) els.share.disabled = false;
+            });
         }
 
         function discardDraft() {
@@ -910,6 +931,7 @@
         els.lockedCancel.addEventListener('click', function () { if (state === 'locked') cancel(false); });
         els.lockedPause.addEventListener('click', pauseToggle);
         els.lockedFinish.addEventListener('click', function () { if (state === 'locked') finish(''); });
+        if (els.share) els.share.addEventListener('click', shareDraft);
         els.discard.addEventListener('click', discardDraft);
 
         els.submit.addEventListener('click', function () {
@@ -933,6 +955,7 @@
             var sendLabel = els.submit.innerHTML;
             els.submit.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending&hellip;';
             els.discard.disabled = true;
+            if (els.share) els.share.disabled = true;
             setHead('Sending', 'idle');
 
             Promise.resolve()
@@ -961,6 +984,7 @@
                     els.submit.disabled = false;
                     els.submit.innerHTML = sendLabel;
                     els.discard.disabled = false;
+                    if (els.share) els.share.disabled = false;
                     if (err && err.message) els.readyStatus.textContent = err.message;
                     setHead('Standby', 'idle');
                     toast((err && err.message) || 'Could not send the recording.', 'error');

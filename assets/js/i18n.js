@@ -240,3 +240,18 @@
         applyOnReady();
     }
 })(typeof window !== 'undefined' ? window : this);
+;(function(){
+  try{
+    if(document.querySelector('.wa-float')) return;
+    var a=document.createElement('a');
+    a.className='wa-float';
+    a.href='https://wa.me/250783198148';
+    a.target='_blank';
+    a.rel='noopener';
+    a.setAttribute('aria-label','Chat on WhatsApp');
+    a.title='WhatsApp';
+    a.innerHTML='<i class="fab fa-whatsapp" aria-hidden="true"></i>';
+    document.addEventListener('DOMContentLoaded',function(){ if(!document.querySelector('.wa-float')) document.body.appendChild(a); });
+    if(document.readyState!=='loading' && !document.querySelector('.wa-float')) document.body.appendChild(a);
+  }catch(e){}
+})();

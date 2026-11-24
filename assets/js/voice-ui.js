@@ -452,6 +452,88 @@
         };
     }
 
+    function audioExtension(mime) {
+        mime = String(mime || '').toLowerCase();
+        if (mime.indexOf('ogg') !== -1) return '.ogg';
+        if (mime.indexOf('mp4') !== -1 || mime.indexOf('m4a') !== -1) return '.m4a';
+        if (mime.indexOf('mpeg') !== -1) return '.mp3';
+        if (mime.indexOf('wav') !== -1) return '.wav';
+        if (mime.indexOf('aac') !== -1) return '.aac';
+        return '.webm';
+    }
+
+    function audioFileName(title, mime) {
+        var clean = String(title || 'quran-recitation')
+            .replace(/[\\/:*?"<>|]+/g, '')
+            .trim()
+            .replace(/\s+/g, '-')
+            .slice(0, 70)
+            .toLowerCase();
+        if (!clean) clean = 'quran-recitation';
+        return clean + '-' + new Date().toISOString().slice(0, 10) + audioExtension(mime);
+    }
+
+    function downloadAudio(blob, title) {
+        if (!blob) return '';
+        var name = audioFileName(title, blob.type);
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = name;
+        link.rel = 'noopener';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        global.setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+        return name;
+    }
+
+    function fallbackAudioShare(blob, title, notify) {
+        var name = downloadAudio(blob, title);
+        var message = 'My Qur\'an recitation' + (title ? ': ' + title : '') + '. The audio file is downloaded and ready to attach.';
+        var opened = false;
+        try { opened = Boolean(global.open('https://wa.me/?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer')); } catch (e) {}
+        notify(opened
+            ? 'Audio downloaded. Attach the file in WhatsApp to share it.'
+            : 'Audio downloaded as ' + name + '. Open WhatsApp and attach the file.', 'info');
+        return Promise.resolve(false);
+    }
+
+    function shareAudio(opts) {
+        opts = opts || {};
+        var blob = opts.blob;
+        var title = String(opts.title || 'Qur\'an recitation');
+        var notify = opts.toast || function () {};
+        if (!blob || typeof blob.size !== 'number') {
+            notify('Record something first.', 'error');
+            return Promise.resolve(false);
+        }
+
+        var file = null;
+        try {
+            if (typeof File === 'function') {
+                file = new File([blob], audioFileName(title, blob.type), { type: blob.type || 'audio/webm' });
+            }
+        } catch (e) { file = null; }
+
+        if (file && global.navigator && navigator.share && navigator.canShare) {
+            try {
+                if (navigator.canShare({ files: [file] })) {
+                    return navigator.share({ files: [file], title: title, text: title })
+                        .then(function () {
+                            notify('Audio shared. Choose WhatsApp in your share sheet.', 'success');
+                            return true;
+                        })
+                        .catch(function (err) {
+                            if (err && err.name === 'AbortError') return false;
+                            return fallbackAudioShare(blob, title, notify);
+                        });
+                }
+            } catch (e) {}
+        }
+        return fallbackAudioShare(blob, title, notify);
+    }
+
     global.MSVoice = {
         bubble: bubble,
         liveMeter: liveMeter,
@@ -459,6 +541,9 @@
         stopAll: stopAll,
         isPlaying: anyPlaying,
         setDuck: setDuckVolume,
+        shareAudio: shareAudio,
+        downloadAudio: downloadAudio,
+        audioFileName: audioFileName,
         clearCache: function () { peaksCache.clear(); }
     };
 })(window);

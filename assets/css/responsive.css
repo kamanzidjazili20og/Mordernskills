@@ -56,7 +56,7 @@
     .logo { font-size: 18px; }
     .lang-trigger { font-size: 12px; padding: 7px 11px; }
     .btn-admin { font-size: 12.5px; padding: 8px 12px; }
-    .btn-wa-link .btn-label { display: none; }
+
 }
 
 /* --------------------------------------------------------------------------
@@ -87,7 +87,7 @@
     .header { padding: 7px 14px; }
     .logo { font-size: 15px; gap: 7px; }
     .logo .logo-img { width: 26px; height: 26px; border-radius: 8px; }
-    .btn-wa-link { display: none; }
+
 
     /* Splash / intro */
     .splash-inner { padding: 12px 16px 16px; }
@@ -720,40 +720,35 @@ iframe {
 }
 
 /* Recitation / teacher compact header */
-@media (max-width: 900px) {
+@media (max-width: 980px) {
     .rec-header-inner {
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+            "brand user"
+            "nav nav";
         align-items: center;
+        gap: 12px;
     }
-    .rec-brand {
-        flex: 1 1 auto;
-    }
-    .rec-user {
-        margin-inline-start: auto;
-    }
+    .rec-brand { grid-area: brand; min-width: 0; }
+    .rec-user { grid-area: user; margin-inline-start: 0; justify-self: end; }
     .rec-nav {
-        order: 3;
-        flex: 1 1 100%;
+        grid-area: nav;
+        order: 0;
+        flex: none;
         width: 100%;
-        overflow-x: auto;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow: visible;
         white-space: nowrap;
-        padding-bottom: 2px;
-        scrollbar-width: none;
+        padding-bottom: 0;
     }
-    .rec-nav::-webkit-scrollbar { display: none; }
-    .rec-nav a {
-        flex: 0 0 auto;
-    }
+    .rec-nav a { width: 100%; min-width: 0; justify-content: center; }
 }
 @media (max-width: 480px) {
-    .rec-header-inner {
-        padding: 10px 12px;
-        gap: 10px;
-    }
-    .rec-nav a {
-        padding: 7px 10px;
-        font-size: 11.5px;
-    }
+    .rec-header-inner { padding: 10px 12px; gap: 8px 10px; }
+    .rec-brand span { max-width: 34vw; overflow: hidden; text-overflow: ellipsis; }
+    .rec-nav a { padding: 7px 4px; font-size: 10.5px; }
 }
 
 /* ==========================================================================
