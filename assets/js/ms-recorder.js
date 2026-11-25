@@ -114,6 +114,8 @@
         '.msr-btn.red{background:rgba(248,113,113,0.12);color:#fca5a5;border:1px solid rgba(248,113,113,0.4);}',
         '.msr-btn.whatsapp{background:rgba(37,211,102,0.14);color:#86efac;border:1px solid rgba(37,211,102,0.42);}',
         '.msr-btn.whatsapp:hover{background:rgba(37,211,102,0.24);}',
+        '.msr-btn.download{background:rgba(212,168,83,0.12);color:#f5d18a;border:1px solid rgba(212,168,83,0.38);}',
+        '.msr-btn.download:hover{background:rgba(212,168,83,0.22);}',
         '.msr-sent{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;padding:14px 0 8px;text-align:center;}',
         '.msr-sent .ok{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;',
         'background:rgba(52,211,153,0.16);border:1px solid rgba(52,211,153,0.45);color:#34d399;font-size:20px;}',
@@ -237,6 +239,7 @@
             '    <div class="msr-ready-actions">',
             '      <button type="button" class="msr-btn red" data-discard><i class="fas fa-rotate-left"></i> Discard</button>',
             '      <button type="button" class="msr-btn whatsapp" data-share-audio aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</button>',
+            '      <button type="button" class="msr-btn download" data-download-audio aria-label="Download this recording"><i class="fas fa-download"></i> Download</button>',
             '      <button type="button" class="msr-btn gold" data-send><i class="fas fa-paper-plane"></i> Send</button>',
             '    </div>',
             '  </div>',
@@ -279,6 +282,7 @@
             readyStatus: q('.msr-ready-status'),
             discard: q('[data-discard]'),
             share: q('[data-share-audio]'),
+            download: q('[data-download-audio]'),
             submit: q('[data-send]'),
             sent: q('.msr-sent')
         };
@@ -841,6 +845,7 @@
                     : 'Listen back — send it to the review queue when it sounds right.';
             els.submit.disabled = Boolean(tooBig);
             if (els.share) els.share.disabled = Boolean(tooBig);
+            if (els.download) els.download.disabled = Boolean(tooBig);
             if (!tooBig && typeof opts.onReady === 'function') {
                 try { opts.onReady(getRecording()); } catch (e) {}
             }
@@ -871,6 +876,16 @@
             }).catch(function () {
                 if (els.share) els.share.disabled = false;
             });
+        }
+
+        function downloadDraft() {
+            if (!recordedBlob || state !== 'ready') return;
+            if (!window.MSVoice || !MSVoice.downloadAudio) {
+                toast('Audio download is not available in this browser.', 'error');
+                return;
+            }
+            var name = MSVoice.downloadAudio(recordedBlob, opts.shareTitle || title);
+            if (name) toast('Downloaded as ' + name, 'success');
         }
 
         function discardDraft() {
@@ -1035,6 +1050,7 @@
         els.lockedPause.addEventListener('click', pauseToggle);
         els.lockedFinish.addEventListener('click', function () { if (state === 'locked') finish(''); });
         if (els.share) els.share.addEventListener('click', shareDraft);
+        if (els.download) els.download.addEventListener('click', downloadDraft);
         els.discard.addEventListener('click', discardDraft);
 
         els.submit.addEventListener('click', function () {

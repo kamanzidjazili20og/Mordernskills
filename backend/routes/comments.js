@@ -21,6 +21,7 @@ const { authenticate } = require('../middleware/auth');
 const { uploadComment, COMMENT_DIR } = require('../middleware/upload');
 const { fail } = require('../middleware/errors');
 const storage = require('../services/supabase');
+const { prepareVoiceFile } = require('../services/voice-audio');
 
 const router = express.Router();
 
@@ -210,6 +211,7 @@ router.post('/lesson/:lessonId', authenticate, (req, res) => {
       let storageType = null;
       let audioPath = null;
       if (req.file) {
+        await prepareVoiceFile(req.file, 'lesson voice comment', { bitrate: 96000 });
         if (storage.enabled) {
           try {
             stored = await storage.uploadCommentAudioToSupabase(req.file);

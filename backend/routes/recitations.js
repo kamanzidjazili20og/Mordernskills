@@ -20,6 +20,7 @@ const { authenticate, requireAdmin, requireTeacher, requireStudent } = require('
 const { uploadRecitation, RECITATION_DIR } = require('../middleware/upload');
 const { fail } = require('../middleware/errors');
 const storage = require('../services/supabase');
+const { prepareVoiceFile } = require('../services/voice-audio');
 const SURAHS = require('../config/surahs');
 
 const router = express.Router();
@@ -728,6 +729,8 @@ router.post('/submissions', authenticate, requireStudent, (req, res) => {
         lessonId = lesson.id;
       }
 
+      if (req.file) await prepareVoiceFile(req.file, 'student submission', { bitrate: 96000 });
+
       let stored = null;
       if (storage.enabled) {
         try {
@@ -823,6 +826,7 @@ router.patch('/submissions/:id/review', authenticate, requireTeacher, (req, res)
       }
 
       if (req.file) {
+        await prepareVoiceFile(req.file, 'voice feedback', { bitrate: 96000 });
         uploaded = await storeFeedbackAudio(req.file);
       }
 

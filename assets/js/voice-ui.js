@@ -86,7 +86,7 @@
             airCut.gain.value = -1.5;
 
             var gain = ctx.createGain();
-            gain.gain.value = 1.25;
+            gain.gain.value = 1.12;
 
             var limiter = ctx.createDynamicsCompressor();
             limiter.threshold.value = -2;

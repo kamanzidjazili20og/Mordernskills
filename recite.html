@@ -657,6 +657,8 @@ body.rec-page .sub-card {
 }
 .sub-share:hover { background: rgba(37,211,102,0.2); color: #bbf7d0; border-color: rgba(37,211,102,0.6); transform: translateY(-1px); }
 .sub-share:disabled { opacity: .5; cursor: default; transform: none; }
+.sub-download { border-color: rgba(212,168,83,0.35); background: rgba(212,168,83,0.1); color: var(--gold-light); }
+.sub-download:hover { background: rgba(212,168,83,0.2); color: #f5d18a; border-color: rgba(212,168,83,0.6); }
 .sub-date { font-size: 11px; color: var(--text-muted); }
 
 /* Toasts / avatars */
@@ -1205,6 +1207,7 @@ body.rec-page .rec-study {
                     <div class="rec-ready-actions">
                         <button type="button" class="btn btn-secondary btn-ghost-red" id="discardBtn"><i class="fas fa-trash"></i> Redo</button>
                         <button type="button" class="btn btn-secondary btn-share-wa" id="shareAudioBtn" aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                        <button type="button" class="btn btn-secondary" id="downloadAudioBtn" aria-label="Download this recording"><i class="fas fa-download"></i> Download</button>
                         <button type="button" class="btn btn-primary btn-send" id="submitBtn">
                             <i class="fas fa-paper-plane"></i> Send for review
                         </button>
@@ -1391,6 +1394,7 @@ body.rec-page .rec-study {
         readyStatus: document.getElementById('readyStatus'),
         discard: document.getElementById('discardBtn'),
         share: document.getElementById('shareAudioBtn'),
+        download: document.getElementById('downloadAudioBtn'),
         submit: document.getElementById('submitBtn')
     };
 
@@ -1576,6 +1580,7 @@ body.rec-page .rec-study {
                 + '  <div class="sub-actions">'
                 + '      <div class="sub-voice" data-voice="' + s.id + '" data-duration="' + (s.duration_seconds || 0) + '"></div>'
                 + '      <button type="button" class="sub-share" data-share-audio="' + Number(s.id) + '" data-share-title="' + R.escapeHtml(submissionShareTitle(s)) + '" title="Share this recording to WhatsApp" aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i></button>'
+                + '      <button type="button" class="sub-share sub-download" data-download-audio="' + Number(s.id) + '" data-download-title="' + R.escapeHtml(submissionShareTitle(s)) + '" title="Download this recording" aria-label="Download this recording"><i class="fas fa-download"></i></button>'
                 + reviewDate
                 + '  </div>'
                 + feedback
@@ -2597,6 +2602,7 @@ body.rec-page .rec-study {
             : 'Listen back, then send it to your teacher for review.';
         els.submit.disabled = Boolean(tooBig);
         if (els.share) els.share.disabled = Boolean(tooBig);
+        if (els.download) els.download.disabled = Boolean(tooBig);
     }
 
     function draftShareTitle() {
@@ -2751,22 +2757,25 @@ body.rec-page .rec-study {
     });
 
     els.submissionList.addEventListener('click', async function (event) {
-        var button = event.target.closest('[data-share-audio]');
+        var button = event.target.closest('[data-share-audio], [data-download-audio]');
         if (!button || button.disabled) return;
-        var id = Number(button.getAttribute('data-share-audio'));
+        var isDownload = button.hasAttribute('data-download-audio');
+        var id = Number(button.getAttribute(isDownload ? 'data-download-audio' : 'data-share-audio'));
         if (!id) return;
+        var title = button.getAttribute(isDownload ? 'data-download-title' : 'data-share-title') || 'Qur\'an recitation';
         var original = button.innerHTML;
         button.disabled = true;
         button.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
         try {
             var blob = await R.fetchAudio(id);
-            await MSVoice.shareAudio({
-                blob: blob,
-                title: button.getAttribute('data-share-title') || 'Qur\'an recitation',
-                toast: R.toast
-            });
+            if (isDownload) {
+                var name = MSVoice.downloadAudio(blob, title);
+                if (name) R.toast('Downloaded as ' + name, 'success');
+            } else {
+                await MSVoice.shareAudio({ blob: blob, title: title, toast: R.toast });
+            }
         } catch (err) {
-            R.toast(err.message || 'Could not load the recording for sharing.', 'error');
+            R.toast(err.message || 'Could not load the recording.', 'error');
         } finally {
             button.disabled = false;
             button.innerHTML = original;
@@ -2893,6 +2902,11 @@ body.rec-page .rec-study {
     });
 
     if (els.share) els.share.addEventListener('click', shareDraft);
+    if (els.download) els.download.addEventListener('click', function () {
+        if (!recordedBlob || recState !== 'ready') return;
+        var name = MSVoice.downloadAudio(recordedBlob, draftShareTitle());
+        if (name) R.toast('Downloaded as ' + name, 'success');
+    });
     els.submit.addEventListener('click', sendRecording);
 
     window.addEventListener('beforeunload', function () {

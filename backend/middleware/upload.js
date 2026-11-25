@@ -2,6 +2,7 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const { AUDIO_EXTENSIONS, AUDIO_MIMES } = require('../services/audio-format');
 
 const VIDEO_DIR = path.join(__dirname, '..', 'uploads', 'videos');
 const THUMBNAIL_DIR = path.join(__dirname, '..', 'uploads', 'thumbnails');
@@ -98,17 +99,14 @@ const bookFilter = (req, file, cb) => {
 // MediaRecorder emits "audio/webm;codecs=opus" in Chrome, "audio/mp4" in
 // Safari and "audio/ogg;codecs=opus" in Firefox. Match on the base MIME type
 // as well as the extension so all three browsers are accepted.
-const RECITATION_EXTENSIONS = ['.webm', '.ogg', '.oga', '.mp3', '.m4a', '.mp4', '.wav', '.aac'];
-const RECITATION_MIME_PREFIXES = ['audio/', 'video/webm'];
-
 const recitationFilter = (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
-    const mime = String(file.mimetype || '').toLowerCase();
-    const mimeOk = RECITATION_MIME_PREFIXES.some(prefix => mime.startsWith(prefix));
-    if (RECITATION_EXTENSIONS.includes(ext) || mimeOk) {
+    const mime = String(file.mimetype || '').split(';')[0].trim().toLowerCase();
+    const mimeOk = AUDIO_MIMES.has(mime);
+    if (AUDIO_EXTENSIONS.includes(ext) || mimeOk) {
         cb(null, true);
     } else {
-        cb(new Error(`Invalid recording format. Allowed: ${RECITATION_EXTENSIONS.join(', ')}`));
+        cb(new Error(`Invalid recording format. Allowed: ${AUDIO_EXTENSIONS.join(', ')}`));
     }
 };
 
