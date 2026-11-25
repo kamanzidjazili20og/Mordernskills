@@ -1279,7 +1279,7 @@ body::before {
 <script src="assets/js/share.js"></script>
 <link rel="stylesheet" href="assets/css/page-backdrop.css">
 </head>
-<body>
+<body class="page-video">
 <div class="site-backdrop backdrop-video" aria-hidden="true"></div>
 
 <div class="page-backdrop" id="pageBackdrop"></div>
@@ -2185,7 +2185,7 @@ function esc(str) {
         .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-var MS_PLACEHOLDER = (window.MS_MEDIA && MS_MEDIA.PLACEHOLDER) || 'Images/placeholder.svg';
+var MS_PLACEHOLDER = (window.MS_MEDIA && MS_MEDIA.PLACEHOLDER) || 'Images/backgrounds/hero-poster.jpg';
 
 // Maps the app's language codes onto BCP-47 tags for Intl.
 var LOCALE_TAGS = { en: 'en-GB', rw: 'rw-RW', fr: 'fr-FR', sw: 'sw-TZ', ar: 'ar' };

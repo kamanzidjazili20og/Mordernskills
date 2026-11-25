@@ -534,6 +534,38 @@ body::before {
 }
 .panel:hover { border-color: rgba(212,168,83,0.1); }
 
+.page-section .panel,
+.page-section .stat-card {
+    background-color: #04120d;
+    background-repeat: no-repeat;
+    background-position: center 28%;
+    background-size: cover;
+    background-image:
+        linear-gradient(165deg, rgba(4,18,13,0.9) 0%, rgba(3,12,9,0.96) 100%),
+        var(--admin-section-image, url("Images/backgrounds/hero-poster.jpg"));
+}
+#page-dashboard { --admin-section-image: url("Images/backgrounds/hero-poster.jpg"); }
+#page-lessons { --admin-section-image: url("Images/thumbnails/thumb_seed_11.jpg"); }
+#page-upload { --admin-section-image: url("Images/backgrounds/section-experiences.webp"); }
+#page-categories { --admin-section-image: url("Images/backgrounds/section-cities.webp"); }
+#page-testimonials { --admin-section-image: url("Images/backgrounds/section-about.webp"); }
+#page-instructors { --admin-section-image: url("Images/backgrounds/section-culture.webp"); }
+#page-books { --admin-section-image: url("Images/backgrounds/section-culture.webp"); }
+#page-plans { --admin-section-image: url("Images/backgrounds/hero-poster.jpg"); }
+#page-payments { --admin-section-image: url("Images/backgrounds/section-experiences.webp"); }
+#page-recitations { --admin-section-image: url("Images/backgrounds/section-culture.webp"); }
+#page-testimonials .testimonial-admin-card,
+#page-instructors .testimonial-admin-card {
+    background-image:
+        linear-gradient(165deg, rgba(8,27,19,0.86) 0%, rgba(3,12,9,0.96) 100%),
+        var(--admin-section-image);
+}
+#page-recitations .rec-card {
+    background-image:
+        linear-gradient(165deg, rgba(8,27,19,0.9) 0%, rgba(3,12,9,0.97) 100%),
+        var(--admin-section-image);
+}
+
 .panel-header {
     padding: 18px 22px;
     display: flex;
@@ -1663,7 +1695,7 @@ body.lang-rw [data-lang="en"] { display: none !important; }
 <link rel="stylesheet" href="assets/css/polish.css">
 <link rel="stylesheet" href="assets/css/page-backdrop.css">
 </head>
-<body>
+<body class="page-admin">
 <div class="site-backdrop backdrop-admin" aria-hidden="true"></div>
 
 <!-- ===== LOGIN OVERLAY ===== -->

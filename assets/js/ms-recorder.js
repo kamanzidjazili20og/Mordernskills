@@ -60,6 +60,10 @@
         'box-shadow:0 18px 46px -12px rgba(96,165,250,0.8);}',
         '.msr-caption{margin:14px 0 0;font-size:12.5px;color:var(--text-sec,#9db4a9);}',
         '.msr-caption strong{color:var(--text,#e9f2ec);}',
+        '.msr-audio-opts{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:11.5px;color:var(--text-sec,#9db4a9);}',
+        '.msr-audio-opts label{display:inline-flex;align-items:center;gap:7px;}',
+        '.msr-audio-opts input{accent-color:#d4a853;}',
+        '.msr-audio-opts select{max-width:190px;padding:6px 9px;border-radius:9px;border:1px solid rgba(212,168,83,0.25);background:rgba(5,18,13,0.85);color:var(--text,#e9f2ec);font:inherit;font-size:11.5px;}',
         '.msr-kb{margin:6px 0 0;font-size:11px;color:var(--text-muted,#7e958a);}',
         '.msr-kb kbd{padding:2px 7px;border-radius:6px;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.05);font-family:inherit;font-size:10.5px;}',
         '.msr-warn{margin:12px auto 0;max-width:420px;font-size:12.5px;color:#fbbf24;}',
@@ -155,10 +159,11 @@
         return '';
     }
 
-    /* 64 kbps mono audio: clear recitation and small uploads. */
+    /* Higher-quality speech encoding: AAC/MP4 for sharing, Opus for browsers
+       that cannot record MP4. Both stay within the existing 25 MB upload cap. */
     function recorderOptions() {
-        var options = { audioBitsPerSecond: 64000 };
         var mime = pickMime();
+        var options = { audioBitsPerSecond: mime && mime.indexOf('mp4') !== -1 ? 128000 : 96000 };
         if (mime) options.mimeType = mime;
         return options;
     }
@@ -200,6 +205,10 @@
             '  <div class="msr-idle">',
             '    <button type="button" class="msr-mic msr-idle-mic" aria-label="Tap to start recording"><i class="fas fa-microphone"></i></button>',
             '    <p class="msr-caption"><strong>Tap</strong> the mic to start &mdash; then tap <strong>stop</strong> when you finish. Hold and slide <strong>left</strong> to cancel.</p>',
+            '    <div class="msr-audio-opts">',
+            '      <label><input type="checkbox" class="msr-headphones"> Headphones mode</label>',
+            '      <label>Mic <select class="msr-mic-select" aria-label="Recording microphone"><option value="">Default microphone</option></select></label>',
+            '    </div>',
             '    <p class="msr-kb">or press <kbd>Space</kbd> to start &amp; stop</p>',
             '  </div>',
             '  <div class="msr-stage msr-hidden">',
@@ -245,6 +254,8 @@
             liveLbl: q('.msr-live .lbl'),
             idle: q('.msr-idle'),
             idleMic: q('.msr-idle-mic'),
+            headphones: q('.msr-headphones'),
+            micSelect: q('.msr-mic-select'),
             warn: q('.msr-warn'),
             stage: q('.msr-stage'),
             timer: q('.msr-timer'),
@@ -298,8 +309,8 @@
         var recorderStream = null;
         var audioGraph = null;
         var duckedMedia = [];
-        var DUCK_VOLUME = 0.16;
-        var MIC_GAIN = 1.7;
+        var DUCK_VOLUME = 0;
+        var MIC_GAIN = 1.25;
         var wakeLock = null;
         var chunks = [];
         var recordedBlob = null;
@@ -337,6 +348,13 @@
         /* Total recorded time across pauses — shown live and sent on upload. */
         function totalRecordedMs() {
             return Math.max(elapsedMs(), accumulatedMs);
+        }
+
+        function freezeElapsedMs() {
+            var active = (state === 'hold' || state === 'locked') && !pausedFlag;
+            if (active && startedAt) accumulatedMs += Date.now() - startedAt;
+            startedAt = 0;
+            return accumulatedMs;
         }
 
         function renderTimer() {
@@ -397,8 +415,9 @@
             if (duckedMedia.length) return;
             try {
                 document.querySelectorAll('video, audio').forEach(function (el) {
-                    duckedMedia.push({ el: el, volume: el.volume });
-                    el.volume = Math.min(Number(el.volume) || 0, DUCK_VOLUME);
+                    duckedMedia.push({ el: el, volume: el.volume, wasPaused: el.paused });
+                    try { el.pause(); } catch (e) {}
+                    el.volume = DUCK_VOLUME;
                 });
             } catch (e) {}
             if (window.MSVoice && typeof MSVoice.setDuck === 'function') MSVoice.setDuck(DUCK_VOLUME);
@@ -407,7 +426,11 @@
         function restorePlaybackDuck() {
             if (duckedMedia.length) {
                 duckedMedia.forEach(function (item) {
-                    if (item.el && item.el.isConnected) item.el.volume = item.volume;
+                    if (!item.el || !item.el.isConnected) return;
+                    item.el.volume = item.volume;
+                    if (!item.wasPaused) {
+                        try { item.el.play().catch(function () {}); } catch (e) {}
+                    }
                 });
                 duckedMedia = [];
             }
@@ -421,25 +444,59 @@
             try {
                 ctx = new Ctx();
                 var source = ctx.createMediaStreamSource(cstream);
-                var highpass = ctx.createBiquadFilter();
-                highpass.type = 'highpass';
-                highpass.frequency.value = 85;
-                highpass.Q.value = 0.7;
+
+                var rumble1 = ctx.createBiquadFilter();
+                rumble1.type = 'highpass';
+                rumble1.frequency.value = 75;
+                rumble1.Q.value = 0.707;
+                var rumble2 = ctx.createBiquadFilter();
+                rumble2.type = 'highpass';
+                rumble2.frequency.value = 75;
+                rumble2.Q.value = 0.707;
+
+                var presence = ctx.createBiquadFilter();
+                presence.type = 'peaking';
+                presence.frequency.value = 2800;
+                presence.Q.value = 1;
+                presence.gain.value = 2.5;
+
+                var airCut = ctx.createBiquadFilter();
+                airCut.type = 'highshelf';
+                airCut.frequency.value = 7000;
+                airCut.gain.value = -1.5;
+
+                var inputGain = ctx.createGain();
+                inputGain.gain.value = MIC_GAIN;
+
                 var compressor = ctx.createDynamicsCompressor();
-                compressor.threshold.value = -20;
-                compressor.knee.value = 18;
-                compressor.ratio.value = 5;
-                compressor.attack.value = 0.003;
-                compressor.release.value = 0.25;
-                var gain = ctx.createGain();
-                gain.gain.value = MIC_GAIN;
+                compressor.threshold.value = -18;
+                compressor.knee.value = 16;
+                compressor.ratio.value = 3;
+                compressor.attack.value = 0.01;
+                compressor.release.value = 0.2;
+
+                var makeup = ctx.createGain();
+                makeup.gain.value = 1.15;
+
+                var limiter = ctx.createDynamicsCompressor();
+                limiter.threshold.value = -3;
+                limiter.knee.value = 0;
+                limiter.ratio.value = 20;
+                limiter.attack.value = 0.001;
+                limiter.release.value = 0.05;
+
                 var dest = ctx.createMediaStreamDestination();
-                source.connect(highpass);
-                highpass.connect(gain);
-                gain.connect(compressor);
-                compressor.connect(dest);
+                source.connect(rumble1);
+                rumble1.connect(rumble2);
+                rumble2.connect(presence);
+                presence.connect(airCut);
+                airCut.connect(inputGain);
+                inputGain.connect(compressor);
+                compressor.connect(makeup);
+                makeup.connect(limiter);
+                limiter.connect(dest);
                 if (ctx.state === 'suspended') ctx.resume().catch(function () {});
-                audioGraph = { ctx: ctx, nodes: [source, highpass, compressor, gain, dest] };
+                audioGraph = { ctx: ctx, nodes: [source, rumble1, rumble2, presence, airCut, inputGain, compressor, makeup, limiter, dest] };
                 return dest.stream;
             } catch (e) {
                 try { if (ctx && ctx.state !== 'closed') ctx.close().catch(function () {}); } catch (e2) {}
@@ -456,20 +513,64 @@
             return 'Microphone access was blocked. Allow it in your browser settings and try again.';
         }
 
-        function acquireMic() {
-            var constraints = {
+        function audioConstraints() {
+            var headphones = Boolean(els.headphones && els.headphones.checked);
+            var micId = els.micSelect ? els.micSelect.value : '';
+            var audio = {
+                echoCancellation: !headphones,
+                noiseSuppression: !headphones,
+                autoGainControl: !headphones,
+                channelCount: { ideal: 1 },
+                sampleRate: { ideal: 48000 }
+            };
+            if (micId) audio.deviceId = { ideal: micId };
+            return { audio: audio };
+        }
+
+        function fallbackAudioConstraints() {
+            var headphones = Boolean(els.headphones && els.headphones.checked);
+            return {
                 audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    autoGainControl: true,
-                    channelCount: 1,
-                    sampleRate: 48000,
-                    sampleSize: 16
+                    echoCancellation: !headphones,
+                    noiseSuppression: !headphones,
+                    autoGainControl: !headphones,
+                    channelCount: 1
                 }
             };
-            return navigator.mediaDevices.getUserMedia(constraints).catch(function (err) {
+        }
+
+        function refreshMicList() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices || !els.micSelect) return;
+            navigator.mediaDevices.enumerateDevices().then(function (devices) {
+                var current = els.micSelect.value;
+                els.micSelect.innerHTML = '<option value="">Default microphone</option>';
+                devices.filter(function (d) { return d.kind === 'audioinput'; }).forEach(function (d, i) {
+                    var opt = document.createElement('option');
+                    opt.value = d.deviceId;
+                    opt.textContent = d.label || ('Microphone ' + (i + 1));
+                    els.micSelect.appendChild(opt);
+                });
+                if (current) els.micSelect.value = current;
+            }).catch(function () {});
+        }
+
+        refreshMicList();
+        if (navigator.mediaDevices && navigator.mediaDevices.addEventListener) {
+            var onDeviceChange = function () { refreshMicList(); };
+            navigator.mediaDevices.addEventListener('devicechange', onDeviceChange);
+            teardown.push(function () { navigator.mediaDevices.removeEventListener('devicechange', onDeviceChange); });
+        }
+
+        function acquireMic() {
+            return navigator.mediaDevices.getUserMedia(audioConstraints()).then(function (stream) {
+                refreshMicList();
+                return stream;
+            }).catch(function (err) {
                 if (err && (err.name === 'OverconstrainedError' || err.name === 'NotFoundError')) {
-                    return navigator.mediaDevices.getUserMedia({ audio: true });
+                    return navigator.mediaDevices.getUserMedia(fallbackAudioConstraints()).then(function (stream) {
+                        refreshMicList();
+                        return stream;
+                    });
                 }
                 throw err;
             });
@@ -664,6 +765,7 @@
         function finish(note) {
             if (state !== 'hold' && state !== 'locked') return;
             if (elapsedMs() < minMs) {
+                freezeElapsedMs();
                 discardOnStop = true;
                 state = 'stopping';
                 updateUI();
@@ -672,6 +774,7 @@
                 return;
             }
             if (note) toast(note, 'info');
+            freezeElapsedMs();
             state = 'stopping';
             updateUI();
             setStatus('Finishing your take&hellip;', false);
@@ -682,8 +785,6 @@
             stopStream();
             var type = (mediaRecorder && mediaRecorder.mimeType) || 'audio/webm';
             mediaRecorder = null;
-            accumulatedMs = totalRecordedMs();
-            startedAt = 0;
             stopTimer();
             lastStopAt = Date.now();
             renderTimer();
@@ -766,6 +867,8 @@
                 title: opts.shareTitle || title,
                 toast: toast
             }).then(function () {
+                if (els.share) els.share.disabled = false;
+            }).catch(function () {
                 if (els.share) els.share.disabled = false;
             });
         }

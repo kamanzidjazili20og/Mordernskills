@@ -20,6 +20,7 @@
     var BARS = 32;
     var peaksCache = new Map();
     var sharedCtx = null;
+    var playbackGraphs = typeof WeakMap === 'function' ? new WeakMap() : null;
     var liveBubbles = new Set();
     var activePlay = null;
     var duckVolume = 1;
@@ -58,7 +59,50 @@
         var Ctx = global.AudioContext || global.webkitAudioContext;
         if (!Ctx) return null;
         try { sharedCtx = new Ctx(); } catch (e) { sharedCtx = null; }
+        if (sharedCtx && sharedCtx.state === 'suspended') sharedCtx.resume().catch(function () {});
         return sharedCtx;
+    }
+
+    function attachPlaybackGraph(audio) {
+        var ctx = acquireCtx();
+        if (!ctx || typeof ctx.createMediaElementSource !== 'function') return;
+        if (playbackGraphs && playbackGraphs.has(audio)) return;
+        try {
+            var source = ctx.createMediaElementSource(audio);
+            var highpass = ctx.createBiquadFilter();
+            highpass.type = 'highpass';
+            highpass.frequency.value = 70;
+            highpass.Q.value = 0.707;
+
+            var presence = ctx.createBiquadFilter();
+            presence.type = 'peaking';
+            presence.frequency.value = 2600;
+            presence.Q.value = 0.9;
+            presence.gain.value = 2;
+
+            var airCut = ctx.createBiquadFilter();
+            airCut.type = 'highshelf';
+            airCut.frequency.value = 8500;
+            airCut.gain.value = -1.5;
+
+            var gain = ctx.createGain();
+            gain.gain.value = 1.25;
+
+            var limiter = ctx.createDynamicsCompressor();
+            limiter.threshold.value = -2;
+            limiter.knee.value = 0;
+            limiter.ratio.value = 20;
+            limiter.attack.value = 0.001;
+            limiter.release.value = 0.05;
+
+            source.connect(highpass);
+            highpass.connect(presence);
+            presence.connect(airCut);
+            airCut.connect(gain);
+            gain.connect(limiter);
+            limiter.connect(ctx.destination);
+            if (playbackGraphs) playbackGraphs.set(audio, { source: source, nodes: [source, highpass, presence, airCut, gain, limiter] });
+        } catch (e) {}
     }
 
     function escapeHtml(value) {
@@ -259,6 +303,7 @@
                 audio.preload = 'auto';
                 audio.volume = duckVolume;
                 audio.src = objectUrl;
+                attachPlaybackGraph(audio);
 
                 audio.addEventListener('error', function () {
                     isPlaying = false;
@@ -306,9 +351,16 @@
             }
             if (audio && audio.paused) {
                 audio.volume = duckVolume;
-                try { await audio.play(); isPlaying = true; notifyPlayed(); } catch (e) { isPlaying = false; }
-                setIcon('pause');
-                rafId = requestAnimationFrame(tick);
+                try {
+                    await audio.play();
+                    isPlaying = true;
+                    notifyPlayed();
+                    setIcon('pause');
+                    rafId = requestAnimationFrame(tick);
+                } catch (e) {
+                    isPlaying = false;
+                    setIcon('play');
+                }
                 return;
             }
             await fetchAndPlay();
@@ -378,6 +430,7 @@
 
         var analyser = null;
         var source = null;
+        var silentSink = null;
         var rafId = 0;
         var idleWave = false;
         var t0 = Date.now();
@@ -394,21 +447,24 @@
 
         function renderLoop() {
             if (!analyser) return;
-            var size = analyser.frequencyBinCount;
-            var data = new Uint8Array(size);
-            analyser.getByteFrequencyData(data);
+            var size = analyser.fftSize;
+            var data = new Float32Array(size);
+            analyser.getFloatTimeDomainData(data);
+            var peak = 0;
+            var sumSq = 0;
+            for (var i = 0; i < size; i++) {
+                var v = data[i];
+                var av = Math.abs(v);
+                if (av > peak) peak = av;
+                sumSq += v * v;
+            }
+            var rms = Math.sqrt(sumSq / Math.max(1, size));
+            var level = Math.min(1, Math.max(rms * 4.2, peak * 1.8));
             var groups = bars.length;
-            var step = Math.floor(size / groups) || 1;
-            for (var i = 0; i < groups; i++) {
-                var sum = 0;
-                var n = 0;
-                for (var j = i * step; j < Math.min(size, (i + 1) * step); j++) {
-                    sum += data[j];
-                    n++;
-                }
-                var level = n ? (sum / n) / 255 : 0;
-                var h = Math.max(8, Math.min(100, level * 160));
-                bars[i].style.height = Math.round(h) + '%';
+            for (var b = 0; b < groups; b++) {
+                var wave = 0.72 + 0.28 * Math.sin((Date.now() / 180) + b * 0.85);
+                var h = Math.max(8, Math.min(100, level * wave * 100));
+                bars[b].style.height = Math.round(h) + '%';
             }
             rafId = requestAnimationFrame(renderLoop);
         }
@@ -418,23 +474,30 @@
                 var ctx = acquireCtx();
                 if (!ctx || !global.AnalyserNode) return false;
                 try {
+                    if (ctx.state === 'suspended') ctx.resume().catch(function () {});
                     source = ctx.createMediaStreamSource(stream);
                     analyser = ctx.createAnalyser();
-                    analyser.fftSize = 256;
-                    analyser.smoothingTimeConstant = 0.75;
+                    analyser.fftSize = 512;
+                    analyser.smoothingTimeConstant = 0.7;
+                    silentSink = ctx.createGain();
+                    silentSink.gain.value = 0;
                     source.connect(analyser);
+                    analyser.connect(silentSink);
+                    silentSink.connect(ctx.destination);
                     if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
                     rafId = requestAnimationFrame(renderLoop);
                     return true;
                 } catch (err) {
                     analyser = null;
                     source = null;
+                    silentSink = null;
                     return false;
                 }
             },
             pause: function () {
                 if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
                 idleWave = true;
+                idleLoop();
             },
             resume: function () {
                 idleWave = false;
@@ -445,8 +508,11 @@
             stop: function () {
                 if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
                 try { if (source) source.disconnect(); } catch (e) { }
+                try { if (analyser) analyser.disconnect(); } catch (e) { }
+                try { if (silentSink) silentSink.disconnect(); } catch (e) { }
                 source = null;
                 analyser = null;
+                silentSink = null;
                 idleLoop();
             }
         };
