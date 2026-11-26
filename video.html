@@ -2362,7 +2362,7 @@ function toast(message, type) {
 function getYouTubeEmbed(url, startAt) {
     var m = url.match(/(?:youtube\.com\/watch\?v=)([\w-]+)/) || url.match(/(?:youtu\.be\/)([\w-]+)/);
     if (!m) return null;
-    var embed = 'https://www.youtube.com/embed/' + m[1] + '?rel=0&autoplay=1&playsinline=1&modestbranding=1';
+    var embed = 'https://www.youtube.com/embed/' + m[1] + '?rel=0&autoplay=1&playsinline=1&modestbranding=1&enablejsapi=1';
     if (startAt && startAt > 0) embed += '&start=' + Math.floor(startAt);
     return embed;
 }
@@ -2788,6 +2788,28 @@ function stopPlaybackNow() {
     hidePreviewBanner();
     resetPlayerVisual();
 }
+
+var recorderDuckedYoutube = false;
+function sendYouTubeCommand(func, args) {
+    var wrap = document.getElementById('youtubeFrame');
+    var iframe = wrap && wrap.querySelector('iframe');
+    if (!iframe || !iframe.contentWindow) return;
+    try {
+        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: args == null ? '' : String(args) }), '*');
+    } catch (e) {}
+}
+window.MSDuckLessonVideo = function (level) {
+    var wrap = document.getElementById('youtubeFrame');
+    recorderDuckedYoutube = Boolean(wrap && wrap.style.display === 'block' && wrap.querySelector('iframe'));
+    if (recorderDuckedYoutube) {
+        var volume = Math.max(0, Math.min(100, Math.round((Number(level) || 0) * 100)));
+        sendYouTubeCommand('setVolume', volume);
+    }
+};
+window.MSRestoreLessonVideo = function () {
+    if (recorderDuckedYoutube) sendYouTubeCommand('setVolume', 100);
+    recorderDuckedYoutube = false;
+};
 
 function startAccessWatchdog() {
     if (!userHasAccess || !accessExpiresAt || accessWatchdog) return;

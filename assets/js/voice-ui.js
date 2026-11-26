@@ -22,10 +22,12 @@
     var sharedCtx = null;
     var playbackGraphs = typeof WeakMap === 'function' ? new WeakMap() : null;
     var liveBubbles = new Set();
+    var pausedByRecorder = new Set();
     var activePlay = null;
     var duckVolume = 1;
 
     function claimPlay(self) {
+        pausedByRecorder.delete(self);
         if (activePlay && activePlay !== self) {
             try { activePlay.stop(); } catch (e) { }
         }
@@ -37,6 +39,7 @@
             try { b.stop(); } catch (e) { }
         });
         if (activePlay) activePlay = null;
+        pausedByRecorder.clear();
     }
 
     function anyPlaying() {
@@ -52,6 +55,23 @@
         liveBubbles.forEach(function (b) {
             if (typeof b.setVolume === 'function') b.setVolume(duckVolume);
         });
+    }
+
+    function pauseAll() {
+        pausedByRecorder.clear();
+        liveBubbles.forEach(function (b) {
+            if (typeof b.isPlaying === 'function' && b.isPlaying() && typeof b.pause === 'function') {
+                b.pause();
+                pausedByRecorder.add(b);
+            }
+        });
+    }
+
+    function resumeAll() {
+        pausedByRecorder.forEach(function (b) {
+            if (typeof b.resume === 'function') b.resume();
+        });
+        pausedByRecorder.clear();
     }
 
     function acquireCtx() {
@@ -341,6 +361,7 @@
 
         async function toggle() {
             claimPlay(self);
+            pausedByRecorder.delete(self);
             if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
             if (audio && !audio.paused) {
                 isPlaying = false;
@@ -388,8 +409,20 @@
         var self = {
             el: el,
             play: toggle,
+            pause: function () {
+                if (!audio || audio.paused) return;
+                isPlaying = false;
+                audio.pause();
+                setIcon('play');
+                paint(progress());
+                if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+            },
+            resume: function () {
+                if (audio && audio.paused) toggle();
+            },
             stop: function () {
                 isPlaying = false;
+                pausedByRecorder.delete(self);
                 if (audio && !audio.paused) {
                     audio.pause();
                     setIcon('play');
@@ -536,7 +569,7 @@
             .slice(0, 70)
             .toLowerCase();
         if (!clean) clean = 'quran-recitation';
-        return clean + '-' + new Date().toISOString().slice(0, 10) + audioExtension(mime);
+        return 'modern-skills-' + clean + '-' + new Date().toISOString().slice(0, 10) + audioExtension(mime);
     }
 
     function downloadAudio(blob, title) {
@@ -556,7 +589,7 @@
 
     function fallbackAudioShare(blob, title, notify) {
         var name = downloadAudio(blob, title);
-        var message = 'My Qur\'an recitation' + (title ? ': ' + title : '') + '. The audio file is downloaded and ready to attach.';
+        var message = 'Modern Skills Qur\'an recitation' + (title ? ': ' + title : '') + '. The audio file is downloaded and ready to attach.';
         var opened = false;
         try { opened = Boolean(global.open('https://wa.me/?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer')); } catch (e) {}
         notify(opened
@@ -575,27 +608,40 @@
             return Promise.resolve(false);
         }
 
+        var mime = String(blob.type || 'audio/webm').split(';')[0].trim() || 'audio/webm';
         var file = null;
         try {
             if (typeof File === 'function') {
-                file = new File([blob], audioFileName(title, blob.type), { type: blob.type || 'audio/webm' });
+                file = new File([blob], audioFileName(title, mime), { type: mime });
             }
         } catch (e) { file = null; }
 
-        if (file && global.navigator && navigator.share && navigator.canShare) {
-            try {
-                if (navigator.canShare({ files: [file] })) {
-                    return navigator.share({ files: [file], title: title, text: title })
-                        .then(function () {
-                            notify('Audio shared. Choose WhatsApp in your share sheet.', 'success');
-                            return true;
-                        })
-                        .catch(function (err) {
-                            if (err && err.name === 'AbortError') return false;
-                            return fallbackAudioShare(blob, title, notify);
-                        });
+        if (file && global.navigator && typeof navigator.share === 'function') {
+            var shareText = 'Modern Skills — ' + title;
+            var attempts = [
+                { files: [file] },
+                { files: [file], title: shareText, text: shareText }
+            ];
+            function tryNative(index) {
+                if (index >= attempts.length) return fallbackAudioShare(blob, title, notify);
+                try {
+                    var result = navigator.share(attempts[index]);
+                    if (!result || typeof result.then !== 'function') return tryNative(index + 1);
+                    return result.then(function () {
+                        notify('Shared — choose WhatsApp to send the audio file.', 'success');
+                        return true;
+                    }).catch(function (err) {
+                        if (err && err.name === 'AbortError') {
+                            notify('Sharing cancelled.', 'info');
+                            return false;
+                        }
+                        return tryNative(index + 1);
+                    });
+                } catch (err) {
+                    return tryNative(index + 1);
                 }
-            } catch (e) {}
+            }
+            return tryNative(0);
         }
         return fallbackAudioShare(blob, title, notify);
     }
@@ -606,6 +652,8 @@
         formatTime: formatTime,
         stopAll: stopAll,
         isPlaying: anyPlaying,
+        pauseAll: pauseAll,
+        resumeAll: resumeAll,
         setDuck: setDuckVolume,
         shareAudio: shareAudio,
         downloadAudio: downloadAudio,

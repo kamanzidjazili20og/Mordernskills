@@ -6,6 +6,7 @@
     var API_ORIGIN = (window.MODERN_SKILLS_CONFIG && window.MODERN_SKILLS_CONFIG.API_URL)
         || (location.protocol === 'file:' ? 'http://localhost:3001' : location.origin);
     var API = API_ORIGIN + '/api';
+    var audioBlobCache = new Map();
     var STATUS = {
         pending: { label: 'Pending review', cls: 'pending', icon: 'fa-hourglass-half' },
         reviewed: { label: 'Reviewed', cls: 'reviewed', icon: 'fa-circle-check' },
@@ -101,17 +102,28 @@
         return data || {};
     }
 
-    async function fetchAudioBlob(path, fallbackMessage) {
-        var t = token();
-        var res = await fetch(API + path, {
-            headers: t ? { Authorization: 'Bearer ' + t } : {}
-        });
-        if (!res.ok) {
-            if (res.status === 401) clearSession();
-            var payload = await res.json().catch(function () { return {}; });
-            throw new Error(payload.error || fallbackMessage || 'Could not load the recording.');
-        }
-        return res.blob();
+    function fetchAudioBlob(path, fallbackMessage) {
+        var cached = audioBlobCache.get(path);
+        if (cached) return cached;
+        var request = (async function () {
+            var t = token();
+            var res = await fetch(API + path, {
+                headers: t ? { Authorization: 'Bearer ' + t } : {}
+            });
+            if (!res.ok) {
+                if (res.status === 401) clearSession();
+                var payload = await res.json().catch(function () { return {}; });
+                throw new Error(payload.error || fallbackMessage || 'Could not load the recording.');
+            }
+            return res.blob();
+        })();
+        audioBlobCache.set(path, request);
+        request.catch(function () { audioBlobCache.delete(path); });
+        return request;
+    }
+
+    function prefetchAudio(submissionId) {
+        return fetchAudioBlob('/recitations/submissions/' + submissionId + '/audio');
     }
 
     function fetchAudio(submissionId) {
@@ -225,6 +237,7 @@
         guard: guard,
         api: api,
         fetchAudio: fetchAudio,
+        prefetchAudio: prefetchAudio,
         fetchFeedbackAudio: fetchFeedbackAudio,
         statusMeta: statusMeta,
         escapeHtml: escapeHtml,

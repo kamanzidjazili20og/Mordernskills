@@ -313,8 +313,8 @@
         var recorderStream = null;
         var audioGraph = null;
         var duckedMedia = [];
-        var DUCK_VOLUME = 0;
-        var MIC_GAIN = 1.25;
+        var DUCK_VOLUME = 0.12;
+        var MIC_GAIN = 1.3;
         var wakeLock = null;
         var chunks = [];
         var recordedBlob = null;
@@ -419,11 +419,11 @@
             if (duckedMedia.length) return;
             try {
                 document.querySelectorAll('video, audio').forEach(function (el) {
-                    duckedMedia.push({ el: el, volume: el.volume, wasPaused: el.paused });
-                    try { el.pause(); } catch (e) {}
+                    duckedMedia.push({ el: el, volume: el.volume });
                     el.volume = DUCK_VOLUME;
                 });
             } catch (e) {}
+            if (typeof window.MSDuckLessonVideo === 'function') window.MSDuckLessonVideo(DUCK_VOLUME);
             if (window.MSVoice && typeof MSVoice.setDuck === 'function') MSVoice.setDuck(DUCK_VOLUME);
         }
 
@@ -432,12 +432,10 @@
                 duckedMedia.forEach(function (item) {
                     if (!item.el || !item.el.isConnected) return;
                     item.el.volume = item.volume;
-                    if (!item.wasPaused) {
-                        try { item.el.play().catch(function () {}); } catch (e) {}
-                    }
                 });
                 duckedMedia = [];
             }
+            if (typeof window.MSRestoreLessonVideo === 'function') window.MSRestoreLessonVideo();
             if (window.MSVoice && typeof MSVoice.setDuck === 'function') MSVoice.setDuck(1);
         }
 
@@ -612,7 +610,7 @@
             var fill = Math.min(100, Math.round(recordedBytes / softBytes * 100));
             els.progressFill.style.width = fill + '%';
 
-            if (state === 'hold') { setHead('Recording', 'rec'); if (!els.status.classList.contains('rec')) setStatus('Recording&hellip;', true); }
+            if (state === 'hold') { setHead('Recording', 'rec'); if (!els.status.classList.contains('rec')) setStatus('Recording &mdash; lesson audio lowered so your voice stays clear.', true); }
             else if (state === 'locked' && !pausedFlag) { setHead('Recording', 'rec'); }
             else if (state === 'locked' && pausedFlag) { setHead('Paused', 'paused'); setStatus('Paused &mdash; resume or stop when ready.', false); }
             else if (state === 'stopping') { setHead('Finishing', 'idle'); }
@@ -721,7 +719,7 @@
             drag.locked = true;
             drag.cancel = false;
             updateUI();
-            setStatus('Recording hands-free &mdash; pause or stop when finished.', true);
+            setStatus('Recording hands-free &mdash; lesson audio lowered so your voice is loud.', true);
         }
 
         function pauseToggle() {

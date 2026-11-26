@@ -1312,8 +1312,8 @@ body.rec-page .rec-study {
     var recorderStream = null;
     var audioGraph = null;
     var duckedMedia = [];
-    var DUCK_VOLUME = 0;
-    var MIC_GAIN = 1.25;
+    var DUCK_VOLUME = 0.12;
+    var MIC_GAIN = 1.3;
     var wakeLock = null;
     var chunks = [];
     var recordedBlob = null;
@@ -2081,11 +2081,11 @@ body.rec-page .rec-study {
         if (duckedMedia.length) return;
         try {
             document.querySelectorAll('video, audio').forEach(function (el) {
-                duckedMedia.push({ el: el, volume: el.volume, wasPaused: el.paused });
-                try { el.pause(); } catch (e) {}
+                duckedMedia.push({ el: el, volume: el.volume });
                 el.volume = DUCK_VOLUME;
             });
         } catch (e) {}
+        if (typeof window.MSDuckLessonVideo === 'function') window.MSDuckLessonVideo(DUCK_VOLUME);
         if (window.MSVoice && typeof MSVoice.setDuck === 'function') MSVoice.setDuck(DUCK_VOLUME);
     }
 
@@ -2094,12 +2094,10 @@ body.rec-page .rec-study {
             duckedMedia.forEach(function (item) {
                 if (!item.el || !item.el.isConnected) return;
                 item.el.volume = item.volume;
-                if (!item.wasPaused) {
-                    try { item.el.play().catch(function () {}); } catch (e) {}
-                }
             });
             duckedMedia = [];
         }
+        if (typeof window.MSRestoreLessonVideo === 'function') window.MSRestoreLessonVideo();
         if (window.MSVoice && typeof MSVoice.setDuck === 'function') MSVoice.setDuck(1);
     }
 
@@ -2372,11 +2370,11 @@ body.rec-page .rec-study {
         } else if (s === 'idle') {
             setHint('<strong>Tap</strong> the mic to start recording');
         } else if (s === 'hold') {
-            setHint('Starting&hellip; recording will continue hands-free');
+            setHint('Starting&hellip; the lesson stays visible and its sound is lowered for your voice');
         } else if (s === 'locked') {
             setHint(recPaused
                 ? '<strong>Paused.</strong> Tap the mic to finish, or resume below.'
-                : 'Recording hands-free &mdash; <strong>tap the mic</strong> to finish.');
+                : 'Recording hands-free &mdash; lesson sound lowered, <strong>tap the mic</strong> to finish.');
         } else if (s === 'stopping') {
             setHint('Saving your take&hellip;');
         }
@@ -2755,6 +2753,16 @@ body.rec-page .rec-study {
         if (assigned) selectAssignment(assigned.id);
         else enterLessonMode(lessonId);
     });
+
+    function warmShareAudio(event) {
+        var button = event.target.closest && event.target.closest('[data-share-audio]');
+        if (!button) return;
+        var id = Number(button.getAttribute('data-share-audio'));
+        if (id && R.prefetchAudio) R.prefetchAudio(id).catch(function () {});
+    }
+    els.submissionList.addEventListener('pointerover', warmShareAudio);
+    els.submissionList.addEventListener('pointerdown', warmShareAudio);
+    els.submissionList.addEventListener('focusin', warmShareAudio);
 
     els.submissionList.addEventListener('click', async function (event) {
         var button = event.target.closest('[data-share-audio], [data-download-audio]');
