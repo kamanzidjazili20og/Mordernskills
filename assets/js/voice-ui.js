@@ -572,6 +572,11 @@
         return 'modern-skills-' + clean + '-' + new Date().toISOString().slice(0, 10) + audioExtension(mime);
     }
 
+    function whatsappUrl(title, fileName) {
+        var message = 'Modern Skills Qur\'an recitation' + (title ? ': ' + title : '') + (fileName ? ' — ' + fileName : '') + '.';
+        return 'https://wa.me/250783198148?text=' + encodeURIComponent(message);
+    }
+
     function downloadAudio(blob, title) {
         if (!blob) return '';
         var name = audioFileName(title, blob.type);
@@ -587,15 +592,26 @@
         return name;
     }
 
+    function showWaReceipt(anchor, title, result) {
+        if (!anchor) return;
+        var name = result && result.fileName ? result.fileName : audioFileName(title, 'audio/mp4');
+        anchor.href = result && result.waUrl ? result.waUrl : whatsappUrl(title, name);
+        anchor.setAttribute('aria-label', 'Open WhatsApp');
+        anchor.title = 'Open WhatsApp';
+        anchor.classList.remove('rec-hidden', 'msr-hidden');
+    }
+
     function fallbackAudioShare(blob, title, notify) {
         var name = downloadAudio(blob, title);
-        var message = 'Modern Skills Qur\'an recitation' + (title ? ': ' + title : '') + '. The audio file is downloaded and ready to attach.';
-        var opened = false;
-        try { opened = Boolean(global.open('https://wa.me/?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer')); } catch (e) {}
-        notify(opened
-            ? 'Audio downloaded. Attach the file in WhatsApp to share it.'
-            : 'Audio downloaded as ' + name + '. Open WhatsApp and attach the file.', 'info');
-        return Promise.resolve(false);
+        notify('Audio downloaded as ' + name + '. Open WhatsApp to attach it.', 'info');
+        return Promise.resolve({
+            shared: false,
+            native: false,
+            fallback: true,
+            cancelled: false,
+            fileName: name,
+            waUrl: whatsappUrl(title, name)
+        });
     }
 
     function shareAudio(opts) {
@@ -605,14 +621,16 @@
         var notify = opts.toast || function () {};
         if (!blob || typeof blob.size !== 'number') {
             notify('Record something first.', 'error');
-            return Promise.resolve(false);
+            return Promise.resolve({ shared: false, error: true, cancelled: true, fileName: '', waUrl: whatsappUrl(title) });
         }
 
         var mime = String(blob.type || 'audio/webm').split(';')[0].trim() || 'audio/webm';
+        var name = audioFileName(title, mime);
+        var url = whatsappUrl(title, name);
         var file = null;
         try {
             if (typeof File === 'function') {
-                file = new File([blob], audioFileName(title, mime), { type: mime });
+                file = new File([blob], name, { type: mime });
             }
         } catch (e) { file = null; }
 
@@ -628,12 +646,12 @@
                     var result = navigator.share(attempts[index]);
                     if (!result || typeof result.then !== 'function') return tryNative(index + 1);
                     return result.then(function () {
-                        notify('Shared — choose WhatsApp to send the audio file.', 'success');
-                        return true;
+                        notify('Audio handed to your share sheet. Choose WhatsApp to send it.', 'success');
+                        return { shared: true, native: true, fallback: false, cancelled: false, fileName: name, waUrl: url };
                     }).catch(function (err) {
                         if (err && err.name === 'AbortError') {
                             notify('Sharing cancelled.', 'info');
-                            return false;
+                            return { shared: false, native: false, fallback: false, cancelled: true, fileName: name, waUrl: url };
                         }
                         return tryNative(index + 1);
                     });
@@ -658,6 +676,8 @@
         shareAudio: shareAudio,
         downloadAudio: downloadAudio,
         audioFileName: audioFileName,
+        whatsappUrl: whatsappUrl,
+        showWaReceipt: showWaReceipt,
         clearCache: function () { peaksCache.clear(); }
     };
 })(window);

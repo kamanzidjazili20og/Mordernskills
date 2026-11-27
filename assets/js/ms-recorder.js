@@ -240,6 +240,7 @@
             '      <button type="button" class="msr-btn red" data-discard><i class="fas fa-rotate-left"></i> Discard</button>',
             '      <button type="button" class="msr-btn whatsapp" data-share-audio aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</button>',
             '      <button type="button" class="msr-btn download" data-download-audio aria-label="Download this recording"><i class="fas fa-download"></i> Download</button>',
+            '      <a class="wa-receipt msr-hidden" data-wa-receipt target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Open WhatsApp</a>',
             '      <button type="button" class="msr-btn gold" data-send><i class="fas fa-paper-plane"></i> Send</button>',
             '    </div>',
             '  </div>',
@@ -283,6 +284,7 @@
             discard: q('[data-discard]'),
             share: q('[data-share-audio]'),
             download: q('[data-download-audio]'),
+            waReceipt: q('[data-wa-receipt]'),
             submit: q('[data-send]'),
             sent: q('.msr-sent')
         };
@@ -819,6 +821,7 @@
 
         function clearDraft() {
             if (draftBubble) { draftBubble.destroy(); draftBubble = null; }
+            if (els.waReceipt) els.waReceipt.classList.add('msr-hidden');
             recordedBlob = null;
         }
 
@@ -864,13 +867,18 @@
                 toast('Audio sharing is not available in this browser.', 'error');
                 return;
             }
+            var shareTitle = opts.shareTitle || title;
             els.share.disabled = true;
             MSVoice.shareAudio({
                 blob: recordedBlob,
-                title: opts.shareTitle || title,
+                title: shareTitle,
                 toast: toast
-            }).then(function () {
+            }).then(function (result) {
                 if (els.share) els.share.disabled = false;
+                if (result && (result.shared || result.fallback)) {
+                    MSVoice.showWaReceipt(els.waReceipt, shareTitle, result);
+                    if (window.MSWhatsApp) window.MSWhatsApp.markShared();
+                }
             }).catch(function () {
                 if (els.share) els.share.disabled = false;
             });

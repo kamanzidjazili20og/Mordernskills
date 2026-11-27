@@ -242,6 +242,26 @@
 })(typeof window !== 'undefined' ? window : this);
 ;(function(){
   try{
+    function gateWhatsApp(){
+      var body=document.body;
+      if(!body) return;
+      var page=(location.pathname||'').toLowerCase();
+      if(body.classList.contains('page-recite') || body.classList.contains('page-video') || page.indexOf('recite.html')!==-1 || page.indexOf('video.html')!==-1) body.classList.add('wa-gated');
+      try{ if(sessionStorage.getItem('ms_wa_shared')==='1') body.classList.add('wa-share-complete'); }catch(e){}
+    }
+    window.MSWhatsApp={
+      markShared:function(){
+        gateWhatsApp();
+        if(document.body) document.body.classList.add('wa-share-complete');
+        try{ sessionStorage.setItem('ms_wa_shared','1'); }catch(e){}
+      },
+      reset:function(){
+        if(document.body) document.body.classList.remove('wa-share-complete');
+        try{ sessionStorage.removeItem('ms_wa_shared'); }catch(e){}
+      }
+    };
+    gateWhatsApp();
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',gateWhatsApp,{once:true});
     if(document.querySelector('.wa-float')) return;
     var a=document.createElement('a');
     a.className='wa-float';
@@ -251,7 +271,7 @@
     a.setAttribute('aria-label','Chat on WhatsApp');
     a.title='WhatsApp';
     a.innerHTML='<i class="fab fa-whatsapp" aria-hidden="true"></i>';
-    document.addEventListener('DOMContentLoaded',function(){ if(!document.querySelector('.wa-float')) document.body.appendChild(a); });
+    document.addEventListener('DOMContentLoaded',function(){ gateWhatsApp(); if(!document.querySelector('.wa-float')) document.body.appendChild(a); });
     if(document.readyState!=='loading' && !document.querySelector('.wa-float')) document.body.appendChild(a);
   }catch(e){}
 })();

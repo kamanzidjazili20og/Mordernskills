@@ -659,6 +659,7 @@ body.rec-page .sub-card {
 .sub-share:disabled { opacity: .5; cursor: default; transform: none; }
 .sub-download { border-color: rgba(212,168,83,0.35); background: rgba(212,168,83,0.1); color: var(--gold-light); }
 .sub-download:hover { background: rgba(212,168,83,0.2); color: #f5d18a; border-color: rgba(212,168,83,0.6); }
+.sub-wa-receipt { padding: 7px 12px; font-size: 11px; }
 .sub-date { font-size: 11px; color: var(--text-muted); }
 
 /* Toasts / avatars */
@@ -1208,6 +1209,7 @@ body.rec-page .rec-study {
                         <button type="button" class="btn btn-secondary btn-ghost-red" id="discardBtn"><i class="fas fa-trash"></i> Redo</button>
                         <button type="button" class="btn btn-secondary btn-share-wa" id="shareAudioBtn" aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
                         <button type="button" class="btn btn-secondary" id="downloadAudioBtn" aria-label="Download this recording"><i class="fas fa-download"></i> Download</button>
+                        <a class="wa-receipt rec-hidden" id="waReceipt" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Open WhatsApp</a>
                         <button type="button" class="btn btn-primary btn-send" id="submitBtn">
                             <i class="fas fa-paper-plane"></i> Send for review
                         </button>
@@ -1215,7 +1217,7 @@ body.rec-page .rec-study {
                     <div class="rec-ready-status rec-status" id="readyStatus" aria-live="polite"></div>
                 </div>
 
-                <div class="rec-hint">Lesson audio pauses while you record &middot; studio voice processing on &middot; maximum 25 MB</div>
+                <div class="rec-hint">Lesson stays visible while you record &middot; its sound is lowered so your voice leads &middot; maximum 25 MB</div>
             </div>
             </aside>
 
@@ -1286,6 +1288,7 @@ body.rec-page .rec-study {
 <script src="assets/js/media.js"></script>
 <script src="assets/js/recitation-common.js"></script>
 <script src="assets/js/voice-ui.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script>
 (function () {
     'use strict';
@@ -1326,6 +1329,9 @@ body.rec-page .rec-study {
     var recordedBytes = 0;
     var sizeStopTriggered = false;
     var draftBubble = null;
+    var sharedWaIds = new Set();
+    var waReceiptUrls = new Map();
+    var draftWaResult = null;
     var studyFeedbackBubble = null;
     var reviewSnapshot = null;
     var freshFeedback = {};
@@ -1395,6 +1401,7 @@ body.rec-page .rec-study {
         discard: document.getElementById('discardBtn'),
         share: document.getElementById('shareAudioBtn'),
         download: document.getElementById('downloadAudioBtn'),
+        waReceipt: document.getElementById('waReceipt'),
         submit: document.getElementById('submitBtn')
     };
 
@@ -1581,6 +1588,7 @@ body.rec-page .rec-study {
                 + '      <div class="sub-voice" data-voice="' + s.id + '" data-duration="' + (s.duration_seconds || 0) + '"></div>'
                 + '      <button type="button" class="sub-share" data-share-audio="' + Number(s.id) + '" data-share-title="' + R.escapeHtml(submissionShareTitle(s)) + '" title="Share this recording to WhatsApp" aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i></button>'
                 + '      <button type="button" class="sub-share sub-download" data-download-audio="' + Number(s.id) + '" data-download-title="' + R.escapeHtml(submissionShareTitle(s)) + '" title="Download this recording" aria-label="Download this recording"><i class="fas fa-download"></i></button>'
+                + '      <a class="wa-receipt sub-wa-receipt' + (sharedWaIds.has(Number(s.id)) ? '' : ' rec-hidden') + '" data-wa-receipt="' + Number(s.id) + '" data-wa-title="' + R.escapeHtml(submissionShareTitle(s)) + '" href="' + R.escapeHtml(waReceiptUrls.get(Number(s.id)) || '') + '" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Open WhatsApp</a>'
                 + reviewDate
                 + '  </div>'
                 + feedback
@@ -2618,13 +2626,19 @@ body.rec-page .rec-study {
         if (!recordedBlob || recState !== 'ready') return;
         if (recordedBlob.size > MAX_BYTES) return R.toast('This take is over 25 MB. Record a shorter passage before sharing.', 'error');
         if (!window.MSVoice || !MSVoice.shareAudio) return R.toast('Audio sharing is not available in this browser.', 'error');
+        var title = draftShareTitle();
         els.share.disabled = true;
         MSVoice.shareAudio({
             blob: recordedBlob,
-            title: draftShareTitle(),
+            title: title,
             toast: R.toast
-        }).then(function () {
+        }).then(function (result) {
             if (els.share) els.share.disabled = false;
+            if (result && (result.shared || result.fallback)) {
+                draftWaResult = result;
+                MSVoice.showWaReceipt(els.waReceipt, title, result);
+                if (window.MSWhatsApp) MSWhatsApp.markShared();
+            }
         }).catch(function () {
             if (els.share) els.share.disabled = false;
         });
@@ -2632,6 +2646,8 @@ body.rec-page .rec-study {
 
     function discardDraft() {
         if (draftBubble) { draftBubble.destroy(); draftBubble = null; }
+        if (els.waReceipt) els.waReceipt.classList.add('rec-hidden');
+        draftWaResult = null;
         recordedBlob = null;
         accumulatedMs = 0;
         recordedBytes = 0;
@@ -2657,6 +2673,7 @@ body.rec-page .rec-study {
         stopTimer();
         chunks = [];
         recordedBlob = null;
+        draftWaResult = null;
         if (draftBubble) { draftBubble.destroy(); draftBubble = null; }
         recordedBytes = 0;
         accumulatedMs = 0;
@@ -2690,7 +2707,11 @@ body.rec-page .rec-study {
         els.submit.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending&hellip;';
 
         try {
-            await R.api('/submissions', { method: 'POST', body: form });
+            var sent = await R.api('/submissions', { method: 'POST', body: form });
+            if (sent && sent.id && draftWaResult) {
+                sharedWaIds.add(Number(sent.id));
+                waReceiptUrls.set(Number(sent.id), draftWaResult.waUrl || MSVoice.whatsappUrl(draftShareTitle(), draftWaResult.fileName));
+            }
             R.toast('Recitation sent. It will be reviewed and you will see feedback here.', 'success');
             recState = 'sent';
             els.readyView.classList.remove('rec-hidden');
@@ -2780,7 +2801,14 @@ body.rec-page .rec-study {
                 var name = MSVoice.downloadAudio(blob, title);
                 if (name) R.toast('Downloaded as ' + name, 'success');
             } else {
-                await MSVoice.shareAudio({ blob: blob, title: title, toast: R.toast });
+                var result = await MSVoice.shareAudio({ blob: blob, title: title, toast: R.toast });
+                if (result && (result.shared || result.fallback)) {
+                    sharedWaIds.add(id);
+                    waReceiptUrls.set(id, result.waUrl || MSVoice.whatsappUrl(title, result.fileName));
+                    var receipt = els.submissionList.querySelector('[data-wa-receipt="' + id + '"]');
+                    MSVoice.showWaReceipt(receipt, title, result);
+                    if (window.MSWhatsApp) MSWhatsApp.markShared();
+                }
             }
         } catch (err) {
             R.toast(err.message || 'Could not load the recording.', 'error');
