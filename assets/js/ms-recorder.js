@@ -105,7 +105,15 @@
         '.msr-preview{display:flex;justify-content:center;margin-bottom:10px;}',
         '.msr-preview .vsu-bubble{max-width:min(420px,96%);}',
         '.msr-ready-status{margin:0 0 14px;font-size:12.5px;color:var(--text-muted,#7e958a);}',
-        '.msr-ready-actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}',
+        '.msr-ready-actions{display:grid;gap:12px;justify-items:center;width:100%;}',
+        '.msr-links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:7px;border-radius:999px;border:1px solid rgba(212,168,83,.16);background:rgba(4,18,13,.54);}',
+        '.msr-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:34px;padding:7px 13px;border-radius:999px;border:1px solid rgba(148,163,184,.22);background:rgba(255,255,255,.035);color:var(--text-muted,#7e958a);font-size:12px;font-weight:800;text-decoration:none;cursor:pointer;transition:transform .12s ease,background .12s ease,border-color .12s ease,color .12s ease;}',
+        '.msr-link:hover{transform:translateY(-1px);background:rgba(255,255,255,.08);border-color:rgba(212,168,83,.42);color:var(--text,#e8f0eb);}',
+        '.msr-link:disabled{opacity:.5;cursor:default;transform:none;}',
+        '.msr-link.wa{border-color:rgba(37,211,102,.42);background:rgba(37,211,102,.14);color:#86efac;}',
+        '.msr-link.wa:hover{background:rgba(37,211,102,.24);color:#d1fae5;border-color:rgba(37,211,102,.62);}',
+        '.msr-link.receipt{border-color:rgba(52,211,153,.46);background:rgba(52,211,153,.16);color:#86efac;}',
+        '.msr-primary{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;}',
         '.msr-btn{display:inline-flex;align-items:center;gap:9px;padding:11px 22px;border-radius:999px;border:none;cursor:pointer;',
         'font-size:13px;font-weight:800;transition:transform .12s ease,opacity .15s ease;touch-action:none;-webkit-tap-highlight-color:transparent;}',
         '.msr-btn:hover{transform:translateY(-1px);}',
@@ -120,6 +128,7 @@
         '.msr-sent .ok{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;',
         'background:rgba(52,211,153,0.16);border:1px solid rgba(52,211,153,0.45);color:#34d399;font-size:20px;}',
         '.msr-sent strong{font-size:14.5px;}',
+        '@media(max-width:480px){.msr-links{border-radius:16px;padding:8px}.msr-link{flex:1 1 120px}.msr-primary .msr-btn{flex:1 1 130px}}',
         '.msr-hidden{display:none!important;}'
     ].join('\n');
 
@@ -237,11 +246,15 @@
             '    <div class="msr-preview"></div>',
             '    <p class="msr-ready-status"></p>',
             '    <div class="msr-ready-actions">',
-            '      <button type="button" class="msr-btn red" data-discard><i class="fas fa-rotate-left"></i> Discard</button>',
-            '      <button type="button" class="msr-btn whatsapp" data-share-audio aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</button>',
-            '      <button type="button" class="msr-btn download" data-download-audio aria-label="Download this recording"><i class="fas fa-download"></i> Download</button>',
-            '      <a class="wa-receipt msr-hidden" data-wa-receipt target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Open WhatsApp</a>',
-            '      <button type="button" class="msr-btn gold" data-send><i class="fas fa-paper-plane"></i> Send</button>',
+            '      <div class="msr-links" aria-label="Recording share and download actions">',
+            '        <button type="button" class="msr-link wa" data-share-audio aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</button>',
+            '        <button type="button" class="msr-link" data-download-audio aria-label="Download this recording"><i class="fas fa-download"></i> Download</button>',
+            '        <a class="msr-link receipt msr-hidden" data-wa-receipt target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Open WhatsApp</a>',
+            '      </div>',
+            '      <div class="msr-primary">',
+            '        <button type="button" class="msr-btn red" data-discard><i class="fas fa-rotate-left"></i> Discard</button>',
+            '        <button type="button" class="msr-btn gold" data-send><i class="fas fa-paper-plane"></i> Send</button>',
+            '      </div>',
             '    </div>',
             '  </div>',
             '  <div class="msr-sent msr-hidden">',
@@ -843,7 +856,7 @@
                 ? 'This take is over the ' + Math.round(maxBytes / (1024 * 1024)) + ' MB limit. Discard it and record a shorter passage.'
                 : manualSend
                     ? 'Listen back — then choose Approve or Needs improvement below.'
-                    : 'Listen back — send it to the review queue when it sounds right.';
+                    : 'Listen back — share to WhatsApp, download, then send when it sounds right.';
             els.submit.disabled = Boolean(tooBig);
             if (els.share) els.share.disabled = Boolean(tooBig);
             if (els.download) els.download.disabled = Boolean(tooBig);

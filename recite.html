@@ -583,8 +583,44 @@ body.rec-page .rec-stat {
     justify-content: center;
 }
 .rec-ready-bubble { display: flex; justify-content: center; width: 100%; }
-.rec-ready-actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-.rec-ready-actions .btn { padding: 11px 15px; font-size: 12.5px; }
+.rec-ready-actions { display: grid; gap: 10px; justify-items: center; width: 100%; }
+.rec-ready-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 7px;
+    border-radius: 999px;
+    border: 1px solid rgba(212, 168, 83, 0.16);
+    background: rgba(4, 18, 13, 0.54);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+.ready-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 34px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--text-sec);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: transform .15s var(--ease), background .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease);
+}
+.ready-link:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.08); border-color: rgba(212, 168, 83, 0.42); color: var(--text); }
+.ready-link:disabled { opacity: .5; cursor: default; transform: none; }
+.ready-link-wa { border-color: rgba(37, 211, 102, 0.38); background: rgba(37, 211, 102, 0.12); color: #a7f3cf; }
+.ready-link-wa:hover { background: rgba(37, 211, 102, 0.22); color: #d1fae5; border-color: rgba(37, 211, 102, 0.62); }
+.ready-link-download { border-color: rgba(212, 168, 83, 0.34); background: rgba(212, 168, 83, 0.1); color: #f5d18a; }
+.ready-link-download:hover { background: rgba(212, 168, 83, 0.2); color: #fde3ad; }
+.ready-link-receipt { border-color: rgba(52, 211, 153, 0.46); background: rgba(52, 211, 153, 0.16); color: #86efac; }
+.rec-ready-primary { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+.rec-ready-primary .btn { padding: 11px 16px; font-size: 12.5px; }
 .btn-ghost-red {
     border-color: rgba(248,113,113,0.4) !important;
     color: #fca5a5 !important;
@@ -1081,6 +1117,9 @@ body.rec-page .rec-study {
     .rec-hero { padding: 24px 16px; }
     .rec-stats { gap: 8px; }
     .rec-stat strong { font-size: 24px; }
+    .rec-ready-links { border-radius: 16px; padding: 8px; }
+    .ready-link { flex: 1 1 130px; }
+    .rec-ready-primary .btn { flex: 1 1 130px; }
 }
 </style>
 <link rel="stylesheet" href="assets/css/responsive.css">
@@ -1206,13 +1245,17 @@ body.rec-page .rec-study {
                     <span class="rec-ready-title"><i class="fas fa-comments"></i> Preview your take</span>
                     <div class="rec-ready-bubble" id="readyBubble"></div>
                     <div class="rec-ready-actions">
-                        <button type="button" class="btn btn-secondary btn-ghost-red" id="discardBtn"><i class="fas fa-trash"></i> Redo</button>
-                        <button type="button" class="btn btn-secondary btn-share-wa" id="shareAudioBtn" aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
-                        <button type="button" class="btn btn-secondary" id="downloadAudioBtn" aria-label="Download this recording"><i class="fas fa-download"></i> Download</button>
-                        <a class="wa-receipt rec-hidden" id="waReceipt" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Open WhatsApp</a>
-                        <button type="button" class="btn btn-primary btn-send" id="submitBtn">
-                            <i class="fas fa-paper-plane"></i> Send for review
-                        </button>
+                        <div class="rec-ready-links" aria-label="Recording share and download actions">
+                            <button type="button" class="ready-link ready-link-wa" id="shareAudioBtn" aria-label="Share this recording to WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                            <button type="button" class="ready-link ready-link-download" id="downloadAudioBtn" aria-label="Download this recording"><i class="fas fa-download"></i> Download</button>
+                            <a class="ready-link ready-link-receipt rec-hidden" id="waReceipt" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Open WhatsApp</a>
+                        </div>
+                        <div class="rec-ready-primary">
+                            <button type="button" class="btn btn-secondary btn-ghost-red" id="discardBtn"><i class="fas fa-trash"></i> Redo</button>
+                            <button type="button" class="btn btn-primary btn-send" id="submitBtn">
+                                <i class="fas fa-paper-plane"></i> Send for review
+                            </button>
+                        </div>
                     </div>
                     <div class="rec-ready-status rec-status" id="readyStatus" aria-live="polite"></div>
                 </div>
@@ -2605,7 +2648,7 @@ body.rec-page .rec-study {
         var tooBig = recordedBlob && recordedBlob.size > MAX_BYTES;
         els.readyStatus.textContent = tooBig
             ? 'This take is over the 25 MB limit. Discard it and record a shorter passage.'
-            : 'Listen back, then send it to your teacher for review.';
+            : 'Listen back, share to WhatsApp if you want, then send it for review.';
         els.submit.disabled = Boolean(tooBig);
         if (els.share) els.share.disabled = Boolean(tooBig);
         if (els.download) els.download.disabled = Boolean(tooBig);
